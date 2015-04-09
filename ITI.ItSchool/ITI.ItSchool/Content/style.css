@@ -1,0 +1,54 @@
+
+body{
+	background: #F7C5EF;
+}
+
+img{
+	margin-left: 35%;
+
+}
+.menu, ol {
+	border: 2px solid black;
+	background: none repeat scroll 0% 0% black;
+}
+ul{
+	float : right;
+}
+.nav-justified {
+    width: 30%;
+}
+.nav-pills > li{
+	margin: none;
+}
+.nav-pills > li > a {
+    border-radius: 0px;
+	background: transparent;
+}
+.nav > li > a:hover {
+  background-color: #8774E4;
+  color: white;
+  border-radius: 5px;
+}
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+	background-color: #8774E4;
+	color: white;
+	border-radius: 5px;
+}
+a { 
+  color: #028; 
+  border-radius: 0px;
+}
+.bs-example{
+	margin: 20px;
+}
+#myTab{
+margin: 0% 33% 3% 5%;
+}
+p {
+	margin: 0% 20%;
+	padding: 1% 0% 5% 3%;
+}
+
+
+
+
