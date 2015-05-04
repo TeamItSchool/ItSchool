@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bootstrap arena</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../components/webcomponentsjs/webcomponents.js">
+    </script>
+    <!-- Bootstrap -->
+    <link href="~/Content/bootstrap-theme.min.css" rel="stylesheet" media="screen">
+    <!-- Font-Awesome -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+    <!-- My style -->
+    <link href="~/Content/style.css" rel="stylesheet" media="screen">
+
+    <link href="../components/paper-button/paper-button.html" rel="import">
+
+    <link href="../components/paper-input/paper-input.html" rel="import">
+    <link href="../components/core-input/core-input.html" rel="import">
+    <link href="../components/paper-dropdown/paper-dropdown.html" rel="import">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#myTab li:eq(0) a").tab('show');
+        });
+    </script>
+    <style shim-shadowdom>
+        paper-button.colored {
+            color: #4285f4;
+        }
+
+        paper-button[raised].colored {
+            background: #4285f4;
+            color: #fff;
+        }
+
+        paper-button.custom > core-icon {
+            margin-right: 4px;
+        }
+
+        paper-button.hover:hover {
+            background: #eee;
+        }
+
+        paper-button.blue-ripple::shadow #ripple {
+            color: #4285f4;
+        }
+
+        paper-button {
+            padding: 0;
+        }
+
+            paper-button::shadow .button-content {
+                padding: 0;
+            }
+
+            paper-button button {
+                padding: 1em;
+                background-color: transparent;
+                border-color: transparent;
+            }
+
+            paper-button button::-moz-focus-inner {
+                border: 0;
+            }
+    </style>
+</head>
+<body unresolved>
+    <script src="~/Scripts/angular.js"></script>
+    <script src="~/Scripts/ng-polymer-elements.js"></script>
+    <script src="~/Scripts/NG-Polymer.js"></script>
+    <section class="row">
+        <img src="~/Images/LOGO_360.png" class="img-responsive" />
+    </section>
+    <form method="post" action="http://localhost:18264/BackOffice/Index">
+        <center>
+            <paper-input ng-model="text" label="Entrez votre pseudo.." error="input is required!" autovalidate></paper-input>
+
+            <input type="hidden" ng-model="text" value="{{text}}" name="pseudo"/>
+
+            <br />Mot de passe : <input type="password" name="password" placeholder="Entrez un mot de passe..." required /><br />
+
+            <br /><paper-button <paper-button type="submit" class="colored" raised>
+                <button>Connexion</button>
+            </paper-button>
+            <br />
+                      <paper-dropdown>
+                          Hi!
+                      </paper-dropdown>
+        </center>
+    </form>
+</body>
+</html>
