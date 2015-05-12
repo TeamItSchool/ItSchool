@@ -5,40 +5,30 @@ using System.Web;
 
 namespace ITI.ItSchool.Models
 {
-    public class DataAccessLayer : IDataAccessLayer
+    public class DataAccessLayer<T> : IDataAccessLayer<T>
     {
         DatabaseContext db;
+        Switch sw;
 
         public DataAccessLayer()
         {
             db = new DatabaseContext();
         }
 
-        //public List<T> GetEntity()
-        //{
-        //    //switch typeof( T )
-        //    //{
-        //    //    case Group:
-        //    //        return db.Groups.ToList();
-        //    //        break;
+        public List<T> GetEntity()
+        {
+            sw = new Switch(  )
+        }
 
-        //    //    default:
-        //    //        return null;
-        //    //        break;
-        //    //}
+        public List<T> GetEntityById(int id)
+        {
+            throw new NotImplementedException();
+        }
 
-        //    throw new NotImplementedException();
-        //}
-
-        //public List<T> GetEntityById( int id )
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public List<T> GetEntityByIdentifier( string identifier )
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public List<T> GetEntityByIdentifier(string identifier)
+        {
+            throw new NotImplementedException();
+        }
 
         public List<Group> GetGroups()
         {

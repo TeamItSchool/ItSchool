@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace ITI.ItSchool.Models
 {
-    public interface IDataAccessLayer : IDisposable
+    public interface IDataAccessLayer<T> : IDisposable
     {
-        //List<T> GetEntity();
+        List<T> GetEntity();
 
-        //List<T> GetEntityById( int id );
+        List<T> GetEntityById(int id);
 
-        //List<T> GetEntityByIdentifier( string identifier );
+        List<T> GetEntityByIdentifier(string identifier);
 
         List<Group> GetGroups();
 

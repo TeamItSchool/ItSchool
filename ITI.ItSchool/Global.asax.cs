@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Data.Entity;
+using ITI.ItSchool.Models;
 
 namespace ITI.ItSchool
 {
@@ -13,6 +15,8 @@ namespace ITI.ItSchool
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            Database.SetInitializer<DatabaseContext>( new DropCreateDatabaseIfModelChanges<DatabaseContext>() );
         }
     }
 }
