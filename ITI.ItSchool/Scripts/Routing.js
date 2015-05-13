@@ -1,5 +1,5 @@
-﻿angular.module('TheApp', ['ngRoute', 'ngMaterial']) //extending from previously created angularjs module in part1
-// here ['ngRoute'] is not required, I have just added to make you understand in a single place
+﻿angular.module('TheApp', ['ngRoute', 'ngMaterial']) // ['ngRoute'] is required for the routing and
+    //['ngMaterial'] for the material design components
 .run(function ($log) {
     $log.debug("startApp running");
 })
@@ -18,6 +18,10 @@
     .when('/teacher', {
         templateUrl: '/Templates/TeacherHomePage.html',
         controller: 'TeacherHomeController'
+    })
+    .when('/teacher/login', {
+        templateUrl: '/Templates/TeacherLoginPage.html',
+        controller: 'TeacherLoginController'
     })
     .when('/kid', {
         templateUrl: '/Templates/KidHomePage.html',
@@ -46,6 +50,9 @@
 })
 .controller('TeacherHomeController', function ($scope) {
     $scope.Message = 'Page "Professeurs"';
+})
+.controller('TeacherLoginController', function ($scope) {
+    $scope.Message = "Entrez vos identifiants pour vous connecter.";
 })
 .controller('KidHomeController', function ($scope) {
     $scope.Message = 'Page "Élève"';

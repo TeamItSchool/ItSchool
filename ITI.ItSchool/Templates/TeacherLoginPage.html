@@ -1,0 +1,18 @@
+﻿<div ng-controller="TeacherLoginController">
+    <center>
+        <h3>{{Message}}</h3>
+
+        <md-input-container style="width:15%">
+            <label>Pseudo</label>
+            <input type="text" ng-model="user.pseudo" name="pseudo" ng-required="true" />
+        </md-input-container>
+
+        <md-input-container style="width:15%">
+            <label>Mot de passe</label>
+            <input type="password" ng-model="user.password" name="password" ng-required="true" />
+        </md-input-container>
+        <br />
+        <md-button class="md-raised md-primary">Connexion</md-button>
+    </center>
+</div>
+
