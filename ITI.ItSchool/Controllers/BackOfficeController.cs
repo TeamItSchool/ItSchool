@@ -14,12 +14,26 @@ namespace ITI.ItSchool.Controllers
         {
             NameValueCollection coll;
             coll = Request.Form;
-            ViewData["Pseudo"] = coll[0];
-            ViewData["Password"] = coll[1];
-            if( String.IsNullOrWhiteSpace( ViewData["Pseudo"].ToString() ) || String.IsNullOrWhiteSpace( ViewData["Password"].ToString() ) )
-                return View( "~/Views/Home/Index.cshtml" );
-            else
-                return View( "Index" );
+            ViewData["Error"] = "";
+            string theCase = null;
+
+            if( coll != null && coll.Count == 2)
+            {
+                ViewData["Pseudo"] = coll[0];
+                ViewData["Password"] = coll[1];
+                if( String.IsNullOrWhiteSpace( ViewData["Pseudo"].ToString() ) || String.IsNullOrWhiteSpace( ViewData["Password"].ToString() )) {
+                    theCase = "~/Views/Home/Index.cshtml";
+                    ViewData["Error"] = "Veuillez entrer votre pseudo et votre mot de passe.";
+                }
+                else
+                    theCase = "Index";
+            }
+            else if (coll.Count != 2)
+            {
+                ViewData["Error"] = "Attention vous n'avez pas entré de pseudo ou de mot de passe.";
+                theCase = "~/Views/Home/Index.cshtml";
+            }
+            return View(theCase);
         }
     }
 }
