@@ -11,6 +11,8 @@ namespace ITI.ItSchool.Models
 
         public string Name { get; set; }
 
+        public int QuantityMembers { get; set; }
+
         public string Remarks { get; set; }
     }
 }

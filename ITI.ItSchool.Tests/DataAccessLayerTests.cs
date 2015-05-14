@@ -1,4 +1,5 @@
 ﻿using ITI.ItSchool.Models;
+using ITI.ItSchool.Models.UserEntity;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -11,18 +12,9 @@ namespace ITI.ItSchool.Tests
     [TestFixture]
     public class DataAccessLayerTests
     {
-        [Test]
-        public void can_create_a_group_and_get_it()
+        public void noob_test()
         {
-            using( IDataAccessLayer<Group> dal = new DataAccessLayer<Group>() )
-            {
-                dal.CreateGroup( 1, "Pupils", "Teacher's group" );
-                List<Group> groups = dal.GetGroups();
-
-                Assert.IsNotNull( groups );
-                Assert.AreEqual( 3, groups.Count );
-                Assert.AreEqual( "Teachers", groups[0].Name );
-            }
+            
         }
     }
 }

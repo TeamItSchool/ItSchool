@@ -15,8 +15,6 @@ namespace ITI.ItSchool
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-
-            Database.SetInitializer<DatabaseContext>( new DropCreateDatabaseIfModelChanges<DatabaseContext>() );
         }
     }
 }
