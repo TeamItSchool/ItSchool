@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ITI.ItSchool.Models
+namespace ITI.ItSchool.DAL
 {
-    public interface IDataAccessLayer<T> : IDisposable
+    public class Class1
     {
-        
     }
 }

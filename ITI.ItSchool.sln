@@ -5,12 +5,14 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITI.ItSchool", "ITI.ItSchool\ITI.ItSchool.csproj", "{ABBD5DA4-1F87-4538-9182-85E6D4DC9D21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITI.ItSchool.Tests", "ITI.ItSchool.Tests\ITI.ItSchool.Tests.csproj", "{55BB16ED-E67B-402A-A908-9FAF217D3BD9}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{12FE9AED-5918-4DDE-BB6A-648EF51D3F88}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITI.ItSchool.Tests", "ITI.ItSchool.Tests\ITI.ItSchool.Tests.csproj", "{55BB16ED-E67B-402A-A908-9FAF217D3BD9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITI.ItSchool.DAL", "ITI.ItSchool.DAL\ITI.ItSchool.DAL.csproj", "{4E099BB7-2613-45BB-BA51-95430DCE310A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +28,10 @@ Global
 		{55BB16ED-E67B-402A-A908-9FAF217D3BD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55BB16ED-E67B-402A-A908-9FAF217D3BD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55BB16ED-E67B-402A-A908-9FAF217D3BD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E099BB7-2613-45BB-BA51-95430DCE310A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E099BB7-2613-45BB-BA51-95430DCE310A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E099BB7-2613-45BB-BA51-95430DCE310A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E099BB7-2613-45BB-BA51-95430DCE310A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

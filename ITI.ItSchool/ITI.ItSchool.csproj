@@ -117,8 +117,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AvatarContext.cs" />
     <Compile Include="Models\AvatarEntities\Avatar.cs" />
-    <Compile Include="Models\SNContext.cs" />
+    <Compile Include="Models\ChatContext.cs" />
+    <Compile Include="Models\GameContext.cs" />
+    <Compile Include="Models\SchoolContext.cs" />
+    <Compile Include="Models\SocialNetworkContext.cs" />
     <Compile Include="Models\UserContext.cs" />
     <Compile Include="Models\UserEntities\Belonging.cs" />
     <Compile Include="Models\SchoolEntities\Chapter.cs" />
@@ -133,7 +137,6 @@
     <Compile Include="Models\SchoolEntities\Grade.cs" />
     <Compile Include="Models\UserEntities\Group.cs" />
     <Compile Include="Models\AvatarEntities\Hair.cs" />
-    <Compile Include="Models\Interfaces\IDataAccessLayer.cs" />
     <Compile Include="Models\GameEntities\Level.cs" />
     <Compile Include="Models\SchoolEntities\Matter.cs" />
     <Compile Include="Models\ChatEntities\Message.cs" />

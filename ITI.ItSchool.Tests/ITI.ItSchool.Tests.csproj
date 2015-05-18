@@ -92,8 +92,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="BackOfficeControllerTest.cs" />
-    <Compile Include="DataAccessLayerTests.cs" />
+    <Compile Include="DBContextTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
