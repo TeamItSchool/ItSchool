@@ -100,6 +100,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ITI.ItSchool.DAL\ITI.ItSchool.DAL.csproj">
+      <Project>{4e099bb7-2613-45bb-ba51-95430dce310a}</Project>
+      <Name>ITI.ItSchool.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ITI.ItSchool\ITI.ItSchool.csproj">
       <Project>{abbd5da4-1f87-4538-9182-85e6d4dc9d21}</Project>
       <Name>ITI.ItSchool</Name>

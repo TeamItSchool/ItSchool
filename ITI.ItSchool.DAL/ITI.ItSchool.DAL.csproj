@@ -30,7 +30,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -39,8 +46,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="AvatarEntities\Avatar.cs" />
+    <Compile Include="AvatarEntities\Clothe.cs" />
+    <Compile Include="AvatarEntities\Eye.cs" />
+    <Compile Include="AvatarEntities\Hair.cs" />
+    <Compile Include="AvatarEntities\Mouth.cs" />
+    <Compile Include="AvatarEntities\Nose.cs" />
+    <Compile Include="ChatEntities\Conversation.cs" />
+    <Compile Include="ChatEntities\Message.cs" />
+    <Compile Include="GameEntities\Exercise.cs" />
+    <Compile Include="GameEntities\ExerciseType.cs" />
+    <Compile Include="GameEntities\Game.cs" />
+    <Compile Include="GameEntities\Level.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SchoolEntities\Chapter.cs" />
+    <Compile Include="SchoolEntities\Grade.cs" />
+    <Compile Include="SchoolEntities\Matter.cs" />
+    <Compile Include="SchoolEntities\Theme.cs" />
+    <Compile Include="SocialNetworkEntities\Friendship.cs" />
+    <Compile Include="SocialNetworkEntities\Status.cs" />
+    <Compile Include="UserEntities\Belonging.cs" />
+    <Compile Include="UserEntities\Control.cs" />
+    <Compile Include="UserEntities\Group.cs" />
+    <Compile Include="UserEntities\Right.cs" />
+    <Compile Include="UserEntities\User.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
