@@ -1,12 +1,11 @@
-﻿using ITI.ItSchool.Models.UserEntity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace ITI.ItSchool.Models
+namespace ITI.ItSchool.Models.UserEntities
 {
     [Table( "Groups", Schema="ItSchool" )]
     public class Group

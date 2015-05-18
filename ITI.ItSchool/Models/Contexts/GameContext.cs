@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity;
 
-namespace ITI.ItSchool.Models
+namespace ITI.ItSchool.Models.Contexts
 {
     public class GameContext : DbContext
     {

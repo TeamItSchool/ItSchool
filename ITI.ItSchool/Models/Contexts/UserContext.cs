@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
-using ITI.ItSchool.Models.UserEntity;
 using System.Data.Entity.ModelConfiguration;
+using ITI.ItSchool.Models.UserEntities;
 
 
-namespace ITI.ItSchool.Models
+namespace ITI.ItSchool.Models.Contexts
 {
     public class UserContext : DbContext
     {
-        public UserContext() : base( "ItSchool" ) { }
-        
+        public UserContext() : base("ItSchool") { }
+
         public DbSet<User> Users { get; set; }
 
         public DbSet<Control> Controls { get; set; }
@@ -21,9 +21,9 @@ namespace ITI.ItSchool.Models
 
         public DbSet<Right> Rights { get; set; }
 
-        protected override void OnModelCreating( DbModelBuilder modelBuilder )
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.HasDefaultSchema( "ItSchool" );
+            modelBuilder.HasDefaultSchema("ItSchool");
         }
     }
 }

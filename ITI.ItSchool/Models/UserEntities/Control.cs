@@ -4,9 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations.Schema;
-using ITI.ItSchool.Models.UserEntity;
 
-namespace ITI.ItSchool.Models
+namespace ITI.ItSchool.Models.UserEntities
 {
     public class Control
     {
@@ -15,7 +14,7 @@ namespace ITI.ItSchool.Models
 
         public int TutorId { get; set; }
 
-        [ForeignKey( "UserId" )]
+        [ForeignKey( "TutorId" )]
         public virtual User Tutor { get; set; }
 
         public int ChildId { get; set; }

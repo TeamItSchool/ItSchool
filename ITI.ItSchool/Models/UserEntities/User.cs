@@ -1,13 +1,8 @@
-﻿using ITI.ItSchool.Models.AvatarEntities;
-using System;
-using System.Collections.Generic;
+﻿using ITI.ItSchool.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity;
-using System.Linq;
-using System.Web;
 
-namespace ITI.ItSchool.Models.UserEntity
+namespace ITI.ItSchool.Models.UserEntities
 {
     [Table( "Users", Schema="ItSchool" )]
     public class User

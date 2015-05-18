@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace ITI.ItSchool.Models.AvatarEntities
+namespace ITI.ItSchool.Models
 {
     public class Avatar
     {
@@ -17,30 +17,30 @@ namespace ITI.ItSchool.Models.AvatarEntities
         [MaxLength( 45 )]
         public string Name { get; set; }
 
-        [ForeignKey( "MouthId" )]
         public int MouthId { get; set; }
 
-        public Mouth Mouth { get; set; }
+        [ForeignKey("MouthId")]
+        public virtual Mouth Mouth { get; set; }
 
-        [ForeignKey( "HairId" )]
         public int HairId { get; set; }
 
-        public Hair Hair { get; set; }
+        [ForeignKey("HairId")]
+        public virtual Hair Hair { get; set; }
 
-        [ForeignKey( "NoseId" )]
         public int NoseId { get; set; }
 
-        public Nose Nose { get; set; }
+        [ForeignKey("NoseId")]
+        public virtual Nose Nose { get; set; }
 
-        [ForeignKey( "EyesId" )]
         public int EyesId { get; set; }
 
-        public Eye Eye { get; set; }
+        [ForeignKey("EyesId")]
+        public virtual Eye Eye { get; set; }
 
-        [ForeignKey( "ClotheId" )]
         public int ClotheId { get; set; }
 
-        public Clothe Clothe { get; set; }
+        [ForeignKey("ClotheId")]
+        public virtual Clothe Clothe { get; set; }
 
         [MaxLength( 200 )]
         public string Remarks { get; set; }

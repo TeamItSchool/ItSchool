@@ -1,4 +1,4 @@
-﻿using ITI.ItSchool.Models.UserEntity;
+﻿using ITI.ItSchool.Models.UserEntities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

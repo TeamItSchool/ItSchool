@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
-using ITI.ItSchool.Models.AvatarEntities;
 
-namespace ITI.ItSchool.Models
+namespace ITI.ItSchool.Models.Contexts
 {
     public class AvatarContext : DbContext
     {
