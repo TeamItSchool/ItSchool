@@ -19,11 +19,18 @@ namespace ITI.ItSchool.Models
         public bool CreateUser( User user )
         {
             if( user == null ) throw new ArgumentNullException( "The 'User' as an object type is null.", "user" );
-            using( var userContext = new UserContext() )
+            try
             {
-                userContext.Users.Add( user );
-                userContext.SaveChanges();
-                return true;
+                using (var userContext = new UserContext())
+                {
+                    userContext.Users.Add(user);
+                    userContext.SaveChanges();
+                    return true;
+                }
+            } 
+            catch( System.Data.Entity.Validation.DbEntityValidationException ex )
+            {
+                throw;
             }
         }
 

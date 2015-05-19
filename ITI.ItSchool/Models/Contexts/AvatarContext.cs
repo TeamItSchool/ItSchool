@@ -22,9 +22,9 @@ namespace ITI.ItSchool.Models.Contexts
 
         public DbSet<Nose> Noses { get; set; }
 
-        protected override void OnModelCreating( DbModelBuilder modelBuilder )
-        {
-            modelBuilder.HasDefaultSchema( "ItSchool" );
-        }
+        //protected override void OnModelCreating( DbModelBuilder modelBuilder )
+        //{
+        //    modelBuilder.HasDefaultSchema( "ItSchool" );
+        //}
     }
 }

@@ -15,9 +15,9 @@ namespace ITI.ItSchool.Models.Contexts
 
         public DbSet<Message> Messages { get; set; }
 
-        protected override void OnModelCreating( DbModelBuilder modelBuilder )
-        {
-            modelBuilder.HasDefaultSchema( "ItSchool" );
-        }
+        //protected override void OnModelCreating( DbModelBuilder modelBuilder )
+        //{
+        //    modelBuilder.HasDefaultSchema( "ItSchool" );
+        //}
     }
 }

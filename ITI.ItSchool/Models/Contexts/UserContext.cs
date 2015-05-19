@@ -22,10 +22,10 @@ namespace ITI.ItSchool.Models.Contexts
 
         public DbSet<Right> Rights { get; set; }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.HasDefaultSchema("ItSchool");
-            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-        }
+        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.HasDefaultSchema("ItSchool");
+        //    //modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+        //}
     }
 }

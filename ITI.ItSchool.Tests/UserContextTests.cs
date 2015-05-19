@@ -13,7 +13,7 @@ namespace ITI.ItSchool.Tests
     public class UserContextTests
     {
         [Test]
-        public void create_a_user_and_find_him()
+        public void create_a_user()
         {
             IUserRepository userRepo = new SQLUserRepository();
 
@@ -21,16 +21,81 @@ namespace ITI.ItSchool.Tests
 
             Assert.Throws<ArgumentNullException>( () => userRepo.CreateUser( nullUser ) );
 
-            User u = new User();
+            var c = new Clothe
+            {
+                Name = "TestClothe",
+                Link = "TestLink",
+                Remarks = "TestRemarks",
+            };
 
-            u.FirstName = "Michael";
-            u.LastName = "Kyle";
-            u.Mail = "kyle@microsoft.com";
-            u.Nickname = "Miky";
-            u.Password = "mypass";
-            u.Remarks = "This is a test...";
+            var e = new Eye
+            {
+                Name = "TestEye",
+                Link = "TestLink",
+            };
 
-            bool isCreated = userRepo.CreateUser( u );
+            var h = new Hair()
+            {
+                Name = "TestHair",
+                Link = "TestLink"
+            };
+
+            var m = new Mouth
+            {
+                Name = "TestMouth",
+                Link = "TestMouthLink"
+            };
+
+            var n = new Nose
+            {
+                Name = "TestNose",
+                Link = "NoseLink"
+            };
+
+            var right = new Right
+            {
+                Name = "TestRight",
+                Remarks = "TestRemarkRight"
+            };
+
+            var grade = new Grade
+            {
+                Name = "TestGrade",
+                Remarks = "TestRemarkGrade"
+            };
+
+            var a = new Avatar
+            {
+                Name = "TestAvatar",
+                Clothe = c,
+                Eye = e,
+                Hair = h,
+                Mouth = m,
+                Nose = n,
+                Remarks = "Avatar Remarks"
+            };
+
+            var g = new Group
+            {
+                Name = "TestGroup",
+                Remarks = "GroupRemarks..."
+            };
+
+            var user = new User
+            {
+                UserId = 1,
+                FirstName = "Michael",
+                LastName = "Junior",
+                Nickname = "Tikari",
+                Mail = "junior@microsoft.com",
+                Password = "mypass",
+                Avatar = a,
+                Grade = grade,
+                Right = right,
+                Remarks = "This is a test..."
+            };
+
+            bool isCreated = userRepo.CreateUser( user );
 
             Assert.That( isCreated, Is.EqualTo( true ) );
         }

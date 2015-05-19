@@ -18,9 +18,9 @@ namespace ITI.ItSchool.Models.Contexts
 
         public DbSet<Level> Levels { get; set; }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.HasDefaultSchema( "ItSchool" );
-        }
+        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.HasDefaultSchema( "ItSchool" );
+        //}
     }
 }

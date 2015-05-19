@@ -17,5 +17,8 @@ namespace ITI.ItSchool.Models
         public string Name { get; set; }
 
         public string Link { get; set; }
+
+        [MaxLength( 200 )]
+        public string Remarks { get; set; }
     }
 }
