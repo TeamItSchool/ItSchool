@@ -5,6 +5,7 @@ using System.Web;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration;
 using ITI.ItSchool.Models.UserEntities;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 
 namespace ITI.ItSchool.Models.Contexts
@@ -24,6 +25,7 @@ namespace ITI.ItSchool.Models.Contexts
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("ItSchool");
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
     }
 }

@@ -12,7 +12,7 @@ namespace ITI.ItSchool.Models.UserEntities
         [Key]
         public int ControlId { get; set; }
 
-        public int TutorId { get; set; }
+        public int? TutorId { get; set; }
 
         [ForeignKey( "TutorId" )]
         public virtual User Tutor { get; set; }

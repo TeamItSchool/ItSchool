@@ -29,7 +29,14 @@ namespace ITI.ItSchool.Models
 
         public User FindByNickname( string nickname )
         {
-            throw new NotImplementedException();
+            using( var userContext = new UserContext() ) 
+            {
+                var user = from u in userContext.Users
+                           where u.Nickname == nickname
+                           select u;
+
+                return (User)user;
+            }
         }
 
         public User FindById( int id )
