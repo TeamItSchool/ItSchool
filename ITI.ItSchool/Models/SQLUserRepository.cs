@@ -19,24 +19,17 @@ namespace ITI.ItSchool.Models
         public bool CreateUser( User user )
         {
             if( user == null ) throw new ArgumentNullException( "The 'User' as an object type is null.", "user" );
-            try
+            using ( var userContext = new UserContext() )
             {
-                using ( var userContext = new UserContext() )
-                {
-                    userContext.Users.Add(user);
-                    userContext.SaveChanges();
-                    return true;
-                }
-            } 
-            catch( System.Data.Entity.Validation.DbEntityValidationException ex )
-            {
-                throw;
+                userContext.Users.Add(user);
+                userContext.SaveChanges();
+                return true;
             }
         }
 
         public IList<User> FindByNickname( string nickname )
         {
-            List<User> users = new List<User>();
+            IList<User> users = new List<User>();
             var userContext = new UserContext();
 
             var user = from u in userContext.Users
@@ -44,10 +37,9 @@ namespace ITI.ItSchool.Models
                        select new
                        {
                            Nickname = u.Nickname
-
                        };
 
-            users = user.ToList();
+            users = userContext.Users.ToList();
             userContext.Dispose();
 
             return users;

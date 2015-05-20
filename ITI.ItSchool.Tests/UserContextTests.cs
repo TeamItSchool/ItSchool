@@ -107,7 +107,9 @@ namespace ITI.ItSchool.Tests
             IList<User> u;
 
             IUserRepository userRepo = new SQLUserRepository();
+
             u = userRepo.FindByNickname( nickname );
+            Assert.That( nickname, Is.EqualTo( u[0].Nickname ) );
         }
     }
 }
