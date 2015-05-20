@@ -44,10 +44,10 @@ namespace ITI.ItSchool.Models
                        select new
                        {
                            Nickname = u.Nickname
+
                        };
 
-            users = user.ToList<User>;
-
+            users = user.ToList();
             userContext.Dispose();
 
             return users;
