@@ -21,7 +21,7 @@ namespace ITI.ItSchool.Models
             if( user == null ) throw new ArgumentNullException( "The 'User' as an object type is null.", "user" );
             try
             {
-                using (var userContext = new UserContext())
+                using ( var userContext = new UserContext() )
                 {
                     userContext.Users.Add(user);
                     userContext.SaveChanges();
@@ -34,16 +34,38 @@ namespace ITI.ItSchool.Models
             }
         }
 
-        public User FindByNickname( string nickname )
+        public IList<User> FindByNickname( string nickname )
         {
-            using( var userContext = new UserContext() ) 
-            {
-                var user = from u in userContext.Users
-                           where u.Nickname == nickname
-                           select u;
+            List<User> users = new List<User>();
+            var userContext = new UserContext();
 
-                return (User)user;
-            }
+            var user = from u in userContext.Users
+                       where u.Nickname == nickname
+                       select new
+                       {
+                           Nickname = u.Nickname
+                       };
+
+            users = user.ToList<User>;
+
+            userContext.Dispose();
+
+            return users;
+
+            //using( var userContext = new UserContext() ) 
+            //{
+            //    var user = from u in userContext.Users
+            //               where u.Nickname == nickname
+            //               select new
+            //               {
+            //                   Nickname = u.Nickname;
+            //               };
+
+            //    foreach( var usersFound in user )
+            //    {
+            //        users.Nickname = 
+            //    }
+
         }
 
         public User FindById( int id )

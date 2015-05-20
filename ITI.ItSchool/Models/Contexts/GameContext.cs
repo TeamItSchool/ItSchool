@@ -17,10 +17,5 @@ namespace ITI.ItSchool.Models.Contexts
         public DbSet<Game> Games { get; set; }
 
         public DbSet<Level> Levels { get; set; }
-
-        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.HasDefaultSchema( "ItSchool" );
-        //}
     }
 }

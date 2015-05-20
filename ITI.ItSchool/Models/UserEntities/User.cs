@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ITI.ItSchool.Models.UserEntities
 {
-    [Table( "Users", Schema="ItSchool" )]
+    [Table( "Users" )]
     public class User
     {
         public User() { }
@@ -44,9 +44,9 @@ namespace ITI.ItSchool.Models.UserEntities
         [ForeignKey( "AvatarId" )]
         public virtual Avatar Avatar { get; set; }
 
-        public int GroupId { get; set; }
+        //public int GroupUserId { get; set; }
 
-        [ForeignKey("GroupId")]
+        //[ForeignKey("GroupUserId")]
         public virtual Group Group { get; set; }
 
         [MaxLength( 200 )]

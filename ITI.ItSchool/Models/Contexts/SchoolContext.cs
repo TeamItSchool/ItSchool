@@ -13,10 +13,5 @@ namespace ITI.ItSchool.Models.Contexts
         public DbSet<Matter> Matters { get; set; }
 
         public DbSet<Theme> Themes { get; set; }
-
-        //protected override void OnModelCreating( DbModelBuilder modelBuilder )
-        //{
-        //    modelBuilder.HasDefaultSchema( "ItSchool" );
-        //}
     }
 }

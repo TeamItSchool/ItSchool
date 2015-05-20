@@ -11,7 +11,7 @@ namespace ITI.ItSchool.Models
     {
         User FindById( int id );
 
-        User FindByNickname( string nickname );
+        IList<User> FindByNickname( string nickname );
 
         User FindByMail( string mail );
 

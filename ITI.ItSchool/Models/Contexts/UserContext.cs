@@ -21,11 +21,5 @@ namespace ITI.ItSchool.Models.Contexts
         public DbSet<Group> Groups { get; set; }
 
         public DbSet<Right> Rights { get; set; }
-
-        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.HasDefaultSchema("ItSchool");
-        //    //modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-        //}
     }
 }

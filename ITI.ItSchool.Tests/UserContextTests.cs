@@ -99,5 +99,15 @@ namespace ITI.ItSchool.Tests
 
             Assert.That( isCreated, Is.EqualTo( true ) );
         }
+
+        [Test]
+        public void can_find_a_user()
+        {
+            string nickname = "Tikari";
+            IList<User> u;
+
+            IUserRepository userRepo = new SQLUserRepository();
+            u = userRepo.FindByNickname( nickname );
+        }
     }
 }

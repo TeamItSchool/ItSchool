@@ -13,10 +13,5 @@ namespace ITI.ItSchool.Models.Contexts
         public DbSet<Friendship> Friendships { get; set; }
 
         public DbSet<Status> Statuses { get; set; }
-
-        //protected override void OnModelCreating( DbModelBuilder modelBuilder )
-        //{
-        //    modelBuilder.HasDefaultSchema( "ItSchool" );
-        //}
     }
 }

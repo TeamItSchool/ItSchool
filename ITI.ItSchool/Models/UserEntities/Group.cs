@@ -7,9 +7,16 @@ using System.Web;
 
 namespace ITI.ItSchool.Models.UserEntities
 {
-    [Table( "Groups", Schema="ItSchool" )]
+    [Table( "Groups" )]
     public class Group
     {
+        List<User> _userList;
+
+        public Group()
+        {
+            _userList = new List<User>();
+        }
+
         [Key]
         public int GroupId { get; set; }
 

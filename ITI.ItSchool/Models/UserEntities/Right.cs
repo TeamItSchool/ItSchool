@@ -7,7 +7,7 @@ using System.Web;
 
 namespace ITI.ItSchool.Models.UserEntities
 {
-    [Table( "Rights", Schema="ItSchool" )]
+    [Table( "Rights" )]
     public class Right
     {
         [Key]

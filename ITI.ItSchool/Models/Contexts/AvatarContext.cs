@@ -21,10 +21,5 @@ namespace ITI.ItSchool.Models.Contexts
         public DbSet<Mouth> Mouths { get; set; }
 
         public DbSet<Nose> Noses { get; set; }
-
-        //protected override void OnModelCreating( DbModelBuilder modelBuilder )
-        //{
-        //    modelBuilder.HasDefaultSchema( "ItSchool" );
-        //}
     }
 }
