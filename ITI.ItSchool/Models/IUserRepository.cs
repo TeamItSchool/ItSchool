@@ -9,15 +9,17 @@ namespace ITI.ItSchool.Models
 {
     public interface IUserRepository
     {
-        User FindById( int id );
-
         IList<User> FindByNickname( string nickname );
 
+        IList<User> Update( User u );
+        
+        User FindById( int id );
+        
         User FindByMail( string mail );
 
         User FindByGrade( string grade );
 
-        bool CreateUser( User u );
+        bool Create( User u );
 
         bool Remove( User u );
 

@@ -16,7 +16,7 @@ namespace ITI.ItSchool.Models
         /// </summary>
         /// <param name="user">The user to create as an object</param>
         /// <returns>The new user who was created.</returns>
-        public bool CreateUser( User user )
+        public bool Create( User user )
         {
             if( user == null ) throw new ArgumentNullException( "The 'User' as an object type is null.", "user" );
             using ( var userContext = new UserContext() )
@@ -27,37 +27,45 @@ namespace ITI.ItSchool.Models
             }
         }
 
+        /// <summary>
+        /// Finds a user by his nickname.
+        /// 
+        /// TO REFACTOR WITH SYNTAXIC SUGAR "USING"
+        /// </summary>
+        /// <param name="nickname">The user who we look for.</param>
+        /// <returns>A list which contains several informations about him.</returns>
         public IList<User> FindByNickname( string nickname )
         {
             IList<User> users = new List<User>();
-            var userContext = new UserContext();
+            UserContext userContext = new UserContext();
 
             var user = from u in userContext.Users
                        where u.Nickname == nickname
-                       select new
+                       select new               // Anonymous type
                        {
-                           Nickname = u.Nickname
+                           Nickname = u.Nickname 
                        };
 
             users = userContext.Users.ToList();
             userContext.Dispose();
 
             return users;
+        }
 
-            //using( var userContext = new UserContext() ) 
-            //{
-            //    var user = from u in userContext.Users
-            //               where u.Nickname == nickname
-            //               select new
-            //               {
-            //                   Nickname = u.Nickname;
-            //               };
+        public IList<User> Update( User user )
+        {
+            IList<User> userToUpdate = new List<User>();
+            using( var db = new UserContext() )
+            {
+                var query = from u in db.Users
+                            where u.UserId == user.UserId
+                            select u;
 
-            //    foreach( var usersFound in user )
-            //    {
-            //        users.Nickname = 
-            //    }
+                userToUpdate = db.Users.ToList();
+                userToUpdate[0].Mail = user.Mail;
 
+                return userToUpdate;
+            }
         }
 
         public User FindById( int id )
