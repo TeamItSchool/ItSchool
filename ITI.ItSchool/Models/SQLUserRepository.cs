@@ -29,7 +29,6 @@ namespace ITI.ItSchool.Models
 
         /// <summary>
         /// Finds a user by his nickname.
-        /// 
         /// TO REFACTOR WITH SYNTAXIC SUGAR "USING"
         /// </summary>
         /// <param name="nickname">The user who we look for.</param>
@@ -63,6 +62,18 @@ namespace ITI.ItSchool.Models
 
                 userToUpdate = db.Users.ToList();
                 userToUpdate[0].Mail = user.Mail;
+
+                if( userToUpdate[ 0 ].Password.Equals( user.Password ) )
+                {
+                    userToUpdate[ 0 ].Nickname = user.Nickname;
+                    userToUpdate[ 0 ].FirstName = user.FirstName;
+                    userToUpdate[ 0 ].LastName = user.LastName;
+                    userToUpdate[ 0 ].Mail = user.Mail;
+                }
+                else
+                {
+                    return null;
+                }
 
                 return userToUpdate;
             }

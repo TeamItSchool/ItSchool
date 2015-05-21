@@ -211,6 +211,12 @@ namespace ITI.ItSchool.Tests
             u = userRepo.Update( user );
 
             Assert.That( user.Mail, Is.EqualTo( "john.smith@outlook.com" ) );
+
+            user.Password = "mypassword";
+
+            u = userRepo.Update( user );
+
+            Assert.IsNull( u );
         }
     }
 }
