@@ -1,0 +1,23 @@
+﻿<div ng-controller="TeacherRegistrationController">
+    <center>
+        <h3>{{Message}}</h3>
+        <form novalidate name="LoginForm" ng-submit="Login()">
+            <div ng-show="!IsLogedIn">
+                <md-input-container style="width:15%">
+                    <label>Choisis ton pseudo</label>
+                    <input type="text" ng-model="LoginData.Username" name="cUsername" ng-class="Submitted?'ng-dirty':''" required>
+                    <span class="error" ng-show="(LoginData.cUsername.$dirty || Submitted) && LoginData.cUsername.$error.required">Username required</span>
+                </md-input-container>
+                <br />
+                <md-input-container style="width:15%">
+                    <label>Choisis ton mot de passe </label>
+                    <input type="password" ng-model="LoginData.Password" name="cPassword" ng-class="Submitted?'ng-dirty':''" required>
+                    <span class="error" ng-show="(LoginData.cPassword.$dirty || Submitted) && LoginData.cPassword.$error.required">Password required</span>
+                </md-input-container>
+                <br />
+                <md-button class="md-raised md-primary" value="Login" type="submit">Connexion</md-button>
+            </div>
+        </form>
+    </center>
+</div>
+
