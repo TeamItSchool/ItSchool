@@ -1,3 +1,86 @@
-﻿<center>
-    <h2>{{Message}}</h2>
+﻿<style>
+    input {
+        padding: 5px;
+        border: 1px solid #A5A5A5;
+    }
+    input.ng-dirty.ng-valid {
+        border: 1px solid green;
+        background-color: rgb(255, 244, 244);
+    }
+    .error {
+        color:red;
+    }
+</style>
+
+<div ng-controller="KidRegistrationController">
+    <center>
+        <h3>{{Message}}</h3>
+        <form novalidate name="RegisterForm" ng-submit="SaveData(User)">
+            <div style="color:red">{{message}}</div>
+            <table>
+                <tr>
+                    <td>Full Name: </td>
+                    <td>
+                        <input type="text" ng-model="User.FullName" name="uFullName" ng-class="submitted?'ng-dirty':''" required autofocus />
+                        <span class="error" ng-show="(RegisterForm.uFullName.$dirty || submitted) && RegisterForm.uFullName.$error.required">Fullname is required!</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>EmailID: </td>
+                    <td>
+                        <input type="email" ng-model="User.EmailID" name="uEmailID" ng-class="submitted?'ng-dirty':''" required autofocus />
+                        <span class="error" ng-show="(RegisterForm.uEmailID.$dirty || submitted) && RegisterForm.uEmailID.$error.required">Email is required!</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Username: </td>
+                    <td>
+                        <input type="text" ng-model="User.UserName" name="uUserName" ng-class="submitted?'ng-dirty':''" required autofocus />
+                        <span class="error" ng-show="(RegisterForm.uUserName.$dirty || submitted) && RegisterForm.uUserName.$error.required">Username is required!</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Password: </td>
+                    <td>
+                        <input type="password" ng-model="User.Password" name="uPassword" ng-class="submitted?'ng-dirty':''" required autofocus />
+                        <span class="error" ng-show="(RegisterForm.uPassword.$dirty || submitted) && RegisterForm.uPassword.$error.required">Password is required!</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Gender: </td>
+                    <td>
+                        <input type="radio" ng-model="User.Gender" name="uGender" value="Garçon" required /> Garçon
+                        <input type="radio" ng-model="User.Gender" name="uGender" value="Fille" required /> Fille
+                        <span class="error" ng-show="(RegisterForm.uGender.$dirty || submitted) && RegisterForm.uGender.$error.required">Gender is required!</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="submit" value="{{submitText}}" />
+                    </td>
+                </tr>
+            </table>
+        </form>
 </center>
+    <!--
+        <form novalidate name="RegistrationForm" ng-submit="SaveData(User)">
+        <div ng-show="!IsLogedIn">
+            <md-input-container style="width:10%">
+                <label>Choisis ton pseudo</label>
+                <input type="text" ng-model="LoginData.Username" name="cUsername" ng-class="Submitted?'ng-dirty':''" required>
+                <span class="error" ng-show="(LoginData.cUsername.$dirty || Submitted) && LoginData.cUsername.$error.required">Username required</span>
+            </md-input-container>
+            <br />
+            <md-input-container style="width:10%">
+                <label>Choisis ton mot de passe </label>
+                <input type="password" ng-model="LoginData.Password" name="cPassword" ng-class="Submitted?'ng-dirty':''" required>
+                <span class="error" ng-show="(LoginData.cPassword.$dirty || Submitted) && LoginData.cPassword.$error.required">Password required</span>
+            </md-input-container>
+            <br />
+            <md-button class="md-raised md-primary" value="Login" type="submit">Connexion</md-button>
+        </div>
+    </form>
+    -->
+</div>
+

@@ -1,18 +1,23 @@
 ﻿<div ng-controller="KidLogInController">
     <center>
         <h3>{{Message}}</h3>
-
-            <md-input-container style="width:15%">
-                <label>Pseudo</label>
-                <input type="text" ng-model="user.pseudo" name="pseudo" ng-required="true">
-            </md-input-container>
-
-            <md-input-container style="width:15%">
-                <label>Mot de passe</label>
-                <input type="password" ng-model="user.password" name="password" ng-required="true">
-            </md-input-container>
-            <br />
-            <md-button class="md-raised md-primary">Connexion</md-button>
-        </center>
-    </div>
+        <form novalidate name="LoginForm" ng-submit="Login()">
+            <div ng-show="!IsLogedIn">
+                <md-input-container style="width:10%">
+                    <label>Pseudo</label>
+                    <input type="text" ng-model="LoginData.Username" name="cUsername" ng-class="Submitted?'ng-dirty':''" required>
+                    <span class="error" ng-show="(LoginData.cUsername.$dirty || Submitted) && LoginData.cUsername.$error.required">Username required</span>
+                </md-input-container>
+                <br />
+                <md-input-container style="width:10%">
+                    <label>Mot de passe</label>
+                    <input type="password" ng-model="LoginData.Password" name="cPassword" ng-class="Submitted?'ng-dirty':''" required>
+                    <span class="error" ng-show="(LoginData.cPassword.$dirty || Submitted) && LoginData.cPassword.$error.required">Password required</span>
+                </md-input-container>
+                <br />
+                        <md-button class="md-raised md-primary" value="Login" type="submit">Connexion</md-button>
+            </div>
+        </form>
+</center>
+</div>
 
