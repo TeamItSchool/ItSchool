@@ -38,6 +38,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -45,6 +46,13 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
+=======
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+>>>>>>> Michat
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Runtime.Serialization" />
@@ -1444,8 +1452,8 @@
     <Content Include="Content\style.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+<<<<<<< HEAD
     <Content Include="Images\material-design-icons\navigation\1x_ios\ic_apps_black_24dp.png" />
-    <Content Include="Images\pen.png" />
     <Content Include="Images\material-design-icons\navigation\1x_ios\ic_apps_black_48dp.png" />
     <Content Include="Images\material-design-icons\navigation\1x_ios\ic_arrow_back_black_24dp.png" />
     <Content Include="Images\material-design-icons\navigation\1x_ios\ic_arrow_back_black_48dp.png" />
@@ -4440,6 +4448,7 @@
     <Content Include="MyModel.edmx.diagram">
       <DependentUpon>MyModel.edmx</DependentUpon>
     </Content>
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\docs\components\bootstrap-3.1.1\css\bootstrap-theme.css" />
     <Content Include="Scripts\docs\components\bootstrap-3.1.1\css\bootstrap-theme.min.css" />
     <Content Include="Scripts\docs\components\bootstrap-3.1.1\css\bootstrap.css" />
@@ -6631,9 +6640,10 @@
     <Content Include="Scripts\i18n\angular-locale_zh.js" />
     <Content Include="Scripts\i18n\angular-locale_zu-za.js" />
     <Content Include="Scripts\i18n\angular-locale_zu.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\ng-polymer-elements.js" />
-    <Content Include="Scripts\painting.js" />
     <Content Include="Scripts\ng-polymer-elements.min.js" />
     <Content Include="Scripts\NG-Polymer.js" />
     <Content Include="Scripts\Routing.js" />
@@ -6647,13 +6657,24 @@
     <Content Include="Templates\TeacherHomePage.html" />
     <Content Include="Templates\TeacherLoginPage.html" />
     <Content Include="Templates\TeacherRegistrationPage.html" />
+=======
+    <Content Include="Images\LOGO_360.png" />
+    <Content Include="Images\pen.png" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Scripts\jquery-2.1.3.intellisense.js" />
+    <Content Include="Scripts\jquery-2.1.3.js" />
+    <Content Include="Scripts\jquery-2.1.3.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\painting.js" />
+>>>>>>> Michat
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BackOfficeController.cs" />
+<<<<<<< HEAD
     <Compile Include="Controllers\DataController.cs" />
-    <Compile Include="Controllers\DrawController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -6673,6 +6694,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MyModel.edmx</DependentUpon>
+    </Compile>
+=======
+    <Compile Include="Controllers\DrawController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Contexts\AvatarContext.cs" />
     <Compile Include="Models\AvatarEntities\Avatar.cs" />
@@ -6705,6 +6731,7 @@
     <Compile Include="Models\UserEntities\Group.cs" />
     <Compile Include="Models\UserEntities\Right.cs" />
     <Compile Include="Models\UserEntities\User.cs" />
+>>>>>>> Michat
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User1.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
@@ -6719,8 +6746,13 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+<<<<<<< HEAD
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\version.json" />
+=======
+    <Content Include="Views\Draw\Painting.cshtml" />
+    <Content Include="Scripts\jquery-2.1.3.min.map" />
+>>>>>>> Michat
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -6729,11 +6761,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Folder Include="Scripts\i18n\ngLocale\" />
     <Folder Include="Views\Data\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+=======
+    <Folder Include="App_Data\" />
+>>>>>>> Michat
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -4,9 +4,12 @@
   http://go.microsoft.com/fwlink/?LinkId=301880
   -->
 <configuration>
+<<<<<<< HEAD
+=======
   <connectionStrings>
     <add name="ItSchool" connectionString="DataSource=(localdb)\v11.0; Initial Catalog=ItSchool.Models.Contexts; Integrated Security=true; MultipleActiveResultSets=True; Application Name=EntityFrameworkMUE" providerName="System.Data.SqlClient"/>
   </connectionStrings>
+>>>>>>> Michat
   <configSections>
     <!-- For more information on Entity Framework configuration, visit http://go.microsoft.com/fwlink/?LinkID=237468 -->
     <section name="entityFramework" type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
@@ -61,21 +64,32 @@
       </dependentAssembly>
       <dependentAssembly>
         <assemblyIdentity name="System.Web.Mvc" publicKeyToken="31bf3856ad364e35" />
+<<<<<<< HEAD
+        <bindingRedirect oldVersion="1.0.0.0-5.2.2.0" newVersion="5.2.2.0" />
+=======
         <bindingRedirect oldVersion="1.0.0.0-5.2.3.0" newVersion="5.2.3.0" />
+>>>>>>> Michat
       </dependentAssembly>
     </assemblyBinding>
   </runtime>
   <entityFramework>
     <defaultConnectionFactory type="System.Data.Entity.Infrastructure.LocalDbConnectionFactory, EntityFramework">
       <parameters>
+<<<<<<< HEAD
+        <parameter value="mssqllocaldb" />
+=======
         <parameter value="v11.0" />
+>>>>>>> Michat
       </parameters>
     </defaultConnectionFactory>
     <providers>
       <provider invariantName="System.Data.SqlClient" type="System.Data.Entity.SqlServer.SqlProviderServices, EntityFramework.SqlServer" />
     </providers>
   </entityFramework>
+<<<<<<< HEAD
   <connectionStrings>
     <add name="TestDBEntities" connectionString="metadata=res://*/MyModel.csdl|res://*/MyModel.ssdl|res://*/MyModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=(LocalDB)\v11.0;attachdbfilename=|DataDirectory|\TestDB.mdf;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
   </connectionStrings>
+=======
+>>>>>>> Michat
 </configuration>
