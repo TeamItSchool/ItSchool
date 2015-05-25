@@ -137,7 +137,7 @@ namespace ITI.ItSchool.Tests
                 Link = "TestLink",
             };
 
-            var h = new Hair()
+            var h = new Hair
             {
                 Name = "TestHair",
                 Link = "TestLink"

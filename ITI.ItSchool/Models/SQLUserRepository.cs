@@ -35,7 +35,7 @@ namespace ITI.ItSchool.Models
                 Link = "TestLink",
             };
 
-            var h = new Hair()
+            var h = new Hair
             {
                 Name = "TestHair",
                 Link = "TestLink"
