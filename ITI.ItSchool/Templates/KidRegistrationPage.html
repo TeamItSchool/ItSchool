@@ -19,39 +19,38 @@
             <div style="color:red">{{message}}</div>
             <table>
                 <tr>
-                    <td>Full Name: </td>
+                    <td>Prénom: </td>
                     <td>
-                        <input type="text" ng-model="User.FullName" name="uFullName" ng-class="submitted?'ng-dirty':''" required autofocus />
-                        <span class="error" ng-show="(RegisterForm.uFullName.$dirty || submitted) && RegisterForm.uFullName.$error.required">Fullname is required!</span>
+                        <input type="text" ng-model="User.FirstName" name="uFirstName" ng-class="submitted?'ng-dirty':''" required autofocus />
+                        <span class="error" ng-show="(RegisterForm.uFirstName.$dirty || submitted) && RegisterForm.uFirstName.$error.required">Le prénom doit être rentré!</span>
                     </td>
                 </tr>
                 <tr>
-                    <td>EmailID: </td>
+                    <td>Nom de famille: </td>
                     <td>
-                        <input type="email" ng-model="User.EmailID" name="uEmailID" ng-class="submitted?'ng-dirty':''" required autofocus />
-                        <span class="error" ng-show="(RegisterForm.uEmailID.$dirty || submitted) && RegisterForm.uEmailID.$error.required">Email is required!</span>
+                        <input type="text" ng-model="User.LastName" name="uLastName" ng-class="submitted?'ng-dirty':''" required autofocus />
+                        <span class="error" ng-show="(RegisterForm.uLastName.$dirty || submitted) && RegisterForm.uLastName.$error.required">Le prénom doit être rentré!</span>
                     </td>
                 </tr>
                 <tr>
-                    <td>Username: </td>
+                    <td>Adresse email: </td>
                     <td>
-                        <input type="text" ng-model="User.UserName" name="uUserName" ng-class="submitted?'ng-dirty':''" required autofocus />
-                        <span class="error" ng-show="(RegisterForm.uUserName.$dirty || submitted) && RegisterForm.uUserName.$error.required">Username is required!</span>
+                        <input type="email" ng-model="User.Mail" name="uMail" ng-class="submitted?'ng-dirty':''" required autofocus />
+                        <span class="error" ng-show="(RegisterForm.uMail.$dirty || submitted) && RegisterForm.uMail.$error.required">L'email doit être entré !</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Pseudo: </td>
+                    <td>
+                        <input type="text" ng-model="User.Nickname" name="uNickname" ng-class="submitted?'ng-dirty':''" required autofocus />
+                        <span class="error" ng-show="(RegisterForm.uNickname.$dirty || submitted) && RegisterForm.uNickname.$error.required">Le pseudo doit être entré !</span>
                     </td>
                 </tr>
                 <tr>
                     <td>Password: </td>
                     <td>
                         <input type="password" ng-model="User.Password" name="uPassword" ng-class="submitted?'ng-dirty':''" required autofocus />
-                        <span class="error" ng-show="(RegisterForm.uPassword.$dirty || submitted) && RegisterForm.uPassword.$error.required">Password is required!</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Gender: </td>
-                    <td>
-                        <input type="radio" ng-model="User.Gender" name="uGender" value="Garçon" required /> Garçon
-                        <input type="radio" ng-model="User.Gender" name="uGender" value="Fille" required /> Fille
-                        <span class="error" ng-show="(RegisterForm.uGender.$dirty || submitted) && RegisterForm.uGender.$error.required">Gender is required!</span>
+                        <span class="error" ng-show="(RegisterForm.uPassword.$dirty || submitted) && RegisterForm.uPassword.$error.required">Le mot de passe doit être entré !</span>
                     </td>
                 </tr>
                 <tr>

@@ -4,12 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace ITI.ItSchool.Models
 {
     public interface IUserRepository
     {
-        IList<User> FindByNickname( string nickname );
+        User FindByNickname( string nickname );
+
+        IList<User> FindAllUsers();
+
+        JsonResult FindUserByNickname( string nickname );
 
         IList<User> Update( User u );
         

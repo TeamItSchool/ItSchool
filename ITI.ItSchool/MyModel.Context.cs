@@ -16,7 +16,7 @@ namespace ITI.ItSchool
     public partial class TestDBEntities : DbContext
     {
         public TestDBEntities()
-            : base("name=TestDBEntities")
+            : base("TestDBEntities")
         {
         }
     

@@ -90,11 +90,11 @@ namespace ITI.ItSchool.Tests
             var user = new User
             {
                 UserId = 1,
-                FirstName = "Michael",
-                LastName = "Junior",
-                Nickname = "Tikari",
-                Mail = "junior@microsoft.com",
-                Password = "mypass",
+                FirstName = "Guénolé",
+                LastName = "Kikabou",
+                Nickname = "guenole_k",
+                Mail = "kikabouguenole@gmail.com",
+                Password = "admin",
                 Avatar = a,
                 Grade = grade,
                 Right = right,
@@ -110,12 +110,12 @@ namespace ITI.ItSchool.Tests
         public void can_find_a_user()
         {
             string nickname = "Tikari";
-            IList<User> u;
+            User u;
 
             IUserRepository userRepo = new SQLUserRepository();
 
             u = userRepo.FindByNickname( nickname );
-            Assert.That( nickname, Is.EqualTo( u[0].Nickname ) );
+            Assert.That( nickname, Is.EqualTo( u.Nickname ) );
         }
 
         [Test]
@@ -202,7 +202,8 @@ namespace ITI.ItSchool.Tests
 
             Assert.That( isCreated == true );
 
-            u = userRepo.FindByNickname( user.Nickname );
+            u = userRepo.FindAllUsers();
+            //u = userRepo.FindByNickname( user.Nickname );
 
             Assert.That( user.Mail, Is.EqualTo( "smith@microsoft.com" ) );
 

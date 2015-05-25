@@ -71,15 +71,9 @@
         $scope.Submitted = true;
         if ($scope.IsFormValid) {
             LoginService.GetUser($scope.LoginData).then(function (d) {
-                if (d.data.UserName != null && d.data.Status == 3) {
+                if (d.data.Nickname != null) {
                     $scope.IsLogedIn = true;
-                    $scope.Message = "Bienvenue " + d.data.FullName;
-                }
-                else if (d.data.UserName != null && d.data.Status == 1) {
-                    alert("T'es pas censé pouvoir te connecter ici.. " + d.data.UserName + ", allez dégage, OUST, BASTA ! #Pèse")
-                }
-                else if (d.data.UserName != null && d.data.Status == 2) {
-                    alert("Oops vous êtes professeur mais êtes dans l'espace Kidz")
+                    $scope.Message = "Bienvenue " + d.data.FirstName;
                 }
                 else {
                     alert('Oops tu as entré le mauvais pseudo ou le mauvais mot de passe. Réessye pour te connecter.')
@@ -96,13 +90,14 @@
     $scope.message = "";
     $scope.isFormValid = false;
     $scope.User = {
-        UserName: '',
+        Nickname: '',
         Password: '',
-        FullName: '',
-        EmailID: '',
-        Gender: '',
-        Status: '3',
-        UserID: ''
+        FirstName: '',
+        LastName: '',
+        Mail: '',
+        //Gender: '',
+        //Status: '3',
+        //UserID: ''
     };
 
     //Check form validation // here RegisterForm is our form name
@@ -150,7 +145,7 @@
     var monobjet = JSON.parse(monobjet_json);
     // Affichage dans la console
     console.log(monobjet.data.FullName);
-    $scope.Message = "Bonjour " + monobjet.data.FullName;
+    $scope.Message = "Bonjour " + monobjet.data.FirstName + " " + monobjet.data.LastName;
 
 })
 .controller('TeacherLoginController', function ($scope, LoginService) {
@@ -174,28 +169,24 @@
         $scope.Submitted = true;
         if ($scope.IsFormValid) {
             LoginService.GetUser($scope.LoginData).then(function (d) {
-                if (d.data.UserName != null && d.data.Status == 2) {
-
+                if (d.data.Nickname != null) {
+                    //console.log(d.data.FirstName + " " + d.data.LastName);
                     var monobjet_json = JSON.stringify(d);
                     sessionStorage.setItem("objet", monobjet_json);
 
                     var monobjet_json = sessionStorage.getItem("objet");
                     var monobjet = JSON.parse(monobjet_json);
                     // Affichage dans la console
-                    console.log(monobjet.data.FullName);
+                    console.log(monobjet.data.FirstName);
                     
                     $scope.IsLogedIn = true;
-                    $scope.Message = "Vous êtes bien connecté. Bienvenue " + d.data.FullName;
-                }
-                else if (d.data.UserName != null && d.data.Status == 1) {
-                    alert("T'es pas censé pouvoir te connecter ici.. " + d.data.UserName + ", allez dégage, OUST, BASTA ! #Pèse")
-                }
-                else if (d.data.UserName != null && d.data.Status == 3) {
-                    alert("Oops tu es dans l'espace de tes professeurs, connecte-toi dans l'espace Kidz")
+                    $scope.Message = "Vous êtes bien connecté. Bienvenue " + d.data.FirstName + " " + d.data.LastName;
                 }
                 else {
                     alert("Votre pseudo ou votre mot de passe sont incorrects. Veuillez réessayer s'il vous plaît")
                 }
+
+                console.log(d.data.FirstName + " " + d.data.LastName);
             })
         }
     };
