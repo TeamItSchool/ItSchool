@@ -83,8 +83,7 @@
     };
 })
 .controller("KidRegistrationController", function ($scope, RegistrationService) {
-    //Default Variable
-    $scope.submitText = "Save";
+    $scope.submitText = "Inscription";
     $scope.submitted = false;
     $scope.Message = "Inscris-toi sur It'School :)";
     $scope.message = "";
@@ -94,10 +93,7 @@
         Password: '',
         FirstName: '',
         LastName: '',
-        Mail: '',
-        //Gender: '',
-        //Status: '3',
-        //UserID: ''
+        Mail: ''
     };
 
     //Check form validation // here RegisterForm is our form name
@@ -107,7 +103,7 @@
 
     //Save Data
     $scope.SaveData = function (data) {
-        if ($scope.submitText == "Save") {
+        if ($scope.submitText == "Inscription") {
             $scope.submitted = true;
             $scope.message = "";
 
@@ -116,15 +112,15 @@
                 $scope.User = data;
                 RegistrationService.SaveFormData($scope.User).then(function (d) {
                     alert(d);
-                    if (d == 'Success') {
+                    if (d == 'Le compte a bien été créé.') {
                         //Have to clear form here
                         ClearForm();
                     }
-                    $scope.submitText = "Save";
+                    $scope.submitText = "Inscription";
                 });
             }
             else {
-                $scope.message = 'Please fill required fields value';
+                $scope.message = 'Il faut bien tout remplir :)';
             }
         }
     }
@@ -191,19 +187,18 @@
         }
     };
 })
-.controller('TeacherRegistrationController', function ($scope) {
-    //Default Variable
-    $scope.submitText = "Save";
+.controller("TeacherRegistrationController", function ($scope, RegistrationService) {
+    $scope.submitText = "Inscription";
     $scope.submitted = false;
     $scope.Message = "Inscription";
     $scope.message = "";
     $scope.isFormValid = false;
     $scope.User = {
-        UserName: '',
+        Nickname: '',
         Password: '',
-        FullName: '',
-        EmailID: '',
-        Gender: ''
+        FirstName: '',
+        LastName: '',
+        Mail: ''
     };
 
     //Check form validation // here RegisterForm is our form name
@@ -213,24 +208,24 @@
 
     //Save Data
     $scope.SaveData = function (data) {
-        if ($scope.submitText == "Save") {
+        if ($scope.submitText == "Inscription") {
             $scope.submitted = true;
             $scope.message = "";
 
             if ($scope.isFormValid) {
-                $scope.submitText = "Please wait...";
+                $scope.submitText = "Veuillez patienter s'il vous plaît";
                 $scope.User = data;
                 RegistrationService.SaveFormData($scope.User).then(function (d) {
                     alert(d);
-                    if (d == 'Success') {
+                    if (d == 'Le compte a bien été créé.') {
                         //Have to clear form here
                         ClearForm();
                     }
-                    $scope.submitText = "Save";
+                    $scope.submitText = "Inscription";
                 });
             }
             else {
-                $scope.message = 'Please fill required fields value';
+                $scope.message = 'Remplissez bien tous les champs.';
             }
         }
     }
@@ -242,7 +237,6 @@
         $scope.submitted = false;
     }
 })
-
 .controller('KidHomeController', function ($scope) {
     $scope.Message = 'Page "Élève"';
 })

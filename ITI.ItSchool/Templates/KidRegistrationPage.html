@@ -1,85 +1,36 @@
 ﻿<style>
-    input {
-        padding: 5px;
-        border: 1px solid #A5A5A5;
-    }
-    input.ng-dirty.ng-valid {
-        border: 1px solid green;
-        background-color: rgb(255, 244, 244);
-    }
     .error {
-        color:red;
+        color: red;
     }
 </style>
-
-<div ng-controller="KidRegistrationController">
+<div ng-controller="TeacherRegistrationController">
     <center>
         <h3>{{Message}}</h3>
         <form novalidate name="RegisterForm" ng-submit="SaveData(User)">
-            <div style="color:red">{{message}}</div>
-            <table>
-                <tr>
-                    <td>Prénom: </td>
-                    <td>
-                        <input type="text" ng-model="User.FirstName" name="uFirstName" ng-class="submitted?'ng-dirty':''" required autofocus />
-                        <span class="error" ng-show="(RegisterForm.uFirstName.$dirty || submitted) && RegisterForm.uFirstName.$error.required">Le prénom doit être rentré!</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Nom de famille: </td>
-                    <td>
-                        <input type="text" ng-model="User.LastName" name="uLastName" ng-class="submitted?'ng-dirty':''" required autofocus />
-                        <span class="error" ng-show="(RegisterForm.uLastName.$dirty || submitted) && RegisterForm.uLastName.$error.required">Le prénom doit être rentré!</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Adresse email: </td>
-                    <td>
-                        <input type="email" ng-model="User.Mail" name="uMail" ng-class="submitted?'ng-dirty':''" required autofocus />
-                        <span class="error" ng-show="(RegisterForm.uMail.$dirty || submitted) && RegisterForm.uMail.$error.required">L'email doit être entré !</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Pseudo: </td>
-                    <td>
-                        <input type="text" ng-model="User.Nickname" name="uNickname" ng-class="submitted?'ng-dirty':''" required autofocus />
-                        <span class="error" ng-show="(RegisterForm.uNickname.$dirty || submitted) && RegisterForm.uNickname.$error.required">Le pseudo doit être entré !</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Password: </td>
-                    <td>
-                        <input type="password" ng-model="User.Password" name="uPassword" ng-class="submitted?'ng-dirty':''" required autofocus />
-                        <span class="error" ng-show="(RegisterForm.uPassword.$dirty || submitted) && RegisterForm.uPassword.$error.required">Le mot de passe doit être entré !</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                        <input type="submit" value="{{submitText}}" />
-                    </td>
-                </tr>
-            </table>
-        </form>
-</center>
-    <!--
-        <form novalidate name="RegistrationForm" ng-submit="SaveData(User)">
-        <div ng-show="!IsLogedIn">
-            <md-input-container style="width:10%">
-                <label>Choisis ton pseudo</label>
-                <input type="text" ng-model="LoginData.Username" name="cUsername" ng-class="Submitted?'ng-dirty':''" required>
-                <span class="error" ng-show="(LoginData.cUsername.$dirty || Submitted) && LoginData.cUsername.$error.required">Username required</span>
+            <!--<div style="color:red"></div>-->
+            <md-input-container md-no-float style="width:15%">
+                <input ng-model="User.FirstName" name="uFirstName" placeholder="Prénom..." required autofocus>
+                <span class="error" ng-show="(RegisterForm.uFirstName.$dirty || submitted) && RegisterForm.uFirstName.$error.required">Le prénom doit être rentré!</span>
             </md-input-container>
-            <br />
-            <md-input-container style="width:10%">
-                <label>Choisis ton mot de passe </label>
-                <input type="password" ng-model="LoginData.Password" name="cPassword" ng-class="Submitted?'ng-dirty':''" required>
-                <span class="error" ng-show="(LoginData.cPassword.$dirty || Submitted) && LoginData.cPassword.$error.required">Password required</span>
+            <md-input-container md-no-float style="width:15%">
+                <input type="text" ng-model="User.LastName" name="uLastName" placeholder="Nom..." ng-class="submitted?'ng-dirty':''" required autofocus />
+                <span class="error" ng-show="(RegisterForm.uLastName.$dirty || submitted) && RegisterForm.uLastName.$error.required">Le nom de famille doit être rentré!</span>
             </md-input-container>
-            <br />
-            <md-button class="md-raised md-primary" value="Login" type="submit">Connexion</md-button>
-        </div>
-    </form>
-    -->
-</div>
+            <md-input-container md-no-float style="width:15%">
+                <input type="email" ng-model="User.Mail" name="uMail" placeholder="Email..." ng-class="submitted?'ng-dirty':''" required autofocus />
+                <span class="error" ng-show="(RegisterForm.uMail.$dirty || submitted) && RegisterForm.uMail.$error.required">L'email doit être entré !</span>
+            </md-input-container>
+            <md-input-container md-no-float style="width:15%">
+                <input type="text" ng-model="User.Nickname" name="uNickname" placeholder="Pseudo..." ng-class="submitted?'ng-dirty':''" required autofocus />
+                <span class="error" ng-show="(RegisterForm.uNickname.$dirty || submitted) && RegisterForm.uNickname.$error.required">Le pseudo doit être entré !</span>
+            </md-input-container>
 
+            <md-input-container md-no-float style="width:15%">
+                <input type="password" ng-model="User.Password" name="uPassword" placeholder="Mot de passe..." ng-class="submitted?'ng-dirty':''" required autofocus />
+                <span class="error" ng-show="(RegisterForm.uPassword.$dirty || submitted) && RegisterForm.uPassword.$error.required">Le mot de passe doit être entré !</span>
+            </md-input-container>
+
+            <md-button class="md-raised md-primary" value="{{submitText}}" type="submit">{{submitText}}</md-button>
+        </form>
+    </center>
+</div>
