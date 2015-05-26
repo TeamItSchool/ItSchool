@@ -31,6 +31,10 @@
         templateUrl: '/Templates/TeacherLobbyPage.html',
         controller: 'TeacherLobbyController'
     })
+    .when('/teacher/exercices', {
+        templateUrl: '/Templates/TeacherSelectExercicesPage.html',
+        controller: 'TeacherSelectExercicesController'
+    })
     .when('/kid', {
         templateUrl: '/Templates/KidHomePage.html',
         controller: 'KidHomeController'
@@ -162,7 +166,6 @@
 .controller('TeacherHomeController', function ($scope) {
     $scope.Message = 'Page "Professeurs"';
 })
-
 .controller('TeacherLobbyController', function ($scope, LoginService) {
     var monobjet_json = sessionStorage.getItem("objet");
     var monobjet = JSON.parse(monobjet_json);
@@ -303,6 +306,9 @@
         $scope.RegisterForm.$setPristine(); // here registerForm is our form name
         $scope.submitted = false;
     }
+})
+.controller('TeacherSelectExercicesController', function ($scope) {
+    $scope.Message = 'Swag';
 })
 .controller('KidHomeController', function ($scope) {
     $scope.Message = 'Page "Élève"';

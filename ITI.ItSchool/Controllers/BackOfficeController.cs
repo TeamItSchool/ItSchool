@@ -35,5 +35,11 @@ namespace ITI.ItSchool.Controllers
             }
             return View(theCase);
         }
+
+
+        public ActionResult Drag()
+        {
+            return View( "Drag" );
+        }
     }
 }

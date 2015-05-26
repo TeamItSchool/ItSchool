@@ -6645,6 +6645,7 @@
     <Content Include="Scripts\painting.js" />
     <Content Include="Scripts\ng-polymer-elements.min.js" />
     <Content Include="Scripts\NG-Polymer.js" />
+    <Content Include="Scripts\PairOuImpair.js" />
     <Content Include="Scripts\Routing.js" />
     <Content Include="Scripts\version.txt" />
     <Content Include="Templates\Error.html" />
@@ -6656,6 +6657,7 @@
     <Content Include="Templates\TeacherHomePage.html" />
     <Content Include="Templates\TeacherLoginPage.html" />
     <Content Include="Templates\TeacherRegistrationPage.html" />
+    <Content Include="Templates\TeacherSelectExercicesPage.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
