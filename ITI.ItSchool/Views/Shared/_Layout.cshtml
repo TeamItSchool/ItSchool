@@ -1,14 +1,21 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
+    <title>@ViewBag.Title</title>
+    <link href="~/Components/angular-material/angular-material.css" rel="stylesheet" />
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
+
+    <!-- Bootstrap -->
+    <link href="~/Content/bootstrap-theme.min.css" rel="stylesheet" media="screen">
+    <!-- Font-Awesome -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+    <!-- My style -->
+    <link href="~/Content/style.css" rel="stylesheet" media="screen">
 </head>
-<body>
+<body ng-app="TheApp">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -17,15 +24,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink( "Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" } )
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                </ul>
+                <ul class="nav navbar-nav"></ul>
             </div>
         </div>
     </div>
-
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -34,7 +39,12 @@
         </footer>
     </div>
 
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/angular-route.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="../Components/angular-animate/angular-animate.js"></script>
+    <script src="../Components/angular-aria/angular-aria.js"></script>
+    <script type="text/javascript" src="../Components/angular-material/angular-material.js"></script>
+    @RenderSection( "Scripts", required: false )
 </body>
 </html>
