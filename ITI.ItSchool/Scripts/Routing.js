@@ -82,8 +82,9 @@
         }
     };
 })
-.controller("KidRegistrationController", function ($scope, RegistrationService) {
+.controller("KidRegistrationController", function ($scope, RegistrationService, LoginService) {
     $scope.submitText = "Inscription";
+    $scope.IsRegistered = false;
     $scope.submitted = false;
     $scope.Message = "Inscris-toi sur It'School :)";
     $scope.message = "";
@@ -108,13 +109,41 @@
             $scope.message = "";
 
             if ($scope.isFormValid) {
-                $scope.submitText = "Please wait...";
+                $scope.submitText = "Patience..";
                 $scope.User = data;
                 RegistrationService.SaveFormData($scope.User).then(function (d) {
                     alert(d);
                     if (d == 'Le compte a bien été créé.') {
+                        $scope.IsRegistered = true;
+                        $scope.Message = "Embarque dans l'aventure It'School !";
+                        $scope.IsLogedIn = false;
+                        $scope.Submitted = false;
+                        $scope.IsFormValid = false;
+
+                        $scope.LoginData = {
+                            Username: '',
+                            Password: ''
+                        };
+                        //Check if Form is valid or not // here f1 is our form Name
+                        $scope.$watch('LoginForm.$valid', function (newVal) {
+                            $scope.IsFormValid = newVal;
+                        });
+                        $scope.Login = function () {
+                            $scope.Submitted = true;
+                            if ($scope.IsFormValid) {
+                                LoginService.GetUser($scope.LoginData).then(function (d) {
+                                    if (d.data.Nickname != null) {
+                                        $scope.IsLogedIn = true;
+                                        $scope.Message = "Bienvenue " + d.data.FirstName;
+                                    }
+                                    else {
+                                        alert('Oops tu as entré le mauvais pseudo ou le mauvais mot de passe. Réessye pour te connecter.')
+                                    }
+                                })
+                            }
+                        };
                         //Have to clear form here
-                        ClearForm();
+                        //ClearForm();
                     }
                     $scope.submitText = "Inscription";
                 });
@@ -124,8 +153,6 @@
             }
         }
     }
-
-    //Clear form (reset)
     function ClearForm() {
         $scope.User = {};
         $scope.RegisterForm.$setPristine(); // here registerForm is our form name
@@ -140,7 +167,7 @@
     var monobjet_json = sessionStorage.getItem("objet");
     var monobjet = JSON.parse(monobjet_json);
     // Affichage dans la console
-    console.log(monobjet.data.FullName);
+    console.log(monobjet.data.FirstName);
     $scope.Message = "Bonjour " + monobjet.data.FirstName + " " + monobjet.data.LastName;
 
 })
@@ -166,7 +193,6 @@
         if ($scope.IsFormValid) {
             LoginService.GetUser($scope.LoginData).then(function (d) {
                 if (d.data.Nickname != null) {
-                    //console.log(d.data.FirstName + " " + d.data.LastName);
                     var monobjet_json = JSON.stringify(d);
                     sessionStorage.setItem("objet", monobjet_json);
 
@@ -187,9 +213,12 @@
         }
     };
 })
-.controller("TeacherRegistrationController", function ($scope, RegistrationService) {
+.controller("TeacherRegistrationController", function ($scope, RegistrationService, LoginService) {
+
+    sessionStorage.removeItem("objet");
     $scope.submitText = "Inscription";
     $scope.submitted = false;
+    $scope.IsRegistered = false;
     $scope.Message = "Inscription";
     $scope.message = "";
     $scope.isFormValid = false;
@@ -218,8 +247,47 @@
                 RegistrationService.SaveFormData($scope.User).then(function (d) {
                     alert(d);
                     if (d == 'Le compte a bien été créé.') {
+                        $scope.IsRegistered = true;
+
+                        $scope.Message = "Entrez vos identifiants pour vous connecter.";
+                        $scope.IsLogedIn = false;
+                        $scope.Submitted = false;
+                        $scope.IsFormValid = false;
+
+                        $scope.LoginData = {
+                            Username: '',
+                            Password: ''
+                        };
+                        //Check if Form is valid or not // here f1 is our form Name
+                        $scope.$watch('LoginForm.$valid', function (newVal) {
+                            $scope.IsFormValid = newVal;
+                        });
+                        $scope.Login = function () {
+                            $scope.Submitted = true;
+                            if ($scope.IsFormValid) {
+                                LoginService.GetUser($scope.LoginData).then(function (d) {
+                                    if (d.data.Nickname != null) {
+                                        var monobjet_json = JSON.stringify(d);
+                                        sessionStorage.setItem("objet", monobjet_json);
+
+                                        var monobjet_json = sessionStorage.getItem("objet");
+                                        var monobjet = JSON.parse(monobjet_json);
+                                        // Affichage dans la console
+                                        console.log(monobjet.data.FirstName);
+
+                                        $scope.IsLogedIn = true;
+                                        $scope.Message = "Vous êtes bien connecté. Bienvenue " + d.data.FirstName + " " + d.data.LastName;
+                                    }
+                                    else {
+                                        alert("Votre pseudo ou votre mot de passe sont incorrects. Veuillez réessayer s'il vous plaît")
+                                    }
+
+                                    console.log(d.data.FirstName + " " + d.data.LastName);
+                                })
+                            }
+                        };
                         //Have to clear form here
-                        ClearForm();
+                        //ClearForm();
                     }
                     $scope.submitText = "Inscription";
                 });
@@ -229,7 +297,6 @@
             }
         }
     }
-
     //Clear form (reset)
     function ClearForm() {
         $scope.User = {};
