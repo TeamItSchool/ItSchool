@@ -14,6 +14,7 @@ namespace ITI.ItSchool.Models
     {
         /// <summary>
         /// Creates a new User add it to the database.
+        /// We have to take care / the user now is creating a GradeID and a RightID
         /// </summary>
         /// <param name="user">The user to create as an object</param>
         /// <returns>The new user who was created.</returns>

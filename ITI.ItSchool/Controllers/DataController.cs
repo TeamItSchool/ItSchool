@@ -23,7 +23,6 @@ namespace ITI.ItSchool.Controllers
             
             SQLUserRepository sUserRepo = new SQLUserRepository();
             var jsonData = sUserRepo.FindUserByNickname( d.Username );
-
             return jsonData;
 
             #region Code For Login With TestDBEntities

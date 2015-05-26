@@ -153,8 +153,6 @@
             }
         }
     }
-
-    //Clear form (reset)
     function ClearForm() {
         $scope.User = {};
         $scope.RegisterForm.$setPristine(); // here registerForm is our form name
@@ -169,7 +167,7 @@
     var monobjet_json = sessionStorage.getItem("objet");
     var monobjet = JSON.parse(monobjet_json);
     // Affichage dans la console
-    console.log(monobjet.data.FullName);
+    console.log(monobjet.data.FirstName);
     $scope.Message = "Bonjour " + monobjet.data.FirstName + " " + monobjet.data.LastName;
 
 })
@@ -195,7 +193,6 @@
         if ($scope.IsFormValid) {
             LoginService.GetUser($scope.LoginData).then(function (d) {
                 if (d.data.Nickname != null) {
-                    //console.log(d.data.FirstName + " " + d.data.LastName);
                     var monobjet_json = JSON.stringify(d);
                     sessionStorage.setItem("objet", monobjet_json);
 
@@ -217,6 +214,7 @@
     };
 })
 .controller("TeacherRegistrationController", function ($scope, RegistrationService, LoginService) {
+
     sessionStorage.removeItem("objet");
     $scope.submitText = "Inscription";
     $scope.submitted = false;
@@ -250,6 +248,7 @@
                     alert(d);
                     if (d == 'Le compte a bien été créé.') {
                         $scope.IsRegistered = true;
+
                         $scope.Message = "Entrez vos identifiants pour vous connecter.";
                         $scope.IsLogedIn = false;
                         $scope.Submitted = false;
@@ -259,7 +258,7 @@
                             Username: '',
                             Password: ''
                         };
-                        //Check if Form is valid or not // here LoginForm is our form Name
+                        //Check if Form is valid or not // here f1 is our form Name
                         $scope.$watch('LoginForm.$valid', function (newVal) {
                             $scope.IsFormValid = newVal;
                         });
@@ -268,7 +267,6 @@
                             if ($scope.IsFormValid) {
                                 LoginService.GetUser($scope.LoginData).then(function (d) {
                                     if (d.data.Nickname != null) {
-                                        //console.log(d.data.FirstName + " " + d.data.LastName);
                                         var monobjet_json = JSON.stringify(d);
                                         sessionStorage.setItem("objet", monobjet_json);
 
@@ -299,7 +297,6 @@
             }
         }
     }
-
     //Clear form (reset)
     function ClearForm() {
         $scope.User = {};
