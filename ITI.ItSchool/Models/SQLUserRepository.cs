@@ -12,26 +12,51 @@ namespace ITI.ItSchool.Models
 {
     public class SQLUserRepository : IUserRepository
     {
+
+        private bool CheckMail( User user )
+        {
+            User usersMail = null;
+
+            using( var db = new UserContext() )
+            {
+                usersMail = db.Users.Where( u => u.Mail.Equals( user.Mail ) ).FirstOrDefault();
+
+                if( usersMail == null ) return false;
+       
+                return true;
+            }
+        }
+
         /// <summary>
         /// Creates a new User add it to the database.
         /// We have to take care / the user now is creating a GradeID and a RightID
         /// </summary>
         /// <param name="user">The user to create as an object</param>
-        /// <returns>The new user who was created.</returns>
+        /// <returns>True if the user was well created.</returns>
         public bool Create( User user )
         {
             User userToCreate = null;
+            bool mailExists = true;
             if( user == null ) throw new ArgumentNullException( "The 'User' as an object type is null.", "user" );
 
             using ( var userContext = new UserContext() )
             {
                 userToCreate = userContext.Users.Where(u => u.Nickname.Equals( user.Nickname ) ).FirstOrDefault();
+                mailExists = this.CheckMail( user );
 
                 if( userToCreate == null )
                 {
-                    userContext.Users.Add( user );
-                    userContext.SaveChanges();
-                    return true;
+                    if( !mailExists )
+                    {
+                        userContext.Users.Add(user);
+                        userContext.SaveChanges();
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                    
                 }
                 else
                 {
@@ -44,7 +69,7 @@ namespace ITI.ItSchool.Models
         /// Finds a user by his nickname
         /// </summary>
         /// <param name="nickname">The concerned user's nickname.</param>
-        /// <returns>a User</returns>
+        /// <returns>the User</returns>
         public User FindByNickname( string nickname )
         {
             using( var uc = new UserContext() )
