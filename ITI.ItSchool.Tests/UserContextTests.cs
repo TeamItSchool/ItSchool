@@ -1,4 +1,5 @@
 ﻿using ITI.ItSchool.Models;
+using ITI.ItSchool.Models.AvatarEntities;
 using ITI.ItSchool.Models.UserEntities;
 using NUnit.Framework;
 using System;
@@ -23,39 +24,23 @@ namespace ITI.ItSchool.Tests
         }
 
         [Test]
-        public void create_a_user()
+        public void cannot_create_a_user_with_an_existing_nickname()
         {
             IUserRepository userRepo = new SQLUserRepository();
 
-            var c = new Clothe
+            var body = new Body
             {
-                Name = "TestClothe",
-                Link = "TestLink",
-                Remarks = "TestRemarks",
+                Name = "Soldat"
             };
 
-            var e = new Eye
+            var foot = new Foot
             {
-                Name = "TestEye",
-                Link = "TestLink",
+                Name = "Soldat"
             };
 
-            var h = new Hair()
+            var legs = new Legs
             {
-                Name = "TestHair",
-                Link = "TestLink"
-            };
-
-            var m = new Mouth
-            {
-                Name = "TestMouth",
-                Link = "TestMouthLink"
-            };
-
-            var n = new Nose
-            {
-                Name = "TestNose",
-                Link = "NoseLink"
+                Name = "Soldat"
             };
 
             var right = new Right
@@ -73,12 +58,75 @@ namespace ITI.ItSchool.Tests
             var a = new Avatar
             {
                 Name = "TestAvatar",
-                Clothe = c,
-                Eye = e,
-                Hair = h,
-                Mouth = m,
-                Nose = n,
-                Remarks = "Avatar Remarks"
+                Body = body,
+                Feet = foot,
+                Legs = legs
+            };
+
+            var g = new Group
+            {
+                Name = "TestGroup",
+                Remarks = "GroupRemarks..."
+            };
+
+            var user = new User
+            {
+                UserId = 1,
+                FirstName = "Guénolé",
+                LastName = "Kikabou",
+                Nickname = "guenole_k",
+                Mail = "kikabouguenole@gmail.com",
+                Password = "admin",
+                Avatar = a,
+                Group = g,
+                Grade = grade,
+                Right = right,
+                Remarks = "This is a test..."
+            };
+
+            bool isCreated = userRepo.Create(user);
+
+            Assert.That(isCreated == false);
+        }
+
+        [Test]
+        public void create_a_user()
+        {
+            IUserRepository userRepo = new SQLUserRepository();
+
+            var body = new Body
+            {
+                Name = "Soldat"
+            };
+
+            var foot = new Foot
+            {
+                Name = "Soldat"
+            };
+
+            var legs = new Legs
+            {
+                Name = "Soldat"
+            };
+
+            var right = new Right
+            {
+                Name = "TestRight",
+                Remarks = "TestRemarkRight"
+            };
+
+            var grade = new Grade
+            {
+                Name = "TestGrade",
+                Remarks = "TestRemarkGrade"
+            };
+
+            var a = new Avatar
+            {
+                Name = "TestAvatar",
+                Body = body,
+                Feet = foot,
+                Legs = legs
             };
 
             var g = new Group
@@ -109,50 +157,21 @@ namespace ITI.ItSchool.Tests
         [Test]
         public void can_find_a_user()
         {
-            string nickname = "Tikari";
-            User u;
-
             IUserRepository userRepo = new SQLUserRepository();
 
-            u = userRepo.FindByNickname( nickname );
-            Assert.That( nickname, Is.EqualTo( u.Nickname ) );
-        }
-
-        [Test]
-        public void can_update_a_user()
-        {
-            IUserRepository userRepo = new SQLUserRepository();
-            IList<User> u;
-
-            var c = new Clothe
+            var body = new Body
             {
-                Name = "TestClothe",
-                Link = "TestLink",
-                Remarks = "TestRemarks",
+                Name = "Soldat"
             };
 
-            var e = new Eye
+            var foot = new Foot
             {
-                Name = "TestEye",
-                Link = "TestLink",
+                Name = "Soldat"
             };
 
-            var h = new Hair
+            var legs = new Legs
             {
-                Name = "TestHair",
-                Link = "TestLink"
-            };
-
-            var m = new Mouth
-            {
-                Name = "TestMouth",
-                Link = "TestMouthLink"
-            };
-
-            var n = new Nose
-            {
-                Name = "TestNose",
-                Link = "NoseLink"
+                Name = "Soldat"
             };
 
             var right = new Right
@@ -170,12 +189,80 @@ namespace ITI.ItSchool.Tests
             var a = new Avatar
             {
                 Name = "TestAvatar",
-                Clothe = c,
-                Eye = e,
-                Hair = h,
-                Mouth = m,
-                Nose = n,
-                Remarks = "Avatar Remarks"
+                Body = body,
+                Feet = foot,
+                Legs = legs
+            };
+
+            var g = new Group
+            {
+                Name = "TestGroup",
+                Remarks = "GroupRemarks..."
+            };
+
+            var user = new User
+            {
+                UserId = 1,
+                FirstName = "Guénolé",
+                LastName = "Kikabou",
+                Nickname = "Toto",
+                Mail = "ms@gmail.com",
+                Password = "admin",
+                Avatar = a,
+                Grade = grade,
+                Right = right,
+                Remarks = "This is a test..."
+            };
+            string nickname = user.Nickname;
+            User u;
+            bool isCreated = userRepo.Create( user );
+
+            Assert.That( isCreated == true );
+
+            u = userRepo.FindByNickname( nickname );
+
+            Assert.That( nickname, Is.EqualTo( u.Nickname ) );
+        }
+
+        [Test]
+        public void can_update_a_user()
+        {
+            IUserRepository userRepo = new SQLUserRepository();
+            IList<User> u;
+
+            var body = new Body
+            {
+                Name = "Soldat"
+            };
+
+            var foot = new Foot
+            {
+                Name = "Soldat"
+            };
+
+            var legs = new Legs
+            {
+                Name = "Soldat"
+            };
+
+            var right = new Right
+            {
+                Name = "TestRight",
+                Remarks = "TestRemarkRight"
+            };
+
+            var grade = new Grade
+            {
+                Name = "TestGrade",
+                Remarks = "TestRemarkGrade"
+            };
+
+            var a = new Avatar
+            {
+                Name = "TestAvatar",
+                Body = body,
+                Feet = foot,
+                Legs = legs
             };
 
             var g = new Group
@@ -203,7 +290,6 @@ namespace ITI.ItSchool.Tests
             Assert.That( isCreated == true );
 
             u = userRepo.FindAllUsers();
-            //u = userRepo.FindByNickname( user.Nickname );
 
             Assert.That( user.Mail, Is.EqualTo( "smith@microsoft.com" ) );
 

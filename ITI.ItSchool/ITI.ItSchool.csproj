@@ -6660,6 +6660,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AvatarEntities\Body.cs" />
+    <Compile Include="Models\AvatarEntities\Foot.cs" />
+    <Compile Include="Models\AvatarEntities\Legs.cs" />
     <Compile Include="Models\LoginData.cs" />
     <Compile Include="MyModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -6678,11 +6681,6 @@
     </Compile>
     <Compile Include="Models\Contexts\AvatarContext.cs" />
     <Compile Include="Models\AvatarEntities\Avatar.cs" />
-    <Compile Include="Models\AvatarEntities\Clothe.cs" />
-    <Compile Include="Models\AvatarEntities\Eye.cs" />
-    <Compile Include="Models\AvatarEntities\Hair.cs" />
-    <Compile Include="Models\AvatarEntities\Mouth.cs" />
-    <Compile Include="Models\AvatarEntities\Nose.cs" />
     <Compile Include="Models\Contexts\ChatContext.cs" />
     <Compile Include="Models\ChatEntities\Conversation.cs" />
     <Compile Include="Models\ChatEntities\Message.cs" />

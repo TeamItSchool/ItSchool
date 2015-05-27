@@ -20,80 +20,23 @@ namespace ITI.ItSchool.Models
         /// <returns>The new user who was created.</returns>
         public bool Create( User user )
         {
+            User userToCreate = null;
             if( user == null ) throw new ArgumentNullException( "The 'User' as an object type is null.", "user" );
-
-            #region User Elements To Not Have Exception + affectation
-            var c = new Clothe
-            {
-                Name = "TestClothe",
-                Link = "TestLink",
-                Remarks = "TestRemarks",
-            };
-
-            var e = new Eye
-            {
-                Name = "TestEye",
-                Link = "TestLink",
-            };
-
-            var h = new Hair
-            {
-                Name = "TestHair",
-                Link = "TestLink"
-            };
-
-            var m = new Mouth
-            {
-                Name = "TestMouth",
-                Link = "TestMouthLink"
-            };
-
-            var n = new Nose
-            {
-                Name = "TestNose",
-                Link = "NoseLink"
-            };
-
-            var right = new Right
-            {
-                Name = "TestRight",
-                Remarks = "TestRemarkRight"
-            };
-
-            var grade = new Grade
-            {
-                Name = "TestGrade",
-                Remarks = "TestRemarkGrade"
-            };
-
-            var a = new Avatar
-            {
-                Name = "TestAvatar",
-                Clothe = c,
-                Eye = e,
-                Hair = h,
-                Mouth = m,
-                Nose = n,
-                Remarks = "Avatar Remarks"
-            };
-
-            var g = new Group
-            {
-                Name = "TestGroup",
-                Remarks = "GroupRemarks..."
-            };
-
-            user.Avatar = a;
-            user.Grade = grade;
-            user.Right = right;
-            user.Remarks = "This is a test...";
-            #endregion
 
             using ( var userContext = new UserContext() )
             {
-                userContext.Users.Add(user);
-                userContext.SaveChanges();
-                return true;
+                userToCreate = userContext.Users.Where(u => u.Nickname.Equals( user.Nickname ) ).FirstOrDefault();
+
+                if( userToCreate == null )
+                {
+                    userContext.Users.Add( user );
+                    userContext.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
 
