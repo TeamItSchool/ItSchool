@@ -10,12 +10,7 @@ namespace ITI.ItSchool.Models.UserEntities
     [Table( "Groups" )]
     public class Group
     {
-        List<User> _userList;
-
-        public Group()
-        {
-            _userList = new List<User>();
-        }
+        public Group() { }
 
         [Key]
         public int GroupId { get; set; }

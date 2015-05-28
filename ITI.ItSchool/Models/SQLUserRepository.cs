@@ -13,7 +13,19 @@ namespace ITI.ItSchool.Models
     public class SQLUserRepository : IUserRepository
     {
 
-        private bool CheckMail( User user )
+        private bool CheckEmptyFields( User user )
+        {
+            if( String.IsNullOrEmpty( user.FirstName ) || String.IsNullOrEmpty( user.LastName ) ||
+                String.IsNullOrEmpty( user.Mail ) || String.IsNullOrEmpty( user.Nickname ) ||
+                String.IsNullOrEmpty( user.Password ) )
+            {
+                return false;
+            }
+            return true;
+            
+        }
+
+        private bool CheckExistingMail( User user )
         {
             User usersMail = null;
 
@@ -42,7 +54,7 @@ namespace ITI.ItSchool.Models
             using ( var userContext = new UserContext() )
             {
                 userToCreate = userContext.Users.Where(u => u.Nickname.Equals( user.Nickname ) ).FirstOrDefault();
-                mailExists = this.CheckMail( user );
+                mailExists = this.CheckExistingMail( user );
 
                 if( userToCreate == null )
                 {

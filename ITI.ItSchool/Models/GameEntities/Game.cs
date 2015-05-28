@@ -27,15 +27,10 @@ namespace ITI.ItSchool.Models
 
         public Level Level { get; set; }
 
-        [ForeignKey( "ExerciseId" )]
-        public int ExerciseId { get; set; }
-
-        public Exercise Exercise { get; set; }
-
         [ForeignKey( "ExerciseType" )]
         public int ExerciseTypeId { get; set; }
 
-        public ExerciseType ExerciseType { get; set; }
+        public virtual ExerciseType ExerciseType { get; set; }
 
         [MaxLength( 100 )]
         public string Data { get; set; }

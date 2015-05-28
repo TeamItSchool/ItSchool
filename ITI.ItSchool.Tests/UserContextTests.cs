@@ -54,12 +54,6 @@ namespace ITI.ItSchool.Tests
                 Name = "Soldat"
             };
 
-            var right = new Right
-            {
-                Name = "TestRight",
-                Remarks = "TestRemarkRight"
-            };
-
             var grade = new Grade
             {
                 Name = "TestGrade",
@@ -91,7 +85,6 @@ namespace ITI.ItSchool.Tests
                 Avatar = a,
                 Group = g,
                 Grade = grade,
-                Right = right,
                 Remarks = "This is a test..."
             };
 
@@ -110,7 +103,6 @@ namespace ITI.ItSchool.Tests
                 Avatar = a,
                 Group = g,
                 Grade = grade,
-                Right = right,
                 Remarks = "This is a test..."
             };
 
@@ -141,12 +133,6 @@ namespace ITI.ItSchool.Tests
                 Name = "Soldat"
             };
 
-            var right = new Right
-            {
-                Name = "TestRight",
-                Remarks = "TestRemarkRight"
-            };
-
             var grade = new Grade
             {
                 Name = "TestGrade",
@@ -177,7 +163,6 @@ namespace ITI.ItSchool.Tests
                 Password = "admin",
                 Avatar = a,
                 Grade = grade,
-                Right = right,
                 Remarks = "This is a test..."
             };
 
@@ -205,12 +190,6 @@ namespace ITI.ItSchool.Tests
             var legs = new Legs
             {
                 Name = "Soldat"
-            };
-
-            var right = new Right
-            {
-                Name = "TestRight",
-                Remarks = "TestRemarkRight"
             };
 
             var grade = new Grade
@@ -243,7 +222,6 @@ namespace ITI.ItSchool.Tests
                 Password = "admin",
                 Avatar = a,
                 Grade = grade,
-                Right = right,
                 Remarks = "This is a test..."
             };
             string nickname = user.Nickname;
@@ -279,12 +257,6 @@ namespace ITI.ItSchool.Tests
                 Name = "Soldat"
             };
 
-            var right = new Right
-            {
-                Name = "TestRight",
-                Remarks = "TestRemarkRight"
-            };
-
             var grade = new Grade
             {
                 Name = "TestGrade",
@@ -314,7 +286,6 @@ namespace ITI.ItSchool.Tests
                 Password = "mypass",
                 Avatar = a,
                 Grade = grade,
-                Right = right,
                 Group = g,
                 Remarks = "This is a test..."
             };
@@ -363,12 +334,6 @@ namespace ITI.ItSchool.Tests
                 Name = "Soldat"
             };
 
-            var right = new Right
-            {
-                Name = "TestRight",
-                Remarks = "TestRemarkRight"
-            };
-
             var grade = new Grade
             {
                 Name = "TestGrade",
@@ -398,7 +363,6 @@ namespace ITI.ItSchool.Tests
                 Password = "mypass",
                 Avatar = a,
                 Grade = grade,
-                Right = right,
                 Group = g,
                 Remarks = "This is a test..."
             };
@@ -416,7 +380,6 @@ namespace ITI.ItSchool.Tests
                 Password = "mypass",
                 Avatar = a,
                 Grade = grade,
-                Right = right,
                 Group = g,
                 Remarks = "This is a test..."
             };
