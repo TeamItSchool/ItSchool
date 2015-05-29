@@ -1,0 +1,42 @@
+﻿<div ng-controller="TeacherDragAndDropController">
+    <center>
+        <h1>{{Message}}</h1>
+        <br />
+        <form novalidate name="SaveTeacherDragAndDrop" ng-submit="Login()">
+            <table>
+                <tr>
+                    <td><input type="number" name="Card1" ng-model="card1" step="2" value="{{card1}}" min="1" max="101" required /></td>
+                    <td><input type="number" name="Card2" ng-model="card2" step="2" value="{{card2}}" min="2" max="100" required /></td>
+                    <td><input type="number" name="Card3" ng-model="card3" step="2" value="{{card3}}" min="1" max="101" required /></td>
+                    <td><input type="number" name="Card4" ng-model="card4" step="2" value="{{card4}}" min="2" max="100" required /></td>
+                    <td><input type="number" name="Card5" ng-model="card5" step="2" value="{{card5}}" min="1" max="101" required /><br /></td>
+                </tr>
+                <tr>
+                    <td><div id="impair" class="resize-drag drag-drop"> {{card1}} </div></td>
+                    <td><div id="pair" class="resize-drag drag-drop"> {{card2}} </div></td>
+                    <td><div id="pair" class="resize-drag drag-drop"> {{card3}} </div>
+                    <td><div id="impair" class="resize-drag drag-drop"> {{card4}} </div></td>
+                    <td><div id="impair" class="resize-drag drag-drop"> {{card5}} </div></td>
+                </tr>
+                <tr>
+                    <td><input type="number" name="Card6" ng-model="card6" step="2" value="{{card6}}" min="2" max="100" required /></td>
+                    <td><input type="number" name="Card7" ng-model="card7" step="2" value="{{card7}}" min="1" max="101" required /></td>
+                    <td><input type="number" name="Card8" ng-model="card8" step="2" value="{{card8}}" min="2" max="100" required /></td>
+                    <td><input type="number" name="Card9" ng-model="card9" step="2" value="{{card9}}" min="1" max="101" required /></td>
+                    <td><input type="number" name="Card10" ng-model="card10" step="2" value="{{card10}}" min="2" max="100" required /><br /></td>
+                </tr>
+                <tr>
+                    <td><div id="pair" class="resize-drag drag-drop"> {{card6}} </div></td>
+                    <td><div id="impair" class="resize-drag drag-drop"> {{card7}} </div></td>
+                    <td><div id="pair" class="resize-drag drag-drop"> {{card8}} </div></td>
+                    <td><div id="impair" class="resize-drag drag-drop"> {{card9}} </div></td>
+                    <td><div id="pair" class="resize-drag drag-drop"> {{card10}} </div></td>
+                </tr>
+            </table>
+            <input type="submit" name="save" value="Sauvegarder" />
+        </form>
+    </center>
+
+    <div id="zone-pair" class="dropzonePair">Zone Paire</div>
+    <div id="zone-impair" class="dropzoneImpair">Zone impaire</div>
+</div>

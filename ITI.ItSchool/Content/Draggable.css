@@ -74,11 +74,15 @@
   -webkit-transform: translate(0px, 0px);
           transform: translate(0px, 0px);
 
-  transition: background-color 5s;
+  transition: background-color 3s;
 }
-
 
 .drag-drop.can-drop {
   color: #FFF;
   background-color: #4e4;
+}
+
+.drag-drop.cannot-drop {
+  color: #FFF;
+  background-color:red;
 }

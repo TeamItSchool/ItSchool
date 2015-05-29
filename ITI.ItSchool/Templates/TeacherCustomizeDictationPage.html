@@ -1,0 +1,39 @@
+﻿<div ng-controller="TeacherDictationController">
+    <center>
+        <div ng-show="!EasySelected && !MediumSelected && !HardSelected">
+            <h1>{{Message}}</h1>
+            <table>
+                <tr>
+                    <td>
+                        <form novalidate name="EasyForm" ng-submit="Easy()">
+                            <md-button class="md-raised md-primary" type="submit" name="easy">Facile</md-button>
+                        </form>
+                    </td>
+                    <td>
+                        <form novalidate name="MediumForm" ng-submit="Medium()">
+                            <md-button class="md-raised md-primary" type="submit" name="medium">Moyen</md-button>
+                        </form>
+                    </td>
+                    <td>
+                        <form novalidate name="HardForm" ng-submit="Hard()">
+                            <md-button class="md-raised md-primary" type="submit" name="hard">Difficile</md-button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div ng-show="EasySelected">
+            <h1>{{Message}}</h1>
+            <form name="DictText" ng-submit="SaveText()">
+                <textarea ng-model="DictationText.Text" name="text" placeholder="Texte de la dictée..." rows="5" cols="40"></textarea><br />
+                <md-button class="md-raised md-primary" type="submit" name="SaveEasyText">{{Button}}</md-button>
+            </form>
+        </div>
+        <div ng-show="MediumSelected">
+            <h1>{{Message}</h1>
+        </div>
+        <div ng-show="HardSelected">
+            <h1>{{Message}}</h1>
+        </div>
+    </center>
+</div>

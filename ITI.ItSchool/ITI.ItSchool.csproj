@@ -6650,9 +6650,12 @@
     <Content Include="Scripts\version.txt" />
     <Content Include="Templates\Error.html" />
     <Content Include="Templates\home.html" />
+    <Content Include="Templates\KidDragAndDropExercice.html" />
     <Content Include="Templates\KidHomePage.html" />
     <Content Include="Templates\KidLoginPage.html" />
     <Content Include="Templates\KidRegistrationPage.html" />
+    <Content Include="Templates\TeacherCustomizeDictationPage.html" />
+    <Content Include="Templates\TeacherCustomizeDragAndDropPage.html" />
     <Content Include="Templates\TeacherLobbyPage.html" />
     <Content Include="Templates\TeacherHomePage.html" />
     <Content Include="Templates\TeacherLoginPage.html" />
@@ -6671,6 +6674,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CardsData.cs" />
+    <Compile Include="Models\DictationText.cs" />
     <Compile Include="Models\LoginData.cs" />
     <Compile Include="MyModel.Context.cs">
       <AutoGen>True</AutoGen>

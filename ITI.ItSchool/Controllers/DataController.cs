@@ -36,6 +36,21 @@ namespace ITI.ItSchool.Controllers
             #endregion
         }
 
+        public JsonResult SaveDragAndDropTeacher( CardsData c )
+        {
+            JsonResult jsonData = null;
+            return jsonData;
+        }
+
+        public JsonResult SaveDictation( DictationText d )
+        {
+            DictationText text = new DictationText();
+            text.Text = "Je suis celui qui me trouve dans la fôret. La fôret est grande, magnifique. Je suis heureux de me trouver dans cette forêt";
+            text.Level = "Easy";
+            JsonResult jsonData = new JsonResult { Data = text, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            return jsonData;
+        }
+
         /// <summary>
         /// Save User in DB
         /// </summary>

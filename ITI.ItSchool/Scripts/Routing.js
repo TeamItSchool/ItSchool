@@ -35,6 +35,14 @@
         templateUrl: '/Templates/TeacherSelectExercicesPage.html',
         controller: 'TeacherSelectExercicesController'
     })
+    .when('/teacher/exercices/drag_drop', {
+        templateUrl: '/Templates/TeacherCustomizeDragAndDropPage.html',
+        controller: 'TeacherDragAndDropController'
+    })
+    .when('/teacher/exercices/dictation', {
+        templateUrl: '/Templates/TeacherCustomizeDictationPage.html',
+        controller: 'TeacherDictationController'
+    })
     .when('/kid', {
         templateUrl: '/Templates/KidHomePage.html',
         controller: 'KidHomeController'
@@ -187,7 +195,7 @@
         Username: '',
         Password: ''
     };
-    //Check if Form is valid or not // here f1 is our form Name
+    //Check if Form is valid or not // here LoginForm is our form Name
     $scope.$watch('LoginForm.$valid', function (newVal) {
         $scope.IsFormValid = newVal;
     });
@@ -243,7 +251,6 @@
         if ($scope.submitText == "Inscription") {
             $scope.submitted = true;
             $scope.message = "";
-
             if ($scope.isFormValid) {
                 $scope.submitText = "Veuillez patienter s'il vous plaît";
                 $scope.User = data;
@@ -308,7 +315,128 @@
     }
 })
 .controller('TeacherSelectExercicesController', function ($scope) {
-    $scope.Message = 'Swag';
+    $scope.Message = 'Selectionnez un exercice à modifier';
+})
+.controller('TeacherDictationController', function ($scope, SaveDictationText) {
+    $scope.Message = 'Selectionnez un niveau.';
+    $scope.EasySelected = false;
+    $scope.MediumSelected = false;
+    $scope.HardSelected = false;
+    $scope.Message2 = "";
+    $scope.IsFormValid = false;
+    $scope.Button = "Sauvegarder";
+
+    $scope.DictationText = {
+        Text: '',
+        Level: ''
+    };
+
+    $scope.LoginData = {
+        Username: 'Yo',
+        Password: 'No'
+    };
+
+    //Check if Form is valid or not // here DictText is our form Name
+    $scope.$watch('DictText.$valid', function (newVal) {
+        $scope.IsFormValid = newVal;
+    });
+
+    $scope.SaveText = function () {
+        if ($scope.IsFormValid) {
+            $scope.Button = "Sauvegarde en cours..."
+            SaveDictationText.GetText($scope.DictationText).then(function (d) {
+                $scope.Button = "Dictée sauvegardée";
+            })
+        }
+    };    
+
+    $scope.Easy = function () {
+        $scope.EasySelected = true;
+        $scope.Message = "Insérez le texte (Niveau facile)";
+        $scope.DictationText.Level = "Easy";
+    }
+    $scope.Medium = function () {
+        $scope.MediumSelected = true;
+        $scope.Message = "Insérez le texte (Niveau moyen)";
+        $scope.DictationText.Level = "Medium";
+    }
+    $scope.Hard = function () {
+        $scope.HardSelected = true;
+        $scope.Message = "Insérez le texte (Niveau difficile)";
+        $scope.DictationText.Level = "Hard";
+    }
+})
+.factory('SaveDictationText', function ($http) {
+    var fac = {};
+    var data = "";
+    fac.GetText = function (d) {
+        return $http({
+            url: '/Data/SaveDictation',
+            method: 'POST',
+            data: JSON.stringify(d),
+            headers: { 'content-type': 'application/json' }
+        })
+    };
+
+    return fac;
+})
+.controller('TeacherDragAndDropController', function ($scope, SaveDragAndDropExercice) {
+    $scope.Message = "Modifiez à vos souhaits l'exercice du 'Glissé-Déposé'";
+    $scope.card1 = "1";
+    $scope.card2 = "2";
+    $scope.card3 = "3";
+    $scope.card4 = "4";
+    $scope.card5 = "5";
+    $scope.card6 = "6";
+    $scope.card7 = "7";
+    $scope.card8 = "8";
+    $scope.card9 = "9";
+    $scope.card10 = "10";
+
+    $scope.IsSaved = false;
+    $scope.Submitted = false;
+    $scope.IsFormValid = false;
+
+    $scope.CardsData = {
+        Card1: '', Card2: '',
+        Card3: '', Card4: '',
+        Card5: '', Card6: '',
+        Card7: '', Card8: '',
+        Card9: '', Card10: ''
+    };
+    //Check if Form is valid or not // here SaveTeacherDragAndDrop is our form Name
+    $scope.$watch('SaveDragAndDropTeacher.$valid', function (newVal) {
+        $scope.IsFormValid = newVal;
+    });
+
+    $scope.Save = function () {
+        $scope.Submitted = true;
+        if ($scope.IsFormValid) {
+            LoginService.GetUser($scope.CardsData).then(function (d) {
+                if (d.data.Card1 != null) {
+                    $scope.IsSaved = true;
+                    $scope.Message = "Yup";
+                }
+                else {
+                    alert('Woops')
+                }
+            })
+        }
+    };
+})
+.factory('SaveDragAndDropExercice', function ($http) {
+    var fac = {};
+    var data = "";
+    fac.GetUser = function (d) {
+        return $http({
+            url: '/Data/SaveDragAndDropTeacher',
+            method: 'POST',
+            data: JSON.stringify(d),
+            headers: { 'content-type': 'application/json' }
+        })
+    };
+
+    return fac;
 })
 .controller('KidHomeController', function ($scope) {
     $scope.Message = 'Page "Élève"';
@@ -412,5 +540,4 @@
         return defer.promise;
     }
     return fac;
-})
-;
+});

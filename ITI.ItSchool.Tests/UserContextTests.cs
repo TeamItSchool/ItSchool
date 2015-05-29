@@ -16,9 +16,7 @@ namespace ITI.ItSchool.Tests
         public void create_a_null_user_throws_ArgumentNullException()
         {
             IUserRepository userRepo = new SQLUserRepository();
-
             User nullUser = null;
-
             Assert.Throws<ArgumentNullException>( () => userRepo.Create( nullUser ) );
         }
 
