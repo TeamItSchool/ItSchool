@@ -163,6 +163,7 @@ namespace ITI.ItSchool.Tests
                 Password = "admin",
                 Avatar = a,
                 Grade = grade,
+                Group = g,
                 Remarks = "This is a test..."
             };
 
@@ -221,6 +222,7 @@ namespace ITI.ItSchool.Tests
                 Mail = "ms@gmail.com",
                 Password = "admin",
                 Avatar = a,
+                Group = g,
                 Grade = grade,
                 Remarks = "This is a test..."
             };
@@ -387,6 +389,23 @@ namespace ITI.ItSchool.Tests
             isCreated = userRepo.Create( userWithSameMailAdd );
 
             Assert.That( isCreated, Is.EqualTo( false ) );
+
+            var userWithEmptyFields = new User
+            {
+                FirstName = "",
+                LastName = "",
+                Nickname = "", 
+                Mail = "",
+                Password = "",
+                Avatar = a,
+                Group = g, 
+                Grade = grade,
+                Remarks = "Test of creating user with specific empty fields"
+            };
+
+            isCreated = userRepo.Create( userWithEmptyFields );
+
+            Assert.That( isCreated, Is.Not.EqualTo( true ) );
         }
     }
 }

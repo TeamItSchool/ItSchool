@@ -19,10 +19,9 @@ namespace ITI.ItSchool.Models
                 String.IsNullOrEmpty( user.Mail ) || String.IsNullOrEmpty( user.Nickname ) ||
                 String.IsNullOrEmpty( user.Password ) )
             {
-                return false;
+                return true;
             }
-            return true;
-            
+            return false;
         }
 
         private bool CheckExistingMail( User user )
@@ -49,16 +48,18 @@ namespace ITI.ItSchool.Models
         {
             User userToCreate = null;
             bool mailExists = true;
+            bool emptyFields = false;
             if( user == null ) throw new ArgumentNullException( "The 'User' as an object type is null.", "user" );
 
             using ( var userContext = new UserContext() )
             {
                 userToCreate = userContext.Users.Where(u => u.Nickname.Equals( user.Nickname ) ).FirstOrDefault();
                 mailExists = this.CheckExistingMail( user );
+                emptyFields = this.CheckEmptyFields( user );
 
                 if( userToCreate == null )
                 {
-                    if( !mailExists )
+                    if( !mailExists && !emptyFields )
                     {
                         userContext.Users.Add(user);
                         userContext.SaveChanges();
@@ -130,7 +131,6 @@ namespace ITI.ItSchool.Models
                             select u;
 
                 userToUpdate = db.Users.ToList();
-                userToUpdate[0].Mail = user.Mail;
 
                 if( userToUpdate[ 0 ].Password.Equals( user.Password ) )
                 {
