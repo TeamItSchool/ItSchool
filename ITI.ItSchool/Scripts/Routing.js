@@ -171,6 +171,7 @@
         $scope.submitted = false;
     }
 })
+
 .controller('TeacherHomeController', function ($scope) {
     $scope.Message = 'Page "Professeurs"';
 })
@@ -331,11 +332,6 @@
         Level: ''
     };
 
-    $scope.LoginData = {
-        Username: 'Yo',
-        Password: 'No'
-    };
-
     //Check if Form is valid or not // here DictText is our form Name
     $scope.$watch('DictText.$valid', function (newVal) {
         $scope.IsFormValid = newVal;
@@ -344,6 +340,7 @@
     $scope.SaveText = function () {
         if ($scope.IsFormValid) {
             $scope.Button = "Sauvegarde en cours..."
+            $scope.DictationText.Text.trim();
             SaveDictationText.GetText($scope.DictationText).then(function (d) {
                 $scope.Button = "Dictée sauvegardée";
             })
