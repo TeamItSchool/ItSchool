@@ -4077,6 +4077,7 @@
     <Content Include="Scripts\angular-route.min.js.map" />
     <Content Include="Scripts\angular-sanitize.min.js.map" />
     <Content Include="Scripts\angular-touch.min.js.map" />
+    <Content Include="Scripts\collections.js" />
     <Content Include="Scripts\docs\components\bootstrap-3.1.1\css\bootstrap-theme.css.map" />
     <Content Include="Scripts\docs\components\bootstrap-3.1.1\css\bootstrap.css.map" />
     <Content Include="Scripts\docs\components\bootstrap-3.1.1\fonts\glyphicons-halflings-regular.eot" />
@@ -6740,6 +6741,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\cloze-game.ts" />
+    <TypeScriptCompile Include="Scripts\collections.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
