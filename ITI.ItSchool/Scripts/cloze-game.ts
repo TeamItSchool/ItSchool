@@ -1,9 +1,11 @@
 ﻿class ClozeGame
 {
     errors: number = 0;
-    wordsToHide: string[];
+    wordsToHide: Array<string>;
 
-    constructor() { }
+    constructor() {
+        this.wordsToHide = new Array<string>();
+    }
 
     get totalErrors(): number {
         return this.errors;
@@ -15,8 +17,9 @@
         this.wordsToHide.push("blue");
     }
 
-    check( wordsReceived: string[] ): void {
-        var i: number = 0;
+    check(wordsReceived: string[]): void {
+        this.getWords();
+        var i = 0;
         for (i; i < this.wordsToHide.length; i++ ) {
             if( this.wordsToHide[i] != wordsReceived[i] ) {
                 this.errors++;

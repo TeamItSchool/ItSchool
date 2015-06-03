@@ -1,6 +1,7 @@
 ﻿var ClozeGame = (function () {
     function ClozeGame() {
         this.errors = 0;
+        this.wordsToHide = new Array();
     }
     Object.defineProperty(ClozeGame.prototype, "totalErrors", {
         get: function () {
@@ -17,6 +18,7 @@
     };
 
     ClozeGame.prototype.check = function (wordsReceived) {
+        this.getWords();
         var i = 0;
         for (i; i < this.wordsToHide.length; i++) {
             if (this.wordsToHide[i] != wordsReceived[i]) {
