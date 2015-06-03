@@ -16,5 +16,8 @@ namespace ITI.ItSchool.Models.AvatarEntities
         [MinLength( 3 )]
         [MaxLength( 45 )]
         public string Name { get; set; }
+
+        [MaxLength(256)]
+        public string Link { get; set; }
     }
 }

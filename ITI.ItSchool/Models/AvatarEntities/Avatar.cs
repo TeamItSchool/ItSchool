@@ -1,4 +1,5 @@
 ﻿using ITI.ItSchool.Models.AvatarEntities;
+using ITI.ItSchool.Models.UserEntities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -18,6 +19,11 @@ namespace ITI.ItSchool.Models
         [MaxLength( 45 )]
         public string Name { get; set; }
 
+        public int UserId { get; set; }
+
+        [ForeignKey( "UserId" )]
+        public virtual User User { get; set; }
+
         public int FootId { get; set; }
 
         [ForeignKey( "FootId" )]
@@ -32,7 +38,5 @@ namespace ITI.ItSchool.Models
 
         [ForeignKey("BodyId")]
         public virtual Body Body { get; set; }
-
-
     }
 }
