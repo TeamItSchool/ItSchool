@@ -11,7 +11,7 @@ namespace ITI.ItSchool.Models
 {
     public class Avatar
     {
-        [Key]
+        [Key, ForeignKey( "User" )]
         public int AvatarId { get; set; }
 
         [Required]

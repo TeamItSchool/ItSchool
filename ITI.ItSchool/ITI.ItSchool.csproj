@@ -6660,6 +6660,7 @@
     <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\DrawController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TestInputController.cs" />
     <Compile Include="Controllers\TexteTrousController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -6725,6 +6726,7 @@
     <Content Include="Scripts\version.json" />
     <Content Include="Views\TexteTrous\ClozeExercise.cshtml" />
     <Content Include="Scripts\app.config" />
+    <Content Include="Views\TestInput\Input.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
