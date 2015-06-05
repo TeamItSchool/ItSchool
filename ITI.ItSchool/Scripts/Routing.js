@@ -191,6 +191,7 @@
     $scope.IsLogedIn = false;
     $scope.Submitted = false;
     $scope.IsFormValid = false;
+    $scope.ButtonMessage = "Connexion";
 
     $scope.LoginData = {
         Username: '',
@@ -204,6 +205,7 @@
         $scope.Submitted = true;
         if ($scope.IsFormValid) {
             LoginService.GetUser($scope.LoginData).then(function (d) {
+                $scope.ButtonMessage = "Connexion en cours..";
                 if (d.data.Nickname != null) {
                     var monobjet_json = JSON.stringify(d);
                     sessionStorage.setItem("objet", monobjet_json);
@@ -496,6 +498,7 @@
         $scope.submitted = false;
     }
 })
+
 
 //Factories
 

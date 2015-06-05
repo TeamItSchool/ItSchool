@@ -120,6 +120,7 @@ namespace ITI.ItSchool.Models
         {
             using( var uc = new UserContext() )
             {
+                uc.Configuration.LazyLoadingEnabled = false;
                 User user = uc.Users.Where( a => a.Nickname.Equals( nickname ) ).FirstOrDefault();
                 var jsonData = new JsonResult { Data = user, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 return jsonData;
