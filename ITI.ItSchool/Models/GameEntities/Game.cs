@@ -17,19 +17,20 @@ namespace ITI.ItSchool.Models
         [MaxLength( 200 )]
         public string Name { get; set; }
 
-        [ForeignKey( "ChapterId" )]
         public int ChapterId { get; set; }
 
+        [ForeignKey("ChapterId")]
         public Chapter Chapter { get; set; }
-
-        [ForeignKey( "LevelId" )]
+        
         public int LevelId { get; set; }
 
+        [ForeignKey("LevelId")]
         public Level Level { get; set; }
 
-        [ForeignKey( "ExerciseType" )]
+        
         public int ExerciseTypeId { get; set; }
 
+        [ForeignKey("ExerciseTypeId")]
         public virtual ExerciseType ExerciseType { get; set; }
 
         [MaxLength( 100 )]

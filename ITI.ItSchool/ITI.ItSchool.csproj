@@ -6693,7 +6693,7 @@
     <Compile Include="Models\GameEntities\ExerciseType.cs" />
     <Compile Include="Models\GameEntities\Game.cs" />
     <Compile Include="Models\GameEntities\Level.cs" />
-    <Compile Include="Models\IUserRepository.cs" />
+    <Compile Include="Models\IRepository.cs" />
     <Compile Include="Models\Contexts\SchoolContext.cs" />
     <Compile Include="Models\SchoolEntities\Chapter.cs" />
     <Compile Include="Models\SchoolEntities\Grade.cs" />
@@ -6702,7 +6702,7 @@
     <Compile Include="Models\Contexts\SocialNetworkContext.cs" />
     <Compile Include="Models\SocialNetworkEntities\Friendship.cs" />
     <Compile Include="Models\SocialNetworkEntities\Status.cs" />
-    <Compile Include="Models\SQLUserRepository.cs" />
+    <Compile Include="Models\SQLRepository.cs" />
     <Compile Include="Models\Contexts\UserContext.cs" />
     <Compile Include="Models\UserEntities\Belonging.cs" />
     <Compile Include="Models\UserEntities\Control.cs" />

@@ -9,7 +9,7 @@ namespace ITI.ItSchool.Models
 {
     public class Chapter
     {
-        [Key]
+        [Key, ForeignKey("Grade")]
         public int ChapterId { get; set; }
 
         [Required]
@@ -20,12 +20,12 @@ namespace ITI.ItSchool.Models
         public int ThemeId { get; set; }
 
         [ForeignKey( "ThemeId" )]
-        public Theme Theme { get; set; }
+        public virtual Theme Theme { get; set; }
 
-        [ForeignKey( "GradeId" )]
         public int GradeId { get; set; }
 
-        public Grade Grade { get; set; }
+        [ForeignKey("GradeId")]
+        public virtual Grade Grade { get; set; }
 
         [MaxLength( 200 )]
         public string Remarks { get; set; }

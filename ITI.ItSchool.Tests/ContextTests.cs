@@ -13,31 +13,38 @@ using System.Threading.Tasks;
 namespace ITI.ItSchool.Tests
 {
     [TestFixture]
-    public class UserContextTests
+    public class ContextTests
     {
-        public void initialize_database()
+        private void initialize_database_userContext()
         {
             IDatabaseInitializer<UserContext> init = new DropCreateDatabaseAlways<UserContext>();
             Database.SetInitializer( init );
             init.InitializeDatabase( new UserContext() );
         }
 
+        private void initialize_database_gameContext()
+        {
+            IDatabaseInitializer<GameContext> init = new DropCreateDatabaseAlways<GameContext>();
+            Database.SetInitializer( init );
+            init.InitializeDatabase( new GameContext() );
+        }
+
         [Test]
         public void create_a_null_user_throws_ArgumentNullException()
         {
-            IUserRepository userRepo = new SQLUserRepository();
+            IRepository repo = new SQLRepository();
 
             User nullUser = null;
 
-            Assert.Throws<ArgumentNullException>( () => userRepo.Create( nullUser ) );
+            Assert.Throws<ArgumentNullException>( () => repo.Create( nullUser ) );
         }
 
         [Test]
         public void cannot_create_a_user_with_an_existing_nickname()
         {
-            initialize_database();
+            initialize_database_userContext();
 
-            IUserRepository userRepo = new SQLUserRepository();
+            IRepository repo = new SQLRepository();
 
             var body = new Body
             {
@@ -88,7 +95,7 @@ namespace ITI.ItSchool.Tests
                 Remarks = "This is a test..."
             };
 
-            bool isCreated = userRepo.Create( user );
+            bool isCreated = repo.Create( user );
 
             Assert.That( isCreated == true );
 
@@ -106,7 +113,7 @@ namespace ITI.ItSchool.Tests
                 Remarks = "This is a test..."
             };
 
-            isCreated = userRepo.Create( sameUser );
+            isCreated = repo.Create( sameUser );
 
             Assert.That( isCreated == false );
 
@@ -115,8 +122,8 @@ namespace ITI.ItSchool.Tests
         [Test]
         public void create_a_user()
         {
-            initialize_database();
-            IUserRepository userRepo = new SQLUserRepository();
+            initialize_database_userContext();
+            IRepository repo = new SQLRepository();
 
             var body = new Body
             {
@@ -167,7 +174,7 @@ namespace ITI.ItSchool.Tests
                 Remarks = "This is a test..."
             };
 
-            bool isCreated = userRepo.Create( user );
+            bool isCreated = repo.Create( user );
 
             Assert.That( isCreated, Is.EqualTo( true ) );
         }
@@ -175,8 +182,8 @@ namespace ITI.ItSchool.Tests
         [Test]
         public void can_find_a_user()
         {
-            initialize_database();
-            IUserRepository userRepo = new SQLUserRepository();
+            initialize_database_userContext();
+            IRepository urepo = new SQLRepository();
 
             var body = new Body
             {
@@ -228,11 +235,11 @@ namespace ITI.ItSchool.Tests
             };
             string nickname = user.Nickname;
             User u;
-            bool isCreated = userRepo.Create( user );
+            bool isCreated = urepo.Create( user );
 
             Assert.That( isCreated == true );
 
-            u = userRepo.FindByNickname( nickname );
+            u = urepo.FindByNickname( nickname );
 
             Assert.That( nickname, Is.EqualTo( u.Nickname ) );
         }
@@ -240,8 +247,8 @@ namespace ITI.ItSchool.Tests
         [Test]
         public void can_update_a_user()
         {
-            initialize_database();
-            IUserRepository userRepo = new SQLUserRepository();
+            initialize_database_userContext();
+            IRepository repo = new SQLRepository();
             IList<User> u;
 
             var body = new Body
@@ -292,23 +299,23 @@ namespace ITI.ItSchool.Tests
                 Remarks = "This is a test..."
             };
 
-            bool isCreated = userRepo.Create( user );
+            bool isCreated = repo.Create( user );
 
             Assert.That( isCreated == true );
 
-            u = userRepo.FindAllUsers();
+            u = repo.FindAllUsers();
 
             Assert.That( user.Mail, Is.EqualTo( "smith@microsoft.com" ) );
 
             user.Mail = "john.smith@outlook.com";
 
-            u = userRepo.Update( user );
+            u = repo.Update( user );
 
             Assert.That( user.Mail, Is.EqualTo( "john.smith@outlook.com" ) );
 
             user.Password = "mypassword";
 
-            u = userRepo.Update( user );
+            u = repo.Update( user );
 
             Assert.That( user.Mail, Is.EqualTo( "john.smith@outlook.com" ) );
             Assert.IsNull( u );
@@ -317,9 +324,9 @@ namespace ITI.ItSchool.Tests
         [Test]
         public void cannot_create_an_account_with_an_existing_mail()
         {
-            initialize_database();
+            initialize_database_userContext();
 
-            IUserRepository userRepo = new SQLUserRepository();
+            IRepository repo = new SQLRepository();
 
             var body = new Body
             {
@@ -369,7 +376,7 @@ namespace ITI.ItSchool.Tests
                 Remarks = "This is a test..."
             };
 
-            bool isCreated = userRepo.Create(user);
+            bool isCreated = repo.Create(user);
 
             Assert.That( isCreated == true );
 
@@ -386,7 +393,7 @@ namespace ITI.ItSchool.Tests
                 Remarks = "This is a test..."
             };
 
-            isCreated = userRepo.Create( userWithSameMailAdd );
+            isCreated = repo.Create( userWithSameMailAdd );
 
             Assert.That( isCreated, Is.EqualTo( false ) );
 
@@ -403,9 +410,63 @@ namespace ITI.ItSchool.Tests
                 Remarks = "Test of creating user with specific empty fields"
             };
 
-            isCreated = userRepo.Create( userWithEmptyFields );
+            isCreated = repo.Create( userWithEmptyFields );
 
             Assert.That( isCreated, Is.Not.EqualTo( true ) );
+        }
+
+        [Test]
+        public void create_an_exercise()
+        {
+            //initialize_database_gameContext();
+
+            IRepository repo = new SQLRepository();
+
+            var chapter = new Chapter
+            {
+                Name = "Verbes en anglais",
+                ThemeId = 1,
+                GradeId = 2
+            };
+
+            var grade = new Grade
+            {
+                Name = "6e",
+                Remarks = "Collège"
+            };
+
+            var theme = new Theme
+            {
+                Name = "Anglais",
+                MatterId = 1
+            };
+
+            var matter = new Matter
+            {
+                Name = "Anglais"
+            };
+
+            var level = new Level
+            {
+                Name = "Facile"
+            };
+
+            var gameType = new ExerciseType
+            {
+                Name = "Texte à trous"
+            };
+
+            var game = new Game
+            {
+                Name = "Retrouver les verbes",
+                Chapter = chapter,
+                Level = level,
+                ExerciseType = gameType,
+                Data = " Hello! My name is Brian. "
+            };
+
+            bool isCreated = repo.Create( game );
+            Assert.That( isCreated, Is.EqualTo( true ) );
         }
     }
 }

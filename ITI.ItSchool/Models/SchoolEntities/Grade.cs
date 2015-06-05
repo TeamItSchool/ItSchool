@@ -18,5 +18,7 @@ namespace ITI.ItSchool.Models
 
         [MaxLength( 200 )]
         public string Remarks { get; set; }
+
+        public virtual ICollection<Chapter> Chapters { get; set; }
     }
 }

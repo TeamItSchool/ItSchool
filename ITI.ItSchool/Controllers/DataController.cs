@@ -21,7 +21,7 @@ namespace ITI.ItSchool.Controllers
         public JsonResult UserLogin( LoginData d )
         {
             
-            SQLUserRepository sUserRepo = new SQLUserRepository();
+            SQLRepository sUserRepo = new SQLRepository();
             var jsonData = sUserRepo.FindUserByNickname( d.Username );
             return jsonData;
 
@@ -49,7 +49,7 @@ namespace ITI.ItSchool.Controllers
             //Here we will save data to the database
             if( ModelState.IsValid != false )
             {
-                SQLUserRepository sUserRepo = new SQLUserRepository();
+                SQLRepository sUserRepo = new SQLRepository();
                 var user = sUserRepo.FindByNickname( u.Nickname );
                 if( user == null )
                 {

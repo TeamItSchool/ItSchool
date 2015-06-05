@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace ITI.ItSchool.Models
 {
-    public class SQLUserRepository : IUserRepository
+    public class SQLRepository : IRepository
     {
 
         private bool CheckEmptyFields( User user )
@@ -35,6 +35,26 @@ namespace ITI.ItSchool.Models
                 if( usersMail == null ) return false;
        
                 return true;
+            }
+        }
+
+        public bool Create( Game game )
+        {
+            if ( game.Equals( null ) ) throw new ArgumentNullException( "Game as a type is null", "game" );
+            if ( game.Data.Equals( null ) ) throw new ArgumentNullException( "Game's data is null", "game" );
+
+            using( var db = new GameContext() )
+            {
+                try
+                {
+                    db.Games.Add(game);
+                    db.SaveChanges();
+                    return true;
+                }
+                catch( Exception ex )
+                {
+                    throw;
+                }
             }
         }
 

@@ -17,6 +17,7 @@ namespace ITI.ItSchool
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
             Database.SetInitializer<UserContext>( new DropCreateDatabaseIfModelChanges<UserContext>() );
+            Database.SetInitializer<GameContext>( new DropCreateDatabaseIfModelChanges<GameContext>() );
         }
     }
 }

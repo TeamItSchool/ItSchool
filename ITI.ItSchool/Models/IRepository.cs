@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace ITI.ItSchool.Models
 {
-    public interface IUserRepository
+    public interface IRepository
     {
         User FindByNickname( string nickname );
 
@@ -25,6 +25,8 @@ namespace ITI.ItSchool.Models
         User FindByGrade( string grade );
 
         bool Create( User u );
+
+        bool Create( Game g );
 
         bool Remove( User u );
 
