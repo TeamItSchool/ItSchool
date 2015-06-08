@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using ITI.ItSchool.Models.SchoolEntities;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 
 namespace ITI.ItSchool.Models
 {
@@ -55,6 +58,32 @@ namespace ITI.ItSchool.Models
                 {
                     throw;
                 }
+            }
+        }
+
+        public bool Create( Grade grade )
+        {
+            using( var db = new SchoolContext() )
+            {
+                try
+                {
+                    db.Configuration.LazyLoadingEnabled = false;
+                    db.Grades.Add(grade);
+                    db.SaveChanges();
+                    return true;
+                }
+                catch (DbEntityValidationException dbEx)
+                {
+                    foreach (var validationErrors in dbEx.EntityValidationErrors)
+                    {
+                        foreach (var validationError in validationErrors.ValidationErrors)
+                        {
+                            Trace.TraceInformation("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                        }
+                    }
+                }
+
+                return false;
             }
         }
 

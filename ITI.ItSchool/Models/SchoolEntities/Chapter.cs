@@ -5,8 +5,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace ITI.ItSchool.Models
+namespace ITI.ItSchool.Models.SchoolEntities
 {
+    [Table("Chapters")]
     public class Chapter
     {
         [Key, ForeignKey("Grade")]
@@ -17,9 +18,10 @@ namespace ITI.ItSchool.Models
         [MaxLength( 45 )]
         public string Name { get; set; }
 
+        
         public int ThemeId { get; set; }
 
-        [ForeignKey( "ThemeId" )]
+        [ForeignKey("ThemeId")]
         public virtual Theme Theme { get; set; }
 
         public int GradeId { get; set; }
@@ -29,5 +31,7 @@ namespace ITI.ItSchool.Models
 
         [MaxLength( 200 )]
         public string Remarks { get; set; }
+
+        public virtual ICollection<Game> Games { get; set; }
     }
 }

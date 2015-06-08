@@ -1,4 +1,6 @@
-﻿using System.Data.Entity;
+﻿using ITI.ItSchool.Models.SchoolEntities;
+using System.Collections.Generic;
+using System.Data.Entity;
 
 namespace ITI.ItSchool.Models.Contexts
 {
@@ -12,6 +14,6 @@ namespace ITI.ItSchool.Models.Contexts
 
         public DbSet<Matter> Matters { get; set; }
 
-        public DbSet<Theme> Themes { get; set; }
+        public DbSet<Theme> Themes { get; set; }  
     }
 }

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace ITI.ItSchool.Models
+namespace ITI.ItSchool.Models.SchoolEntities
 {
     public class Matter
     {

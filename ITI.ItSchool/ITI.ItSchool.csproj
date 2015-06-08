@@ -6712,6 +6712,11 @@
     <Compile Include="User1.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="UserContextMigrations\201506081206562_Initial.cs" />
+    <Compile Include="UserContextMigrations\201506081206562_Initial.Designer.cs">
+      <DependentUpon>201506081206562_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserContextMigrations\Configuration.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -6744,6 +6749,11 @@
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\cloze-game.ts" />
     <TypeScriptCompile Include="Scripts\collections.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="UserContextMigrations\201506081206562_Initial.resx">
+      <DependentUpon>201506081206562_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

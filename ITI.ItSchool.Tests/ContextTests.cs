@@ -1,6 +1,7 @@
 ﻿using ITI.ItSchool.Models;
 using ITI.ItSchool.Models.AvatarEntities;
 using ITI.ItSchool.Models.Contexts;
+using ITI.ItSchool.Models.SchoolEntities;
 using ITI.ItSchool.Models.UserEntities;
 using NUnit.Framework;
 using System;
@@ -418,32 +419,38 @@ namespace ITI.ItSchool.Tests
         [Test]
         public void create_an_exercise()
         {
-            //initialize_database_gameContext();
+            initialize_database_gameContext();
 
             IRepository repo = new SQLRepository();
 
-            var chapter = new Chapter
-            {
-                Name = "Verbes en anglais",
-                ThemeId = 1,
-                GradeId = 2
-            };
-
             var grade = new Grade
             {
-                Name = "6e",
+                GradeId = 1,
+                Name = "6e2",
                 Remarks = "Collège"
-            };
-
-            var theme = new Theme
-            {
-                Name = "Anglais",
-                MatterId = 1
             };
 
             var matter = new Matter
             {
+                MatterId = 1,
                 Name = "Anglais"
+            };
+
+            var theme = new Theme
+            {
+                ThemeId = 1,
+                Name = "Anglais",
+                Matter = matter,
+                MatterId = matter.MatterId
+            };
+
+            var chapter = new Chapter
+            {
+                Name = "Verbes en anglais",
+                Theme = theme,
+                ThemeId = theme.ThemeId,
+                Grade = grade,
+                GradeId = grade.GradeId
             };
 
             var level = new Level
@@ -467,6 +474,54 @@ namespace ITI.ItSchool.Tests
 
             bool isCreated = repo.Create( game );
             Assert.That( isCreated, Is.EqualTo( true ) );
+        }
+
+        [Test]
+        public void guegue_says_to_me_that_we_cant_create_an_alone_grade() 
+        {
+            IRepository repo = new SQLRepository();
+
+            List<Chapter> c = new List<Chapter>();
+
+            ICollection<Chapter> chapters = new List<Chapter>();
+
+            var matter = new Matter
+            {
+                MatterId = 1,
+                Name = "Maths",
+            };
+
+            var theme = new Theme
+            {
+                ThemeId = 1,
+                Name = "Algèbre",
+                MatterId = 1,
+                Remarks = "Jean Neymar"
+
+            };
+
+            
+            var chapter = new Chapter
+            {
+                Name = "Les nombres relatifs",
+                Theme = theme,
+                ThemeId = 1,
+                GradeId = 1,
+            };
+
+            c = chapters.ToList();
+            c.Add(chapter);
+
+            var grade = new Grade
+            {
+                Name = "CM1",
+                Remarks = "Go fuck YS"
+            };
+
+            c[0].GradeId = grade.GradeId;
+
+            bool isCreated = repo.Create( grade );
+            Assert.That( isCreated == true );
         }
     }
 }
