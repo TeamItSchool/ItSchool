@@ -31,6 +31,10 @@
         templateUrl: '/Templates/TeacherLobbyPage.html',
         controller: 'TeacherLobbyController'
     })
+    .when('/teacher/ClozeExercise', {
+        templateUrl: '/Templates/TeacherCustomizeClozeExercisePage.html',
+        controller: 'TeacherClozeExerciseController'
+    })
     .when('/kid', {
         templateUrl: '/Templates/KidHomePage.html',
         controller: 'KidHomeController'
@@ -210,6 +214,32 @@
 
                 console.log(d.data.FirstName + " " + d.data.LastName);
             })
+        }
+    };
+})
+
+.controller("TeacherClozeExerciseController", function ($scope, ExerciseDatas) {
+    $scope.Message = 'Configuration de l\'exercice';
+    $scope.Button = '15';
+    $scope.IsFormValid = false;
+    $scope.test = '';
+
+    //Mettre toutes les propriétés du Game
+    $scope.Game = {
+        //A REMPLIR
+        Data: ''
+    };
+
+    $scope.$watch('ClozeExercise', function (newValue) {
+        $scope.IsFormValid = newValue;
+    });
+
+    $scope.SaveData = function () {
+        console.log("Là : " + ExerciseDatas);
+        if ($scope.IsFormValid) {
+            ExerciseDatas.GetExerciseDatas($scope.Game).then(function (data) {
+                console.log("SaveData");
+            });
         }
     };
 })
@@ -407,4 +437,18 @@
     }
     return fac;
 })
-;
+
+.factory('ExerciseDatas', function ($http) {
+    var fac = {};
+    var data = "";
+    fac.GetExerciseDatas = function (d) {
+        return $http({
+            url: '/Data/GetExerciseDatas',
+            method: 'POST',
+            data: JSON.stringify(d),
+            headers: { 'content-type': 'application/json' }
+        })
+    };
+
+    return fac;
+});

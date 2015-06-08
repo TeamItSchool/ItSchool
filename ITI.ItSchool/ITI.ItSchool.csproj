@@ -6646,6 +6646,7 @@
     <Content Include="Templates\KidHomePage.html" />
     <Content Include="Templates\KidLoginPage.html" />
     <Content Include="Templates\KidRegistrationPage.html" />
+    <Content Include="Templates\TeacherCustomizeClozeExercisePage.html" />
     <Content Include="Templates\TeacherLobbyPage.html" />
     <Content Include="Templates\TeacherHomePage.html" />
     <Content Include="Templates\TeacherLoginPage.html" />
@@ -6661,7 +6662,6 @@
     <Compile Include="Controllers\DrawController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TestInputController.cs" />
-    <Compile Include="Controllers\TexteTrousController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -6729,7 +6729,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\version.json" />
-    <Content Include="Views\TexteTrous\ClozeExercise.cshtml" />
     <Content Include="Scripts\app.config" />
     <Content Include="Views\TestInput\Input.cshtml" />
     <None Include="Web.Debug.config">

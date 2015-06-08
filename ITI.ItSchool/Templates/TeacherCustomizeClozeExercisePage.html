@@ -1,0 +1,9 @@
+﻿<div ng-controller="TeacherClozeExerciseController">
+    <center>
+        <h1>{{Message}}</h1>
+        <form name="ClozeExercise" ng-submit="SaveData()">
+            <textarea ng-model="Game.Data"></textarea><br />
+            <md-button class="md-raised md-primary" type="submit" name="saveText">{{Button}}</md-button>
+        </form>
+    </center>
+</div>

@@ -101,5 +101,11 @@ namespace ITI.ItSchool.Controllers
             #endregion
             return new JsonResult { Data = message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
+
+        public JsonResult GetExerciseDatas( Game g )
+        {
+            IRepository repo = new SQLRepository();
+            return null;
+        }
     }
 }

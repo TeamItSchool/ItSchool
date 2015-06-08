@@ -16,7 +16,7 @@ namespace ITI.ItSchool.Models.SchoolEntities
         public int GradeId { get; set; }
 
         [Required]
-        [MinLength( 3 )]
+        [MinLength( 2 )]
         [MaxLength( 45 )]
         public string Name { get; set; }
 
