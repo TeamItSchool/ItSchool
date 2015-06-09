@@ -227,7 +227,9 @@
     //Mettre toutes les propriétés du Game
     $scope.Game = {
         //A REMPLIR
-        Data: ''
+        Data: '',
+        Level: 'Easy',
+        exerciseType :''
     };
 
     $scope.$watch('ClozeExercise', function (newValue) {
@@ -235,7 +237,7 @@
     });
 
     $scope.SaveData = function () {
-        console.log("Là : " + ExerciseDatas);
+        console.log( "Là : " + ExerciseDatas + "L240: " + $scope.Game.Level );
         if ($scope.IsFormValid) {
             ExerciseDatas.GetExerciseDatas($scope.Game).then(function (data) {
                 console.log("SaveData");

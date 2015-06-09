@@ -105,7 +105,9 @@ namespace ITI.ItSchool.Controllers
         public JsonResult GetExerciseDatas( Game g )
         {
             IRepository repo = new SQLRepository();
-            return null;
+            var jsonData = repo.SetExercise( g );
+            return jsonData;
+            
         }
     }
 }

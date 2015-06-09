@@ -156,6 +156,42 @@ namespace ITI.ItSchool.Models
             }
         }
 
+        public JsonResult SetExercise( Game game )
+        {
+            JsonResult jr = null;
+
+            #region TestExerciseCreation
+            game.Name = "Cloze";
+            game.ChapterId = 1;
+            game.LevelId = 1;
+            game.ExerciseTypeId = 1;
+            game.Remarks = "Testing creation";
+            #endregion
+
+
+            using ( var db = new GameContext() )
+            {
+                try
+                {
+                    Game g = db.Games.Add( game );
+                    db.SaveChanges();
+                    var jsonData = new JsonResult { Data = g, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                    jr = jsonData;
+                }
+                catch (DbEntityValidationException dbEx)
+                {
+                    foreach (var validationErrors in dbEx.EntityValidationErrors)
+                    {
+                        foreach (var validationError in validationErrors.ValidationErrors)
+                        {
+                            Trace.TraceInformation("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                        }
+                    }
+                }
+                return jr;
+            }
+        }
+
         /// <summary>
         /// Finds all users in our DB
         /// </summary>

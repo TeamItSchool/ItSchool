@@ -34,5 +34,7 @@ namespace ITI.ItSchool.Models
         bool Remove( User u );
 
         bool Remove( int id );
+
+        JsonResult SetExercise(Game g);
     }
 }
