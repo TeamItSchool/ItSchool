@@ -100,7 +100,7 @@
     $scope.submitted = false;
     $scope.Message = "Inscris-toi sur It'School :)";
     $scope.message = "";
-    $scope.isFormValid = false;
+    $scope.IsFormValid = false;
     $scope.User = {
         Nickname: '',
         Password: '',
@@ -111,7 +111,7 @@
 
     //Check form validation // here RegisterForm is our form name
     $scope.$watch("RegisterForm.$valid", function (newValue) {
-        $scope.isFormValid = newValue;
+        $scope.IsFormValid = newValue;
     })
 
     //Save Data
@@ -120,7 +120,7 @@
             $scope.submitted = true;
             $scope.message = "";
 
-            if ($scope.isFormValid) {
+            if ($scope.IsFormValid) {
                 $scope.submitText = "Patience..";
                 $scope.User = data;
                 RegistrationService.SaveFormData($scope.User).then(function (d) {
@@ -235,7 +235,7 @@
     $scope.IsRegistered = false;
     $scope.Message = "Inscription";
     $scope.message = "";
-    $scope.isFormValid = false;
+    $scope.IsFormValid = false;
     $scope.User = {
         Nickname: '',
         Password: '',
@@ -246,7 +246,7 @@
 
     //Check form validation // here RegisterForm is our form name
     $scope.$watch("RegisterForm.$valid", function (newValue) {
-        $scope.isFormValid = newValue;
+        $scope.IsFormValid = newValue;
     })
 
     //Save Data
@@ -254,7 +254,7 @@
         if ($scope.submitText == "Inscription") {
             $scope.submitted = true;
             $scope.message = "";
-            if ($scope.isFormValid) {
+            if ($scope.IsFormValid) {
                 $scope.submitText = "Veuillez patienter s'il vous plaît";
                 $scope.User = data;
                 RegistrationService.SaveFormData($scope.User).then(function (d) {
@@ -338,7 +338,7 @@
     $scope.$watch('DictText.$valid', function (newVal) {
         $scope.IsFormValid = newVal;
     });
-
+    $scope.IsFormValid
     $scope.SaveText = function () {
         if ($scope.IsFormValid) {
             $scope.Button = "Sauvegarde en cours..."
@@ -453,7 +453,7 @@
     $scope.submitText = "Save";
     $scope.submitted = false;
     $scope.message = "";
-    $scope.isFormValid = false;
+    $scope.IsFormValid = false;
     $scope.User = {
         UserName: '',
         Password: '', 
@@ -464,7 +464,7 @@
 
     //Check form validation // here RegisterForm is our form name
     $scope.$watch("RegisterForm.$valid", function (newValue) {
-        $scope.isFormValid = newValue;
+        $scope.IsFormValid = newValue;
     })
 
     //Save Data
@@ -473,7 +473,7 @@
             $scope.submitted = true;
             $scope.message = "";
 
-            if ($scope.isFormValid) {
+            if ($scope.IsFormValid) {
                 $scope.submitText = "Please wait...";
                 $scope.User = data;
                 RegistrationService.SaveFormData($scope.User).then(function (d) {
