@@ -1,0 +1,88 @@
+﻿#drag-1 {
+  width: 15%;
+  height: 5%;
+  min-height: 6.5em;
+  margin: 10%;
+
+  background-color: #29e; 
+  color: white;
+
+  border-radius: 0.75em;
+  padding: 4%;
+
+  -webkit-transform: translate(0px, 0px);
+          transform: translate(0px, 0px);
+}
+
+#drag-me::before {
+  content: "#" attr(id);
+  font-weight: bold;
+}
+
+.resize-drag {
+  color: white;
+  font-size: 20px;
+  font-family: sans-serif;
+  border-radius: 8px;
+  margin: 10px 30px 20px;
+
+  width: 70px;
+
+  /* This makes things *much* easier */
+  box-sizing: border-box;
+}
+
+.resize-container {
+  width: 100%;
+  height: 240px;
+}
+
+
+#zone-pair {
+  height: 150px;
+}
+
+#zone-impair {
+  height: 150px ;
+}
+
+.dropzoneImpair, .dropzonePair {
+  background-color: #ccc;
+  margin: 10px auto 30px;
+  width: 80%;
+
+}
+
+.drop-active {
+  border-color: #aaa;
+}
+
+.drop-target {
+  border-color: #fff;
+}
+
+
+.drag-drop {
+  display: inline-block;
+  min-width: 40px;
+  padding: 2em 0.5em;
+
+  color: #fff;
+  background-color: #29e;
+ border: solid 2px #fff;
+
+  -webkit-transform: translate(0px, 0px);
+          transform: translate(0px, 0px);
+
+  transition: background-color 3s;
+}
+
+.drag-drop.can-drop {
+  color: #FFF;
+  background-color: #4e4;
+}
+
+.drag-drop.cannot-drop {
+  color: #FFF;
+  background-color:red;
+}

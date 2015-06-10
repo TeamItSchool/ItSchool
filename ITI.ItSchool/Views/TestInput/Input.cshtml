@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "Input";
+}
+
+<h2>Test input text</h2>
+
+@{
+    var sentence = "";
+    if (@ViewBag.word == "suis")
+    {
+        <p>Je <input type="text" /> suis un petit garçon</p>
+    }
+
+}
+
+<p>@sentence</p>
+@ViewData["word"]
