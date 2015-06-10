@@ -163,7 +163,7 @@ namespace ITI.ItSchool.Models
             #region TestExerciseCreation
             game.Name = "Cloze";
             game.ChapterId = 1;
-            game.LevelId = 1;
+            //game.LevelId = 1;
             game.ExerciseTypeId = 1;
             game.Remarks = "Testing creation";
             #endregion

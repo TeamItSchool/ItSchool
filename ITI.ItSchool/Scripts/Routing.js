@@ -225,11 +225,15 @@
     $scope.test = '';
 
     //Mettre toutes les propriétés du Game
+    
     $scope.Game = {
         //A REMPLIR
         Data: '',
-        Level: 'Easy',
-        exerciseType :''
+        Level: {
+            Name: 'Tatu',
+            Remarks: 'Test level Remarks'
+        },
+        Remarks: 'Toto'
     };
 
     $scope.$watch('ClozeExercise', function (newValue) {
