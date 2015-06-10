@@ -34,7 +34,8 @@
     .when('/teacher/exercices', {
         templateUrl: '/Templates/TeacherSelectExercicesPage.html',
         controller: 'TeacherSelectExercicesController'
-    .when('/teacher/ClozeExercise', {
+    })
+    .when('/teacher/cloze_exercise', {
         templateUrl: '/Templates/TeacherCustomizeClozeExercisePage.html',
         controller: 'TeacherClozeExerciseController'
     })
@@ -62,7 +63,6 @@
         templateUrl: '/Templates/Error.html',
         controller: 'ErrorController'
     })
-
     $locationProvider.html5Mode(false).hashPrefix('!'); // This is for Hashbang Mode
 })
 .controller('HomeController', function ($scope) {
@@ -575,8 +575,7 @@
         return defer.promise;
     }
     return fac;
-});
-
+})
 .factory('ExerciseDatas', function ($http) {
     var fac = {};
     var data = "";

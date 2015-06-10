@@ -6682,6 +6682,8 @@
     <Compile Include="Models\AvatarEntities\Body.cs" />
     <Compile Include="Models\AvatarEntities\Foot.cs" />
     <Compile Include="Models\AvatarEntities\Legs.cs" />
+    <Compile Include="Models\CardsData.cs" />
+    <Compile Include="Models\DictationText.cs" />
     <Compile Include="Models\LoginData.cs" />
     <Compile Include="MyModel.Context.cs">
       <AutoGen>True</AutoGen>
