@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ITI.ItSchool.Models.AvatarEntities;
+using ITI.ItSchool.Models.UserEntities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,7 +11,7 @@ namespace ITI.ItSchool.Models
 {
     public class Avatar
     {
-        [Key]
+        [Key, ForeignKey( "User" )]
         public int AvatarId { get; set; }
 
         [Required]
@@ -17,32 +19,24 @@ namespace ITI.ItSchool.Models
         [MaxLength( 45 )]
         public string Name { get; set; }
 
-        public int MouthId { get; set; }
+        public int UserId { get; set; }
 
-        [ForeignKey("MouthId")]
-        public virtual Mouth Mouth { get; set; }
+        [ForeignKey( "UserId" )]
+        public virtual User User { get; set; }
 
-        public int HairId { get; set; }
+        public int FootId { get; set; }
 
-        [ForeignKey("HairId")]
-        public virtual Hair Hair { get; set; }
+        [ForeignKey( "FootId" )]
+        public virtual Foot Feet { get; set; }
 
-        public int NoseId { get; set; }
+        public int LegsId { get; set; }
 
-        [ForeignKey("NoseId")]
-        public virtual Nose Nose { get; set; }
+        [ForeignKey( "LegsId" )]
+        public virtual Legs Legs { get; set; }
 
-        public int EyesId { get; set; }
+        public int BodyId { get; set; }
 
-        [ForeignKey("EyesId")]
-        public virtual Eye Eye { get; set; }
-
-        public int ClotheId { get; set; }
-
-        [ForeignKey("ClotheId")]
-        public virtual Clothe Clothe { get; set; }
-
-        [MaxLength( 200 )]
-        public string Remarks { get; set; }
+        [ForeignKey("BodyId")]
+        public virtual Body Body { get; set; }
     }
 }

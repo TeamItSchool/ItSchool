@@ -1,4 +1,5 @@
-﻿using ITI.ItSchool.Models.UserEntities;
+﻿using ITI.ItSchool.Models.SchoolEntities;
+using ITI.ItSchool.Models.UserEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Web.Mvc;
 
 namespace ITI.ItSchool.Models
 {
-    public interface IUserRepository
+    public interface IRepository
     {
         User FindByNickname( string nickname );
 
@@ -26,8 +27,14 @@ namespace ITI.ItSchool.Models
 
         bool Create( User u );
 
+        bool Create( Game g );
+
+        bool Create( Grade g );
+
         bool Remove( User u );
 
         bool Remove( int id );
+
+        JsonResult SetExercise(Game g);
     }
 }

@@ -10,8 +10,6 @@ namespace ITI.ItSchool.Models.Contexts
     {
         public GameContext() : base( "ItSchool" ) { }
 
-        public DbSet<Exercise> Exercises { get; set; }
-
         public DbSet<ExerciseType> ExerciseTypes { get; set; }
 
         public DbSet<Game> Games { get; set; }

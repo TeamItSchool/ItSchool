@@ -31,13 +31,14 @@
         templateUrl: '/Templates/TeacherLobbyPage.html',
         controller: 'TeacherLobbyController'
     })
+<<<<<<< HEAD
+    .when('/teacher/ClozeExercise', {
+        templateUrl: '/Templates/TeacherCustomizeClozeExercisePage.html',
+        controller: 'TeacherClozeExerciseController'
+=======
     .when('/teacher/exercices', {
         templateUrl: '/Templates/TeacherSelectExercicesPage.html',
         controller: 'TeacherSelectExercicesController'
-    })
-    .when('/teacher/cloze_exercise', {
-        templateUrl: '/Templates/TeacherCustomizeClozeExercisePage.html',
-        controller: 'TeacherClozeExerciseController'
     })
     .when('/teacher/exercices/drag_drop', {
         templateUrl: '/Templates/TeacherCustomizeDragAndDropPage.html',
@@ -46,6 +47,7 @@
     .when('/teacher/exercices/dictation', {
         templateUrl: '/Templates/TeacherCustomizeDictationPage.html',
         controller: 'TeacherDictationController'
+>>>>>>> local_guenole
     })
     .when('/kid', {
         templateUrl: '/Templates/KidHomePage.html',
@@ -63,6 +65,7 @@
         templateUrl: '/Templates/Error.html',
         controller: 'ErrorController'
     })
+
     $locationProvider.html5Mode(false).hashPrefix('!'); // This is for Hashbang Mode
 })
 .controller('HomeController', function ($scope) {
@@ -575,7 +578,9 @@
         return defer.promise;
     }
     return fac;
+<<<<<<< HEAD
 })
+
 .factory('ExerciseDatas', function ($http) {
     var fac = {};
     var data = "";
@@ -589,4 +594,6 @@
     };
 
     return fac;
+=======
+>>>>>>> local_guenole
 });

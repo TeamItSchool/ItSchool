@@ -1,24 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ITI.ItSchool.Models
+namespace ITI.ItSchool.Models.AvatarEntities
 {
-    public class Mouth
+    public class Body
     {
         [Key]
-        public int MouthId { get; set; }
+        public int BodyId { get; set; }
 
         [Required]
         [MinLength(3)]
         [MaxLength(45)]
         public string Name { get; set; }
 
+        [MaxLength(512)]
         public string Link { get; set; }
-
-        [MaxLength( 200 )]
-        public string Remarks { get; set; }
     }
 }

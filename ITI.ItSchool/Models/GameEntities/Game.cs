@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ITI.ItSchool.Models.SchoolEntities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -17,25 +18,21 @@ namespace ITI.ItSchool.Models
         [MaxLength( 200 )]
         public string Name { get; set; }
 
-        [ForeignKey( "ChapterId" )]
         public int ChapterId { get; set; }
 
+        [ForeignKey("ChapterId")]
         public Chapter Chapter { get; set; }
-
-        [ForeignKey( "LevelId" )]
+        
         public int LevelId { get; set; }
 
+        [ForeignKey("LevelId")]
         public Level Level { get; set; }
 
-        [ForeignKey( "ExerciseId" )]
-        public int ExerciseId { get; set; }
-
-        public Exercise Exercise { get; set; }
-
-        [ForeignKey( "ExerciseType" )]
+        
         public int ExerciseTypeId { get; set; }
 
-        public ExerciseType ExerciseType { get; set; }
+        [ForeignKey("ExerciseTypeId")]
+        public virtual ExerciseType ExerciseType { get; set; }
 
         [MaxLength( 100 )]
         public string Data { get; set; }

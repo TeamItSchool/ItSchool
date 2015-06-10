@@ -1,4 +1,5 @@
 ﻿using ITI.ItSchool.Models;
+using ITI.ItSchool.Models.SchoolEntities;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -34,19 +35,14 @@ namespace ITI.ItSchool.Models.UserEntities
         [ForeignKey( "GradeId" )]
         public virtual Grade Grade { get; set; }
 
-        public int RightId { get; set; }
-
-        [ForeignKey( "RightId" )]
-        public virtual Right Right { get; set; }
-
         public int AvatarId { get; set; }
 
         [ForeignKey( "AvatarId" )]
         public virtual Avatar Avatar { get; set; }
 
-        //public int GroupUserId { get; set; }
+        public int GroupId { get; set; }
 
-        //[ForeignKey("GroupUserId")]
+        [ForeignKey("GroupId")]
         public virtual Group Group { get; set; }
 
         [MaxLength( 200 )]

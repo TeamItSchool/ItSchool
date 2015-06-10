@@ -5,11 +5,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace ITI.ItSchool.Models
+namespace ITI.ItSchool.Models.SchoolEntities
 {
+    [Table("Chapters")]
     public class Chapter
     {
-        [Key]
+        [Key, ForeignKey("Grade")]
         public int ChapterId { get; set; }
 
         [Required]
@@ -17,17 +18,20 @@ namespace ITI.ItSchool.Models
         [MaxLength( 45 )]
         public string Name { get; set; }
 
+        
         public int ThemeId { get; set; }
 
-        [ForeignKey( "ThemeId" )]
-        public Theme Theme { get; set; }
+        [ForeignKey("ThemeId")]
+        public virtual Theme Theme { get; set; }
 
-        [ForeignKey( "GradeId" )]
         public int GradeId { get; set; }
 
-        public Grade Grade { get; set; }
+        [ForeignKey("GradeId")]
+        public virtual Grade Grade { get; set; }
 
         [MaxLength( 200 )]
         public string Remarks { get; set; }
+
+        public virtual ICollection<Game> Games { get; set; }
     }
 }

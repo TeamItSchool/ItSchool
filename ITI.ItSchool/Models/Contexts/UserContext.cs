@@ -19,7 +19,5 @@ namespace ITI.ItSchool.Models.Contexts
         public DbSet<Control> Controls { get; set; }
 
         public DbSet<Group> Groups { get; set; }
-
-        public DbSet<Right> Rights { get; set; }
     }
 }

@@ -20,7 +20,12 @@ namespace ITI.ItSchool.Controllers
         /// <returns>JSon Data for AngularJS informations</returns>
         public JsonResult UserLogin( LoginData d )
         {
+<<<<<<< HEAD
+            
             SQLRepository sUserRepo = new SQLRepository();
+=======
+            SQLUserRepository sUserRepo = new SQLUserRepository();
+>>>>>>> local_guenole
             var jsonData = sUserRepo.FindUserByNickname( d.Username );
             return jsonData;
 
