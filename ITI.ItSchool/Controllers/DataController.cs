@@ -20,7 +20,6 @@ namespace ITI.ItSchool.Controllers
         /// <returns>JSon Data for AngularJS informations</returns>
         public JsonResult UserLogin( LoginData d )
         {
-            
             SQLRepository sUserRepo = new SQLRepository();
             var jsonData = sUserRepo.FindUserByNickname( d.Username );
             return jsonData;
@@ -34,6 +33,47 @@ namespace ITI.ItSchool.Controllers
                 return jsonData;
             }*/
             #endregion
+        }
+
+        public JsonResult SaveDragAndDropTeacher( CardsData c )
+        {
+            JsonResult jsonData = null;
+            return jsonData;
+        }
+
+        public JsonResult SaveDictation( DictationText d )
+        {
+            d.Text.Trim();
+            DictationText text = new DictationText();
+            text.Text = d.Text;
+            text.Level = d.Level;
+            JsonResult jsonData = new JsonResult { Data = text, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            return jsonData;
+        }
+
+        public JsonResult CheckDictationText( DictationText d )
+        {
+            d.Text.Trim();
+            int i = 0;
+            bool success = false;
+            List<string> wrongEntries = new List<string>();
+            DictationText text = new DictationText();
+            text.Text = "Je suis celui qui me trouve dans la fôret. La fôret est grande, magnifique. Je suis heureux de me trouver dans cette forêt";
+            text.Level = d.Level;
+            string[] textPieces = d.Text.Split( new Char[] { ' ' } );
+            string[] comparativeTextPieces = text.Text.Split( new Char[] { ' ' } );
+            if( textPieces.Count() < comparativeTextPieces.Count() )
+                success = false;
+            foreach( string tP in textPieces )
+            {
+                if( tP != comparativeTextPieces[i] )
+                    wrongEntries.Add( tP );
+            }
+            if( wrongEntries.Count == 0 )
+                success = true;
+
+            JsonResult jsonData = new JsonResult { Data = text, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            return jsonData;
         }
 
         /// <summary>

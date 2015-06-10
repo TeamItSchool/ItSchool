@@ -31,9 +31,20 @@
         templateUrl: '/Templates/TeacherLobbyPage.html',
         controller: 'TeacherLobbyController'
     })
+    .when('/teacher/exercices', {
+        templateUrl: '/Templates/TeacherSelectExercicesPage.html',
+        controller: 'TeacherSelectExercicesController'
     .when('/teacher/ClozeExercise', {
         templateUrl: '/Templates/TeacherCustomizeClozeExercisePage.html',
         controller: 'TeacherClozeExerciseController'
+    })
+    .when('/teacher/exercices/drag_drop', {
+        templateUrl: '/Templates/TeacherCustomizeDragAndDropPage.html',
+        controller: 'TeacherDragAndDropController'
+    })
+    .when('/teacher/exercices/dictation', {
+        templateUrl: '/Templates/TeacherCustomizeDictationPage.html',
+        controller: 'TeacherDictationController'
     })
     .when('/kid', {
         templateUrl: '/Templates/KidHomePage.html',
@@ -92,7 +103,7 @@
     $scope.submitted = false;
     $scope.Message = "Inscris-toi sur It'School :)";
     $scope.message = "";
-    $scope.isFormValid = false;
+    $scope.IsFormValid = false;
     $scope.User = {
         Nickname: '',
         Password: '',
@@ -103,7 +114,7 @@
 
     //Check form validation // here RegisterForm is our form name
     $scope.$watch("RegisterForm.$valid", function (newValue) {
-        $scope.isFormValid = newValue;
+        $scope.IsFormValid = newValue;
     })
 
     //Save Data
@@ -112,7 +123,7 @@
             $scope.submitted = true;
             $scope.message = "";
 
-            if ($scope.isFormValid) {
+            if ($scope.IsFormValid) {
                 $scope.submitText = "Patience..";
                 $scope.User = data;
                 RegistrationService.SaveFormData($scope.User).then(function (d) {
@@ -163,10 +174,10 @@
         $scope.submitted = false;
     }
 })
+
 .controller('TeacherHomeController', function ($scope) {
     $scope.Message = 'Page "Professeurs"';
 })
-
 .controller('TeacherLobbyController', function ($scope, LoginService) {
     var monobjet_json = sessionStorage.getItem("objet");
     var monobjet = JSON.parse(monobjet_json);
@@ -183,12 +194,13 @@
     $scope.IsLogedIn = false;
     $scope.Submitted = false;
     $scope.IsFormValid = false;
+    $scope.ButtonMessage = "Connexion";
 
     $scope.LoginData = {
         Username: '',
         Password: ''
     };
-    //Check if Form is valid or not // here f1 is our form Name
+    //Check if Form is valid or not // here LoginForm is our form Name
     $scope.$watch('LoginForm.$valid', function (newVal) {
         $scope.IsFormValid = newVal;
     });
@@ -196,6 +208,7 @@
         $scope.Submitted = true;
         if ($scope.IsFormValid) {
             LoginService.GetUser($scope.LoginData).then(function (d) {
+                $scope.ButtonMessage = "Connexion en cours..";
                 if (d.data.Nickname != null) {
                     var monobjet_json = JSON.stringify(d);
                     sessionStorage.setItem("objet", monobjet_json);
@@ -257,7 +270,7 @@
     $scope.IsRegistered = false;
     $scope.Message = "Inscription";
     $scope.message = "";
-    $scope.isFormValid = false;
+    $scope.IsFormValid = false;
     $scope.User = {
         Nickname: '',
         Password: '',
@@ -268,7 +281,7 @@
 
     //Check form validation // here RegisterForm is our form name
     $scope.$watch("RegisterForm.$valid", function (newValue) {
-        $scope.isFormValid = newValue;
+        $scope.IsFormValid = newValue;
     })
 
     //Save Data
@@ -276,8 +289,7 @@
         if ($scope.submitText == "Inscription") {
             $scope.submitted = true;
             $scope.message = "";
-
-            if ($scope.isFormValid) {
+            if ($scope.IsFormValid) {
                 $scope.submitText = "Veuillez patienter s'il vous plaît";
                 $scope.User = data;
                 RegistrationService.SaveFormData($scope.User).then(function (d) {
@@ -340,6 +352,126 @@
         $scope.submitted = false;
     }
 })
+.controller('TeacherSelectExercicesController', function ($scope) {
+    $scope.Message = 'Selectionnez un exercice à modifier';
+})
+.controller('TeacherDictationController', function ($scope, SaveDictationText) {
+    $scope.Message = 'Selectionnez un niveau.';
+    $scope.EasySelected = false;
+    $scope.MediumSelected = false;
+    $scope.HardSelected = false;
+    $scope.Message2 = "";
+    $scope.IsFormValid = false;
+    $scope.Button = "Sauvegarder";
+
+    $scope.DictationText = {
+        Text: '',
+        Level: ''
+    };
+
+    //Check if Form is valid or not // here DictText is our form Name
+    $scope.$watch('DictText.$valid', function (newVal) {
+        $scope.IsFormValid = newVal;
+    });
+    $scope.IsFormValid
+    $scope.SaveText = function () {
+        if ($scope.IsFormValid) {
+            $scope.Button = "Sauvegarde en cours..."
+            $scope.DictationText.Text.trim();
+            SaveDictationText.GetText($scope.DictationText).then(function (d) {
+                $scope.Button = "Dictée sauvegardée";
+            })
+        }
+    };    
+
+    $scope.Easy = function () {
+        $scope.EasySelected = true;
+        $scope.Message = "Insérez le texte (Niveau facile)";
+        $scope.DictationText.Level = "Easy";
+    }
+    $scope.Medium = function () {
+        $scope.MediumSelected = true;
+        $scope.Message = "Insérez le texte (Niveau moyen)";
+        $scope.DictationText.Level = "Medium";
+    }
+    $scope.Hard = function () {
+        $scope.HardSelected = true;
+        $scope.Message = "Insérez le texte (Niveau difficile)";
+        $scope.DictationText.Level = "Hard";
+    }
+})
+.factory('SaveDictationText', function ($http) {
+    var fac = {};
+    var data = "";
+    fac.GetText = function (d) {
+        return $http({
+            url: '/Data/SaveDictation',
+            method: 'POST',
+            data: JSON.stringify(d),
+            headers: { 'content-type': 'application/json' }
+        })
+    };
+
+    return fac;
+})
+.controller('TeacherDragAndDropController', function ($scope, SaveDragAndDropExercice) {
+    $scope.Message = "Modifiez à vos souhaits l'exercice du 'Glissé-Déposé'";
+    $scope.card1 = "1";
+    $scope.card2 = "2";
+    $scope.card3 = "3";
+    $scope.card4 = "4";
+    $scope.card5 = "5";
+    $scope.card6 = "6";
+    $scope.card7 = "7";
+    $scope.card8 = "8";
+    $scope.card9 = "9";
+    $scope.card10 = "10";
+
+    $scope.IsSaved = false;
+    $scope.Submitted = false;
+    $scope.IsFormValid = false;
+
+    $scope.CardsData = {
+        Card1: '', Card2: '',
+        Card3: '', Card4: '',
+        Card5: '', Card6: '',
+        Card7: '', Card8: '',
+        Card9: '', Card10: ''
+    };
+    //Check if Form is valid or not // here SaveTeacherDragAndDrop is our form Name
+    $scope.$watch('SaveDragAndDropTeacher.$valid', function (newVal) {
+        $scope.IsFormValid = newVal;
+    });
+
+    $scope.Save = function () {
+        $scope.Submitted = true;
+        if ($scope.IsFormValid) {
+            LoginService.GetUser($scope.CardsData).then(function (d) {
+                if (d.data.Card1 != null) {
+                    $scope.IsSaved = true;
+                    $scope.Message = "Yup";
+                }
+                else {
+                    alert('Woops')
+                }
+            })
+        }
+    };
+})
+.factory('SaveDragAndDropExercice', function ($http) {
+    var fac = {};
+    var data = "";
+    fac.GetUser = function (d) {
+        return $http({
+            url: '/Data/SaveDragAndDropTeacher',
+            method: 'POST',
+            data: JSON.stringify(d),
+            headers: { 'content-type': 'application/json' }
+        })
+    };
+
+    return fac;
+})
 .controller('KidHomeController', function ($scope) {
     $scope.Message = 'Page "Élève"';
 })
@@ -356,7 +488,7 @@
     $scope.submitText = "Save";
     $scope.submitted = false;
     $scope.message = "";
-    $scope.isFormValid = false;
+    $scope.IsFormValid = false;
     $scope.User = {
         UserName: '',
         Password: '', 
@@ -367,7 +499,7 @@
 
     //Check form validation // here RegisterForm is our form name
     $scope.$watch("RegisterForm.$valid", function (newValue) {
-        $scope.isFormValid = newValue;
+        $scope.IsFormValid = newValue;
     })
 
     //Save Data
@@ -376,7 +508,7 @@
             $scope.submitted = true;
             $scope.message = "";
 
-            if ($scope.isFormValid) {
+            if ($scope.IsFormValid) {
                 $scope.submitText = "Please wait...";
                 $scope.User = data;
                 RegistrationService.SaveFormData($scope.User).then(function (d) {
@@ -401,6 +533,7 @@
         $scope.submitted = false;
     }
 })
+
 
 //Factories
 
@@ -442,7 +575,7 @@
         return defer.promise;
     }
     return fac;
-})
+});
 
 .factory('ExerciseDatas', function ($http) {
     var fac = {};
