@@ -69,7 +69,7 @@ namespace ITI.ItSchool.UserContextMigrations
                     {
                         BodyId = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false, maxLength: 45),
-                        Link = c.String(maxLength: 256),
+                        Link = c.String(maxLength: 512),
                     })
                 .PrimaryKey(t => t.BodyId);
             
@@ -79,7 +79,7 @@ namespace ITI.ItSchool.UserContextMigrations
                     {
                         FootId = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false, maxLength: 45),
-                        Link = c.String(maxLength: 256),
+                        Link = c.String(maxLength: 512),
                     })
                 .PrimaryKey(t => t.FootId);
             
@@ -89,7 +89,7 @@ namespace ITI.ItSchool.UserContextMigrations
                     {
                         LegsId = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false, maxLength: 45),
-                        Link = c.String(maxLength: 256),
+                        Link = c.String(maxLength: 512),
                     })
                 .PrimaryKey(t => t.LegsId);
             

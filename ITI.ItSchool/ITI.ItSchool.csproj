@@ -6676,6 +6676,11 @@
     <Compile Include="Controllers\DrawController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TestInputController.cs" />
+    <Compile Include="GameContextMigrations\201506110401143_Initial.cs" />
+    <Compile Include="GameContextMigrations\201506110401143_Initial.Designer.cs">
+      <DependentUpon>201506110401143_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GameContextMigrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -6728,9 +6733,13 @@
     <Compile Include="User1.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="UserContextMigrations\201506081206562_Initial.cs" />
-    <Compile Include="UserContextMigrations\201506081206562_Initial.Designer.cs">
-      <DependentUpon>201506081206562_Initial.cs</DependentUpon>
+    <Compile Include="UserContextMigrations\201506110359496_Initial.cs" />
+    <Compile Include="UserContextMigrations\201506110359496_Initial.Designer.cs">
+      <DependentUpon>201506110359496_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserContextMigrations\201506110400493_Initial1.cs" />
+    <Compile Include="UserContextMigrations\201506110400493_Initial1.Designer.cs">
+      <DependentUpon>201506110400493_Initial1.cs</DependentUpon>
     </Compile>
     <Compile Include="UserContextMigrations\Configuration.cs" />
   </ItemGroup>
@@ -6768,8 +6777,14 @@
     <TypeScriptCompile Include="Scripts\collections.d.ts" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="UserContextMigrations\201506081206562_Initial.resx">
-      <DependentUpon>201506081206562_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="GameContextMigrations\201506110401143_Initial.resx">
+      <DependentUpon>201506110401143_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserContextMigrations\201506110359496_Initial.resx">
+      <DependentUpon>201506110359496_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserContextMigrations\201506110400493_Initial1.resx">
+      <DependentUpon>201506110400493_Initial1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

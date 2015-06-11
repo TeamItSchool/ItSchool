@@ -166,7 +166,7 @@ namespace ITI.ItSchool.Models
             game.ChapterId = 1;
             //game.LevelId = 1;
             game.ExerciseTypeId = 1;
-            game.Remarks = "Testing creation";
+            //game.Remarks = "Testing creation";
             #endregion
 
 

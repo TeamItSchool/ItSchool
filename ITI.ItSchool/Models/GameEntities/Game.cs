@@ -36,8 +36,5 @@ namespace ITI.ItSchool.Models
 
         [MaxLength( 100 )]
         public string Data { get; set; }
-
-        [MaxLength( 200 )]
-        public string Remarks { get; set; }
     }
 }
