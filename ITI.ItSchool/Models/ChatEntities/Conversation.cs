@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Web;
 
@@ -18,17 +20,24 @@ namespace ITI.ItSchool.Models.ChatEntities
         [MaxLength( 45 )]
         public string Name { get; set; }
 
-        [ForeignKey( "FirstUserId" )]
         public int FirstUserId { get; set; }
 
-        public User FirstUser { get; set; }
+        [ForeignKey("FirstUserId") ]
+        public virtual User FirstUser { get; set; }
 
-        [ForeignKey( "SecondUserId" )]
         public int SecondUserId { get; set; }
 
-        public User SecondUser { get; set; }
+        [ForeignKey("SecondUserId")]
+        public virtual User SecondUser { get; set; }
 
-        [MaxLength( 200 )]
-        public string Remarks { get; set; }
+        //protected override void OnModelCreating( DbModelBuilder modelBuilder )
+        //{
+        //    modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+
+        //    modelBuilder.Entity<Conversation>()
+        //        .HasRequired(f => f.SecondUser)
+        //        .WithRequiredDependent()
+        //        .WillCascadeOnDelete(false);
+        //}
     }
 }

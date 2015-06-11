@@ -6671,6 +6671,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="ChatContextMigrations\201506110827204_Initial.cs" />
+    <Compile Include="ChatContextMigrations\201506110827204_Initial.Designer.cs">
+      <DependentUpon>201506110827204_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ChatContextMigrations\Configuration.cs" />
     <Compile Include="Controllers\BackOfficeController.cs" />
     <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\DrawController.cs" />
@@ -6730,16 +6735,17 @@
     <Compile Include="Models\UserEntities\Group.cs" />
     <Compile Include="Models\UserEntities\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SchoolContextMigrations\201506110906165_Initial.cs" />
+    <Compile Include="SchoolContextMigrations\201506110906165_Initial.Designer.cs">
+      <DependentUpon>201506110906165_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SchoolContextMigrations\Configuration.cs" />
     <Compile Include="User1.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="UserContextMigrations\201506110359496_Initial.cs" />
     <Compile Include="UserContextMigrations\201506110359496_Initial.Designer.cs">
       <DependentUpon>201506110359496_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UserContextMigrations\201506110400493_Initial1.cs" />
-    <Compile Include="UserContextMigrations\201506110400493_Initial1.Designer.cs">
-      <DependentUpon>201506110400493_Initial1.cs</DependentUpon>
     </Compile>
     <Compile Include="UserContextMigrations\Configuration.cs" />
   </ItemGroup>
@@ -6777,14 +6783,17 @@
     <TypeScriptCompile Include="Scripts\collections.d.ts" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ChatContextMigrations\201506110827204_Initial.resx">
+      <DependentUpon>201506110827204_Initial.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GameContextMigrations\201506110401143_Initial.resx">
       <DependentUpon>201506110401143_Initial.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SchoolContextMigrations\201506110906165_Initial.resx">
+      <DependentUpon>201506110906165_Initial.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserContextMigrations\201506110359496_Initial.resx">
       <DependentUpon>201506110359496_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserContextMigrations\201506110400493_Initial1.resx">
-      <DependentUpon>201506110400493_Initial1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

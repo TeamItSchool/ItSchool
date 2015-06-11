@@ -234,6 +234,28 @@ namespace ITI.ItSchool.Models
             }
         }
 
+        public JsonResult GetGrades()
+        {
+            List<Grade> grades = new List<Grade>();
+            using( var db = new SchoolContext() )
+            {
+                grades = db.Grades.OrderBy( g => g.Name ).ToList();
+                var jsonData = new JsonResult { Data = grades, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                return jsonData;
+            }
+        }
+
+        public JsonResult GetGroups()
+        {
+            List<Group> groups = new List<Group>();
+            using (var db = new UserContext())
+            {
+                groups = db.Groups.OrderBy(g => g.Name).ToList();
+                var jsonData = new JsonResult { Data = groups, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                return jsonData;
+            }
+        }
+
         public User FindById( int id )
         {
             throw new NotImplementedException();

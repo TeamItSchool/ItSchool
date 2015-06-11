@@ -93,15 +93,15 @@ namespace ITI.ItSchool.UserContextMigrations
                     })
                 .PrimaryKey(t => t.LegsId);
             
-            CreateTable(
-                "dbo.Grades",
-                c => new
-                    {
-                        GradeId = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false, maxLength: 45),
-                        Remarks = c.String(maxLength: 200),
-                    })
-                .PrimaryKey(t => t.GradeId);
+            //CreateTable(
+            //    "dbo.Grades",
+            //    c => new
+            //        {
+            //            GradeId = c.Int(nullable: false, identity: true),
+            //            Name = c.String(nullable: false, maxLength: 45),
+            //            Remarks = c.String(maxLength: 200),
+            //        })
+            //    .PrimaryKey(t => t.GradeId);
             
             CreateTable(
                 "dbo.Groups",

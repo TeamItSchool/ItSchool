@@ -109,8 +109,22 @@
         Password: '',
         FirstName: '',
         LastName: '',
-        Mail: ''
+        Mail: '',
+        Grade: {
+            Name: ''
+        },
+        Group: {
+            Name: ''
+        }
     };
+
+    $scope.Grades = null;
+    RegistrationService.GetGrades().then(function (d) {
+        $scope.Grades = d.data;
+    }, function (error) {
+        alert( 'Error on Grades!' );
+    }
+    );
 
     //Check form validation // here RegisterForm is our form name
     $scope.$watch("RegisterForm.$valid", function (newValue) {
@@ -490,7 +504,7 @@
     $scope.message = "";
     $scope.IsFormValid = false;
     $scope.User = {
-        UserName: '',
+        UserName: 'Steve',
         Password: '', 
         FullName: '',
         EmailID: '',
@@ -574,8 +588,16 @@
         });
         return defer.promise;
     }
+
+    fac.GetGrades = function () {
+        return $http.get("/Data/GetGrades");
+    }
+    fac.GetGroups = function () {
+        return $http.get("/Data/GetGroups");
+    }
     return fac;
 })
+
 .factory('ExerciseDatas', function ($http) {
     var fac = {};
     var data = "";

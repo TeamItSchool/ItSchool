@@ -26,6 +26,8 @@
                     <span class="error" ng-show="(RegisterForm.uNickname.$dirty || submitted) && RegisterForm.uNickname.$error.required">Le pseudo doit être entré !</span>
                 </md-input-container>
 
+                
+
                 <md-input-container md-no-float style="width:15%">
                     <input type="password" ng-model="User.Password" name="uPassword" placeholder="Mot de passe..." ng-class="submitted?'ng-dirty':''" required autofocus />
                     <span class="error" ng-show="(RegisterForm.uPassword.$dirty || submitted) && RegisterForm.uPassword.$error.required">Le mot de passe doit être entré !</span>
