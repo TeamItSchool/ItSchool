@@ -6,6 +6,7 @@
 <div ng-controller="KidRegistrationController">
     <center>
         <h3>{{Message}}</h3>
+        <h2>{{User.Grade.Name}}</h2>
         <form novalidate name="RegisterForm" ng-submit="SaveData(User)">
             <div ng-show="!IsRegistered">
                 <!--<div style="color:red"></div>-->
@@ -26,13 +27,15 @@
                     <span class="error" ng-show="(RegisterForm.uNickname.$dirty || submitted) && RegisterForm.uNickname.$error.required">Le pseudo doit être entré !</span>
                 </md-input-container>
 
-                
-
                 <md-input-container md-no-float style="width:15%">
                     <input type="password" ng-model="User.Password" name="uPassword" placeholder="Mot de passe..." ng-class="submitted?'ng-dirty':''" required autofocus />
                     <span class="error" ng-show="(RegisterForm.uPassword.$dirty || submitted) && RegisterForm.uPassword.$error.required">Le mot de passe doit être entré !</span>
                 </md-input-container>
+                <md-select ng-model="User.Grade.Name" placeholder="Classe">
+                    <md-option ng-repeat="grade in Grades" value="{{grade.Name}}" ng-model="User.Grade.Name">{{grade.Name}}</md-option>
+                </md-select>
 
+                <br />
                 <md-button class="md-raised md-primary" value="{{submitText}}" type="submit">{{submitText}}</md-button>
             </div>
         </form>
