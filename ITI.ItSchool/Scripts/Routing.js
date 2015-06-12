@@ -109,8 +109,23 @@
         Password: '',
         FirstName: '',
         LastName: '',
-        Mail: ''
+        Mail: '',
+        Grade: {
+            Name: 'Classe'
+        },
+        Group: {
+            Name: 'Professeurs'
+        }
     };
+
+    $scope.Grades = null;
+
+    RegistrationService.GetGrades().then(function (d) {
+        $scope.Grades = d.data;
+        //alert($scope.Grades[0].Name);
+    }, function (error) {
+        alert('Error on grades');
+    });
 
     //Check form validation // here RegisterForm is our form name
     $scope.$watch("RegisterForm.$valid", function (newValue) {
@@ -490,7 +505,7 @@
     $scope.message = "";
     $scope.IsFormValid = false;
     $scope.User = {
-        UserName: '',
+        UserName: 'Steve',
         Password: '', 
         FullName: '',
         EmailID: '',
@@ -574,8 +589,32 @@
         });
         return defer.promise;
     }
+    fac.GetGrades = function () {
+        return $http.get('/Data/GetGrades')
+    }
+    fac.GetGroups = function () {
+        return $http.get('/Data/GetGroups')
+    }
     return fac;
 })
+/*
+.factory('GradesService', function ($http) { // I have explained about factory in the Part 2
+
+    var fac = {};
+    fac.GetGrades = function () {
+        return $http.get('/Data/GetGrades')
+    }
+    return fac;
+})
+.factory('GroupsService', function ($http) { // I have explained about factory in the Part 2
+
+    var fac = {};
+    fac.GetGroups = function () {
+        return $http.get('/Data/GetGroups')
+    }
+    return fac;
+})*/
+
 .factory('ExerciseDatas', function ($http) {
     var fac = {};
     var data = "";

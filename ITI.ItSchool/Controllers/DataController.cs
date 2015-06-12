@@ -149,5 +149,19 @@ namespace ITI.ItSchool.Controllers
             return jsonData;
             
         }
+
+        public JsonResult GetGrades()
+        {
+            IRepository repo = new SQLRepository();
+            var jsonData = repo.GetGrades();
+            return jsonData;
+        }
+
+        public JsonResult GetGroups()
+        {
+            IRepository repo = new SQLRepository();
+            var jsonData = repo.GetGroups();
+            return jsonData;
+        }
     }
 }

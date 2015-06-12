@@ -69,7 +69,7 @@ namespace ITI.ItSchool.UserContextMigrations
                     {
                         BodyId = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false, maxLength: 45),
-                        Link = c.String(maxLength: 256),
+                        Link = c.String(maxLength: 512),
                     })
                 .PrimaryKey(t => t.BodyId);
             
@@ -79,7 +79,7 @@ namespace ITI.ItSchool.UserContextMigrations
                     {
                         FootId = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false, maxLength: 45),
-                        Link = c.String(maxLength: 256),
+                        Link = c.String(maxLength: 512),
                     })
                 .PrimaryKey(t => t.FootId);
             
@@ -89,19 +89,19 @@ namespace ITI.ItSchool.UserContextMigrations
                     {
                         LegsId = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false, maxLength: 45),
-                        Link = c.String(maxLength: 256),
+                        Link = c.String(maxLength: 512),
                     })
                 .PrimaryKey(t => t.LegsId);
             
-            CreateTable(
-                "dbo.Grades",
-                c => new
-                    {
-                        GradeId = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false, maxLength: 45),
-                        Remarks = c.String(maxLength: 200),
-                    })
-                .PrimaryKey(t => t.GradeId);
+            //CreateTable(
+            //    "dbo.Grades",
+            //    c => new
+            //        {
+            //            GradeId = c.Int(nullable: false, identity: true),
+            //            Name = c.String(nullable: false, maxLength: 45),
+            //            Remarks = c.String(maxLength: 200),
+            //        })
+            //    .PrimaryKey(t => t.GradeId);
             
             CreateTable(
                 "dbo.Groups",
