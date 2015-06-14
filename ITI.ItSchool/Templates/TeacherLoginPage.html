@@ -6,13 +6,13 @@
                 <md-input-container style="width:10%">
                     <label>Pseudo</label>
                     <input type="text" ng-model="LoginData.Username" name="cUsername" ng-class="Submitted?'ng-dirty':''" required>
-                    <span class="error" ng-show="(LoginData.cUsername.$dirty || Submitted) && LoginData.cUsername.$error.required">Username required</span>
+                    <span class="error" ng-show="(LoginData.cUsername.$dirty || Submitted) && LoginForm.cUsername.$error.required">Username required</span>
                 </md-input-container>
                 <br />
                 <md-input-container style="width:10%">
                     <label>Mot de passe</label>
                     <input type="password" ng-model="LoginData.Password" name="cPassword" ng-class="Submitted?'ng-dirty':''" required>
-                    <span class="error" ng-show="(LoginData.cPassword.$dirty || Submitted) && LoginData.cPassword.$error.required">Password required</span>
+                    <span class="error" ng-show="(LoginData.cPassword.$dirty || Submitted) && LoginForm.cPassword.$error.required">Password required</span>
                 </md-input-container>
                 <br />
                 <md-button class="md-raised md-primary" value="Login" type="submit">{{ButtonMessage}}</md-button>

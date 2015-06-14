@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration;
 using ITI.ItSchool.Models.UserEntities;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Data.Objects;
 
 
 namespace ITI.ItSchool.Models.Contexts
