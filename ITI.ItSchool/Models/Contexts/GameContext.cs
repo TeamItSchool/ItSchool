@@ -8,7 +8,10 @@ namespace ITI.ItSchool.Models.Contexts
 {
     public class GameContext : DbContext
     {
-        public GameContext() : base( "ItSchool" ) { }
+        public GameContext() : base( "ItSchool" ) 
+        {
+            Database.SetInitializer( new DropCreateDatabaseIfModelChanges<GameContext>() );
+        }
 
         public DbSet<ExerciseType> ExerciseTypes { get; set; }
 

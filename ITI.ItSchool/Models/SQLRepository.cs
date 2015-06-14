@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using ITI.ItSchool.Models.SchoolEntities;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
+using ITI.ItSchool.Models.AvatarEntities;
 
 namespace ITI.ItSchool.Models
 {
@@ -96,12 +97,16 @@ namespace ITI.ItSchool.Models
         public bool Create( User user )
         {
             User userToCreate = null;
+            Avatar userAvatar = new Avatar();
+            Grade grade = new Grade();
+            Group group = new Group();
             bool mailExists = true;
             bool emptyFields = false;
             if( user == null ) throw new ArgumentNullException( "The 'User' as an object type is null.", "user" );
 
             using ( var userContext = new UserContext() )
             {
+                userContext.Configuration.LazyLoadingEnabled = false;
                 userToCreate = userContext.Users.Where(u => u.Nickname.Equals( user.Nickname ) ).FirstOrDefault();
                 mailExists = this.CheckExistingMail( user );
                 emptyFields = this.CheckEmptyFields( user );
@@ -110,6 +115,39 @@ namespace ITI.ItSchool.Models
                 {
                     if( !mailExists && !emptyFields )
                     {
+                        using( var avatarContext = new AvatarContext() )
+                        {
+                            avatarContext.Configuration.LazyLoadingEnabled = false;
+                            userAvatar.Name = "Avatar_" + user.Nickname;
+                            Body body = avatarContext.Bodies.Where( b => b.Name.Equals( "Corps" ) ).FirstOrDefault();
+                            userAvatar.Body = null;
+                            userAvatar.BodyId = body.BodyId;
+                            Foot feet = avatarContext.Feet.Where( f => f.Name.Equals( "Pieds" ) ).FirstOrDefault();
+                            userAvatar.Feet = null;
+                            userAvatar.FootId = feet.FootId;
+                            Legs legs = avatarContext.Legs.Where( l => l.Name.Equals( "Jambes" ) ).FirstOrDefault();
+                            userAvatar.Legs = null;
+                            userAvatar.LegsId = legs.LegsId;
+                            Avatar a = avatarContext.Avatars.OrderByDescending( av => av.AvatarId ).FirstOrDefault();
+                            user.AvatarId = a.AvatarId + 1;
+                            user.Avatar = userAvatar;
+                            userAvatar.User = user;
+                            user.Avatar = userAvatar;
+                        }
+                        using( SchoolContext sc = new SchoolContext() )
+                        {
+                            sc.Configuration.LazyLoadingEnabled = false;
+                            grade = sc.Grades.Where( g => g.Name.Equals( user.Grade.Name ) ).FirstOrDefault();
+                            user.Grade = null;
+                            user.GradeId = grade.GradeId;
+                        }
+                        User use = userContext.Users.OrderByDescending( u => u.UserId ).FirstOrDefault();
+                        int i = use.UserId;
+                        userAvatar.User = null;
+                        userAvatar.UserId = i + 1;
+                        group = userContext.Groups.Where( gr => gr.Name.Equals( user.Group.Name ) ).FirstOrDefault();
+                        user.Group = null;
+                        user.GroupId = group.GroupId;
                         userContext.Users.Add(user);
                         userContext.SaveChanges();
                         return true;
@@ -166,9 +204,8 @@ namespace ITI.ItSchool.Models
             game.ChapterId = 1;
             //game.LevelId = 1;
             game.ExerciseTypeId = 1;
-            game.Remarks = "Testing creation";
+            //game.Remarks = "Testing creation";
             #endregion
-
 
             using ( var db = new GameContext() )
             {
@@ -231,6 +268,30 @@ namespace ITI.ItSchool.Models
                 }
 
                 return userToUpdate;
+            }
+        }
+
+        public JsonResult GetGrades()
+        {
+            List<Grade> grades = new List<Grade>();
+            using( var db = new SchoolContext() )
+            {
+                db.Configuration.LazyLoadingEnabled = false;
+                grades = db.Grades.ToList();
+                //grades = db.Grades.OrderBy( g => g.Name ).ToList();
+                var jsonData = new JsonResult { Data = grades, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                return jsonData;
+            }
+        }
+
+        public JsonResult GetGroups()
+        {
+            List<Group> groups = new List<Group>();
+            using (var db = new UserContext())
+            {
+                groups = db.Groups.OrderBy(g => g.Name).ToList();
+                var jsonData = new JsonResult { Data = groups, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                return jsonData;
             }
         }
 

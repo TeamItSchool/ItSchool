@@ -85,14 +85,25 @@
     $scope.Login = function () {
         $scope.Submitted = true;
         if ($scope.IsFormValid) {
+            $scope.ButtonMessage = "Connexion en cours..";
             LoginService.GetUser($scope.LoginData).then(function (d) {
                 if (d.data.Nickname != null) {
+                    var monobjet_json = JSON.stringify(d);
+                    sessionStorage.setItem("objet", monobjet_json);
+
+                    var monobjet_json = sessionStorage.getItem("objet");
+                    var monobjet = JSON.parse(monobjet_json);
+                    // Affichage dans la console
+                    console.log(monobjet.data.FirstName);
+
                     $scope.IsLogedIn = true;
                     $scope.Message = "Bienvenue " + d.data.FirstName;
                 }
                 else {
-                    alert('Oops tu as entré le mauvais pseudo ou le mauvais mot de passe. Réessye pour te connecter.')
+                    alert("Oops tu as entré le mauvais pseudo ou le mauvais mot de passe. Réessye pour te connecter.")
                 }
+
+                console.log(d.data.FirstName + " " + d.data.LastName);
             })
         }
     };
@@ -104,13 +115,29 @@
     $scope.Message = "Inscris-toi sur It'School :)";
     $scope.message = "";
     $scope.IsFormValid = false;
+
     $scope.User = {
         Nickname: '',
         Password: '',
         FirstName: '',
         LastName: '',
-        Mail: ''
+        Mail: '',
+        Grade: {
+            Name: 'Classe'
+        },
+        Group: {
+            Name: 'Eleves'
+        }
     };
+
+    $scope.Grades = null;
+
+    RegistrationService.GetGrades().then(function (d) {
+        $scope.Grades = d.data;
+        //alert($scope.Grades[0].Name);
+    }, function (error) {
+        alert('Error on grades');
+    });
 
     //Check form validation // here RegisterForm is our form name
     $scope.$watch("RegisterForm.$valid", function (newValue) {
@@ -146,14 +173,25 @@
                         $scope.Login = function () {
                             $scope.Submitted = true;
                             if ($scope.IsFormValid) {
+                                $scope.ButtonMessage = "Connexion en cours..";
                                 LoginService.GetUser($scope.LoginData).then(function (d) {
                                     if (d.data.Nickname != null) {
+                                        var monobjet_json = JSON.stringify(d);
+                                        sessionStorage.setItem("objet", monobjet_json);
+
+                                        var monobjet_json = sessionStorage.getItem("objet");
+                                        var monobjet = JSON.parse(monobjet_json);
+                                        // Affichage dans la console
+                                        console.log(monobjet.data.FirstName);
+
                                         $scope.IsLogedIn = true;
                                         $scope.Message = "Bienvenue " + d.data.FirstName;
                                     }
                                     else {
-                                        alert('Oops tu as entré le mauvais pseudo ou le mauvais mot de passe. Réessye pour te connecter.')
+                                        alert("Oops tu as entré le mauvais pseudo ou le mauvais mot de passe. Réessye pour te connecter.")
                                     }
+
+                                    console.log(d.data.FirstName + " " + d.data.LastName);
                                 })
                             }
                         };
@@ -207,8 +245,8 @@
     $scope.Login = function () {
         $scope.Submitted = true;
         if ($scope.IsFormValid) {
+            $scope.ButtonMessage = "Connexion en cours..";
             LoginService.GetUser($scope.LoginData).then(function (d) {
-                $scope.ButtonMessage = "Connexion en cours..";
                 if (d.data.Nickname != null) {
                     var monobjet_json = JSON.stringify(d);
                     sessionStorage.setItem("objet", monobjet_json);
@@ -271,13 +309,30 @@
     $scope.Message = "Inscription";
     $scope.message = "";
     $scope.IsFormValid = false;
+    $scope.ButtonMessage = "Connexion";
+
     $scope.User = {
         Nickname: '',
         Password: '',
         FirstName: '',
         LastName: '',
-        Mail: ''
+        Mail: '',
+        Grade: {
+            Name: 'Classe'
+        },
+        Group: {
+            Name: 'Professeurs'
+        }
     };
+
+    $scope.Grades = null;
+
+    RegistrationService.GetGrades().then(function (d) {
+        $scope.Grades = d.data;
+        //alert($scope.Grades[0].Name);
+    }, function (error) {
+        alert('Error on grades');
+    });
 
     //Check form validation // here RegisterForm is our form name
     $scope.$watch("RegisterForm.$valid", function (newValue) {
@@ -313,6 +368,7 @@
                         $scope.Login = function () {
                             $scope.Submitted = true;
                             if ($scope.IsFormValid) {
+                                $scope.ButtonMessage = "Connexion en cours..";
                                 LoginService.GetUser($scope.LoginData).then(function (d) {
                                     if (d.data.Nickname != null) {
                                         var monobjet_json = JSON.stringify(d);
@@ -490,7 +546,7 @@
     $scope.message = "";
     $scope.IsFormValid = false;
     $scope.User = {
-        UserName: '',
+        UserName: 'Steve',
         Password: '', 
         FullName: '',
         EmailID: '',
@@ -574,8 +630,32 @@
         });
         return defer.promise;
     }
+    fac.GetGrades = function () {
+        return $http.get('/Data/GetGrades')
+    }
+    fac.GetGroups = function () {
+        return $http.get('/Data/GetGroups')
+    }
     return fac;
 })
+/*
+.factory('GradesService', function ($http) { // I have explained about factory in the Part 2
+
+    var fac = {};
+    fac.GetGrades = function () {
+        return $http.get('/Data/GetGrades')
+    }
+    return fac;
+})
+.factory('GroupsService', function ($http) { // I have explained about factory in the Part 2
+
+    var fac = {};
+    fac.GetGroups = function () {
+        return $http.get('/Data/GetGroups')
+    }
+    return fac;
+})*/
+
 .factory('ExerciseDatas', function ($http) {
     var fac = {};
     var data = "";

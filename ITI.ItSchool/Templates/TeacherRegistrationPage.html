@@ -30,7 +30,10 @@
                     <input type="password" ng-model="User.Password" name="uPassword" placeholder="Mot de passe..." ng-class="submitted?'ng-dirty':''" required autofocus />
                     <span class="error" ng-show="(RegisterForm.uPassword.$dirty || submitted) && RegisterForm.uPassword.$error.required">Le mot de passe doit être entré !</span>
                 </md-input-container>
-
+                <md-select ng-model="User.Grade.Name" placeholder="Classe">
+                    <md-option ng-repeat="grade in Grades" value="{{grade.Name}}" ng-model="User.Grade.Name">{{grade.Name}}</md-option>
+                </md-select>
+                <br />
                 <md-button class="md-raised md-primary" value="{{submitText}}" type="submit">{{submitText}}</md-button>
             </form>
         </div>
@@ -40,13 +43,13 @@
                     <md-input-container style="width:10%">
                         <label>Pseudo</label>
                         <input type="text" ng-model="LoginData.Username" name="cUsername" ng-class="Submitted?'ng-dirty':''" required>
-                        <span class="error" ng-show="(LoginData.cUsername.$dirty || Submitted) && LoginData.cUsername.$error.required">Username required</span>
+                        <span class="error" ng-show="(LoginData.cUsername.$dirty || submitted) && LoginForm.cUsername.$error.required">Username required</span>
                     </md-input-container>
                     <br />
                     <md-input-container style="width:10%">
                         <label>Mot de passe</label>
                         <input type="password" ng-model="LoginData.Password" name="cPassword" ng-class="Submitted?'ng-dirty':''" required>
-                        <span class="error" ng-show="(LoginData.cPassword.$dirty || Submitted) && LoginData.cPassword.$error.required">Password required</span>
+                        <span class="error" ng-show="(LoginData.cPassword.$dirty || Submitted) && LoginForm.cPassword.$error.required">Password required</span>
                     </md-input-container>
                     <br />
                     <md-button class="md-raised md-primary" value="Login" type="submit">Connexion</md-button>

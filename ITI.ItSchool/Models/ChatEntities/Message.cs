@@ -13,9 +13,9 @@ namespace ITI.ItSchool.Models
         [Key]
         public int MessageId { get; set; }
 
-        [ForeignKey( "ConversationId" )]
         public int ConversationId { get; set; }
 
+        [ForeignKey("ConversationId")]
         public Conversation Conversation { get; set; }
 
         public DateTime MsgDate { get; set; }
@@ -24,8 +24,5 @@ namespace ITI.ItSchool.Models
         [MinLength( 3 )]
         [MaxLength( 255 )]
         public string Content { get; set; }
-
-        [MaxLength( 200 )]
-        public string Remarks { get; set; }
     }
 }
