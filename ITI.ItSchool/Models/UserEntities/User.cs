@@ -2,6 +2,7 @@
 using ITI.ItSchool.Models.SchoolEntities;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Objects;
 
 namespace ITI.ItSchool.Models.UserEntities
 {

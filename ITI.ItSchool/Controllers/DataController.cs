@@ -1,5 +1,6 @@
 ﻿using ITI.ItSchool.Models;
 using ITI.ItSchool.Models.Contexts;
+using ITI.ItSchool.Models.SchoolEntities;
 using ITI.ItSchool.Models.UserEntities;
 using System;
 using System.Collections.Generic;
@@ -41,14 +42,36 @@ namespace ITI.ItSchool.Controllers
             return jsonData;
         }
 
-        public JsonResult SaveDictation( DictationText d )
+        public void SaveDictation( Game g )
         {
-            d.Text.Trim();
-            DictationText text = new DictationText();
-            text.Text = d.Text;
-            text.Level = d.Level;
-            JsonResult jsonData = new JsonResult { Data = text, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-            return jsonData;
+            IRepository iRepo = new SQLRepository();
+            string[] words = g.Data.Split( '/' );
+            g.Data = words[1];
+            using( GameContext gc = new GameContext() ) 
+            {
+                using( UserContext uc = new UserContext() )
+                {
+                    User user = iRepo.FindByNickname( words[0] );
+                    g.Chapter = new Models.SchoolEntities.Chapter();
+                    g.Chapter.GradeId = user.GradeId;
+                    g.Chapter.Grade = null;
+                }
+                g.ExerciseTypeId = gc.ExerciseTypes.Where( e => e.Name.Equals( g.ExerciseType.Name ) ).Select(e=>e.ExerciseTypeId).FirstOrDefault();
+                g.ExerciseType = null;
+                g.LevelId = gc.Levels.Where( l => l.Name.Equals( g.Level.Name ) ).Select( l => l.LevelId ).FirstOrDefault();
+                g.Level = null;
+                g.Chapter.Name = "Dictée";
+                using(SchoolContext sc = new SchoolContext()) 
+                {
+                    g.Chapter.Theme = new Models.SchoolEntities.Theme();
+                    g.Chapter.Theme.Name = "Verbes irréguliers";
+                    Matter matter = sc.Matters.Where( m => m.Name.Equals( "Français" ) ).FirstOrDefault();
+                    g.Chapter.Theme.MatterId = matter.MatterId;
+                    g.Name = "Dictée" + sc.Grades.Where( gr => gr.GradeId.Equals( g.Chapter.GradeId ) ).Select( gr => gr.Name ).FirstOrDefault() + gc.Levels.Where( l => l.LevelId.Equals( g.LevelId ) ).Select( l => l.Name ).FirstOrDefault();
+                }
+                gc.Games.Add( g );
+                gc.SaveChanges();
+            }
         }
 
         public JsonResult CheckDictationText( DictationText d )

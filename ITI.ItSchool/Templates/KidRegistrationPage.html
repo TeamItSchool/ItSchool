@@ -6,7 +6,6 @@
 <div ng-controller="KidRegistrationController">
     <center>
         <h3>{{Message}}</h3>
-        <h2>{{User.Grade.Name}}</h2>
         <form novalidate name="RegisterForm" ng-submit="SaveData(User)">
             <div ng-show="!IsRegistered">
                 <!--<div style="color:red"></div>-->
@@ -31,7 +30,7 @@
                     <input type="password" ng-model="User.Password" name="uPassword" placeholder="Mot de passe..." ng-class="submitted?'ng-dirty':''" required autofocus />
                     <span class="error" ng-show="(RegisterForm.uPassword.$dirty || submitted) && RegisterForm.uPassword.$error.required">Le mot de passe doit être entré !</span>
                 </md-input-container>
-                <md-select ng-model="User.Grade.Name" placeholder="Classe">
+                <md-select ng-model="User.Grade.Name" placeholder="Classe" md-on-open="loadGrades()" required>
                     <md-option ng-repeat="grade in Grades" value="{{grade.Name}}" ng-model="User.Grade.Name">{{grade.Name}}</md-option>
                 </md-select>
 
@@ -44,19 +43,27 @@
                 <div ng-show="!IsLogedIn">
                     <md-input-container style="width:10%">
                         <label>Pseudo</label>
-                        <input type="text" ng-model="LoginData.Username" name="cUsername" ng-class="Submitted?'ng-dirty':''" required>
-                        <span class="error" ng-show="(LoginData.cUsername.$dirty || Submitted) && LoginData.cUsername.$error.required">Username required</span>
+                        <input type="text" ng-model="LoginData.Username" name="cUsername" ng-class="Submitted?'ng-dirty':''" required autofocus>
+                        <span class="error" ng-show="(LoginData.cUsername.$dirty || submitted) && LoginForm.cUsername.$error.required">Username required</span>
                     </md-input-container>
                     <br />
                     <md-input-container style="width:10%">
                         <label>Mot de passe</label>
-                        <input type="password" ng-model="LoginData.Password" name="cPassword" ng-class="Submitted?'ng-dirty':''" required>
-                        <span class="error" ng-show="(LoginData.cPassword.$dirty || Submitted) && LoginData.cPassword.$error.required">Password required</span>
+                        <input type="password" ng-model="LoginData.Password" name="cPassword" ng-class="Submitted?'ng-dirty':''" required autofocus>
+                        <span class="error" ng-show="(LoginData.cPassword.$dirty || submitted) && LoginForm.cPassword.$error.required">Password required</span>
                     </md-input-container>
                     <br />
                     <md-button class="md-raised md-primary" value="Login" type="submit">Connexion</md-button>
                 </div>
             </form>
+            <div ng-show="IsLogedIn">
+                <md-button class="md-fab" aria-label="FAB" href="#!/teacher/">
+                    <md-icon md-svg-src="../Images/material-design-icons/navigation/svg/production/ic_arrow_back_36px.svg"></md-icon>
+                </md-button>
+                <md-button class="md-fab" aria-label="FAB" href="#!/teacher/lobby">
+                    <md-icon md-svg-src="../Images/material-design-icons/navigation/svg/production/ic_arrow_forward_36px.svg"></md-icon>
+                </md-button>
+            </div>
         </div>
     </center>
 </div>

@@ -98,12 +98,15 @@ namespace ITI.ItSchool.Models
         {
             User userToCreate = null;
             Avatar userAvatar = new Avatar();
+            Grade grade = new Grade();
+            Group group = new Group();
             bool mailExists = true;
             bool emptyFields = false;
             if( user == null ) throw new ArgumentNullException( "The 'User' as an object type is null.", "user" );
 
             using ( var userContext = new UserContext() )
             {
+                userContext.Configuration.LazyLoadingEnabled = false;
                 userToCreate = userContext.Users.Where(u => u.Nickname.Equals( user.Nickname ) ).FirstOrDefault();
                 mailExists = this.CheckExistingMail( user );
                 emptyFields = this.CheckEmptyFields( user );
@@ -114,21 +117,42 @@ namespace ITI.ItSchool.Models
                     {
                         using( var avatarContext = new AvatarContext() )
                         {
+                            avatarContext.Configuration.LazyLoadingEnabled = false;
                             userAvatar.Name = "Avatar_" + user.Nickname;
-                            userAvatar.BodyId = avatarContext.Bodies.Where( b => b.Name.Equals( "Corps" ) ).Select( bID => bID.BodyId ).FirstOrDefault();
-                            userAvatar.Body = avatarContext.Bodies.Where( b => b.Name.Equals( "Corps" ) ).FirstOrDefault();
-                            userAvatar.FootId = avatarContext.Feet.Where( f => f.Name.Equals( "Pieds" ) ).Select( fID => fID.FootId ).FirstOrDefault();
-                            userAvatar.Feet = avatarContext.Feet.Where( f => f.Name.Equals( "Pieds" ) ).FirstOrDefault();
-                            userAvatar.LegsId = avatarContext.Legs.Where( l => l.Name.Equals( "Jambes" ) ).Select( lID => lID.LegsId ).FirstOrDefault();
-                            userAvatar.Legs = avatarContext.Legs.Where( l => l.Name.Equals( "Jambes" ) ).FirstOrDefault();
-                            /*userAvatar.UserId = userContext.Users.Count() +1;
-                            avatarContext.Avatars.Add( userAvatar );
-                            avatarContext.SaveChanges();*/
+                            Body body = avatarContext.Bodies.Where( b => b.Name.Equals( "Corps" ) ).FirstOrDefault();
+                            userAvatar.Body = null;
+                            userAvatar.BodyId = body.BodyId;
+                            Foot feet = avatarContext.Feet.Where( f => f.Name.Equals( "Pieds" ) ).FirstOrDefault();
+                            userAvatar.Feet = null;
+                            userAvatar.FootId = feet.FootId;
+                            Legs legs = avatarContext.Legs.Where( l => l.Name.Equals( "Jambes" ) ).FirstOrDefault();
+                            userAvatar.Legs = null;
+                            userAvatar.LegsId = legs.LegsId;
+                            Avatar a = avatarContext.Avatars.OrderByDescending( av => av.AvatarId ).FirstOrDefault();
+                            if( a == null )
+                                user.AvatarId = 1;
+                            else
+                                user.AvatarId = a.AvatarId + 1;
+                            user.Avatar = userAvatar;
+                            userAvatar.User = user;
+                            user.Avatar = userAvatar;
                         }
-                        user.Avatar = userAvatar;
-                        userAvatar.User = user;
-                        user.Avatar = userAvatar;
-                        user.GroupId = userContext.Groups.Where( g => g.Name.Equals( user.Group.Name ) ).Select( g => g.GroupId ).FirstOrDefault();
+                        using( SchoolContext sc = new SchoolContext() )
+                        {
+                            sc.Configuration.LazyLoadingEnabled = false;
+                            grade = sc.Grades.Where( g => g.Name.Equals( user.Grade.Name ) ).FirstOrDefault();
+                            user.Grade = null;
+                            user.GradeId = grade.GradeId;
+                        }
+                        User searchedUser = userContext.Users.OrderByDescending( u => u.UserId ).FirstOrDefault();
+                        userAvatar.User = null;
+                        if( searchedUser == null )
+                            userAvatar.UserId = 1;
+                        else
+                            userAvatar.UserId = searchedUser.UserId+1;
+                        group = userContext.Groups.Where( gr => gr.Name.Equals( user.Group.Name ) ).FirstOrDefault();
+                        user.Group = null;
+                        user.GroupId = group.GroupId;
                         userContext.Users.Add(user);
                         userContext.SaveChanges();
                         return true;
@@ -170,7 +194,14 @@ namespace ITI.ItSchool.Models
             using( var uc = new UserContext() )
             {
                 uc.Configuration.LazyLoadingEnabled = false;
-                User user = uc.Users.Where( a => a.Nickname.Equals( nickname ) ).FirstOrDefault();
+                User user = uc.Users
+                    /*.Include("Avatar")
+                        .Include("Avatar.Body")
+                        .Include("Avatar.Feet")
+                        .Include("Avatar.Legs")
+                    .Include("Group")
+                    .Include("Grade")*/
+                    .Where( a => a.Nickname.Equals( nickname ) ).FirstOrDefault();
                 var jsonData = new JsonResult { Data = user, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 return jsonData;
             }
@@ -187,7 +218,6 @@ namespace ITI.ItSchool.Models
             game.ExerciseTypeId = 1;
             //game.Remarks = "Testing creation";
             #endregion
-
 
             using ( var db = new GameContext() )
             {

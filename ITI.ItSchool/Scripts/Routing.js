@@ -85,14 +85,25 @@
     $scope.Login = function () {
         $scope.Submitted = true;
         if ($scope.IsFormValid) {
+            $scope.ButtonMessage = "Connexion en cours..";
             LoginService.GetUser($scope.LoginData).then(function (d) {
                 if (d.data.Nickname != null) {
+                    var monobjet_json = JSON.stringify(d);
+                    sessionStorage.setItem("objet", monobjet_json);
+
+                    var monobjet_json = sessionStorage.getItem("objet");
+                    var monobjet = JSON.parse(monobjet_json);
+                    // Affichage dans la console
+                    console.log(monobjet.data.FirstName);
+
                     $scope.IsLogedIn = true;
                     $scope.Message = "Bienvenue " + d.data.FirstName;
                 }
                 else {
-                    alert('Oops tu as entré le mauvais pseudo ou le mauvais mot de passe. Réessye pour te connecter.')
+                    alert("Oops tu as entré le mauvais pseudo ou le mauvais mot de passe. Réessye pour te connecter.")
                 }
+
+                console.log(d.data.FirstName + " " + d.data.LastName);
             })
         }
     };
@@ -104,6 +115,7 @@
     $scope.Message = "Inscris-toi sur It'School :)";
     $scope.message = "";
     $scope.IsFormValid = false;
+
     $scope.User = {
         Nickname: '',
         Password: '',
@@ -114,7 +126,7 @@
             Name: 'Classe'
         },
         Group: {
-            Name: 'Professeurs'
+            Name: 'Eleves'
         }
     };
 
@@ -161,14 +173,25 @@
                         $scope.Login = function () {
                             $scope.Submitted = true;
                             if ($scope.IsFormValid) {
+                                $scope.ButtonMessage = "Connexion en cours..";
                                 LoginService.GetUser($scope.LoginData).then(function (d) {
                                     if (d.data.Nickname != null) {
+                                        var monobjet_json = JSON.stringify(d);
+                                        sessionStorage.setItem("objet", monobjet_json);
+
+                                        var monobjet_json = sessionStorage.getItem("objet");
+                                        var monobjet = JSON.parse(monobjet_json);
+                                        // Affichage dans la console
+                                        console.log(monobjet.data.FirstName);
+
                                         $scope.IsLogedIn = true;
                                         $scope.Message = "Bienvenue " + d.data.FirstName;
                                     }
                                     else {
-                                        alert('Oops tu as entré le mauvais pseudo ou le mauvais mot de passe. Réessye pour te connecter.')
+                                        alert("Oops tu as entré le mauvais pseudo ou le mauvais mot de passe. Réessye pour te connecter.")
                                     }
+
+                                    console.log(d.data.FirstName + " " + d.data.LastName);
                                 })
                             }
                         };
@@ -189,11 +212,11 @@
         $scope.submitted = false;
     }
 })
-
 .controller('TeacherHomeController', function ($scope) {
     $scope.Message = 'Page "Professeurs"';
 })
 .controller('TeacherLobbyController', function ($scope, LoginService) {
+
     var monobjet_json = sessionStorage.getItem("objet");
     var monobjet = JSON.parse(monobjet_json);
     // Affichage dans la console
@@ -222,10 +245,14 @@
     $scope.Login = function () {
         $scope.Submitted = true;
         if ($scope.IsFormValid) {
+            $scope.ButtonMessage = "Connexion en cours..";
             LoginService.GetUser($scope.LoginData).then(function (d) {
-                $scope.ButtonMessage = "Connexion en cours..";
                 if (d.data.Nickname != null) {
                     var monobjet_json = JSON.stringify(d);
+                    /*d.data.Grade = {
+                        Name: "Oui"
+                    }
+                    document.write(d.data.Grade.Name);*/
                     sessionStorage.setItem("objet", monobjet_json);
 
                     var monobjet_json = sessionStorage.getItem("objet");
@@ -245,7 +272,6 @@
         }
     };
 })
-
 .controller("TeacherClozeExerciseController", function ($scope, ExerciseDatas) {
     $scope.Message = 'Configuration de l\'exercice';
     $scope.Button = '15';
@@ -286,13 +312,30 @@
     $scope.Message = "Inscription";
     $scope.message = "";
     $scope.IsFormValid = false;
+    $scope.ButtonMessage = "Connexion";
+
     $scope.User = {
         Nickname: '',
         Password: '',
         FirstName: '',
         LastName: '',
-        Mail: ''
+        Mail: '',
+        Grade: {
+            Name: 'Classe'
+        },
+        Group: {
+            Name: 'Professeurs'
+        }
     };
+
+    $scope.Grades = null;
+
+    RegistrationService.GetGrades().then(function (d) {
+        $scope.Grades = d.data;
+        //alert($scope.Grades[0].Name);
+    }, function (error) {
+        alert('Error on grades');
+    });
 
     //Check form validation // here RegisterForm is our form name
     $scope.$watch("RegisterForm.$valid", function (newValue) {
@@ -328,6 +371,7 @@
                         $scope.Login = function () {
                             $scope.Submitted = true;
                             if ($scope.IsFormValid) {
+                                $scope.ButtonMessage = "Connexion en cours..";
                                 LoginService.GetUser($scope.LoginData).then(function (d) {
                                     if (d.data.Nickname != null) {
                                         var monobjet_json = JSON.stringify(d);
@@ -371,6 +415,12 @@
     $scope.Message = 'Selectionnez un exercice à modifier';
 })
 .controller('TeacherDictationController', function ($scope, SaveDictationText) {
+
+    var monobjet_json = sessionStorage.getItem("objet");
+    var monobjet = JSON.parse(monobjet_json);
+    // Affichage dans la console
+    console.log(monobjet.data.FirstName + " est dans la modification de la dictée");
+
     $scope.Message = 'Selectionnez un niveau.';
     $scope.EasySelected = false;
     $scope.MediumSelected = false;
@@ -379,9 +429,20 @@
     $scope.IsFormValid = false;
     $scope.Button = "Sauvegarder";
 
-    $scope.DictationText = {
+    /*$scope.DictationText = {
         Text: '',
         Level: ''
+    };*/
+
+    $scope.Game = {
+        //A REMPLIR
+        Data: '',
+        Level: {
+            Name: 'Test'
+        },
+        ExerciseType: {
+            Name: 'Dictation'
+        }
     };
 
     //Check if Form is valid or not // here DictText is our form Name
@@ -392,8 +453,9 @@
     $scope.SaveText = function () {
         if ($scope.IsFormValid) {
             $scope.Button = "Sauvegarde en cours..."
-            $scope.DictationText.Text.trim();
-            SaveDictationText.GetText($scope.DictationText).then(function (d) {
+            $scope.Game.Data.trim();
+            $scope.Game.Data = monobjet.data.Nickname + "/" + $scope.Game.Data;
+            SaveDictationText.GetText($scope.Game).then(function (d) {
                 $scope.Button = "Dictée sauvegardée";
             })
         }
@@ -402,17 +464,17 @@
     $scope.Easy = function () {
         $scope.EasySelected = true;
         $scope.Message = "Insérez le texte (Niveau facile)";
-        $scope.DictationText.Level = "Easy";
+        $scope.Game.Level.Name = "Easy";
     }
     $scope.Medium = function () {
         $scope.MediumSelected = true;
         $scope.Message = "Insérez le texte (Niveau moyen)";
-        $scope.DictationText.Level = "Medium";
+        $scope.Game.Level.Name = "Medium";
     }
     $scope.Hard = function () {
         $scope.HardSelected = true;
         $scope.Message = "Insérez le texte (Niveau difficile)";
-        $scope.DictationText.Level = "Hard";
+        $scope.Game.Level.Name = "Hard";
     }
 })
 .factory('SaveDictationText', function ($http) {
@@ -595,25 +657,7 @@
     fac.GetGroups = function () {
         return $http.get('/Data/GetGroups')
     }
-    return fac;
 })
-/*
-.factory('GradesService', function ($http) { // I have explained about factory in the Part 2
-
-    var fac = {};
-    fac.GetGrades = function () {
-        return $http.get('/Data/GetGrades')
-    }
-    return fac;
-})
-.factory('GroupsService', function ($http) { // I have explained about factory in the Part 2
-
-    var fac = {};
-    fac.GetGroups = function () {
-        return $http.get('/Data/GetGroups')
-    }
-    return fac;
-})*/
 
 .factory('ExerciseDatas', function ($http) {
     var fac = {};
@@ -625,7 +669,7 @@
             data: JSON.stringify(d),
             headers: { 'content-type': 'application/json' }
         })
-    };
+};
 
     return fac;
 });
