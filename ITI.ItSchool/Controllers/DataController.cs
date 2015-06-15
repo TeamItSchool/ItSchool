@@ -63,11 +63,14 @@ namespace ITI.ItSchool.Controllers
                 g.Chapter.Name = "Dictée";
                 using(SchoolContext sc = new SchoolContext()) 
                 {
-                    g.Chapter.Theme = new Models.SchoolEntities.Theme();
+                    /*g.Chapter.Theme = new Models.SchoolEntities.Theme();
                     g.Chapter.Theme.Name = "Verbes irréguliers";
                     Matter matter = sc.Matters.Where( m => m.Name.Equals( "Français" ) ).FirstOrDefault();
-                    g.Chapter.Theme.MatterId = matter.MatterId;
-                    g.Name = "Dictée" + sc.Grades.Where( gr => gr.GradeId.Equals( g.Chapter.GradeId ) ).Select( gr => gr.Name ).FirstOrDefault() + gc.Levels.Where( l => l.LevelId.Equals( g.LevelId ) ).Select( l => l.Name ).FirstOrDefault();
+                    g.Chapter.Theme.MatterId = matter.MatterId;*/
+                    Chapter chap = sc.Chapters.Where( c => c.Name.Equals( "Dictée" ) ).FirstOrDefault();
+                    g.ChapterId = chap.ChapterId;
+                    g.Chapter = null;
+                    g.Name = "Dictée" + sc.Grades.Where( gr => gr.GradeId.Equals( g.ChapterId ) ).Select( gr => gr.Name ).FirstOrDefault() + gc.Levels.Where( l => l.LevelId.Equals( g.LevelId ) ).Select( l => l.Name ).FirstOrDefault();
                 }
                 gc.Games.Add( g );
                 gc.SaveChanges();
