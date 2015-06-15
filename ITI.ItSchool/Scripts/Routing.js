@@ -126,7 +126,7 @@
             Name: 'Classe'
         },
         Group: {
-            Name: 'Eleves'
+            Name: 'Élève'
         }
     };
 
@@ -657,6 +657,7 @@
     fac.GetGroups = function () {
         return $http.get('/Data/GetGroups')
     }
+    return fac;		
 })
 
 .factory('ExerciseDatas', function ($http) {
