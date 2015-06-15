@@ -212,11 +212,11 @@
         $scope.submitted = false;
     }
 })
-
 .controller('TeacherHomeController', function ($scope) {
     $scope.Message = 'Page "Professeurs"';
 })
 .controller('TeacherLobbyController', function ($scope, LoginService) {
+
     var monobjet_json = sessionStorage.getItem("objet");
     var monobjet = JSON.parse(monobjet_json);
     // Affichage dans la console
@@ -249,6 +249,10 @@
             LoginService.GetUser($scope.LoginData).then(function (d) {
                 if (d.data.Nickname != null) {
                     var monobjet_json = JSON.stringify(d);
+                    /*d.data.Grade = {
+                        Name: "Oui"
+                    }
+                    document.write(d.data.Grade.Name);*/
                     sessionStorage.setItem("objet", monobjet_json);
 
                     var monobjet_json = sessionStorage.getItem("objet");
@@ -268,7 +272,6 @@
         }
     };
 })
-
 .controller("TeacherClozeExerciseController", function ($scope, ExerciseDatas) {
     $scope.Message = 'Configuration de l\'exercice';
     $scope.Button = '15';
@@ -412,6 +415,12 @@
     $scope.Message = 'Selectionnez un exercice à modifier';
 })
 .controller('TeacherDictationController', function ($scope, SaveDictationText) {
+
+    var monobjet_json = sessionStorage.getItem("objet");
+    var monobjet = JSON.parse(monobjet_json);
+    // Affichage dans la console
+    console.log(monobjet.data.FirstName + " est dans la modification de la dictée");
+
     $scope.Message = 'Selectionnez un niveau.';
     $scope.EasySelected = false;
     $scope.MediumSelected = false;
@@ -420,9 +429,20 @@
     $scope.IsFormValid = false;
     $scope.Button = "Sauvegarder";
 
-    $scope.DictationText = {
+    /*$scope.DictationText = {
         Text: '',
         Level: ''
+    };*/
+
+    $scope.Game = {
+        //A REMPLIR
+        Data: '',
+        Level: {
+            Name: 'Test'
+        },
+        ExerciseType: {
+            Name: 'Dictation'
+        }
     };
 
     //Check if Form is valid or not // here DictText is our form Name
@@ -433,8 +453,9 @@
     $scope.SaveText = function () {
         if ($scope.IsFormValid) {
             $scope.Button = "Sauvegarde en cours..."
-            $scope.DictationText.Text.trim();
-            SaveDictationText.GetText($scope.DictationText).then(function (d) {
+            $scope.Game.Data.trim();
+            $scope.Game.Data = monobjet.data.Nickname + "/" + $scope.Game.Data;
+            SaveDictationText.GetText($scope.Game).then(function (d) {
                 $scope.Button = "Dictée sauvegardée";
             })
         }
@@ -443,17 +464,17 @@
     $scope.Easy = function () {
         $scope.EasySelected = true;
         $scope.Message = "Insérez le texte (Niveau facile)";
-        $scope.DictationText.Level = "Easy";
+        $scope.Game.Level.Name = "Easy";
     }
     $scope.Medium = function () {
         $scope.MediumSelected = true;
         $scope.Message = "Insérez le texte (Niveau moyen)";
-        $scope.DictationText.Level = "Medium";
+        $scope.Game.Level.Name = "Medium";
     }
     $scope.Hard = function () {
         $scope.HardSelected = true;
         $scope.Message = "Insérez le texte (Niveau difficile)";
-        $scope.DictationText.Level = "Hard";
+        $scope.Game.Level.Name = "Hard";
     }
 })
 .factory('SaveDictationText', function ($http) {
@@ -636,25 +657,7 @@
     fac.GetGroups = function () {
         return $http.get('/Data/GetGroups')
     }
-    return fac;
 })
-/*
-.factory('GradesService', function ($http) { // I have explained about factory in the Part 2
-
-    var fac = {};
-    fac.GetGrades = function () {
-        return $http.get('/Data/GetGrades')
-    }
-    return fac;
-})
-.factory('GroupsService', function ($http) { // I have explained about factory in the Part 2
-
-    var fac = {};
-    fac.GetGroups = function () {
-        return $http.get('/Data/GetGroups')
-    }
-    return fac;
-})*/
 
 .factory('ExerciseDatas', function ($http) {
     var fac = {};
@@ -666,7 +669,7 @@
             data: JSON.stringify(d),
             headers: { 'content-type': 'application/json' }
         })
-    };
+};
 
     return fac;
 });
