@@ -35,7 +35,7 @@
         templateUrl: '/Templates/TeacherSelectExercicesPage.html',
         controller: 'TeacherSelectExercicesController'
     })
-    .when('/teacher/cloze_exercise', {
+    .when('/teacher/exercices/cloze_exercise', {
         templateUrl: '/Templates/TeacherCustomizeClozeExercisePage.html',
         controller: 'TeacherClozeExerciseController'
     })
@@ -361,7 +361,7 @@
 })
 .controller("TeacherClozeExerciseController", function ($scope, ExerciseDatas) {
     $scope.Message = 'Configuration de l\'exercice';
-    $scope.Button = '15';
+    $scope.Button = 'Sauvegarder';
     $scope.IsFormValid = false;
     $scope.test = '';
 
@@ -371,10 +371,10 @@
         //A REMPLIR
         Data: '',
         Level: {
-            Name: 'Tatu',
-            Remarks: 'Test level Remarks'
+            Name: '',
+            Remarks: ''
         },
-        Remarks: 'Toto'
+        Remarks: 'Test remark...'
     };
 
     $scope.$watch('ClozeExercise', function (newValue) {
@@ -384,7 +384,7 @@
     $scope.SaveData = function () {
         console.log( "Là : " + ExerciseDatas + "L240: " + $scope.Game.Level );
         if ($scope.IsFormValid) {
-            ExerciseDatas.GetExerciseDatas($scope.Game).then(function (data) {
+            ExerciseDatas.SaveClozeExercise($scope.Game).then(function (data) {
                 console.log("SaveData");
             });
         }
@@ -754,9 +754,9 @@
 .factory('ExerciseDatas', function ($http) {
     var fac = {};
     var data = "";
-    fac.GetExerciseDatas = function (d) {
+    fac.SaveClozeExercise = function (d) {
         return $http({
-            url: '/Data/GetExerciseDatas',
+            url: '/Data/SaveClozeExercise',
             method: 'POST',
             data: JSON.stringify(d),
             headers: { 'content-type': 'application/json' }
