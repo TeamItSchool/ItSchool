@@ -59,6 +59,18 @@
         templateUrl: '/Templates/KidRegistrationPage.html',
         controller: 'KidRegistrationController'
     })
+    .when('/kid/lobby', {
+        templateUrl: '/Templates/KidLobbyPage.html',
+        controller: 'KidLobbyController'
+    })
+    .when('/kid/exercices', {
+        templateUrl: '/Templates/KidSelectExercicesPage.html',
+        controller: 'KidSelectExercicesController'
+    })
+    .when('/kid/exercices/dictation', {
+        templateUrl: '/Templates/KidPlayDictationPage.html',
+        controller: 'KidPlayDictationController'
+    })
     .otherwise({   // This is when any route not matched
         templateUrl: '/Templates/Error.html',
         controller: 'ErrorController'
@@ -211,6 +223,81 @@
         $scope.RegisterForm.$setPristine(); // here registerForm is our form name
         $scope.submitted = false;
     }
+})
+.controller('KidLobbyController', function ($scope, LoginService) {
+
+    var monobjet_json = sessionStorage.getItem("objet");
+    var monobjet = JSON.parse(monobjet_json);
+    // Affichage dans la console
+    console.log(monobjet.data.FirstName);
+    $scope.Message = "Bonjour " + monobjet.data.FirstName;
+
+})
+.controller('KidSelectExercicesController', function ($scope) {
+    $scope.Message = 'A quoi veux-tu jouer ?';
+})
+.controller('KidPlayDictationController', function ($scop, CheckDictationText) {
+    var monobjet_json = sessionStorage.getItem("objet");
+    var monobjet = JSON.parse(monobjet_json);
+    // Affichage dans la console
+    console.log(monobjet.data.FirstName + " est dans la modification de la dictée");
+
+    $scope.Message = 'Sélectionne un niveau.';
+    $scope.EasySelected = false;
+    $scope.MediumSelected = false;
+    $scope.HardSelected = false;
+    $scope.Message2 = "";
+    $scope.IsFormValid = false;
+    $scope.Button = "Valider";
+
+    $scope.Game = {
+        //A REMPLIR
+        Data: '',
+        Level: {
+            Name: 'Test'
+        },
+        ExerciseType: {
+            Name: 'Dictation'
+        }
+    };
+
+    //Check if Form is valid or not // here DictText is our form Name
+    $scope.$watch('DictText.$valid', function (newVal) {
+        $scope.IsFormValid = newVal;
+    });
+    $scope.IsFormValid
+    $scope.SaveText = function () {
+        if ($scope.IsFormValid) {
+            $scope.Button = "Validtion en cours..."
+            $scope.Game.Data.trim();
+            $scope.Game.Data = monobjet.data.Nickname + "/" + $scope.Game.Data;
+            SaveDictationText.GetText($scope.Game).then(function (d) {
+                $scope.Button = "Dictée sauvegardée";
+            })
+        }
+    };
+
+    $scope.Easy = function () {
+        $scope.EasySelected = true;
+        $scope.Message = "Insérez le texte (Niveau facile)";
+        $scope.Game.Level.Name = "Easy";
+    }
+    $scope.Medium = function () {
+        $scope.MediumSelected = true;
+        $scope.Message = "Insérez le texte (Niveau moyen)";
+        $scope.Game.Level.Name = "Medium";
+    }
+    $scope.Hard = function () {
+        $scope.HardSelected = true;
+        $scope.Message = "Insérez le texte (Niveau difficile)";
+        $scope.Game.Level.Name = "Hard";
+    }
+})
+.controller('KidHomeController', function ($scope) {
+    $scope.Message = 'Page "Élève"';
+})
+.controller('KidLoginController', function ($scope) {
+    $scope.Message = "Entre le pseudo et le mot de passe que tu avais choisis.";
 })
 .controller('TeacherHomeController', function ($scope) {
     $scope.Message = 'Page "Professeurs"';
@@ -549,12 +636,6 @@
 
     return fac;
 })
-.controller('KidHomeController', function ($scope) {
-    $scope.Message = 'Page "Élève"';
-})
-.controller('KidLoginController', function ($scope) {
-    $scope.Message = "Entre le pseudo et le mot de passe que tu avais choisis.";
-})
 .controller('ErrorController', function ($scope) {
     $scope.Message = "404 Not Found!";
 })
@@ -611,9 +692,7 @@
     }
 })
 
-
 //Factories
-
     //Login Factory
 .factory('LoginService', function ($http) {
     var fac = {};
@@ -629,7 +708,19 @@
 
     return fac;
 })
-
+.factory('CheckDictationText', function ($http) {
+    var fac = {};
+    var data = "";
+    fac.GetDictationText = function (d) {
+        return $http({
+            url: '/Data/CheckDictationText',
+            method: 'POST',
+            data: JSON.stringify(d),
+            header: { 'content-type': 'application/json' }
+        })
+    };
+    return fac;
+})
     //Registration Factory
 .factory('RegistrationService', function ($http, $q) {
     //here q is an angularJS service which helps us to run asynchronous function and return result when processing is done
