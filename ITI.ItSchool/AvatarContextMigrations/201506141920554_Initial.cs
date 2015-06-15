@@ -1,4 +1,4 @@
-namespace ITI.ItSchool.UserContextMigrations
+namespace ITI.ItSchool.AvatarContextMigrations
 {
     using System;
     using System.Data.Entity.Migrations;
@@ -7,41 +7,6 @@ namespace ITI.ItSchool.UserContextMigrations
     {
         public override void Up()
         {
-            CreateTable(
-                "dbo.Controls",
-                c => new
-                    {
-                        ControlId = c.Int(nullable: false, identity: true),
-                        TutorId = c.Int(),
-                        ChildId = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.ControlId)
-                .ForeignKey("dbo.Users", t => t.ChildId, cascadeDelete: true)
-                .ForeignKey("dbo.Users", t => t.TutorId)
-                .Index(t => t.TutorId)
-                .Index(t => t.ChildId);
-            
-            CreateTable(
-                "dbo.Users",
-                c => new
-                    {
-                        UserId = c.Int(nullable: false, identity: true),
-                        FirstName = c.String(nullable: false, maxLength: 45),
-                        LastName = c.String(nullable: false),
-                        Nickname = c.String(nullable: false),
-                        Mail = c.String(nullable: false),
-                        Password = c.String(nullable: false),
-                        GradeId = c.Int(nullable: false),
-                        AvatarId = c.Int(nullable: false),
-                        GroupId = c.Int(nullable: false),
-                        Remarks = c.String(maxLength: 200),
-                    })
-                .PrimaryKey(t => t.UserId)
-                .ForeignKey("dbo.Grades", t => t.GradeId, cascadeDelete: true)
-                .ForeignKey("dbo.Groups", t => t.GroupId, cascadeDelete: true)
-                .Index(t => t.GradeId)
-                .Index(t => t.GroupId);
-            
             CreateTable(
                 "dbo.Avatars",
                 c => new
@@ -94,14 +59,35 @@ namespace ITI.ItSchool.UserContextMigrations
                 .PrimaryKey(t => t.LegsId);
             
             CreateTable(
+                "dbo.Users",
+                c => new
+                    {
+                        UserId = c.Int(nullable: false, identity: true),
+                        FirstName = c.String(nullable: false, maxLength: 45),
+                        LastName = c.String(nullable: false),
+                        Nickname = c.String(nullable: false),
+                        Mail = c.String(nullable: false),
+                        Password = c.String(nullable: false),
+                        GradeId = c.Int(nullable: false),
+                        AvatarId = c.Int(nullable: false),
+                        GroupId = c.Int(nullable: false),
+                        Remarks = c.String(maxLength: 200),
+                    })
+                .PrimaryKey(t => t.UserId)
+                .ForeignKey("dbo.Grades", t => t.GradeId, cascadeDelete: true)
+                .ForeignKey("dbo.Groups", t => t.GroupId, cascadeDelete: true)
+                .Index(t => t.GradeId)
+                .Index(t => t.GroupId);
+            
+            CreateTable(
                 "dbo.Grades",
                 c => new
                     {
-                        GradeId = c.Int( nullable: false, identity: true ),
-                        Name = c.String( nullable: false, maxLength: 45 ),
-                        Remarks = c.String( maxLength: 200 ),
-                    } )
-                .PrimaryKey( t => t.GradeId );
+                        GradeId = c.Int(nullable: false, identity: true),
+                        Name = c.String(nullable: false, maxLength: 45),
+                        Remarks = c.String(maxLength: 200),
+                    })
+                .PrimaryKey(t => t.GradeId);
             
             CreateTable(
                 "dbo.Groups",
@@ -117,30 +103,25 @@ namespace ITI.ItSchool.UserContextMigrations
         
         public override void Down()
         {
-            DropForeignKey("dbo.Controls", "TutorId", "dbo.Users");
-            DropForeignKey("dbo.Controls", "ChildId", "dbo.Users");
+            DropForeignKey("dbo.Avatars", "AvatarId", "dbo.Users");
             DropForeignKey("dbo.Users", "GroupId", "dbo.Groups");
             DropForeignKey("dbo.Users", "GradeId", "dbo.Grades");
-            DropForeignKey("dbo.Avatars", "AvatarId", "dbo.Users");
             DropForeignKey("dbo.Avatars", "LegsId", "dbo.Legs");
             DropForeignKey("dbo.Avatars", "FootId", "dbo.Feet");
             DropForeignKey("dbo.Avatars", "BodyId", "dbo.Bodies");
+            DropIndex("dbo.Users", new[] { "GroupId" });
+            DropIndex("dbo.Users", new[] { "GradeId" });
             DropIndex("dbo.Avatars", new[] { "BodyId" });
             DropIndex("dbo.Avatars", new[] { "LegsId" });
             DropIndex("dbo.Avatars", new[] { "FootId" });
             DropIndex("dbo.Avatars", new[] { "AvatarId" });
-            DropIndex("dbo.Users", new[] { "GroupId" });
-            DropIndex("dbo.Users", new[] { "GradeId" });
-            DropIndex("dbo.Controls", new[] { "ChildId" });
-            DropIndex("dbo.Controls", new[] { "TutorId" });
             DropTable("dbo.Groups");
             DropTable("dbo.Grades");
+            DropTable("dbo.Users");
             DropTable("dbo.Legs");
             DropTable("dbo.Feet");
             DropTable("dbo.Bodies");
             DropTable("dbo.Avatars");
-            DropTable("dbo.Users");
-            DropTable("dbo.Controls");
         }
     }
 }

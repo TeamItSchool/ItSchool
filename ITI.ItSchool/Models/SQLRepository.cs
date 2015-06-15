@@ -129,7 +129,10 @@ namespace ITI.ItSchool.Models
                             userAvatar.Legs = null;
                             userAvatar.LegsId = legs.LegsId;
                             Avatar a = avatarContext.Avatars.OrderByDescending( av => av.AvatarId ).FirstOrDefault();
-                            user.AvatarId = a.AvatarId + 1;
+                            if( a == null )
+                                user.AvatarId = 1;
+                            else
+                                user.AvatarId = a.AvatarId + 1;
                             user.Avatar = userAvatar;
                             userAvatar.User = user;
                             user.Avatar = userAvatar;
@@ -141,10 +144,12 @@ namespace ITI.ItSchool.Models
                             user.Grade = null;
                             user.GradeId = grade.GradeId;
                         }
-                        User use = userContext.Users.OrderByDescending( u => u.UserId ).FirstOrDefault();
-                        int i = use.UserId;
+                        User searchedUser = userContext.Users.OrderByDescending( u => u.UserId ).FirstOrDefault();
                         userAvatar.User = null;
-                        userAvatar.UserId = i + 1;
+                        if( searchedUser == null )
+                            userAvatar.UserId = 1;
+                        else
+                            userAvatar.UserId = searchedUser.UserId+1;
                         group = userContext.Groups.Where( gr => gr.Name.Equals( user.Group.Name ) ).FirstOrDefault();
                         user.Group = null;
                         user.GroupId = group.GroupId;
@@ -189,7 +194,14 @@ namespace ITI.ItSchool.Models
             using( var uc = new UserContext() )
             {
                 uc.Configuration.LazyLoadingEnabled = false;
-                User user = uc.Users.Where( a => a.Nickname.Equals( nickname ) ).FirstOrDefault();
+                User user = uc.Users
+                    /*.Include("Avatar")
+                        .Include("Avatar.Body")
+                        .Include("Avatar.Feet")
+                        .Include("Avatar.Legs")
+                    .Include("Group")
+                    .Include("Grade")*/
+                    .Where( a => a.Nickname.Equals( nickname ) ).FirstOrDefault();
                 var jsonData = new JsonResult { Data = user, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 return jsonData;
             }

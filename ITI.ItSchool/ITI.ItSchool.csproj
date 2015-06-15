@@ -6672,6 +6672,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="AvatarContextMigrations\201506141920554_Initial.cs" />
+    <Compile Include="AvatarContextMigrations\201506141920554_Initial.Designer.cs">
+      <DependentUpon>201506141920554_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AvatarContextMigrations\Configuration.cs" />
     <Compile Include="ChatContextMigrations\201506110827204_Initial.cs" />
     <Compile Include="ChatContextMigrations\201506110827204_Initial.Designer.cs">
       <DependentUpon>201506110827204_Initial.cs</DependentUpon>
@@ -6784,6 +6789,9 @@
     <TypeScriptCompile Include="Scripts\collections.d.ts" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="AvatarContextMigrations\201506141920554_Initial.resx">
+      <DependentUpon>201506141920554_Initial.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ChatContextMigrations\201506110827204_Initial.resx">
       <DependentUpon>201506110827204_Initial.cs</DependentUpon>
     </EmbeddedResource>
