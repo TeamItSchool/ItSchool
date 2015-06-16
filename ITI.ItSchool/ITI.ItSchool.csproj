@@ -6656,7 +6656,10 @@
     <Content Include="Templates\Error.html" />
     <Content Include="Templates\home.html" />
     <Content Include="Templates\KidDragAndDropExercice.html" />
+    <Content Include="Templates\KidPlayDictationPage.html" />
+    <Content Include="Templates\KidSelectExercicesPage.html" />
     <Content Include="Templates\KidHomePage.html" />
+    <Content Include="Templates\KidLobbyPage.html" />
     <Content Include="Templates\KidLoginPage.html" />
     <Content Include="Templates\KidRegistrationPage.html" />
     <Content Include="Templates\TeacherCustomizeBattleCardPage.html" />
