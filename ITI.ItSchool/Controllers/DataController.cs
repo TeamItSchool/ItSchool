@@ -42,8 +42,9 @@ namespace ITI.ItSchool.Controllers
             return jsonData;
         }
 
-        public void SaveDictation( Game g )
+        public JsonResult SaveDictation( Game g )
         {
+            string message = "";
             IRepository iRepo = new SQLRepository();
             string[] words = g.Data.Split( '/' );
             g.Data = words[1];
@@ -63,17 +64,23 @@ namespace ITI.ItSchool.Controllers
                 g.Chapter.Name = "Dictée";
                 using(SchoolContext sc = new SchoolContext()) 
                 {
-                    /*g.Chapter.Theme = new Models.SchoolEntities.Theme();
-                    g.Chapter.Theme.Name = "Verbes irréguliers";
-                    Matter matter = sc.Matters.Where( m => m.Name.Equals( "Français" ) ).FirstOrDefault();
-                    g.Chapter.Theme.MatterId = matter.MatterId;*/
                     Chapter chap = sc.Chapters.Where( c => c.Name.Equals( "Dictée" ) ).FirstOrDefault();
                     g.ChapterId = chap.ChapterId;
                     g.Chapter = null;
                     g.Name = "Dictée" + sc.Grades.Where( gr => gr.GradeId.Equals( g.ChapterId ) ).Select( gr => gr.Name ).FirstOrDefault() + gc.Levels.Where( l => l.LevelId.Equals( g.LevelId ) ).Select( l => l.Name ).FirstOrDefault();
                 }
-                gc.Games.Add( g );
-                gc.SaveChanges();
+                Game game = gc.Games.Where( mg => mg.Name.Equals( g.Name ) ).FirstOrDefault();
+                if( game == null )
+                {
+                    gc.Games.Add( g );
+                    gc.SaveChanges();
+                    message = "Jeu enregistré";
+                }
+                else
+                    message = "Un problème est survenu lors de l'enregistrement." + Environment.NewLine 
+                        + "Veuillez réesayer.";      
+                JsonResult data = new JsonResult { Data = message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                return data;
             }
         }
 
@@ -129,42 +136,6 @@ namespace ITI.ItSchool.Controllers
             {
                 message = "Failed!";
             }
-
-            #region with TestDBEntites
-            ////Here we will save data to the database
-            //if( ModelState.IsValid == false)
-            //{
-            //    using (TestDBEntities dc = new TestDBEntities() )
-            //    {
-            //        // check if the username is available
-            //        var user = dc.User1.Where( a => a.UserName.Equals( u.UserName ) ).FirstOrDefault();
-            //        if( user == null )
-            //        {
-            //            //Save here
-            //            u.UserID = dc.User1.Count();
-            //            dc.User1.Add( u );
-            //            dc.SaveChanges();
-            //            if( u.Status == "2" )
-            //                message = "Votre compte est bien créé.";
-            //            else if( u.Status == "3" )
-            //                message = "Ton compte a bien été créé.";
-            //        }
-            //        else
-            //        {
-            //            if( u.Status == "2" )
-            //                message = "Ce pseudo existe déjà. Veuillez en choisir un autre.";
-            //            else if( u.Status == "3" )
-            //                message = "Oops, quelqu'un a déjà choisis ce pseudo. Essayes-en un autre.";
-            //            else
-            //                message = "Aïe..";
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    message = "Failed!";
-            //}
-            #endregion
             return new JsonResult { Data = message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 

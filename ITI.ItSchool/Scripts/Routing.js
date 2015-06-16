@@ -373,8 +373,7 @@
         Level: {
             Name: '',
             Remarks: ''
-        },
-        Remarks: 'Test remark...'
+        }
     };
 
     $scope.$watch('ClozeExercise', function (newValue) {
@@ -507,6 +506,7 @@
     var monobjet = JSON.parse(monobjet_json);
     // Affichage dans la console
     console.log(monobjet.data.FirstName + " est dans la modification de la dictée");
+    console.log("Sa classe est : " + monobjet.data.Grade.Name);
 
     $scope.Message = 'Selectionnez un niveau.';
     $scope.EasySelected = false;
@@ -515,11 +515,6 @@
     $scope.Message2 = "";
     $scope.IsFormValid = false;
     $scope.Button = "Sauvegarder";
-
-    /*$scope.DictationText = {
-        Text: '',
-        Level: ''
-    };*/
 
     $scope.Game = {
         //A REMPLIR
@@ -542,8 +537,16 @@
             $scope.Button = "Sauvegarde en cours..."
             $scope.Game.Data.trim();
             $scope.Game.Data = monobjet.data.Nickname + "/" + $scope.Game.Data;
+            var res = $scope.Game.Data.split("/");
             SaveDictationText.GetText($scope.Game).then(function (d) {
-                $scope.Button = "Dictée sauvegardée";
+                $scope.Game.Data = res[1];
+                console.log(d.data);
+                if (d.data == "Jeu enregistré")
+                    $scope.Button = "Dictée sauvegardée";
+                else {
+                    alert(d.data);
+                    $scope.Button = "Sauvegarder"
+                }
             })
         }
     };    

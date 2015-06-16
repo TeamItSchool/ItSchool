@@ -143,7 +143,8 @@ namespace ITI.ItSchool.Models
                         {
                             sc.Configuration.LazyLoadingEnabled = false;
                             grade = sc.Grades.Where( g => g.Name.Equals( user.Grade.Name ) ).FirstOrDefault();
-                            user.Grade = null;
+                            user.Grade = grade;
+                            //user.Grade = null;
                             user.GradeId = grade.GradeId;
                         }
                         User searchedUser = userContext.Users.OrderByDescending( u => u.UserId ).FirstOrDefault();
@@ -199,13 +200,16 @@ namespace ITI.ItSchool.Models
             {
                 uc.Configuration.LazyLoadingEnabled = false;
                 User user = uc.Users
-                    /*.Include("Avatar")
+                    .Include("Avatar")
                         .Include("Avatar.Body")
                         .Include("Avatar.Feet")
                         .Include("Avatar.Legs")
                     .Include("Group")
-                    .Include("Grade")*/
+                    .Include("Grade")
                     .Where( a => a.Nickname.Equals( nickname ) ).FirstOrDefault();
+                user.Grade.Users = null;
+                user.Group.Users = null;
+                user.Avatar.User = null;   
                 var jsonData = new JsonResult { Data = user, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 return jsonData;
             }
