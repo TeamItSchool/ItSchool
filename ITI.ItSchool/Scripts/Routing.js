@@ -47,6 +47,10 @@
         templateUrl: '/Templates/TeacherCustomizeDictationPage.html',
         controller: 'TeacherDictationController'
     })
+    .when('/teacher/exercices/battleCard', {
+        templateUrl: '/Templates/TeacherCustomizeBattleCardPage.html',
+        controller: 'TeacherBattleCardController'
+    })
     .when('/kid', {
         templateUrl: '/Templates/KidHomePage.html',
         controller: 'KidHomeController'
@@ -126,7 +130,7 @@
             Name: 'Classe'
         },
         Group: {
-            Name: 'Eleves'
+            Name: 'Élèves'
         }
     };
 
@@ -549,6 +553,13 @@
 
     return fac;
 })
+
+.controller('TeacherBattleCardController', function ($scope) {
+    $scope.Time = 'Vous avez 1 minutes ! ';
+    $scope.Score = 0
+    $scope.svgCard = '/Images/redCard.svg';
+})
+
 .controller('KidHomeController', function ($scope) {
     $scope.Message = 'Page "Élève"';
 })
@@ -657,6 +668,7 @@
     fac.GetGroups = function () {
         return $http.get('/Data/GetGroups')
     }
+    return fac;
 })
 
 .factory('ExerciseDatas', function ($http) {

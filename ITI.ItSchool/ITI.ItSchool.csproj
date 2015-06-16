@@ -6659,6 +6659,7 @@
     <Content Include="Templates\KidHomePage.html" />
     <Content Include="Templates\KidLoginPage.html" />
     <Content Include="Templates\KidRegistrationPage.html" />
+    <Content Include="Templates\TeacherCustomizeBattleCardPage.html" />
     <Content Include="Templates\TeacherCustomizeDictationPage.html" />
     <Content Include="Templates\TeacherCustomizeDragAndDropPage.html" />
     <Content Include="Templates\TeacherLobbyPage.html" />
@@ -6745,6 +6746,10 @@
     <Compile Include="SchoolContextMigrations\201506110906165_Initial.Designer.cs">
       <DependentUpon>201506110906165_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="SchoolContextMigrations\201506151035088_Initial1.cs" />
+    <Compile Include="SchoolContextMigrations\201506151035088_Initial1.Designer.cs">
+      <DependentUpon>201506151035088_Initial1.cs</DependentUpon>
+    </Compile>
     <Compile Include="SchoolContextMigrations\Configuration.cs" />
     <Compile Include="User1.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
@@ -6800,6 +6805,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SchoolContextMigrations\201506110906165_Initial.resx">
       <DependentUpon>201506110906165_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SchoolContextMigrations\201506151035088_Initial1.resx">
+      <DependentUpon>201506151035088_Initial1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserContextMigrations\201506110359496_Initial.resx">
       <DependentUpon>201506110359496_Initial.cs</DependentUpon>
