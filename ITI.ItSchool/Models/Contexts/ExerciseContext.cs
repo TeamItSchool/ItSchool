@@ -5,6 +5,7 @@ using System.Web;
 using System.Data.Entity;
 using ITI.ItSchool.Models.ExercisesEntities;
 using ITI.ItSchool.Models.Entities;
+using ITI.ItSchool.Models.ExerciseEntities;
 
 namespace ITI.ItSchool.Models.Contexts
 {
@@ -15,9 +16,9 @@ namespace ITI.ItSchool.Models.Contexts
             Database.SetInitializer( new DropCreateDatabaseIfModelChanges<ExerciseContext>() );
         }
 
-        public DbSet<ExerciseType> ExerciseTypes { get; set; }
-
         public DbSet<Exercise> Exercises { get; set; }
+
+        public DbSet<ExerciseType> ExerciseTypes { get; set; }
 
         public DbSet<Level> Levels { get; set; }
     }

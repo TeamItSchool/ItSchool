@@ -32,9 +32,7 @@ namespace ITI.ItSchool.Models
 
         bool Create( User u );
 
-        bool Create( Exercise exercise );
-
-        bool Create( Grade g );
+        bool Create( Class g );
 
         bool Remove( User u );
 

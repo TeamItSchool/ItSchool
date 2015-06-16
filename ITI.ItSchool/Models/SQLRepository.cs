@@ -40,36 +40,14 @@ namespace ITI.ItSchool.Models
             }
         }
 
-        public bool Create( Exercise game )
-        {
-            string exception = null;
-            if ( game.Equals( null ) ) throw new ArgumentNullException( "Game as a type is null", "game" );
-            if ( game.Data.Equals( null ) ) throw new ArgumentNullException( "Game's data is null", "game" );
-
-            using( var db = new ExerciseContext() )
-            {
-                try
-                {
-                    db.Exercises.Add(game);
-                    db.SaveChanges();
-                    return true;
-                }
-                catch( Exception ex )
-                {
-                   exception = ex.ToString();
-                   throw;
-                }
-            }
-        }
-
-        public bool Create( Grade grade )
+        public bool Create( Class @class )
         {
             using( var db = new SchoolContext() )
             {
                 try
                 {
                     db.Configuration.LazyLoadingEnabled = false;
-                    db.Grades.Add(grade);
+                    db.Grades.Add(@class);
                     db.SaveChanges();
                     return true;
                 }
@@ -98,7 +76,7 @@ namespace ITI.ItSchool.Models
         {
             User userToCreate = null;
             Avatar userAvatar = new Avatar();
-            Grade grade = new Grade();
+            Class grade = new Class();
             Group group = new Group();
             bool mailExists = true;
             bool emptyFields = false;
@@ -142,9 +120,9 @@ namespace ITI.ItSchool.Models
                         using( SchoolContext sc = new SchoolContext() )
                         {
                             sc.Configuration.LazyLoadingEnabled = false;
-                            grade = sc.Grades.Where( g => g.Name.Equals( user.Grade.Name ) ).FirstOrDefault();
-                            user.Grade = null;
-                            user.GradeId = grade.GradeId;
+                            aClass = sc.Grades.Where( c => c.Name.Equals( user.Class.Name ) ).FirstOrDefault();
+                            user.Class = null;
+                            user.ClassId = aClass.ClassId;
                         }
                         User searchedUser = userContext.Users.OrderByDescending( u => u.UserId ).FirstOrDefault();
 
@@ -215,14 +193,6 @@ namespace ITI.ItSchool.Models
         {
             JsonResult jr = null;
 
-            #region TestExerciseCreation
-            exercise.Name = "Cloze";
-            exercise.ChapterId = 1;
-            //game.LevelId = 1;
-            exercise.ExerciseTypeId = 1;
-            //game.Remarks = "Testing creation";
-            #endregion
-
             using ( var db = new ExerciseContext() )
             {
                 try
@@ -289,7 +259,7 @@ namespace ITI.ItSchool.Models
 
         public JsonResult GetGrades()
         {
-            List<Grade> grades = new List<Grade>();
+            List<Class> grades = new List<Class>();
             using( var db = new SchoolContext() )
             {
                 db.Configuration.LazyLoadingEnabled = false;
@@ -335,5 +305,7 @@ namespace ITI.ItSchool.Models
         {
             throw new NotImplementedException();
         }
+
+        public Class aClass { get; set; }
     }
 }

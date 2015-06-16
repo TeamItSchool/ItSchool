@@ -9,11 +9,11 @@ using System.Web;
 
 namespace ITI.ItSchool.Models.SchoolEntities
 {
-    [Table("Grades")]
-    public class Grade
+    [Table("Classes")]
+    public class Class
     {
         [Key]
-        public int GradeId { get; set; }
+        public int ClassId { get; set; }
 
         [Required]
         [MinLength( 2 )]
@@ -21,9 +21,7 @@ namespace ITI.ItSchool.Models.SchoolEntities
         public string Name { get; set; }
 
         [MaxLength( 200 )]
-        public string Remarks { get; set; }
-
-        //public virtual ICollection<Chapter> Chapters { get; set; }
+        public string Description { get; set; }
 
         public virtual ICollection<User> Users { get; set; }
     }

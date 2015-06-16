@@ -10,7 +10,7 @@ namespace ITI.ItSchool.Models.Contexts
 
         public DbSet<Chapter> Chapters { get; set; }
 
-        public DbSet<Grade> Grades { get; set; }
+        public DbSet<Class> Grades { get; set; }
 
         public DbSet<Matter> Matters { get; set; }
 

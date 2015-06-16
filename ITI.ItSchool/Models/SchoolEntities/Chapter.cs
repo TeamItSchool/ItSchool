@@ -11,7 +11,7 @@ namespace ITI.ItSchool.Models.SchoolEntities
     [Table("Chapters")]
     public class Chapter
     {
-        [Key, ForeignKey("Grade")]
+        [Key, ForeignKey("Class")]
         public int ChapterId { get; set; }
 
         [Required]
@@ -25,14 +25,14 @@ namespace ITI.ItSchool.Models.SchoolEntities
         [ForeignKey("ThemeId")]
         public virtual Theme Theme { get; set; }
 
-        public int GradeId { get; set; }
+        public int ClassId { get; set; }
 
-        [ForeignKey("GradeId")]
-        public virtual Grade Grade { get; set; }
+        [ForeignKey("ClassId")]
+        public virtual Class Class { get; set; }
 
         [MaxLength( 200 )]
         public string Remarks { get; set; }
 
-        public virtual ICollection<Exercise> Games { get; set; }
+        public virtual ICollection<Exercise> Exercises { get; set; }
     }
 }
