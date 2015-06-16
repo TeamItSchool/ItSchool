@@ -1,4 +1,5 @@
-﻿using ITI.ItSchool.Models.SchoolEntities;
+﻿using ITI.ItSchool.Models.Entities;
+using ITI.ItSchool.Models.SchoolEntities;
 using ITI.ItSchool.Models.UserEntities;
 using System;
 using System.Collections.Generic;
@@ -31,7 +32,7 @@ namespace ITI.ItSchool.Models
 
         bool Create( User u );
 
-        bool Create( Game g );
+        bool Create( Exercise exercise );
 
         bool Create( Grade g );
 
@@ -39,6 +40,6 @@ namespace ITI.ItSchool.Models
 
         bool Remove( int id );
 
-        JsonResult SetExercise(Game g);
+        JsonResult SetExercise( Exercise exercise );
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 
-namespace ITI.ItSchool.Models
+namespace ITI.ItSchool.Models.ExercisesEntities
 {
     public class ExerciseType
     {

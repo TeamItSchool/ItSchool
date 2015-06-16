@@ -1,16 +1,14 @@
-﻿using ITI.ItSchool.Models.UserEntities;
-using ITI.ItSchool.Models;
+﻿using ITI.ItSchool.Models.AvatarEntities;
 using ITI.ItSchool.Models.Contexts;
+using ITI.ItSchool.Models.Entities;
+using ITI.ItSchool.Models.SchoolEntities;
+using ITI.ItSchool.Models.UserEntities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using ITI.ItSchool.Models.SchoolEntities;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
-using ITI.ItSchool.Models.AvatarEntities;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace ITI.ItSchool.Models
 {
@@ -42,22 +40,24 @@ namespace ITI.ItSchool.Models
             }
         }
 
-        public bool Create( Game game )
+        public bool Create( Exercise game )
         {
+            string exception = null;
             if ( game.Equals( null ) ) throw new ArgumentNullException( "Game as a type is null", "game" );
             if ( game.Data.Equals( null ) ) throw new ArgumentNullException( "Game's data is null", "game" );
 
-            using( var db = new GameContext() )
+            using( var db = new ExerciseContext() )
             {
                 try
                 {
-                    db.Games.Add(game);
+                    db.Exercises.Add(game);
                     db.SaveChanges();
                     return true;
                 }
                 catch( Exception ex )
                 {
-                    throw;
+                   exception = ex.ToString();
+                   throw;
                 }
             }
         }
@@ -211,25 +211,25 @@ namespace ITI.ItSchool.Models
             }
         }
 
-        public JsonResult SetExercise( Game game )
+        public JsonResult SetExercise( Exercise exercise )
         {
             JsonResult jr = null;
 
             #region TestExerciseCreation
-            game.Name = "Cloze";
-            game.ChapterId = 1;
+            exercise.Name = "Cloze";
+            exercise.ChapterId = 1;
             //game.LevelId = 1;
-            game.ExerciseTypeId = 1;
+            exercise.ExerciseTypeId = 1;
             //game.Remarks = "Testing creation";
             #endregion
 
-            using ( var db = new GameContext() )
+            using ( var db = new ExerciseContext() )
             {
                 try
                 {
-                    Game g = db.Games.Add( game );
+                    Exercise e = db.Exercises.Add( exercise );
                     db.SaveChanges();
-                    var jsonData = new JsonResult { Data = g, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                    var jsonData = new JsonResult { Data = e, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                     jr = jsonData;
                 }
                 catch (DbEntityValidationException dbEx)

@@ -1,4 +1,4 @@
-namespace ITI.ItSchool.SchoolContextMigrations
+namespace ITI.ItSchool.ExerciseContextMigrations
 {
     using System;
     using System.Data.Entity.Migrations;
@@ -7,60 +7,40 @@ namespace ITI.ItSchool.SchoolContextMigrations
     {
         public override void Up()
         {
-            //CreateTable(
-            //    "dbo.Chapters",
-            //    c => new
-            //        {
-            //            ChapterId = c.Int(nullable: false),
-            //            Name = c.String(nullable: false, maxLength: 45),
-            //            ThemeId = c.Int(nullable: false),
-            //            GradeId = c.Int(nullable: false),
-            //            Remarks = c.String(maxLength: 200),
-            //        })
-            //    .PrimaryKey(t => t.ChapterId)
-            //    .ForeignKey("dbo.Grades", t => t.ChapterId)
-            //    .ForeignKey("dbo.Themes", t => t.ThemeId, cascadeDelete: true)
-            //    .Index(t => t.ChapterId)
-            //    .Index(t => t.ThemeId);
+            CreateTable(
+                "dbo.Exercises",
+                c => new
+                    {
+                        ExerciseId = c.Int(nullable: false, identity: true),
+                        Name = c.String(nullable: false, maxLength: 200),
+                        ChapterId = c.Int(nullable: false),
+                        LevelId = c.Int(nullable: false),
+                        ExerciseTypeId = c.Int(nullable: false),
+                        Data = c.String(maxLength: 100),
+                    })
+                .PrimaryKey(t => t.ExerciseId)
+                .ForeignKey("dbo.Chapters", t => t.ChapterId, cascadeDelete: true)
+                .ForeignKey("dbo.ExerciseTypes", t => t.ExerciseTypeId, cascadeDelete: true)
+                .ForeignKey("dbo.Levels", t => t.LevelId, cascadeDelete: true)
+                .Index(t => t.ChapterId)
+                .Index(t => t.LevelId)
+                .Index(t => t.ExerciseTypeId);
             
-            //CreateTable(
-            //    "dbo.Games",
-            //    c => new
-            //        {
-            //            GameId = c.Int(nullable: false, identity: true),
-            //            Name = c.String(nullable: false, maxLength: 200),
-            //            ChapterId = c.Int(nullable: false),
-            //            LevelId = c.Int(nullable: false),
-            //            ExerciseTypeId = c.Int(nullable: false),
-            //            Data = c.String(maxLength: 100),
-            //        })
-            //    .PrimaryKey(t => t.GameId)
-            //    .ForeignKey("dbo.Chapters", t => t.ChapterId, cascadeDelete: true)
-            //    .ForeignKey("dbo.ExerciseTypes", t => t.ExerciseTypeId, cascadeDelete: true)
-            //    .ForeignKey("dbo.Levels", t => t.LevelId, cascadeDelete: true)
-            //    .Index(t => t.ChapterId)
-            //    .Index(t => t.LevelId)
-            //    .Index(t => t.ExerciseTypeId);
-            
-            //CreateTable(
-            //    "dbo.ExerciseTypes",
-            //    c => new
-            //        {
-            //            ExerciseTypeId = c.Int(nullable: false, identity: true),
-            //            Name = c.String(nullable: false, maxLength: 45),
-            //            Remarks = c.String(maxLength: 200),
-            //        })
-            //    .PrimaryKey(t => t.ExerciseTypeId);
-            
-            //CreateTable(
-            //    "dbo.Levels",
-            //    c => new
-            //        {
-            //            LevelId = c.Int(nullable: false, identity: true),
-            //            Name = c.String(nullable: false, maxLength: 45),
-            //            Remarks = c.String(maxLength: 200),
-            //        })
-            //    .PrimaryKey(t => t.LevelId);
+            CreateTable(
+                "dbo.Chapters",
+                c => new
+                    {
+                        ChapterId = c.Int(nullable: false),
+                        Name = c.String(nullable: false, maxLength: 45),
+                        ThemeId = c.Int(nullable: false),
+                        GradeId = c.Int(nullable: false),
+                        Remarks = c.String(maxLength: 200),
+                    })
+                .PrimaryKey(t => t.ChapterId)
+                .ForeignKey("dbo.Grades", t => t.ChapterId)
+                .ForeignKey("dbo.Themes", t => t.ThemeId, cascadeDelete: true)
+                .Index(t => t.ChapterId)
+                .Index(t => t.ThemeId);
             
             //CreateTable(
             //    "dbo.Grades",
@@ -154,18 +134,18 @@ namespace ITI.ItSchool.SchoolContextMigrations
             //        })
             //    .PrimaryKey(t => t.GroupId);
             
-            //CreateTable(
-            //    "dbo.Themes",
-            //    c => new
-            //        {
-            //            ThemeId = c.Int(nullable: false, identity: true),
-            //            Name = c.String(nullable: false, maxLength: 200),
-            //            MatterId = c.Int(nullable: false),
-            //            Remarks = c.String(maxLength: 200),
-            //        })
-            //    .PrimaryKey(t => t.ThemeId)
-            //    .ForeignKey("dbo.Matters", t => t.MatterId, cascadeDelete: true)
-            //    .Index(t => t.MatterId);
+            CreateTable(
+                "dbo.Themes",
+                c => new
+                    {
+                        ThemeId = c.Int(nullable: false, identity: true),
+                        Name = c.String(nullable: false, maxLength: 200),
+                        MatterId = c.Int(nullable: false),
+                        Remarks = c.String(maxLength: 200),
+                    })
+                .PrimaryKey(t => t.ThemeId)
+                .ForeignKey("dbo.Matters", t => t.MatterId, cascadeDelete: true)
+                .Index(t => t.MatterId);
             
             CreateTable(
                 "dbo.Matters",
@@ -177,10 +157,32 @@ namespace ITI.ItSchool.SchoolContextMigrations
                     })
                 .PrimaryKey(t => t.MatterId);
             
+            CreateTable(
+                "dbo.ExerciseTypes",
+                c => new
+                    {
+                        ExerciseTypeId = c.Int(nullable: false, identity: true),
+                        Name = c.String(nullable: false, maxLength: 45),
+                        Remarks = c.String(maxLength: 200),
+                    })
+                .PrimaryKey(t => t.ExerciseTypeId);
+            
+            CreateTable(
+                "dbo.Levels",
+                c => new
+                    {
+                        LevelId = c.Int(nullable: false, identity: true),
+                        Name = c.String(nullable: false, maxLength: 45),
+                        Remarks = c.String(maxLength: 200),
+                    })
+                .PrimaryKey(t => t.LevelId);
+            
         }
         
         public override void Down()
         {
+            DropForeignKey("dbo.Exercises", "LevelId", "dbo.Levels");
+            DropForeignKey("dbo.Exercises", "ExerciseTypeId", "dbo.ExerciseTypes");
             DropForeignKey("dbo.Chapters", "ThemeId", "dbo.Themes");
             DropForeignKey("dbo.Themes", "MatterId", "dbo.Matters");
             DropForeignKey("dbo.Chapters", "ChapterId", "dbo.Grades");
@@ -190,9 +192,7 @@ namespace ITI.ItSchool.SchoolContextMigrations
             DropForeignKey("dbo.Avatars", "LegsId", "dbo.Legs");
             DropForeignKey("dbo.Avatars", "FootId", "dbo.Feet");
             DropForeignKey("dbo.Avatars", "BodyId", "dbo.Bodies");
-            DropForeignKey("dbo.Games", "LevelId", "dbo.Levels");
-            DropForeignKey("dbo.Games", "ExerciseTypeId", "dbo.ExerciseTypes");
-            DropForeignKey("dbo.Games", "ChapterId", "dbo.Chapters");
+            DropForeignKey("dbo.Exercises", "ChapterId", "dbo.Chapters");
             DropIndex("dbo.Themes", new[] { "MatterId" });
             DropIndex("dbo.Avatars", new[] { "BodyId" });
             DropIndex("dbo.Avatars", new[] { "LegsId" });
@@ -200,11 +200,13 @@ namespace ITI.ItSchool.SchoolContextMigrations
             DropIndex("dbo.Avatars", new[] { "AvatarId" });
             DropIndex("dbo.Users", new[] { "GroupId" });
             DropIndex("dbo.Users", new[] { "GradeId" });
-            DropIndex("dbo.Games", new[] { "ExerciseTypeId" });
-            DropIndex("dbo.Games", new[] { "LevelId" });
-            DropIndex("dbo.Games", new[] { "ChapterId" });
             DropIndex("dbo.Chapters", new[] { "ThemeId" });
             DropIndex("dbo.Chapters", new[] { "ChapterId" });
+            DropIndex("dbo.Exercises", new[] { "ExerciseTypeId" });
+            DropIndex("dbo.Exercises", new[] { "LevelId" });
+            DropIndex("dbo.Exercises", new[] { "ChapterId" });
+            DropTable("dbo.Levels");
+            DropTable("dbo.ExerciseTypes");
             DropTable("dbo.Matters");
             DropTable("dbo.Themes");
             DropTable("dbo.Groups");
@@ -214,10 +216,8 @@ namespace ITI.ItSchool.SchoolContextMigrations
             DropTable("dbo.Avatars");
             DropTable("dbo.Users");
             DropTable("dbo.Grades");
-            DropTable("dbo.Levels");
-            DropTable("dbo.ExerciseTypes");
-            DropTable("dbo.Games");
             DropTable("dbo.Chapters");
+            DropTable("dbo.Exercises");
         }
     }
 }

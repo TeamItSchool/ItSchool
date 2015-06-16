@@ -1,6 +1,8 @@
 ﻿using ITI.ItSchool.Models;
 using ITI.ItSchool.Models.AvatarEntities;
 using ITI.ItSchool.Models.Contexts;
+using ITI.ItSchool.Models.Entities;
+using ITI.ItSchool.Models.ExercisesEntities;
 using ITI.ItSchool.Models.SchoolEntities;
 using ITI.ItSchool.Models.UserEntities;
 using NUnit.Framework;
@@ -8,8 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ITI.ItSchool.Tests
 {
@@ -23,11 +23,11 @@ namespace ITI.ItSchool.Tests
             init.InitializeDatabase( new UserContext() );
         }
 
-        private void initialize_database_gameContext()
+        private void initialize_database_exerciseContext()
         {
-            IDatabaseInitializer<GameContext> init = new DropCreateDatabaseAlways<GameContext>();
+            IDatabaseInitializer<ExerciseContext> init = new DropCreateDatabaseAlways<ExerciseContext>();
             Database.SetInitializer( init );
-            init.InitializeDatabase( new GameContext() );
+            init.InitializeDatabase( new ExerciseContext() );
         }
 
         [Test]
@@ -419,7 +419,7 @@ namespace ITI.ItSchool.Tests
         [Test]
         public void create_an_exercise()
         {
-            initialize_database_gameContext();
+            initialize_database_exerciseContext();
 
             IRepository repo = new SQLRepository();
 
@@ -463,7 +463,7 @@ namespace ITI.ItSchool.Tests
                 Name = "Texte à trous"
             };
 
-            var game = new Game
+            var exercise = new Exercise
             {
                 Name = "Retrouver les verbes",
                 Chapter = chapter,
@@ -472,7 +472,7 @@ namespace ITI.ItSchool.Tests
                 Data = " Hello! My name is Brian. "
             };
 
-            bool isCreated = repo.Create( game );
+            bool isCreated = repo.Create( exercise );
             Assert.That( isCreated, Is.EqualTo( true ) );
         }
 
@@ -497,7 +497,6 @@ namespace ITI.ItSchool.Tests
                 Name = "Algèbre",
                 MatterId = 1,
                 Remarks = "Jean Neymar"
-
             };
 
             

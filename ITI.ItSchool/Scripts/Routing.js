@@ -760,7 +760,11 @@
             method: 'POST',
             data: JSON.stringify(d),
             headers: { 'content-type': 'application/json' }
-        })
+        }).success(function (d) {
+            defer.resolve(d);
+        }).error(function (e) {
+            defert.reject(e);
+        });
 };
 
     return fac;

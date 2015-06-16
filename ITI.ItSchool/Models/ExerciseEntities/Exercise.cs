@@ -1,4 +1,5 @@
-﻿using ITI.ItSchool.Models.SchoolEntities;
+﻿using ITI.ItSchool.Models.ExercisesEntities;
+using ITI.ItSchool.Models.SchoolEntities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -6,12 +7,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace ITI.ItSchool.Models
+namespace ITI.ItSchool.Models.Entities
 {
-    public class Game
+    public class Exercise
     {
         [Key]
-        public int GameId { get; set; }
+        public int ExerciseId { get; set; }
 
         [Required]
         [MinLength( 3 )]
@@ -21,7 +22,7 @@ namespace ITI.ItSchool.Models
         public int ChapterId { get; set; }
 
         [ForeignKey("ChapterId")]
-        public Chapter Chapter { get; set; }
+        public virtual Chapter Chapter { get; set; }
         
         public int LevelId { get; set; }
 

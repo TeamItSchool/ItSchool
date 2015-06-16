@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ITI.ItSchool.Models.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -32,6 +33,6 @@ namespace ITI.ItSchool.Models.SchoolEntities
         [MaxLength( 200 )]
         public string Remarks { get; set; }
 
-        public virtual ICollection<Game> Games { get; set; }
+        public virtual ICollection<Exercise> Games { get; set; }
     }
 }

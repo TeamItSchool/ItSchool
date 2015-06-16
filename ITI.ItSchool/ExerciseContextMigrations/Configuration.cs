@@ -1,19 +1,19 @@
-namespace ITI.ItSchool.UserContextMigrations
+namespace ITI.ItSchool.ExerciseContextMigrations
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<ITI.ItSchool.Models.Contexts.UserContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<ITI.ItSchool.Models.Contexts.ExerciseContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            MigrationsDirectory = @"UserContextMigrations";
+            MigrationsDirectory = @"ExerciseContextMigrations";
         }
 
-        protected override void Seed(ITI.ItSchool.Models.Contexts.UserContext context)
+        protected override void Seed(ITI.ItSchool.Models.Contexts.ExerciseContext context)
         {
             //  This method will be called after migrating to the latest version.
 
