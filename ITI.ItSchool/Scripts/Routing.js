@@ -737,7 +737,7 @@
             defer.resolve(d);
         }).error(function (e) {
             //Failed callback
-            alert('Error!');
+            console.log( e );
             defer.reject(e);
         });
         return defer.promise;

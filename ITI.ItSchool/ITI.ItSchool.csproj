@@ -6680,6 +6680,11 @@
     <Compile Include="Controllers\DrawController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TestInputController.cs" />
+    <Compile Include="ExerciseClozeContextMigrations\201506162116288_Initial.cs" />
+    <Compile Include="ExerciseClozeContextMigrations\201506162116288_Initial.Designer.cs">
+      <DependentUpon>201506162116288_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExerciseClozeContextMigrations\Configuration.cs" />
     <Compile Include="ExerciseContextMigrations\201506162039503_Initial.cs" />
     <Compile Include="ExerciseContextMigrations\201506162039503_Initial.Designer.cs">
       <DependentUpon>201506162039503_Initial.cs</DependentUpon>
@@ -6697,9 +6702,11 @@
     <Compile Include="Models\AvatarEntities\Foot.cs" />
     <Compile Include="Models\AvatarEntities\Legs.cs" />
     <Compile Include="Models\CardsData.cs" />
+    <Compile Include="Models\Contexts\ExerciseClozeContext.cs" />
     <Compile Include="Models\Contexts\ExerciseDictationContext.cs" />
     <Compile Include="Models\DictationText.cs" />
     <Compile Include="Models\LoginData.cs" />
+    <Compile Include="Models\PlugExercises\ExerciseCloze.cs" />
     <Compile Include="Models\PlugExercises\ExerciseDictation.cs" />
     <Compile Include="MyModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -6781,6 +6788,9 @@
     <TypeScriptCompile Include="Scripts\collections.d.ts" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ExerciseClozeContextMigrations\201506162116288_Initial.resx">
+      <DependentUpon>201506162116288_Initial.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ExerciseContextMigrations\201506162039503_Initial.resx">
       <DependentUpon>201506162039503_Initial.cs</DependentUpon>
     </EmbeddedResource>
