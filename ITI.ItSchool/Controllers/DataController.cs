@@ -64,7 +64,7 @@ namespace ITI.ItSchool.Controllers
 
                     ed.ChapterId = chapter.ChapterId;
                     ed.Chapter = null;
-                    ed.Name = "Dictée " + sc.Grades
+                    ed.Name = "Dictée " + sc.Classes
                                             .Where(cl => cl.ClassId.Equals(ed.ChapterId))
                                             .Select(cl => cl.Name)
                                             .FirstOrDefault() + edc.Level
@@ -208,10 +208,10 @@ namespace ITI.ItSchool.Controllers
             throw new NotImplementedException();
         }
 
-        public JsonResult GetGrades()
+        public JsonResult GetClasses()
         {
             IRepository repo = new SQLRepository();
-            var jsonData = repo.GetGrades();
+            var jsonData = repo.GetClasses();
             return jsonData;
         }
 

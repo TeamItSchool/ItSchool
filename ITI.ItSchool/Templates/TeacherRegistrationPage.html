@@ -30,8 +30,8 @@
                     <input type="password" ng-model="User.Password" name="uPassword" placeholder="Mot de passe..." ng-class="submitted?'ng-dirty':''" required autofocus />
                     <span class="error" ng-show="(RegisterForm.uPassword.$dirty || submitted) && RegisterForm.uPassword.$error.required">Le mot de passe doit être entré !</span>
                 </md-input-container>
-                <md-select ng-model="User.Grade.Name" placeholder="Classe" required>
-                    <md-option ng-repeat="grade in Grades" value="{{grade.Name}}" ng-model="User.Grade.Name">{{grade.Name}}</md-option>
+                <md-select ng-model="User.Class.Name" placeholder="Classe" required>
+                    <md-option ng-repeat="class in Classes" value="{{class.Name}}" ng-model="User.Grade.Name">{{class.Name}}</md-option>
                 </md-select>
                 <br />
                 <md-button class="md-raised md-primary" value="{{submitText}}" type="submit">{{submitText}}</md-button>

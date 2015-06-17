@@ -124,7 +124,7 @@
     $scope.submitText = "Inscription";
     $scope.IsRegistered = false;
     $scope.submitted = false;
-    $scope.Message = "Inscris-toi sur It'School :)";
+    $scope.Message = "Inscris-toi sur It'School ! :)";
     $scope.message = "";
     $scope.IsFormValid = false;
 
@@ -134,21 +134,21 @@
         FirstName: '',
         LastName: '',
         Mail: '',
-        Grade: {
-            Name: 'Classe'
+        Class: {
+            Name: ''
         },
         Group: {
-            Name: 'Élève'
+            Name: 'Élèves'
         }
     };
 
-    $scope.Grades = null;
+    $scope.Classes = null;
 
-    RegistrationService.GetGrades().then(function (d) {
-        $scope.Grades = d.data;
+    RegistrationService.GetClasses().then(function (d) {
+        $scope.Classes = d.data;
         //alert($scope.Grades[0].Name);
     }, function (error) {
-        alert('Error on grades');
+        alert('Error on Classes 151');
     });
 
     //Check form validation // here RegisterForm is our form name
@@ -407,21 +407,21 @@
         FirstName: '',
         LastName: '',
         Mail: '',
-        Grade: {
-            Name: 'Classe'
+        Class: {
+            Name: ''
         },
         Group: {
             Name: 'Professeurs'
         }
     };
 
-    $scope.Grades = null;
+    $scope.Classes = null;
 
-    RegistrationService.GetGrades().then(function (d) {
-        $scope.Grades = d.data;
+    RegistrationService.GetClasses().then(function (d) {
+        $scope.Classes = d.data;
         //alert($scope.Grades[0].Name);
     }, function (error) {
-        alert('Error on grades');
+        alert('Error on classes 424');
     });
 
     //Check form validation // here RegisterForm is our form name
@@ -737,13 +737,13 @@
             defer.resolve(d);
         }).error(function (e) {
             //Failed callback
-            console.log( e );
+            console.log( "An error occured. Error is : " + e + "Data is : " + JSON.stringify(data) );
             defer.reject(e);
         });
         return defer.promise;
     }
-    fac.GetGrades = function () {
-        return $http.get('/Data/GetGrades')
+    fac.GetClasses = function () {
+        return $http.get('/Data/GetClasses')
     }
     fac.GetGroups = function () {
         return $http.get('/Data/GetGroups')

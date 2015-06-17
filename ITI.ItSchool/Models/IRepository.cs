@@ -18,7 +18,7 @@ namespace ITI.ItSchool.Models
 
         JsonResult FindUserByNickname( string nickname );
 
-        JsonResult GetGrades();
+        JsonResult GetClasses();
 
         JsonResult GetGroups();
 
