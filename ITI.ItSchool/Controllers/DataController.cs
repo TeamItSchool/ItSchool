@@ -34,11 +34,12 @@ namespace ITI.ItSchool.Controllers
             return jsonData;
         }
 
-        public void SaveDictation( ExerciseDictation ed )
+        public JsonResult SaveDictation( ExerciseDictation ed )
         {
             string[] words = ed.Text.Split( '/' );
             string nickname = words[ 0 ];
             ed.Text = words[ 1 ];
+            string message = "";
 
             using( var edc = new ExerciseDictationContext() )
             {
@@ -72,14 +73,21 @@ namespace ITI.ItSchool.Controllers
                                             .Select(l => l.Name)
                                             .FirstOrDefault();
                 }
-
-                edc.ExerciseDictation.Add( ed );
-                edc.SaveChanges();
+                ExerciseDictation dictation = edc.ExerciseDictation.Where(edictation => edictation.Name.Equals(ed.Name)).FirstOrDefault();
+                if (dictation ==  null) {
+                    edc.ExerciseDictation.Add( ed );
+                    edc.SaveChanges();
                     message = "Jeu enregistré";
                 }
-                else
-                    message = "Un problème est survenu lors de l'enregistrement." + Environment.NewLine 
-                        + "Veuillez réesayer.";      
+                else {
+                    dictation.Text = ed.Text;
+                    //3. Mark entity as modified
+                    edc.Entry( dictation ).State = System.Data.Entity.EntityState.Modified;
+
+                    //4. call SaveChanges
+                    edc.SaveChanges();
+                    message = "Texte mis à jour.";
+                }
                 JsonResult data = new JsonResult { Data = message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 return data;
             }

@@ -163,11 +163,25 @@ namespace ITI.ItSchool.Models
             using( var uc = new UserContext() )
             {
                 uc.Configuration.LazyLoadingEnabled = false;
-                User user = uc.Users.Where( a => a.Nickname.Equals( nickname ) ).FirstOrDefault();
+                User user = uc.Users
+                    .Include("Class")
+                    .Include("Group")
+                    .Include("Avatar")
+                    .Where( a => a.Nickname.Equals( nickname ) ).FirstOrDefault();
                 jsonData = new JsonResult { Data = user, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-                user.Grade.Users = null;
-                user.Group.Users = null;
-                user.Avatar.User = null;   
+                if( user != null )
+                {
+                    user.Class.Users = null;
+                    user.Group.Users = null;
+                    user.Avatar.User = null;
+                }
+                else
+                {
+                    LoginData d = new LoginData();
+                    d.Username = null;
+                    d.Password = null;
+                    jsonData = new JsonResult { Data = d, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
             }
             return jsonData;
         }
