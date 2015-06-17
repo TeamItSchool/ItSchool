@@ -1439,7 +1439,6 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Draggable.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\style.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -4269,9 +4268,7 @@
     <Content Include="Scripts\docs\js\search-data.json" />
     <Content Include="Scripts\docs\js\search-worker.min.js.map" />
     <Content Include="Scripts\angular.min.js.map" />
-    <Content Include="Scripts\draggable.js" />
-    <Content Include="Scripts\DropImpair.js" />
-    <Content Include="Scripts\DropPair.js" />
+    <Content Include="Scripts\DragNDrop.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="bower_components\core-a11y-keys\.bower.json" />
     <Content Include="bower_components\core-a11y-keys\bower.json" />
@@ -6622,13 +6619,14 @@
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.3.js" />
     <Content Include="Scripts\jquery-2.1.3.min.js" />
+    <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Scripts\jquery.js" />
     <Content Include="Scripts\jsHtml5AudioRecorder.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\ng-polymer-elements.js" />
     <Content Include="Scripts\painting.js" />
     <Content Include="Scripts\ng-polymer-elements.min.js" />
     <Content Include="Scripts\NG-Polymer.js" />
-    <Content Include="Scripts\PairOuImpair.js" />
     <Content Include="Scripts\Routing.js" />
     <Content Include="Scripts\version.txt" />
     <Content Include="Templates\Error.html" />
@@ -6711,6 +6709,10 @@
     <Compile Include="SchoolContextMigrations\201506110906165_Initial.Designer.cs">
       <DependentUpon>201506110906165_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="SchoolContextMigrations\201506161019380_Initial1.cs" />
+    <Compile Include="SchoolContextMigrations\201506161019380_Initial1.Designer.cs">
+      <DependentUpon>201506161019380_Initial1.cs</DependentUpon>
+    </Compile>
     <Compile Include="SchoolContextMigrations\Configuration.cs" />
     <Compile Include="UserContextMigrations\201506110359496_Initial.cs" />
     <Compile Include="UserContextMigrations\201506110359496_Initial.Designer.cs">
@@ -6732,7 +6734,6 @@
     <Content Include="Scripts\app.config" />
     <Content Include="Views\TestInput\Input.cshtml" />
     <Content Include="Scripts\jquery-2.1.3.min.map" />
-    <Content Include="Views\BackOffice\Drag.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -6764,6 +6765,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SchoolContextMigrations\201506110906165_Initial.resx">
       <DependentUpon>201506110906165_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SchoolContextMigrations\201506161019380_Initial1.resx">
+      <DependentUpon>201506161019380_Initial1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserContextMigrations\201506110359496_Initial.resx">
       <DependentUpon>201506110359496_Initial.cs</DependentUpon>

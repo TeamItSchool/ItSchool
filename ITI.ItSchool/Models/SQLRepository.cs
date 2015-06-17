@@ -144,7 +144,7 @@ namespace ITI.ItSchool.Models
                             sc.Configuration.LazyLoadingEnabled = false;
                             grade = sc.Grades.Where( g => g.Name.Equals( user.Grade.Name ) ).FirstOrDefault();
                             user.Grade = grade;
-                            //user.Grade = null;
+                            user.Grade = null;
                             user.GradeId = grade.GradeId;
                         }
                         User searchedUser = userContext.Users.OrderByDescending( u => u.UserId ).FirstOrDefault();
@@ -298,7 +298,7 @@ namespace ITI.ItSchool.Models
             {
                 db.Configuration.LazyLoadingEnabled = false;
                 grades = db.Grades.ToList();
-                //grades = db.Grades.OrderBy( g => g.Name ).ToList();
+                grades = db.Grades.OrderBy( g => g.Name ).ToList();
                 var jsonData = new JsonResult { Data = grades, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 return jsonData;
             }

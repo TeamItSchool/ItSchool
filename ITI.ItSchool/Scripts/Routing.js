@@ -71,9 +71,13 @@
         templateUrl: '/Templates/KidPlayDictationPage.html',
         controller: 'KidPlayDictationController'
     })
+    .when('/kid/exercices/drag_drop', {
+        templateUrl: '/Templates/KidDragAndDropExercice.html',
+        controller: 'KidDragAndDropController'
+    })
     .otherwise({   // This is when any route not matched
-        templateUrl: '/Templates/Error.html',
-        controller: 'ErrorController'
+    templateUrl: '/Templates/Error.html',
+    controller: 'ErrorController'
     })
     $locationProvider.html5Mode(false).hashPrefix('!'); // This is for Hashbang Mode
 })
@@ -138,7 +142,7 @@
             Name: 'Classe'
         },
         Group: {
-            Name: 'Élève'
+            Name: 'Élèves'
         }
     };
 
