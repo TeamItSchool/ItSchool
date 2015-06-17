@@ -1,4 +1,5 @@
-﻿using ITI.ItSchool.Models.SchoolEntities;
+﻿using ITI.ItSchool.Models.Entities;
+using ITI.ItSchool.Models.SchoolEntities;
 using ITI.ItSchool.Models.UserEntities;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace ITI.ItSchool.Models
 
         JsonResult FindUserByNickname( string nickname );
 
-        JsonResult GetGrades();
+        JsonResult GetClasses();
 
         JsonResult GetGroups();
 
@@ -31,14 +32,12 @@ namespace ITI.ItSchool.Models
 
         bool Create( User u );
 
-        bool Create( Game g );
-
-        bool Create( Grade g );
+        bool Create( Class g );
 
         bool Remove( User u );
 
         bool Remove( int id );
 
-        JsonResult SetExercise(Game g);
+        JsonResult SetExercise( Exercise exercise );
     }
 }

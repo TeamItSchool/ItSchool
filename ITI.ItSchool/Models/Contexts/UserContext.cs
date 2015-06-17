@@ -17,8 +17,6 @@ namespace ITI.ItSchool.Models.Contexts
 
         public DbSet<User> Users { get; set; }
 
-        public DbSet<Control> Controls { get; set; }
-
         public DbSet<Group> Groups { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ITI.ItSchool.Models.SchoolEntities;
+using ITI.ItSchool.Models.UserEntities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,18 +9,20 @@ using System.Web;
 
 namespace ITI.ItSchool.Models.SchoolEntities
 {
-    [Table("Matters")]
-    public class Matter
+    [Table("Classes")]
+    public class Class
     {
         [Key]
-        public int MatterId { get; set; }
+        public int ClassId { get; set; }
 
         [Required]
-        [MinLength( 3 )]
+        [MinLength( 2 )]
         [MaxLength( 45 )]
         public string Name { get; set; }
 
         [MaxLength( 200 )]
-        public string Remarks { get; set; }
+        public string Description { get; set; }
+
+        public virtual ICollection<User> Users { get; set; }
     }
 }
