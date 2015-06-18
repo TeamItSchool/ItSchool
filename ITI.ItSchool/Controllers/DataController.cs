@@ -34,11 +34,12 @@ namespace ITI.ItSchool.Controllers
             return jsonData;
         }
 
-        public void SaveDictation( ExerciseDictation ed )
+        public JsonResult SaveDictation( ExerciseDictation ed )
         {
             string[] words = ed.Text.Split( '/' );
             string nickname = words[ 0 ];
             ed.Text = words[ 1 ];
+            string message = "";
 
             using( var edc = new ExerciseDictationContext() )
             {
@@ -72,9 +73,23 @@ namespace ITI.ItSchool.Controllers
                                             .Select(l => l.Name)
                                             .FirstOrDefault();
                 }
+                ExerciseDictation dictation = edc.ExerciseDictation.Where(edictation => edictation.Name.Equals(ed.Name)).FirstOrDefault();
+                if (dictation ==  null) {
+                    edc.ExerciseDictation.Add( ed );
+                    edc.SaveChanges();
+                    message = "Jeu enregistré";
+                }
+                else {
+                    dictation.Text = ed.Text;
+                    //3. Mark entity as modified
+                    edc.Entry( dictation ).State = System.Data.Entity.EntityState.Modified;
 
-                edc.ExerciseDictation.Add( ed );
-                edc.SaveChanges();
+                    //4. call SaveChanges
+                    edc.SaveChanges();
+                    message = "Texte mis à jour.";
+                }
+                JsonResult data = new JsonResult { Data = message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                return data;
             }
 
             //IRepository iRepo = new SQLRepository();
@@ -164,42 +179,6 @@ namespace ITI.ItSchool.Controllers
             {
                 message = "Failed!";
             }
-
-            #region with TestDBEntites
-            ////Here we will save data to the database
-            //if( ModelState.IsValid == false)
-            //{
-            //    using (TestDBEntities dc = new TestDBEntities() )
-            //    {
-            //        // check if the username is available
-            //        var user = dc.User1.Where( a => a.UserName.Equals( u.UserName ) ).FirstOrDefault();
-            //        if( user == null )
-            //        {
-            //            //Save here
-            //            u.UserID = dc.User1.Count();
-            //            dc.User1.Add( u );
-            //            dc.SaveChanges();
-            //            if( u.Status == "2" )
-            //                message = "Votre compte est bien créé.";
-            //            else if( u.Status == "3" )
-            //                message = "Ton compte a bien été créé.";
-            //        }
-            //        else
-            //        {
-            //            if( u.Status == "2" )
-            //                message = "Ce pseudo existe déjà. Veuillez en choisir un autre.";
-            //            else if( u.Status == "3" )
-            //                message = "Oops, quelqu'un a déjà choisis ce pseudo. Essayes-en un autre.";
-            //            else
-            //                message = "Aïe..";
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    message = "Failed!";
-            //}
-            #endregion
             return new JsonResult { Data = message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 

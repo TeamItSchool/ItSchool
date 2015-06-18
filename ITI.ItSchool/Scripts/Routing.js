@@ -80,17 +80,22 @@
 .controller('HomeController', function ($scope) {
     $scope.Message = "Bienvenue";
 })
-.controller('KidLogInController', function ($scope, LoginService) {
-    $scope.Message = "Embarque dans l'aventure It'School !";
+.controller('KidLoginController', function ($scope, LoginService) {
+
+    sessionStorage.removeItem("objet");
+
+    $scope.Message = "Embarque dans l'aventur It'School :)";
     $scope.IsLogedIn = false;
     $scope.Submitted = false;
     $scope.IsFormValid = false;
+    $scope.IsTeacher = false;
+    $scope.ButtonMessage = "Connexion";
 
     $scope.LoginData = {
         Username: '',
         Password: ''
     };
-    //Check if Form is valid or not // here f1 is our form Name
+    //Check if Form is valid or not // here LoginForm is our form Name
     $scope.$watch('LoginForm.$valid', function (newVal) {
         $scope.IsFormValid = newVal;
     });
@@ -99,7 +104,15 @@
         if ($scope.IsFormValid) {
             $scope.ButtonMessage = "Connexion en cours..";
             LoginService.GetUser($scope.LoginData).then(function (d) {
-                if (d.data.Nickname != null) {
+                if (d.data.Username == null && d.data.Nickname == null) {
+                    $scope.LoginData.Username = "";
+                    $scope.LoginData.Password = "";
+                    alert("Oops, tu as entré un mauvais pseudo ou il n'existe pas. Réessaie ou inscris-toi si tu n'es pas inscrit.");
+                } else if (d.data.Nickname != null && d.data.Password != $scope.LoginData.Password) {
+                    $scope.LoginData.Password = "";
+                    alert("Oops, tu as entré un mauvais mot de passe. Réessaye.");
+                }
+                else if (d.data.Nickname != null && d.data.Group.Name == "Élèves" && d.data.Password == $scope.LoginData.Password) {
                     var monobjet_json = JSON.stringify(d);
                     sessionStorage.setItem("objet", monobjet_json);
 
@@ -110,12 +123,20 @@
 
                     $scope.IsLogedIn = true;
                     $scope.Message = "Bienvenue " + d.data.FirstName;
+                } else if (d.data.Nickname != null && d.data.Group.Name == "Professeurs") {
+                    $scope.LoginData.Username = "";
+                    $scope.LoginData.Password = "";
+                    alert("Attention, vous vous trouvez actuellement dans l'espace des élèves.\n Veuillez cliquez sur le bouton 'Espace Professeur'.");
+                    $scope.Message = "Rejoins l'espace 'Enfant'";
+                    $scope.IsTeacher = true;
                 }
                 else {
-                    alert("Oops tu as entré le mauvais pseudo ou le mauvais mot de passe. Réessye pour te connecter.")
+                    $scope.LoginData.Username = "";
+                    $scope.LoginData.Password = "";
+                    alert("Aïe.. Quelque chose s'est mal passé. vois avec tes parents ou ton professeur.")
                 }
 
-                console.log(d.data.FirstName + " " + d.data.LastName);
+                console.log(d.data);
             })
         }
     };
@@ -173,6 +194,7 @@
                         $scope.IsLogedIn = false;
                         $scope.Submitted = false;
                         $scope.IsFormValid = false;
+                        $scope.IsTeacher = false;
 
                         $scope.LoginData = {
                             Username: '',
@@ -187,7 +209,14 @@
                             if ($scope.IsFormValid) {
                                 $scope.ButtonMessage = "Connexion en cours..";
                                 LoginService.GetUser($scope.LoginData).then(function (d) {
-                                    if (d.data.Nickname != null) {
+                                    if (d.data.Username == null && d.data.Nickname == null) {
+                                        $scope.LoginData.Username = "";
+                                        $scope.LoginData.Password = "";
+                                        alert("Oops, tu as entré un mauvais pseudo ou il n'existe pas. Réessaie ou inscris-toi si tu n'es pas inscrit.");
+                                    } else if (d.data.Nickname != null && d.data.Password != $scope.LoginData.Password) {
+                                        $scope.LoginData.Password = "";
+                                        alert("Oops, tu as entré un mauvais mot de passe. Réessaye.");
+                                    } else if (d.data.Nickname != null && d.data.Group.Name == "Élèves" && d.data.Password == $scope.LoginData.Password) {
                                         var monobjet_json = JSON.stringify(d);
                                         sessionStorage.setItem("objet", monobjet_json);
 
@@ -197,10 +226,18 @@
                                         console.log(monobjet.data.FirstName);
 
                                         $scope.IsLogedIn = true;
-                                        $scope.Message = "Bienvenue " + d.data.FirstName;
+                                        $scope.Message = "Bienvenue " + d.data.FirstName + " " + d.data.Group.Name;
+                                    } else if (d.data.Nickname != null && d.data.Group.Name == "Professeurs") {
+                                        $scope.LoginData.Username = "";
+                                        $scope.LoginData.Password = "";
+                                        alert("Attention, vous vous trouvez actuellement dans l'espace des élèves.\n Veuillez cliquez sur le bouton 'Espace Professeur'.");
+                                        $scope.Message = "Rejoins l'espace 'Enfant'";
+                                        $scope.IsTeacher = true;
                                     }
                                     else {
-                                        alert("Oops tu as entré le mauvais pseudo ou le mauvais mot de passe. Réessye pour te connecter.")
+                                        $scope.LoginData.Username = "";
+                                        $scope.LoginData.Password = "";
+                                        alert("Oops, tu as du rentrer un mauvais pseudo ou un mauvais mot de passe. Réessaye de te connecter.")
                                     }
 
                                     console.log(d.data.FirstName + " " + d.data.LastName);
@@ -296,9 +333,6 @@
 .controller('KidHomeController', function ($scope) {
     $scope.Message = 'Page "Élève"';
 })
-.controller('KidLoginController', function ($scope) {
-    $scope.Message = "Entre le pseudo et le mot de passe que tu avais choisis.";
-})
 .controller('TeacherHomeController', function ($scope) {
     $scope.Message = 'Page "Professeurs"';
 })
@@ -319,6 +353,7 @@
     $scope.IsLogedIn = false;
     $scope.Submitted = false;
     $scope.IsFormValid = false;
+    $scope.IsKid = false;
     $scope.ButtonMessage = "Connexion";
 
     $scope.LoginData = {
@@ -334,24 +369,35 @@
         if ($scope.IsFormValid) {
             $scope.ButtonMessage = "Connexion en cours..";
             LoginService.GetUser($scope.LoginData).then(function (d) {
-                if (d.data.Nickname != null) {
+                if (d.data.Username == null && d.data.Nickname == null) {
+                    $scope.LoginData.Username = "";
+                    $scope.LoginData.Password = "";
+                    alert("Vous avez entré un mauvais pseudo ou celui-ci n'existe pas. Veuillez réessayer ou vous inscrire si ce n'est pas le déjà le cas.");
+                } else if (d.data.Nickname != null && d.data.Password != $scope.LoginData.Password) {
+                    $scope.LoginData.Password = "";
+                    alert("Vous avez dû entrer un mauvais mot de passe. Veuillez réessayer.");
+                } else if (d.data.Nickname != null && d.data.Group.Name == "Professeurs" && d.data.Password == $scope.LoginData.Password) {
                     var monobjet_json = JSON.stringify(d);
-                    /*d.data.Grade = {
-                        Name: "Oui"
-                    }
-                    document.write(d.data.Grade.Name);*/
                     sessionStorage.setItem("objet", monobjet_json);
 
                     var monobjet_json = sessionStorage.getItem("objet");
                     var monobjet = JSON.parse(monobjet_json);
                     // Affichage dans la console
                     console.log(monobjet.data.FirstName);
-                    
+
                     $scope.IsLogedIn = true;
                     $scope.Message = "Vous êtes bien connecté. Bienvenue " + d.data.FirstName + " " + d.data.LastName;
+                } else if (d.data.Nickname != null && d.data.Group.Name == "Élèves") {
+                    $scope.LoginData.Username = "";
+                    $scope.LoginData.Password = "";
+                    alert("Oops, tu es dans l'espace des professeurs. Vas dans l'espace des élèves pour te connecter.");
+                    $scope.Message = "Rejoins l'espace 'Enfant'";
+                    $scope.IsKid = true;
                 }
                 else {
-                    alert("Votre pseudo ou votre mot de passe sont incorrects. Veuillez réessayer s'il vous plaît")
+                    $scope.LoginData.Username = "";
+                    $scope.LoginData.Password = "";
+                    alert("Une erreur s'est produite. Veuillez contacter le service technique.")
                 }
 
                 console.log(d.data.FirstName + " " + d.data.LastName);
@@ -373,8 +419,7 @@
         Level: {
             Name: '',
             Remarks: ''
-        },
-        Remarks: 'Test remark...'
+        }
     };
 
     $scope.$watch('ClozeExercise', function (newValue) {
@@ -460,7 +505,14 @@
                             if ($scope.IsFormValid) {
                                 $scope.ButtonMessage = "Connexion en cours..";
                                 LoginService.GetUser($scope.LoginData).then(function (d) {
-                                    if (d.data.Nickname != null) {
+                                    if (d.data.Username == null && d.data.Nickname == null) {
+                                        $scope.LoginData.Username = "";
+                                        $scope.LoginData.Password = "";
+                                        alert("Vous avez entré un mauvais pseudo ou celui-ci n'existe pas. Veuillez réessayer ou vous inscrire si ce n'est pas le déjà le cas.");
+                                    } else if (d.data.Nickname != null && d.data.Password != $scope.LoginData.Password) {
+                                        $scope.LoginData.Password = "";
+                                        alert("Vous avez dû entrer un mauvais mot de passe. Veuillez réessayer.");
+                                    } else if (d.data.Nickname != null && d.data.Group.Name == "Professeurs" && d.data.Password == $scope.LoginData.Password) {
                                         var monobjet_json = JSON.stringify(d);
                                         sessionStorage.setItem("objet", monobjet_json);
 
@@ -471,9 +523,17 @@
 
                                         $scope.IsLogedIn = true;
                                         $scope.Message = "Vous êtes bien connecté. Bienvenue " + d.data.FirstName + " " + d.data.LastName;
+                                    } else if (d.data.Nickname != null && d.data.Group.Name == "Élèves") {
+                                        $scope.LoginData.Username = "";
+                                        $scope.LoginData.Password = "";
+                                        alert("Oops, tu es dans l'espace des professeurs. Vas dans l'espace des élèves pour te connecter.");
+                                        $scope.Message = "Rejoins l'espace 'Enfant'";
+                                        $scope.IsKid = true;
                                     }
                                     else {
-                                        alert("Votre pseudo ou votre mot de passe sont incorrects. Veuillez réessayer s'il vous plaît")
+                                        $scope.LoginData.Username = "";
+                                        $scope.LoginData.Password = "";
+                                        alert("Une erreur s'est produite. Veuillez contacter le service technique.")
                                     }
 
                                     console.log(d.data.FirstName + " " + d.data.LastName);
@@ -507,6 +567,7 @@
     var monobjet = JSON.parse(monobjet_json);
     // Affichage dans la console
     console.log(monobjet.data.FirstName + " est dans la modification de la dictée");
+    console.log("Sa classe est : " + monobjet.data.Class.Name);
 
     $scope.Message = 'Selectionnez un niveau.';
     $scope.EasySelected = false;
@@ -516,19 +577,14 @@
     $scope.IsFormValid = false;
     $scope.Button = "Sauvegarder";
 
-    /*$scope.DictationText = {
-        Text: '',
-        Level: ''
-    };*/
-
-    $scope.Game = {
+    $scope.ExerciseDictation = {
         //A REMPLIR
-        Data: '',
+        Text: '',
         Level: {
             Name: 'Test'
         },
         ExerciseType: {
-            Name: 'Dictation'
+            Name: 'Dictée'
         }
     };
 
@@ -540,10 +596,18 @@
     $scope.SaveText = function () {
         if ($scope.IsFormValid) {
             $scope.Button = "Sauvegarde en cours..."
-            $scope.Game.Data.trim();
-            $scope.Game.Data = monobjet.data.Nickname + "/" + $scope.Game.Data;
-            SaveDictationText.GetText($scope.Game).then(function (d) {
-                $scope.Button = "Dictée sauvegardée";
+            $scope.ExerciseDictation.Text.trim();
+            $scope.ExerciseDictation.Text = monobjet.data.Nickname + "/" + $scope.ExerciseDictation.Text;
+            var res = $scope.ExerciseDictation.Text.split("/");
+            SaveDictationText.GetText($scope.ExerciseDictation).then(function (d) {
+                $scope.ExerciseDictation.Text = res[1];
+                console.log(d.data);
+                if (d.data == "Jeu enregistré")
+                    $scope.Button = "Dictée sauvegardée";
+                else {
+                    alert(d.data);
+                    $scope.Button = "Sauvegarder"
+                }
             })
         }
     };    
@@ -551,17 +615,17 @@
     $scope.Easy = function () {
         $scope.EasySelected = true;
         $scope.Message = "Insérez le texte (Niveau facile)";
-        $scope.Game.Level.Name = "Easy";
+        $scope.ExerciseDictation.Level.Name = "Easy";
     }
     $scope.Medium = function () {
         $scope.MediumSelected = true;
         $scope.Message = "Insérez le texte (Niveau moyen)";
-        $scope.Game.Level.Name = "Medium";
+        $scope.ExerciseDictation.Level.Name = "Medium";
     }
     $scope.Hard = function () {
         $scope.HardSelected = true;
         $scope.Message = "Insérez le texte (Niveau difficile)";
-        $scope.Game.Level.Name = "Hard";
+        $scope.ExerciseDictation.Level.Name = "Hard";
     }
 })
 .factory('SaveDictationText', function ($http) {

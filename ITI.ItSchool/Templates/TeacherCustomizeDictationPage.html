@@ -25,9 +25,9 @@
         <div ng-show="EasySelected">
             <h1>{{Message}}</h1>
             <form name="DictText" ng-submit="SaveText()">
-                <textarea ng-model="Game.Data" name="text" placeholder="Texte de la dictée..." rows="5" cols="40"></textarea><br />
+                <textarea ng-model="ExerciseDictation.Text" name="text" placeholder="Texte de la dictée..." rows="5" cols="40"></textarea><br />
                 <md-button class="md-raised md-primary" type="submit" name="SaveEasyText">{{Button}}</md-button>
-                <h2>{{Game.Data}} + {{Game.Level.Name}}</h2>
+                <h2>{{ExerciseDictation.Text}} + {{ExerciseDictation.Level.Name}}</h2>
             </form>
         </div>
         <div ng-show="MediumSelected">
