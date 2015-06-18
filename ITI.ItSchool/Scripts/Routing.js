@@ -641,10 +641,11 @@
     return fac;
 })
 
+//BattleCardController
 .controller('TeacherBattleCardController', function ($scope) {
     $scope.Time = 'Vous avez 1 minutes ! ';
     $scope.Score = 0
-    $scope.svgCard = '/Images/redCard.svg';
+    $scope.svgCard = "/Images/redCard.svg";
 })
 
 .controller('KidHomeController', function ($scope) {

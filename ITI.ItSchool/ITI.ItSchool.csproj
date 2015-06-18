@@ -1440,6 +1440,8 @@
     <Content Include="Components\webcomponentsjs\webcomponents-lite.min.js" />
     <Content Include="Components\webcomponentsjs\webcomponents.js" />
     <Content Include="Components\webcomponentsjs\webcomponents.min.js" />
+    <Content Include="Content\BattleCardCss\battleCardGame.css" />
+    <Content Include="Content\BattleCardCss\flipclock.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -3776,6 +3778,9 @@
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\AngularSinglePageScriptApp.js" />
     <Content Include="Scripts\app.js" />
+    <Content Include="Scripts\BattleCardJS\battleCardGame.js" />
+    <Content Include="Scripts\BattleCardJS\flipclock.js" />
+    <Content Include="Scripts\BattleCardJS\snap.svg.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Components\bower_components\core-component-page\bower.json" />
