@@ -91,40 +91,6 @@ namespace ITI.ItSchool.Controllers
                 JsonResult data = new JsonResult { Data = message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 return data;
             }
-
-            //IRepository iRepo = new SQLRepository();
-            //string[] words = g.Data.Split( '/' );
-            //g.Data = words[1];
-            //using( ExerciseContext gc = new ExerciseContext() ) 
-            //{
-            //    using( UserContext uc = new UserContext() )
-            //    {
-            //        User user = iRepo.FindByNickname( words[0] );
-            //        g.Chapter = new Models.SchoolEntities.Chapter();
-            //        g.Chapter.GradeId = user.GradeId;
-            //        g.Chapter.Grade = null;
-            //    }
-            //    g.ExerciseTypeId = gc.ExerciseTypes.Where( e => e.Name.Equals( g.ExerciseType.Name ) ).Select(e=>e.ExerciseTypeId).FirstOrDefault();
-            //    g.ExerciseType = null;
-            //    g.LevelId = gc.Levels.Where( l => l.Name.Equals( g.Level.Name ) ).Select( l => l.LevelId ).FirstOrDefault();
-            //    g.Level = null;
-            //    g.Chapter.Name = "Dictée";
-            //    using(SchoolContext sc = new SchoolContext()) 
-            //    {
-            //        /*g.Chapter.Theme = new Models.SchoolEntities.Theme();
-            //        g.Chapter.Theme.Name = "Verbes irréguliers";
-            //        Matter matter = sc.Matters.Where( m => m.Name.Equals( "Français" ) ).FirstOrDefault();
-            //        g.Chapter.Theme.MatterId = matter.MatterId;*/
-
-            //        Chapter chap = sc.Chapters.Where( c => c.Name.Equals( "Dictée" ) ).FirstOrDefault();
-            //        g.ChapterId = chap.ChapterId;
-            //        g.Chapter = null;
-            //        g.Name = "Dictée" + sc.Grades.Where( gr => gr._ClassId.Equals( g.ChapterId ) )
-            //                                              .Select( gr => gr.Name ).FirstOrDefault() + gc.Levels.Where( l => l.LevelId.Equals( g.LevelId ) ).Select( l => l.Name ).FirstOrDefault();
-            //    }
-            //    gc.Exercises.Add( g );
-            //    gc.SaveChanges();
-            //}
         }
 
         public JsonResult CheckDictationText( DictationText d )
