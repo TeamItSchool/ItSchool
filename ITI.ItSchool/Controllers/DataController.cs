@@ -160,6 +160,13 @@ namespace ITI.ItSchool.Controllers
             return jsonData;
         }
 
+        public JsonResult GetClozeExerciseContent()
+        {
+            IRepository db = new SQLRepository();
+            var exerciseData = db.GetClozeExerciseContent();
+            return exerciseData;
+        }
+
         public JsonResult GetGroups()
         {
             IRepository repo = new SQLRepository();

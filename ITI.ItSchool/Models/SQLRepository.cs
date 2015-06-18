@@ -1,6 +1,7 @@
 ﻿using ITI.ItSchool.Models.AvatarEntities;
 using ITI.ItSchool.Models.Contexts;
 using ITI.ItSchool.Models.Entities;
+using ITI.ItSchool.Models.PlugExercises;
 using ITI.ItSchool.Models.SchoolEntities;
 using ITI.ItSchool.Models.UserEntities;
 using System;
@@ -46,6 +47,23 @@ namespace ITI.ItSchool.Models
             }
         }
 
+        public JsonResult GetClozeExerciseContent()
+        {
+            JsonResult content = null;
+            ExerciseCloze ec = new ExerciseCloze();
+            using( var db = new ExerciseClozeContext() )
+            {
+                ec = db.ExerciseCloze.Where( e => e.Name.Equals( "Mon premier Texte à trous" ) ).FirstOrDefault();
+                content = new JsonResult { Data = ec, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+            return content;
+        }
+
+        /// <summary>
+        /// Creates a new class (of pupils).
+        /// </summary>
+        /// <param name="class">The class object to create.</param>
+        /// <returns>True if it has well created.</returns>
         public bool Create( Class @class )
         {
             bool isCreated = false;

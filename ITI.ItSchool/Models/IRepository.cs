@@ -22,6 +22,8 @@ namespace ITI.ItSchool.Models
 
         JsonResult GetGroups();
 
+        JsonResult GetClozeExerciseContent();
+
         IList<User> Update( User u );
         
         User FindById( int id );
