@@ -6640,6 +6640,7 @@
     <Content Include="Templates\KidLobbyPage.html" />
     <Content Include="Templates\KidLoginPage.html" />
     <Content Include="Templates\KidRegistrationPage.html" />
+    <Content Include="Templates\TeacherCustomizeClozeExercisePage.html" />
     <Content Include="Templates\TeacherCustomizeDictationPage.html" />
     <Content Include="Templates\TeacherCustomizeDragAndDropPage.html" />
     <Content Include="Templates\TeacherLobbyPage.html" />

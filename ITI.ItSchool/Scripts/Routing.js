@@ -84,7 +84,7 @@
 
     sessionStorage.removeItem("objet");
 
-    $scope.Message = "Embarque dans l'aventur It'School :)";
+    $scope.Message = "Embarque dans l'aventure It'School :)";
     $scope.IsLogedIn = false;
     $scope.Submitted = false;
     $scope.IsFormValid = false;
@@ -133,7 +133,7 @@
                 else {
                     $scope.LoginData.Username = "";
                     $scope.LoginData.Password = "";
-                    alert("Aïe.. Quelque chose s'est mal passé. vois avec tes parents ou ton professeur.")
+                    alert("Aïe.. Quelque chose s'est mal passé. Vois avec tes parents ou ton professeur.")
                 }
 
                 console.log(d.data);
@@ -409,27 +409,34 @@
     $scope.Message = 'Configuration de l\'exercice';
     $scope.Button = 'Sauvegarder';
     $scope.IsFormValid = false;
-    $scope.test = '';
-
-    //Mettre toutes les propriétés du Game
-    
-    $scope.Game = {
-        //A REMPLIR
-        Data: '',
+    $scope.test = '';    
+    $scope.Exercise = {
+        Text: '',
         Level: {
             Name: '',
-            Remarks: ''
-        }
+        },
+        Words: ''
     };
+
+    $scope.DatabaseText = null;
+    $scope.Words = null;
+
+    ExerciseDatas.GetClozeExercise().then(function (d) {
+        $scope.DatabaseText = d.data.Text;
+        $scope.Exercise.Words = d.data.Words;
+        alert($scope.Exercise.Words);
+    }, function ( error ) {
+        alert( "An error occured");
+    });
 
     $scope.$watch('ClozeExercise', function (newValue) {
         $scope.IsFormValid = newValue;
     });
 
     $scope.SaveData = function () {
-        console.log( "Là : " + ExerciseDatas + "L240: " + $scope.Game.Level );
+        console.log( "Là : " + ExerciseDatas + "L240: " + $scope.Exercise.Level );
         if ($scope.IsFormValid) {
-            ExerciseDatas.SaveClozeExercise($scope.Game).then(function (data) {
+            ExerciseDatas.SaveClozeExercise($scope.Exercise).then(function (data) {
                 console.log("SaveData");
             });
         }
@@ -464,7 +471,6 @@
 
     RegistrationService.GetClasses().then(function (d) {
         $scope.Classes = d.data;
-        //alert($scope.Grades[0].Name);
     }, function (error) {
         alert('Error on classes 424');
     });
@@ -829,7 +835,11 @@
         }).error(function (e) {
             defert.reject(e);
         });
-};
+    };
+
+    fac.GetClozeExercise = function () {
+        return $http.get( '/Data/GetClozeExercise' );
+    };
 
     return fac;
 });

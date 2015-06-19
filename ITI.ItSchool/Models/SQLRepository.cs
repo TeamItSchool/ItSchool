@@ -47,18 +47,6 @@ namespace ITI.ItSchool.Models
             }
         }
 
-        public JsonResult GetClozeExerciseContent()
-        {
-            JsonResult content = null;
-            ExerciseCloze ec = new ExerciseCloze();
-            using( var db = new ExerciseClozeContext() )
-            {
-                ec = db.ExerciseCloze.Where( e => e.Name.Equals( "Mon premier Texte à trous" ) ).FirstOrDefault();
-                content = new JsonResult { Data = ec, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-            }
-            return content;
-        }
-
         /// <summary>
         /// Creates a new class (of pupils).
         /// </summary>
@@ -256,6 +244,23 @@ namespace ITI.ItSchool.Models
                 return userToUpdate;
             }
         }
+
+        public JsonResult GetClozeExerciseContent()
+        {
+            ExerciseCloze ec = new ExerciseCloze();
+            JsonResult data = null;
+            using( var db = new ExerciseClozeContext() )
+            {
+                db.Configuration.LazyLoadingEnabled = false;
+                //var query = from e in db.ExerciseCloze
+                //            where e.Name == "Mon premier texte à trous"
+                //            select e;
+                ec = db.ExerciseCloze.Where(e => e.Name.Equals("Mon premier texte à trous")).FirstOrDefault();
+                data = new JsonResult { Data = ec, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+            return data;
+        }
+
 
         public JsonResult GetClasses() // We talk about pupils classes, sure ;-)
         {

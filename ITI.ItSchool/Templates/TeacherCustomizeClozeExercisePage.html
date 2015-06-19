@@ -2,14 +2,16 @@
     <center>
         <h1>{{Message}}</h1>
         <form name="ClozeExercise" ng-submit="SaveData()">
-            <textarea ng-model="Game.Data"></textarea><br />
-            <select ng-model="Game.Level.Name">
-                <option value="facile">Facile</option>
-                <option value="moyen">Moyen</option>
+            <textarea ng-model="Exercise.Text"></textarea><br />
+            <select ng-model="Exercise.Level.Name">
+                <option value="Easy">Facile</option>
+                <option value="Medium">Moyen</option>
             </select>
             <md-button class="md-raised md-primary" type="submit" name="saveText">{{Button}}</md-button>
-            Debug message : currently selected : {{ {"selected item": Game.Level.Name} }}
-            Debug message : current text : [ {{ Game.Data  }}]
+            Debug message : currently selected : {{ {"selected item": Exercise.Level.Name} }}
+            Debug message : current text : [ {{ Exercise.Text  }}]
+            "TEXT": {{  DatabaseText }}
+            "WORDS": {{ Exercise.Words }}
         </form>
     </center>
 </div>
