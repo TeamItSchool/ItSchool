@@ -11,6 +11,7 @@ function showValue(doc, val, color) {
 	text.removeChild(text.firstChild);
 	text.appendChild(doc.createTextNode(val));
 	text.style.fill = color;
+	//text.style.fontSize = "55px";
 	var path = doc.getElementsByTagName("path")[0];
 	path.style.fill = "#FFEBCD";
 	path.style.stroke = color;
@@ -164,9 +165,9 @@ try{
         //var clock;
       
         gameZone = Snap('#gameZone');
-  
-        //var values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-        var values = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "Y", "Z"];
+        var values = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        //var values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 58, 99, 105, 999];
+        //var values = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "Y", "Z"];
         var handValue = []; // array for card value of hand
         var handColor = []; // array for card color of hand
 
@@ -231,8 +232,11 @@ try{
                     
                     setTimeout(function () {
                         $('#messageClock').html('La partie est termin&eacutee !')
-                        alert("Partie terminée : votre score est de " + $('#score').text() + " !");
+                        //alert("Partie terminée : votre score est de " + $('#score').text() + " !");
                         //window.location.href = "http://localhost:18264/home#!/teacher/exercices";
+                        for (var i = 0; i < cards.length; i++) {
+                            cards[i].contentDocument.documentElement.onclick = null;
+                        }
                     }, 1000);
 
                 }

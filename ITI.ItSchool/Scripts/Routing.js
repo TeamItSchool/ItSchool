@@ -48,8 +48,12 @@
         controller: 'TeacherDictationController'
     })
     .when('/teacher/exercices/battleCard', {
+        templateUrl: '/Templates/TeacherDescriptionBattleCardPage.html',
+        controller: 'TeacherDescriptionBattleCardController'
+    })
+    .when('/teacher/exercices/battleCard/customize', {
         templateUrl: '/Templates/TeacherCustomizeBattleCardPage.html',
-        controller: 'TeacherBattleCardController'
+        controller: 'TeacherCustomizeBattleCardController'
     })
     .when('/kid', {
         templateUrl: '/Templates/KidHomePage.html',
@@ -75,6 +79,10 @@
         templateUrl: '/Templates/KidPlayDictationPage.html',
         controller: 'KidPlayDictationController'
     })
+    .when('/kid/exercices/battleCard', {
+        templateUrl: '/Templates/KidPlayBattleCardPage.html',
+        controller: 'KidPlayBattleCardController'
+    })
     .otherwise({   // This is when any route not matched
         templateUrl: '/Templates/Error.html',
         controller: 'ErrorController'
@@ -88,7 +96,7 @@
 
     sessionStorage.removeItem("objet");
 
-    $scope.Message = "Embarque dans l'aventur It'School :)";
+    $scope.Message = "Embarque dans l'aventure It'School :)";
     $scope.IsLogedIn = false;
     $scope.Submitted = false;
     $scope.IsFormValid = false;
@@ -277,7 +285,7 @@
 .controller('KidSelectExercicesController', function ($scope) {
     $scope.Message = 'A quoi veux-tu jouer ?';
 })
-.controller('KidPlayDictationController', function ($scop, CheckDictationText) {
+.controller('KidPlayDictationController', function ($scope, CheckDictationText) {
     var monobjet_json = sessionStorage.getItem("objet");
     var monobjet = JSON.parse(monobjet_json);
     // Affichage dans la console
@@ -705,8 +713,43 @@
     return fac;
 })
 
-//BattleCardController
-.controller('TeacherBattleCardController', function ($scope) {
+// Description customize BattleCard
+.controller('TeacherDescriptionBattleCardController', function ($scope) {
+
+})
+
+// Customize BattleCard
+.controller('TeacherCustomizeBattleCardController', function ($scope) {
+    //var monobjet_json = sessionStorage.getItem("objet");
+    //var monobjet = JSON.parse(monobjet_json);
+    //// Affichage dans la console
+    //console.log(monobjet.data.FirstName + " est dans la modification de card game");
+
+    $scope.Message = 'Choix du niveau';
+    $scope.EasySelected = false;
+    $scope.MediumSelected = false;
+    $scope.HardSelected = false;
+
+    $scope.Easy = function () {
+        $scope.EasySelected = true;
+        $scope.Message = "Niveau facile";
+        $scope.Game.Level.Name = "Easy";
+    }
+
+    $scope.Medium = function () {
+        $scope.MediumSelected = true;
+        $scope.Message = "Niveau moyen";
+        $scope.Game.Level.Name = "Medium";
+    }
+    $scope.Hard = function () {
+        $scope.HardSelected = true;
+        $scope.Message = "Niveau difficile";
+        $scope.Game.Level.Name = "Hard";
+    }
+})
+
+// Play BattleCard
+.controller('KidPlayBattleCardController', function ($scope) {
     $scope.Time = 'Vous avez 1 minutes ! ';
     $scope.Score = 0
     $scope.svgCard = "/Images/redCard.svg";
@@ -715,9 +758,9 @@
 .controller('KidHomeController', function ($scope) {
     $scope.Message = 'Page "Élève"';
 })
-.controller('KidLoginController', function ($scope) {
-    $scope.Message = "Entre le pseudo et le mot de passe que tu avais choisis.";
-})
+//.controller('KidLoginController', function ($scope) {
+//    $scope.Message = "Entre le pseudo et le mot de passe que tu avais choisis.";
+//})
 
 .controller('ErrorController', function ($scope) {
     $scope.Message = "404 Not Found!";

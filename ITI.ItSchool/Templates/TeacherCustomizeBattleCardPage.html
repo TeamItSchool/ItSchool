@@ -1,39 +1,112 @@
-﻿<div ng-controller="TeacherBattleCardController">
+﻿<div ng-controller="TeacherCustomizeBattleCardController">
     <style>
-        body, html{
-             background-color : #F0E8D8;
-        } 
-    </style>
+        body, html {
+            background-color: #F0E8D8;
+        }
+        h1 {
+	        text-align : center;
+        }
 
-    <div id="clock"></div>
-    <div id="messageClock">{{Time}}</div>
+        #global {
+          padding-bottom : 5%;
+          position: relative; /* on positionne le conteneur */
+          margin-left: auto;
+          margin-right: auto;
+          width: 100%;
+          height : 100%;
+          border : 1px solid black;
+          background: #F0E8D8 -moz-linear-gradient(center bottom , #DACDB1 11%, #F0E8D8 56%) repeat scroll 0% 0%;
 
-    <div id="score">{{Score}}</div>
-    <!--<div class="logo" ng-include="'/Images/redCard.svg'"></div>-->
-    <!--<object id="card1" class="card" type="image/svg+xml" data={{svgCard}}>ðŸ‚ </object>-->
-    <div id="container">
-        
-        <svg id="gameZone">
-            <foreignobject x="10" y="10" width="100%" height="100%">
-                <div id="hand">
+        }
 
-                    <object id="card1" class="card" type="image/svg+xml" data={{svgCard}}>ðŸ‚ </object>
-                    <object id="card2" class="card" type="image/svg+xml" data={{svgCard}}>ðŸ‚ </object>
-                    <object id="card3" class="card" type="image/svg+xml" data={{svgCard}}>ðŸ‚ </object>
-                    <object id="card4" class="card" type="image/svg+xml" data={{svgCard}}>ðŸ‚ </object>
-                    <object id="card5" class="card" type="image/svg+xml" data={{svgCard}}>ðŸ‚ </object>
-                </div>
+        #choice{
+            margin-top : 1.5%;          
+            border : 1px solid black;
+	        box-shadow: 0px 0px 65px #CDBE9F inset, 0px 0px 20px #BEAE8C inset, 0px 0px 5px #816F47;
+	        font-family: Georgia,Times,serif;
+	        line-height: 1.50em;
+        }
 
-                <div id="deal">
-                    <object id="cardToFind" class="card" type="image/svg+xml" data={{svgCard}}>ðŸ‚ </object>
-                </div>
-            </foreignobject>
-        </svg>
+        #choiceTitle{
+            text-decoration: underline;
+            font-weight : bold;
+        }
 
-   </div>
+        #alphabet{
+            font-weight : bold;
+        }
 
-    <script src="../Scripts/BattleCardJS/snap.svg.js"></script>
-    <script src="../Scripts/BattleCardJS/flipclock.js"></script>
-    <script src="../Scripts/BattleCardJS/battleCardGame.js"></script>
- 
-</div>
+        #leftArrow{
+            position : absolute;
+            top : 45%;
+            background-color : #CDBE9F;
+            right: 90%;
+        }
+
+     </style>
+
+    <h1>Customize Battle Card Game</h1>
+
+
+    <div id="global">
+
+        <md-button id="leftArrow" class="md-fab" aria-label="FAB" href="#!/teacher/exercices/battleCard">
+            <md-icon md-svg-src="../Images/material-design-icons/navigation/svg/production/ic_arrow_back_36px.svg"></md-icon>
+        </md-button>
+        <!--<md-button id="rightArrow" class="md-fab" aria-label="FAB" href="#!/teacher/exercices/battleCard/customize">
+            <md-icon md-svg-src="../Images/material-design-icons/navigation/svg/production/ic_arrow_forward_36px.svg"></md-icon>
+        </md-button>-->
+
+        <center>
+            <div ng-show="!EasySelected && !MediumSelected && !HardSelected">
+            <h1>{{Message}}</h1>
+            <table>
+                <tr>
+                    <td>
+                        <form novalidate name="EasyForm" ng-submit="Easy()">
+                            <md-button class="md-raised md-primary" type="submit" name="easy">Facile</md-button>
+                        </form>
+                    </td>
+                    <td>
+                        <form novalidate name="MediumForm" ng-submit="Medium()">
+                            <md-button class="md-raised md-primary" type="submit" name="medium">Moyen</md-button>
+                        </form>
+                    </td>
+                    <td>
+                        <form novalidate name="HardForm" ng-submit="Hard()">
+                            <md-button class="md-raised md-primary" type="submit" name="hard">Difficile</md-button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div ng-show="EasySelected">
+            <h1>{{Message}}</h1>
+            <!--<button type="button" id="alphabet">Alphabet</button>-->
+            <!--<button type="button" id="chiffre">Chiffre</button>-->
+            <select id="choice" value="choice">
+                <option selected disabled>Votre choix</option>
+                <option value="alphabet" id="alphabet">Alphabet</option>
+                <option disabled id="choiceTitle">Chiffres et nombres</option>
+                <option value="0-10">0-10</option>
+                <option value="0-100">0-100</option>
+                <option value="0-500">0-500</option>
+                <option value="0-999">0-999</option>
+            </select>
+        </div>
+        <div ng-show="MediumSelected">
+            <h1>{{Message}}</h1>
+            <button type="button" id="alphabet">Alphabet</button>
+            <button type="button" id="chiffre">Chiffre</button>
+            <!--<textarea ng-model="ExerciseDictation.Text" name="text" placeholder="Texte de la dictée..." rows="5" cols="40"></textarea><br />-->
+        </div>
+        <div ng-show="HardSelected">
+            <h1>{{Message}}</h1>
+            <button type="button" id="alphabet">Alphabet</button>
+            <button type="button" id="chiffre">Chiffre</button>
+        </div>
+        </center>
+
+    </div>
+
+</div >
