@@ -6639,12 +6639,13 @@
     <Content Include="Templates\KidLoginPage.html" />
     <Content Include="Templates\KidRegistrationPage.html" />
     <Content Include="Templates\TeacherCustomizeDictationPage.html" />
-    <Content Include="Templates\TeacherCustomizeDragAndDropPage.html" />
+    <Content Include="Templates\TeacherCustomizeDragAndDropMathsPage.html" />
     <Content Include="Templates\TeacherLobbyPage.html" />
     <Content Include="Templates\TeacherHomePage.html" />
     <Content Include="Templates\TeacherLoginPage.html" />
     <Content Include="Templates\TeacherRegistrationPage.html" />
     <Content Include="Templates\TeacherSelectExercicesPage.html" />
+    <Content Include="Templates\TeacherSelectMatterPage.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
