@@ -1,10 +1,18 @@
 html{
-    background: #F7C5EF;
+    background-color: #FFF;
 }
 
-
 body{
-	background: #F7C5EF;
+    background-color: #FFF;
+ 	background-image:  url("../Images/Background.png");
+    background-repeat:no-repeat;
+    background-attachment: scroll;
+    background-size: cover;
+    background-position: 55% 17%;
+}
+
+#title{
+    margin-left: 10%;
 }
 
 img{
@@ -20,6 +28,7 @@ ul{
 }
 .nav-justified {
     width: 30%;
+    margin-right: 20%;
 }
 .nav-pills > li{
 	margin: 0px;
@@ -29,12 +38,12 @@ ul{
 	background: transparent;
 }
 .nav > li > a:hover {
-  background-color: #8774E4;
+  background-color: #028;
   color: white;
   border-radius: 5px;
 }
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
-	background-color: #8774E4;
+	background-color: #028;
 	color: white;
 	border-radius: 5px;
 }
@@ -46,16 +55,14 @@ a {
 	margin: 20px;
 }
 #myTab{
-margin: 0% 33% 3% 5%;
+margin: 0% 30% 3% 5%;
+font-size: 250%;
 }
 p {
 	margin: 0% 20%;
 	padding: 1% 0% 5% 3%;
 }
 
-.redColors {
-
-}
 
 .blueColors {
     margin-top: 150px;
@@ -64,13 +71,9 @@ p {
     margin-left: 200px;
 }
 
-.yellowColors {
-
-}
 
 /*Drag and drop begin*/
 body {
-  margin: 30px;
   font-family: "Georgia", serif;
   line-height: 1.8em;
   color: #333;
@@ -80,6 +83,8 @@ body {
  
 h1, h2, h3, h4 {
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  margin-left: 7%;
+  width: 75%;
 }
  
 /* Main content area */

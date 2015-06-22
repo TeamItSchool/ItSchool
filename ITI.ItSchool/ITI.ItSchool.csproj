@@ -1439,10 +1439,10 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Site.css" />
     <Content Include="Content\style.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Images\Background.png" />
     <Content Include="Images\material-design-icons\navigation\1x_ios\ic_apps_black_24dp.png" />
     <Content Include="Images\pen.png" />
     <Content Include="Images\material-design-icons\navigation\1x_ios\ic_apps_black_48dp.png" />

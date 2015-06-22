@@ -23,7 +23,7 @@ function init() {
 
     invalide(numbers);
 
-    numbers.sort(function () { return Math.random() - .5 });
+    numbers.sort(function () { return Math.random() - .10 });
 
     for (var i = 0; i < 10; i++) {
         $('<div>' + numbers[i] + '</div>').data('number', numbers[i]).attr('id', 'card' + numbers[i]).appendTo('#cardPile').draggable({
@@ -37,8 +37,8 @@ function init() {
     // Create the card slots
     var words = ['impair', 'pair', 'impair', 'pair', 'impair', 'pair', 'impair', 'pair', 'impair', 'pair'];
 
-    for (var i = 1; i <= 10; i++) {
-        $('<div>' + words[i - 1] + '</div>').data('number', i).appendTo('#cardSlots').droppable({
+    for (var i = 0; i <= 10; i++) {
+        $('<div>' + words[i] + '</div>').data('number', words[i]).appendTo('#cardSlots').droppable({
             accept: '#cardPile div',
             hoverClass: 'hovered',
             drop: handleCardDrop
@@ -55,7 +55,14 @@ function handleCardDrop(event, ui) {
     // on top of the slot, and prevent it being dragged
     // again
 
-    if (slotNumber % 2 == cardNumber % 2) {
+    if (slotNumber == "pair" && cardNumber / 2 == Math.round(cardNumber / 2)) {
+        ui.draggable.addClass('correct');
+        ui.draggable.draggable('disable');
+        $(this).droppable('disable');
+        ui.draggable.position({ of: $(this), my: 'left top', at: 'left top' });
+        ui.draggable.draggable('option', 'revert', false);
+        correctCards++;
+    } else if (slotNumber == "impair" && cardNumber / 2 != Math.round(cardNumber / 2)) {
         ui.draggable.addClass('correct');
         ui.draggable.draggable('disable');
         $(this).droppable('disable');
@@ -88,7 +95,6 @@ function invalide(numbers) {
     if (numbers.length > 10 || numbers.length < 10) {
         alert("Il y a plus ou moins de 10 nombres");
         $("#subContent").disable();
-        init();
     }
 
 }
