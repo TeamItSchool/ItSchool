@@ -1,6 +1,7 @@
 ﻿using ITI.ItSchool.Models.ExerciseEntities;
 using ITI.ItSchool.Models.ExercisesEntities;
 using ITI.ItSchool.Models.SchoolEntities;
+using ITI.ItSchool.Models.UserEntities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -35,5 +36,9 @@ namespace ITI.ItSchool.Models.PlugExercises
 
         [MaxLength]
         public string Text { get; set; }
+
+        public string AudioData { get; set; }
+
+        public virtual ICollection<User> Users { get; set; }
     }
 }

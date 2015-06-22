@@ -40,7 +40,6 @@ namespace ITI.ItSchool.Controllers
             string nickname = words[ 0 ];
             ed.Text = words[ 1 ];
             string message = "";
-
             using( var edc = new ExerciseDictationContext() )
             {
                 using( var uc = new UserContext() )
@@ -64,14 +63,17 @@ namespace ITI.ItSchool.Controllers
                                                  .FirstOrDefault();
 
                     ed.ChapterId = chapter.ChapterId;
-                    ed.Chapter = null;
+                    ed.LevelId = edc.Level.Where( l => l.Name.Equals( ed.Level.Name ) ).Select( l => l.LevelId ).FirstOrDefault();
+                    ed.Level = null;
                     ed.Name = "Dictée " + sc.Classes
-                                            .Where(cl => cl.ClassId.Equals(ed.ChapterId))
-                                            .Select(cl => cl.Name)
+                                            .Where( cl => cl.ClassId.Equals( ed.Chapter.ClassId ) )
+                                            .Select( cl => cl.Name )
                                             .FirstOrDefault() + edc.Level
-                                            .Where(l => l.LevelId.Equals(ed.LevelId))
-                                            .Select(l => l.Name)
+                                            .Where( l => l.LevelId.Equals( ed.LevelId ) )
+                                            .Select( l => l.Name )
                                             .FirstOrDefault();
+                    ed.Chapter = null;
+                    
                 }
                 ExerciseDictation dictation = edc.ExerciseDictation.Where(edictation => edictation.Name.Equals(ed.Name)).FirstOrDefault();
                 if (dictation ==  null) {
@@ -81,6 +83,7 @@ namespace ITI.ItSchool.Controllers
                 }
                 else {
                     dictation.Text = ed.Text;
+                    //dictation.AudioData = ed.AudioData;
                     //3. Mark entity as modified
                     edc.Entry( dictation ).State = System.Data.Entity.EntityState.Modified;
 

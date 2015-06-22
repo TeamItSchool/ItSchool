@@ -25,6 +25,21 @@
         <div ng-show="EasySelected">
             <h1>{{Message}}</h1>
             <form name="DictText" ng-submit="SaveText()">
+                <md-button class="md-raised md-primary" ng-click="startRecording(this);" id="StartButton" disabled>record</md-button>
+                <md-button class="md-raised md-primary" ng-click="stopRecording(this);" id="StopButton" disabled>stop</md-button>
+                <md-button class="md-raised md-primary" ng-click="enableMicrophone()" id="EnableMicrophone">Activer le micro</md-button>
+                <md-button class="md-raised md-primary" onclick="disableMicrophone()" id="DisableMicrophone" disabled>Désactiver le micro</md-button>
+                <audio id="myAudio"></audio>
+                <h2>Recordings</h2>
+                <ul id="recordingslist"></ul>
+
+                <h2>Log</h2>
+                <pre id="log"></pre>
+                <script>
+                    function disableMicrophone() {
+                        location.reload();
+                    }
+                </script>
                 <textarea ng-model="ExerciseDictation.Text" name="text" placeholder="Texte de la dictée..." rows="5" cols="40"></textarea><br />
                 <md-button class="md-raised md-primary" type="submit" name="SaveEasyText">{{Button}}</md-button>
                 <h2>{{ExerciseDictation.Text}} + {{ExerciseDictation.Level.Name}}</h2>
