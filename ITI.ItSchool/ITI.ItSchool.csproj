@@ -6638,6 +6638,7 @@
     <Content Include="Scripts\version.txt" />
     <Content Include="Templates\Error.html" />
     <Content Include="Templates\home.html" />
+    <Content Include="Templates\KidDescriptionBattleCardPage.html" />
     <Content Include="Templates\KidDragAndDropExercice.html" />
     <Content Include="Templates\KidPlayBattleCardPage.html" />
     <Content Include="Templates\KidPlayDictationPage.html" />
@@ -6646,6 +6647,7 @@
     <Content Include="Templates\KidLobbyPage.html" />
     <Content Include="Templates\KidLoginPage.html" />
     <Content Include="Templates\KidRegistrationPage.html" />
+    <Content Include="Templates\TeacherCustomizeBattleCardPage.html" />
     <Content Include="Templates\TeacherDescriptionBattleCardPage.html" />
     <Content Include="Templates\TeacherCustomizeDictationPage.html" />
     <Content Include="Templates\TeacherCustomizeDragAndDropPage.html" />
@@ -6665,6 +6667,11 @@
     <Compile Include="Controllers\DrawController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TestInputController.cs" />
+    <Compile Include="ExerciseBattleCardContextMigrations\201506191648164_Initial.cs" />
+    <Compile Include="ExerciseBattleCardContextMigrations\201506191648164_Initial.Designer.cs">
+      <DependentUpon>201506191648164_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExerciseBattleCardContextMigrations\Configuration.cs" />
     <Compile Include="ExerciseClozeContextMigrations\201506162116288_Initial.cs" />
     <Compile Include="ExerciseClozeContextMigrations\201506162116288_Initial.Designer.cs">
       <DependentUpon>201506162116288_Initial.cs</DependentUpon>
@@ -6687,6 +6694,7 @@
     <Compile Include="Models\AvatarEntities\Foot.cs" />
     <Compile Include="Models\AvatarEntities\Legs.cs" />
     <Compile Include="Models\CardsData.cs" />
+    <Compile Include="Models\Contexts\ExerciseBattleCardContext.cs" />
     <Compile Include="Models\Contexts\ExerciseClozeContext.cs" />
     <Compile Include="Models\Contexts\ExerciseDictationContext.cs" />
     <Compile Include="Models\DictationText.cs" />
@@ -6761,6 +6769,9 @@
     <TypeScriptCompile Include="Scripts\collections.d.ts" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ExerciseBattleCardContextMigrations\201506191648164_Initial.resx">
+      <DependentUpon>201506191648164_Initial.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ExerciseClozeContextMigrations\201506162116288_Initial.resx">
       <DependentUpon>201506162116288_Initial.cs</DependentUpon>
     </EmbeddedResource>

@@ -152,6 +152,68 @@ namespace ITI.ItSchool.Controllers
             return jsonData;
         }
 
+        public JsonResult SaveBattleCard(ExerciseBattleCard exoBattleCard)
+        {
+            string[] words = exoBattleCard.Choice.Split('/');
+            string nickname = words[0];
+            exoBattleCard.Choice = words[1];
+            string message = "";
+
+            using (var exoBattleCardContext = new ExerciseBattleCardContext())
+            {
+                using (var uc = new UserContext())
+                {
+                    IRepository repo = new SQLRepository();
+                    User user = repo.FindByNickname(nickname);
+                    exoBattleCard.Chapter = new Chapter();
+                    exoBattleCard.Chapter.ClassId = user.ClassId;
+                    exoBattleCard.Chapter.Class = null;
+                }
+
+                exoBattleCard.ExerciseTypeId = exoBattleCardContext.ExerciseType.Where(e => e.Name.Equals(exoBattleCard.ExerciseType.Name))
+                                                    .Select(e => e.ExerciseTypeId)
+                                                    .FirstOrDefault();
+                exoBattleCard.ExerciseType = null;
+                exoBattleCard.Chapter.Name = "Chapitre 1";
+
+                using (var sc = new SchoolContext())
+                {
+                    Chapter chapter = sc.Chapters.Where(c => c.Name.Equals(exoBattleCard.Chapter.Name))
+                                                 .FirstOrDefault();
+
+                    exoBattleCard.ChapterId = chapter.ChapterId;
+                    exoBattleCard.Name = "BattleCard " + sc.Classes
+                                            .Where(cl => cl.ClassId.Equals(exoBattleCard.Chapter.ClassId))
+                                            .Select(cl => cl.Name)
+                                            .FirstOrDefault() + exoBattleCardContext.Level
+                                            .Where(l => l.LevelId.Equals(exoBattleCard.LevelId))
+                                            .Select(l => l.Name)
+                                            .FirstOrDefault();
+                    exoBattleCard.Chapter = null;
+                    
+                }
+                ExerciseBattleCard battleCard = exoBattleCardContext.ExerciseBattleCard.Where(ebattleCard => ebattleCard.Name.Equals(exoBattleCard.Name)).FirstOrDefault();
+                if (battleCard == null)
+                {
+                    exoBattleCardContext.ExerciseBattleCard.Add(exoBattleCard);
+                    exoBattleCardContext.SaveChanges();
+                    message = "Jeu enregistré";
+                }
+                else
+                {
+                    battleCard.Choice = exoBattleCard.Choice;
+                    //3. Mark entity as modified
+                    exoBattleCardContext.Entry(battleCard).State = System.Data.Entity.EntityState.Modified;
+
+                    //4. call SaveChanges
+                    exoBattleCardContext.SaveChanges();
+                    message = "Choix mis à jour.";
+                }
+                JsonResult data = new JsonResult { Data = message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                return data;
+            }
+        }
+
         /// <summary>
         /// Save User in DB
         /// </summary>

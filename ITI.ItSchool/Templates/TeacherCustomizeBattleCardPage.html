@@ -82,17 +82,19 @@
         </div>
         <div ng-show="EasySelected">
             <h1>{{Message}}</h1>
-            <!--<button type="button" id="alphabet">Alphabet</button>-->
-            <!--<button type="button" id="chiffre">Chiffre</button>-->
-            <select id="choice" value="choice">
-                <option selected disabled>Votre choix</option>
-                <option value="alphabet" id="alphabet">Alphabet</option>
-                <option disabled id="choiceTitle">Chiffres et nombres</option>
-                <option value="0-10">0-10</option>
-                <option value="0-100">0-100</option>
-                <option value="0-500">0-500</option>
-                <option value="0-999">0-999</option>
-            </select>
+            <form name="FormChoice" ng-submit="SaveChoice()">
+                <select id="choice" value="choice" ng-model="ExerciseBattleCard.Choice">
+                    <!--<option selected disabled>Votre choix</option>-->
+                    <option value="alphabet" id="alphabet">Alphabet</option>
+                    <option disabled id="choiceTitle">Chiffres et nombres</option>
+                    <option value="0-10">0-10</option>
+                    <option value="0-100">0-100</option>
+                    <option value="0-500">0-500</option>
+                    <option value="0-999">0-999</option>
+                </select>
+                <md-button id="saveExercise" class="md-raised md-primary" type="submit" name="SaveEasyChoice">{{Button}}</md-button>
+                <h2>{{ExerciseBattleCard.Choice}} + {{ExerciseBattleCard.Level.Name}}</h2>
+            </form>
         </div>
         <div ng-show="MediumSelected">
             <h1>{{Message}}</h1>

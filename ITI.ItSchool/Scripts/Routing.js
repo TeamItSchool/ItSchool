@@ -80,6 +80,10 @@
         controller: 'KidPlayDictationController'
     })
     .when('/kid/exercices/battleCard', {
+        templateUrl: '/Templates/KidDescriptionBattleCardPage.html',
+        controller: 'KidDescriptionBattleCardController'
+    })
+    .when('/kid/exercices/battleCard/play', {
         templateUrl: '/Templates/KidPlayBattleCardPage.html',
         controller: 'KidPlayBattleCardController'
     })
@@ -719,33 +723,89 @@
 })
 
 // Customize BattleCard
-.controller('TeacherCustomizeBattleCardController', function ($scope) {
-    //var monobjet_json = sessionStorage.getItem("objet");
-    //var monobjet = JSON.parse(monobjet_json);
-    //// Affichage dans la console
-    //console.log(monobjet.data.FirstName + " est dans la modification de card game");
+.controller('TeacherCustomizeBattleCardController', function ($scope, SaveBattleCardChoice) {
+    var monobjet_json = sessionStorage.getItem("objet");
+    var monobjet = JSON.parse(monobjet_json);
+    // Affichage dans la console
+    console.log(monobjet.data.FirstName + " est dans la modification de card game");
 
     $scope.Message = 'Choix du niveau';
     $scope.EasySelected = false;
     $scope.MediumSelected = false;
     $scope.HardSelected = false;
+    $scope.IsFormValid = false;
+    $scope.Button = "Sauvegarder";
 
+    $scope.ExerciseBattleCard = {
+        //A REMPLIR
+        Choice: '',
+        Level: {
+            Name: 'Test'
+        },
+        ExerciseType: {
+            Name: 'CardGame'
+        }
+    };
+
+    //Check if Form is valid or not // here FormChoice is our form Name
+    $scope.$watch('FormChoice.$valid', function (newVal) {
+        $scope.IsFormValid = newVal;
+    });
+    $scope.IsFormValid
+    $scope.SaveChoice = function () {
+        if ($scope.IsFormValid && $scope.ExerciseBattleCard.Choice != "") {
+            $scope.Button = "Sauvegarde en cours..."
+            $scope.ExerciseBattleCard.Choice.trim();
+            $scope.ExerciseBattleCard.Choice = monobjet.data.Nickname + "/" + $scope.ExerciseBattleCard.Choice;
+            var res = $scope.ExerciseBattleCard.Choice.split("/");
+
+            SaveBattleCardChoice.GetChoice($scope.ExerciseBattleCard).then(function (d) {
+                $scope.ExerciseBattleCard.Choice = res[1];
+                console.log(d.data);
+                if (d.data == "Jeu enregistré")
+                    $scope.Button = "Battle Card sauvegardé";
+                else {
+                    alert(d.data);
+                    $scope.Button = "Sauvegarder"
+                }
+            })
+        }
+    };
     $scope.Easy = function () {
         $scope.EasySelected = true;
         $scope.Message = "Niveau facile";
-        $scope.Game.Level.Name = "Easy";
+        $scope.ExerciseBattleCard.Level.Name = "Easy";
     }
 
     $scope.Medium = function () {
         $scope.MediumSelected = true;
         $scope.Message = "Niveau moyen";
-        $scope.Game.Level.Name = "Medium";
+        $scope.ExerciseBattleCard.Level.Name = "Medium";
     }
     $scope.Hard = function () {
         $scope.HardSelected = true;
         $scope.Message = "Niveau difficile";
-        $scope.Game.Level.Name = "Hard";
+        $scope.ExerciseBattleCard.Level.Name = "Hard";
     }
+})
+
+.factory('SaveBattleCardChoice', function ($http) {
+    var fac = {};
+    var data = "";
+    fac.GetChoice = function (d) {
+        return $http({
+            url: '/Data/SaveBattleCard',
+            method: 'POST',
+            data: JSON.stringify(d),
+            headers: { 'content-type': 'application/json' }
+        })
+    };
+    return fac;
+})
+
+// Kid description BattleCard
+.controller('KidDescriptionBattleCardController', function ($scope) {
+
 })
 
 // Play BattleCard
