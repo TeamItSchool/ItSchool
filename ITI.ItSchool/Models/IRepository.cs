@@ -14,6 +14,10 @@ namespace ITI.ItSchool.Models
     {
         User FindByNickname( string nickname );
 
+        JsonResult GetChildrenByClassId( int id );
+
+        List<User> GetChildrenListByClassId( int id );
+
         IList<User> FindAllUsers();
 
         JsonResult FindUserByNickname( string nickname );

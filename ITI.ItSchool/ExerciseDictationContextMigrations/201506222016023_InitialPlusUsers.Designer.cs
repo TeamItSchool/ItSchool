@@ -7,13 +7,13 @@ namespace ITI.ItSchool.ExerciseDictationContextMigrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class UpdateWithUsers : IMigrationMetadata
+    public sealed partial class InitialPlusUsers : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdateWithUsers));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialPlusUsers));
         
         string IMigrationMetadata.Id
         {
-            get { return "201506221417440_UpdateWithUsers"; }
+            get { return "201506222016023_InitialPlusUsers"; }
         }
         
         string IMigrationMetadata.Source

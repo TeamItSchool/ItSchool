@@ -9,8 +9,8 @@ namespace ITI.ItSchool.ExerciseDictationContextMigrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
-            AutomaticMigrationDataLossAllowed = true;
+            AutomaticMigrationsEnabled = false;
+            //AutomaticMigrationDataLossAllowed = true;
             MigrationsDirectory = @"ExerciseDictationContextMigrations";
         }
 

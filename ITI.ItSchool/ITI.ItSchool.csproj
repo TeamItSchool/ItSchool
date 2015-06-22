@@ -6679,9 +6679,9 @@
     <Compile Include="ExerciseDictationContextMigrations\201506162050019_Initial.Designer.cs">
       <DependentUpon>201506162050019_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="ExerciseDictationContextMigrations\201506221417440_UpdateWithUsers.cs" />
-    <Compile Include="ExerciseDictationContextMigrations\201506221417440_UpdateWithUsers.Designer.cs">
-      <DependentUpon>201506221417440_UpdateWithUsers.cs</DependentUpon>
+    <Compile Include="ExerciseDictationContextMigrations\201506222016023_InitialPlusUsers.cs" />
+    <Compile Include="ExerciseDictationContextMigrations\201506222016023_InitialPlusUsers.Designer.cs">
+      <DependentUpon>201506222016023_InitialPlusUsers.cs</DependentUpon>
     </Compile>
     <Compile Include="ExerciseDictationContextMigrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
@@ -6769,8 +6769,8 @@
     <EmbeddedResource Include="ExerciseDictationContextMigrations\201506162050019_Initial.resx">
       <DependentUpon>201506162050019_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ExerciseDictationContextMigrations\201506221417440_UpdateWithUsers.resx">
-      <DependentUpon>201506221417440_UpdateWithUsers.cs</DependentUpon>
+    <EmbeddedResource Include="ExerciseDictationContextMigrations\201506222016023_InitialPlusUsers.resx">
+      <DependentUpon>201506222016023_InitialPlusUsers.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SchoolContextMigrations\201506162026533_Initial.resx">
       <DependentUpon>201506162026533_Initial.cs</DependentUpon>

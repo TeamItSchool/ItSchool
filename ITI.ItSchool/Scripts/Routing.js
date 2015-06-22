@@ -911,8 +911,19 @@
         ExerciseType: {
             Name: 'Dictée'
         },
-        AudioData: ''
+        AudioData: '',
+        Users: ''
     };
+
+
+    $scope.Children = null;
+
+    SaveDictationText.GetChildren(monobjet.data.ClassId).then(function (d) {
+        $scope.Children = d.data;
+        $scope.ExerciseDictation.Users = $scope.Children;
+        console.log($scope.ExerciseDictation.Users);
+        //alert($scope.Grades[0].Name);
+    });
 
     //Check if Form is valid or not // here DictText is our form Name
     $scope.$watch('DictText.$valid', function (newVal) {
@@ -1131,7 +1142,6 @@
                     data = parseWav(buffer);
 
                     console.log(data);
-                    console.log("Swag : " + data.samples);
                     
                     var bytesArray = [];
                     for (var i = 0; i < data.samples.length; i++) {
@@ -1281,9 +1291,11 @@
     var fac = {};
     var data = "";
 
+    fac.GetChildren = function (d) {
+        return $http.get('/Data/GetSpecificChilden/' + d)
+    }
     
     fac.GetText = function (d) {
-        alert(JSON.stringify(d));
         return $http({
             url: '/Data/SaveDictation',
             method: 'POST',
