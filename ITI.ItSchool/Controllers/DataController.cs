@@ -148,11 +148,6 @@ namespace ITI.ItSchool.Controllers
             return new JsonResult { Data = message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
-        public void SaveClozeExercise( Exercise exercise )
-        {
-            throw new NotImplementedException();
-        }
-
         public JsonResult GetClasses()
         {
             IRepository repo = new SQLRepository();
@@ -172,6 +167,25 @@ namespace ITI.ItSchool.Controllers
             IRepository repo = new SQLRepository();
             var jsonData = repo.GetGroups();
             return jsonData;
+        }
+
+        public void SaveClozeExercise(ExerciseCloze exerciseCloze)
+        {
+
+        }
+
+        public JsonResult GetLevels()
+        {
+            IRepository db = new SQLRepository();
+            var levels = db.GetLevels();
+            return levels;
+        }
+
+        public JsonResult GetChapters()
+        {
+            IRepository db = new SQLRepository();
+            var chapters = db.GetChapters();
+            return chapters;
         }
     }
 }

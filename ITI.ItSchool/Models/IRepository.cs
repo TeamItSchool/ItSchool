@@ -12,34 +12,38 @@ namespace ITI.ItSchool.Models
 {
     public interface IRepository
     {
-        User FindByNickname( string nickname );
+        JsonResult FindUserByNickname(string nickname);
 
-        IList<User> FindAllUsers();
-
-        JsonResult FindUserByNickname( string nickname );
+        JsonResult GetChapters();
 
         JsonResult GetClasses();
 
         JsonResult GetGroups();
 
+        JsonResult GetLevels();
+
         JsonResult GetClozeExerciseContent();
 
-        IList<User> Update( User u );
-        
-        User FindById( int id );
-        
-        User FindByMail( string mail );
+        JsonResult SetExercise(Exercise exercise);
 
-        User FindByGrade( string grade );
+        User FindByNickname(string nickname);
 
-        bool Create( User u );
+        User FindById(int id);
 
-        bool Create( Class g );
+        User FindByMail(string mail);
 
-        bool Remove( User u );
+        User FindByGrade(string grade);
 
-        bool Remove( int id );
+        bool Create(User u);
 
-        JsonResult SetExercise( Exercise exercise );
+        bool Create(Class g);
+
+        bool Remove(User u);
+
+        bool Remove(int id);
+
+        IList<User> Update(User u);
+
+        IList<User> FindAllUsers();
     }
 }

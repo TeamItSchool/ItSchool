@@ -409,24 +409,57 @@
     $scope.Message = 'Configuration de l\'exercice';
     $scope.Button = 'Sauvegarder';
     $scope.IsFormValid = false;
-    $scope.test = '';    
     $scope.Exercise = {
         Text: '',
         Level: {
             Name: '',
         },
-        Words: ''
+        Words: '',
+        Chapter: {
+            Name: '',
+        },
+        ExerciseType: {
+            Name: '',
+        }
     };
 
     $scope.DatabaseText = null;
     $scope.Words = null;
+    $scope.Levels = null;
+    $scope.TextFromDb = null;
+    $scope.Chapters = null;
+    $scope.DetailledWords = null;
+
+    ExerciseDatas.GetChapters().then(function (d) {
+        $scope.Chapters = d.data;
+    }, function (error) {
+        alert('An error occured. See console for more details.')
+        console.log('Error L435 is ' + error);
+    });
+
+    ExerciseDatas.GetLevels().then(function (d) {
+        $scope.Levels = d.data;
+        console.log("in levels");
+    }, function (error) {
+        alert('An error occured. See console for more details.');
+        console.log(error);
+    });
 
     ExerciseDatas.GetClozeExercise().then(function (d) {
         $scope.DatabaseText = d.data.Text;
         $scope.Exercise.Words = d.data.Words;
-        alert($scope.Exercise.Words);
-    }, function ( error ) {
-        alert( "An error occured");
+        $scope.Exercise.Text = d.data.Text;
+        $scope.Selections = [];
+
+        var wordsText = d.data.Text.split(/[\s,.]+/);
+        $scope.gridOptions = {
+            data: d.data.Words,
+            selectedItems: $scope.Selections,
+            multiSelect: true
+        }
+
+    }, function (error) {
+        alert("An error occured");
     });
 
     $scope.$watch('ClozeExercise', function (newValue) {
@@ -434,7 +467,7 @@
     });
 
     $scope.SaveData = function () {
-        console.log( "Là : " + ExerciseDatas + "L240: " + $scope.Exercise.Level );
+        console.log("Là : " + ExerciseDatas + "L240: " + $scope.Exercise.Level);
         if ($scope.IsFormValid) {
             ExerciseDatas.SaveClozeExercise($scope.Exercise).then(function (data) {
                 console.log("SaveData");
@@ -812,12 +845,6 @@
         });
         return defer.promise;
     }
-    fac.GetClasses = function () {
-        return $http.get('/Data/GetClasses')
-    }
-    fac.GetGroups = function () {
-        return $http.get('/Data/GetGroups')
-    }
     return fac;		
 })
 
@@ -840,6 +867,21 @@
     fac.GetClozeExercise = function () {
         return $http.get( '/Data/GetClozeExercise' );
     };
+
+    fac.GetClasses = function () {
+        return $http.get('/Data/GetClasses')
+    }
+    fac.GetGroups = function () {
+        return $http.get('/Data/GetGroups')
+    }
+
+    fac.GetChapters = function () {
+        return $http.get('/Data/GetChapters')
+    }
+
+    fac.GetLevels = function () {
+        return $http.get('/Data/GetLevels');
+    }
 
     return fac;
 });

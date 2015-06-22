@@ -1,6 +1,7 @@
 ﻿using ITI.ItSchool.Models.AvatarEntities;
 using ITI.ItSchool.Models.Contexts;
 using ITI.ItSchool.Models.Entities;
+using ITI.ItSchool.Models.ExerciseEntities;
 using ITI.ItSchool.Models.PlugExercises;
 using ITI.ItSchool.Models.SchoolEntities;
 using ITI.ItSchool.Models.UserEntities;
@@ -262,19 +263,27 @@ namespace ITI.ItSchool.Models
         }
 
 
-        public JsonResult GetClasses() // We talk about pupils classes, sure ;-)
+        /// <summary>
+        /// Gets all pupils' classes.
+        /// </summary>
+        /// <returns>All the classes in a list form in JSON Data format.</returns>
+        public JsonResult GetClasses()
         {
             List<Class> classes = new List<Class>();
             JsonResult jsonData = null;
-            using( var db = new SchoolContext() )
+            using (var db = new SchoolContext())
             {
                 db.Configuration.LazyLoadingEnabled = false;
                 classes = db.Classes.ToList();
                 jsonData = new JsonResult { Data = classes, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-            } 
+            }
             return jsonData;
         }
 
+        /// <summary>
+        /// Gets all groups (Teacher, pupil,...).
+        /// </summary>
+        /// <returns>The groups as a JSON format.</returns>
         public JsonResult GetGroups()
         {
             List<Group> groups = new List<Group>();
@@ -283,6 +292,32 @@ namespace ITI.ItSchool.Models
                 groups = db.Groups.OrderBy(g => g.Name).ToList();
                 var jsonData = new JsonResult { Data = groups, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 return jsonData;
+            }
+        }
+
+        /// <summary>
+        /// Gets all the levels of the exercises.
+        /// </summary>
+        /// <returns>The levels as a JSON Format.</returns>
+        public JsonResult GetLevels()
+        {
+            List<Level> levels = new List<Level>();
+            using (var db = new ExerciseContext())
+            {
+                db.Configuration.LazyLoadingEnabled = false;
+                levels = db.Levels.ToList();
+                return new JsonResult { Data = levels, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+        }
+
+        public JsonResult GetChapters()
+        {
+            List<Chapter> chapters = new List<Chapter>();
+            using (var db = new SchoolContext())
+            {
+                db.Configuration.LazyLoadingEnabled = false;
+                chapters = db.Chapters.ToList();
+                return new JsonResult { Data = chapters, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
         }
 

@@ -1,17 +1,22 @@
 ﻿<div ng-controller="TeacherClozeExerciseController">
+    <script src="~/Scripts/ng-grid.js"></script>
     <center>
-        <h1>{{Message}}</h1>
+        <h1>{{ Message }}</h1>
         <form name="ClozeExercise" ng-submit="SaveData()">
-            <textarea ng-model="Exercise.Text"></textarea><br />
-            <select ng-model="Exercise.Level.Name">
-                <option value="Easy">Facile</option>
-                <option value="Medium">Moyen</option>
-            </select>
+            <md-select ng-model="Exercise.Level.Name" placeholder="Niveau" required>
+                <md-option ng-repeat="level in Levels" value="{{ level.Name }}" ng-model="Exercise.Level.Name">{{ level.Name }}</md-option>
+            </md-select>
+
+            <md-select ng-model="Exercise.Chapter.Name" placeholder="Chapitre">
+                <md-option ng-repeat="chapter in Chapters" value="{{ chapter.Name }}" ng-model="Exercise.Chapter.Name">{{ chapter.Name }}</md-option>
+            </md-select>
+
             <md-button class="md-raised md-primary" type="submit" name="saveText">{{Button}}</md-button>
-            Debug message : currently selected : {{ {"selected item": Exercise.Level.Name} }}
-            Debug message : current text : [ {{ Exercise.Text  }}]
-            "TEXT": {{  DatabaseText }}
             "WORDS": {{ Exercise.Words }}
+
+            <textarea rows="15" cols="50" ng-model="Exercise.Text">
+                {{ Exercise.Text }}
+            </textarea><br />
         </form>
     </center>
 </div>
