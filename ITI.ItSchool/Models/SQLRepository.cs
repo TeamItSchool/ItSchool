@@ -263,6 +263,7 @@ namespace ITI.ItSchool.Models
                     users[i].Class.Users = null;
                     users[i].Group.Users = null;
                     users[i].Avatar.User = null;
+
                 }
                 data = new JsonResult { Data = users, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }

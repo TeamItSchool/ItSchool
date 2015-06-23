@@ -915,8 +915,8 @@
         Users: ''
     };
 
-
     $scope.Children = null;
+    $scope.selected = [];
 
     SaveDictationText.GetChildren(monobjet.data.ClassId).then(function (d) {
         $scope.Children = d.data;
@@ -925,10 +925,23 @@
         //alert($scope.Grades[0].Name);
     });
 
+    $scope.toggle = function (child, list) {
+        var idx = list.indexOf(child);
+        if (idx > -1)
+            list.splice(idx, 1);
+        else
+            list.push(child);
+    };
+
+    $scope.exists = function (child, list) {
+        return list.indexOf(child) > -1;
+    };
+
     //Check if Form is valid or not // here DictText is our form Name
     $scope.$watch('DictText.$valid', function (newVal) {
         $scope.IsFormValid = newVal;
     });
+
     $scope.IsFormValid
     $scope.SaveText = function () {
         if ($scope.IsFormValid) {
@@ -936,6 +949,10 @@
             $scope.ExerciseDictation.Text.trim();
             $scope.ExerciseDictation.Text = monobjet.data.Nickname + "/" + $scope.ExerciseDictation.Text;
             var res = $scope.ExerciseDictation.Text.split("/");
+
+            if ($scope.ExerciseDictation.Level.Name != "Easy")
+                $scope.ExerciseDictation.Users = $scope.selected;
+
             SaveDictationText.GetText($scope.ExerciseDictation).then(function (d) {
                 $scope.ExerciseDictation.Text = res[1];
                 console.log(d.data);

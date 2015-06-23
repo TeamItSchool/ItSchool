@@ -36,6 +36,7 @@ namespace ITI.ItSchool.Controllers
 
         public JsonResult SaveDictation( ExerciseDictation dictationExo )
         {
+            
             string[] words = dictationExo.Text.Split( '/' );
             string nickname = words[ 0 ];
             dictationExo.Text = words[ 1 ];
@@ -72,13 +73,12 @@ namespace ITI.ItSchool.Controllers
                                             .Select( l => l.Name )
                                             .FirstOrDefault();
                     dictationExo.Chapter = null;
-                    
                 }
                 ExerciseDictation dictation = edc.ExerciseDictation.Where(exDictation => exDictation.Name.Equals(dictationExo.Name)).FirstOrDefault();
                 if( dictation == null )
                 {
-                    //if(dictationExo.LevelId.Equals(1))
-                    //    dictationExo.Users = repo.GetChildrenListByClassId( user.ClassId );
+                    if(dictationExo.LevelId.Equals(1))
+                        dictationExo.Users = repo.GetChildrenListByClassId( user.ClassId );
 
                     edc.ExerciseDictation.Add( dictationExo );
                     edc.SaveChanges();
@@ -87,7 +87,9 @@ namespace ITI.ItSchool.Controllers
                 else
                 {
                     dictation.Text = dictationExo.Text;
-                    //dictation.AudioData = ed.AudioData;
+                    dictation.Users = dictationExo.Users;
+                    dictation.AudioData = dictationExo.AudioData;
+
                     //3. Mark entity as modified
                     edc.Entry( dictation ).State = System.Data.Entity.EntityState.Modified;
 
