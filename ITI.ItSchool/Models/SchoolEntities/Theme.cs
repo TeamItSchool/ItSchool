@@ -7,6 +7,7 @@ using System.Web;
 
 namespace ITI.ItSchool.Models.SchoolEntities
 {
+    [Table("Themes")]
     public class Theme
     {
         [Key]

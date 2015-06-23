@@ -49,6 +49,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -98,10 +99,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\TestDB.mdf" />
-    <Content Include="App_Data\TestDB_log.ldf">
-      <DependentUpon>TestDB.mdf</DependentUpon>
-    </Content>
     <Content Include="bower_components\core-a11y-keys\core-a11y-keys.html" />
     <Content Include="bower_components\core-a11y-keys\demo.html" />
     <Content Include="bower_components\core-a11y-keys\index.html" />
@@ -1442,11 +1439,10 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Draggable.css" />
-    <Content Include="Content\Site.css" />
     <Content Include="Content\style.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Images\Background.png" />
     <Content Include="Images\material-design-icons\navigation\1x_ios\ic_apps_black_24dp.png" />
     <Content Include="Images\pen.png" />
     <Content Include="Images\material-design-icons\navigation\1x_ios\ic_apps_black_48dp.png" />
@@ -3739,17 +3735,6 @@
     <Content Include="Images\material-design-icons\navigation\svg\production\ic_unfold_more_24px.svg" />
     <Content Include="Images\material-design-icons\navigation\svg\production\ic_unfold_more_36px.svg" />
     <Content Include="Images\material-design-icons\navigation\svg\production\ic_unfold_more_48px.svg" />
-    <Content Include="MyModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>MyModel.edmx</DependentUpon>
-      <LastGenOutput>MyModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="MyModel.edmx.sql" />
-    <Content Include="MyModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>MyModel.edmx</DependentUpon>
-      <LastGenOutput>MyModel.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
@@ -4283,9 +4268,7 @@
     <Content Include="Scripts\docs\js\search-data.json" />
     <Content Include="Scripts\docs\js\search-worker.min.js.map" />
     <Content Include="Scripts\angular.min.js.map" />
-    <Content Include="Scripts\draggable.js" />
-    <Content Include="Scripts\DropImpair.js" />
-    <Content Include="Scripts\DropPair.js" />
+    <Content Include="Scripts\DragNDrop.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="bower_components\core-a11y-keys\.bower.json" />
     <Content Include="bower_components\core-a11y-keys\bower.json" />
@@ -4440,13 +4423,6 @@
     <Content Include="bower_components\webcomponentsjs\build.log" />
     <Content Include="bower_components\webcomponentsjs\package.json" />
     <Content Include="bower_components\webcomponentsjs\README.md" />
-    <EntityDeploy Include="MyModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>MyModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="MyModel.edmx.diagram">
-      <DependentUpon>MyModel.edmx</DependentUpon>
-    </Content>
     <Content Include="Scripts\docs\components\bootstrap-3.1.1\css\bootstrap-theme.css" />
     <Content Include="Scripts\docs\components\bootstrap-3.1.1\css\bootstrap-theme.min.css" />
     <Content Include="Scripts\docs\components\bootstrap-3.1.1\css\bootstrap.css" />
@@ -6643,32 +6619,34 @@
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.3.js" />
     <Content Include="Scripts\jquery-2.1.3.min.js" />
+    <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Scripts\jquery.js" />
     <Content Include="Scripts\jsHtml5AudioRecorder.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\ng-polymer-elements.js" />
     <Content Include="Scripts\painting.js" />
     <Content Include="Scripts\ng-polymer-elements.min.js" />
     <Content Include="Scripts\NG-Polymer.js" />
-    <Content Include="Scripts\PairOuImpair.js" />
     <Content Include="Scripts\Routing.js" />
     <Content Include="Scripts\version.txt" />
     <Content Include="Templates\Error.html" />
     <Content Include="Templates\home.html" />
     <Content Include="Templates\KidDragAndDropExercice.html" />
+    <Content Include="Templates\KidPlayDictationPage.html" />
+    <Content Include="Templates\KidSelectExercicesPage.html" />
     <Content Include="Templates\KidHomePage.html" />
+    <Content Include="Templates\KidLobbyPage.html" />
     <Content Include="Templates\KidLoginPage.html" />
     <Content Include="Templates\KidRegistrationPage.html" />
-<<<<<<< HEAD
     <Content Include="Templates\TeacherCustomizeClozeExercisePage.html" />
-=======
     <Content Include="Templates\TeacherCustomizeDictationPage.html" />
-    <Content Include="Templates\TeacherCustomizeDragAndDropPage.html" />
->>>>>>> local_guenole
+    <Content Include="Templates\TeacherCustomizeDragAndDropMathsPage.html" />
     <Content Include="Templates\TeacherLobbyPage.html" />
     <Content Include="Templates\TeacherHomePage.html" />
     <Content Include="Templates\TeacherLoginPage.html" />
     <Content Include="Templates\TeacherRegistrationPage.html" />
     <Content Include="Templates\TeacherSelectExercicesPage.html" />
+    <Content Include="Templates\TeacherSelectMatterPage.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -6680,64 +6658,63 @@
     <Compile Include="Controllers\DrawController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TestInputController.cs" />
+    <Compile Include="ExerciseClozeContextMigrations\201506162116288_Initial.cs" />
+    <Compile Include="ExerciseClozeContextMigrations\201506162116288_Initial.Designer.cs">
+      <DependentUpon>201506162116288_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExerciseClozeContextMigrations\Configuration.cs" />
+    <Compile Include="ExerciseContextMigrations\201506162039503_Initial.cs" />
+    <Compile Include="ExerciseContextMigrations\201506162039503_Initial.Designer.cs">
+      <DependentUpon>201506162039503_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExerciseContextMigrations\Configuration.cs" />
+    <Compile Include="ExerciseDictationContextMigrations\201506162050019_Initial.cs" />
+    <Compile Include="ExerciseDictationContextMigrations\201506162050019_Initial.Designer.cs">
+      <DependentUpon>201506162050019_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExerciseDictationContextMigrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-<<<<<<< HEAD
     <Compile Include="Models\AvatarEntities\Body.cs" />
     <Compile Include="Models\AvatarEntities\Foot.cs" />
     <Compile Include="Models\AvatarEntities\Legs.cs" />
-=======
     <Compile Include="Models\CardsData.cs" />
+    <Compile Include="Models\Contexts\ExerciseClozeContext.cs" />
+    <Compile Include="Models\Contexts\ExerciseDictationContext.cs" />
     <Compile Include="Models\DictationText.cs" />
->>>>>>> local_guenole
     <Compile Include="Models\LoginData.cs" />
-    <Compile Include="MyModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MyModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="MyModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MyModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="MyModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MyModel.edmx</DependentUpon>
-    </Compile>
+    <Compile Include="Models\PlugExercises\ExerciseCloze.cs" />
+    <Compile Include="Models\PlugExercises\ExerciseDictation.cs" />
     <Compile Include="Models\Contexts\AvatarContext.cs" />
     <Compile Include="Models\AvatarEntities\Avatar.cs" />
-    <Compile Include="Models\Contexts\ChatContext.cs" />
-    <Compile Include="Models\ChatEntities\Conversation.cs" />
-    <Compile Include="Models\ChatEntities\Message.cs" />
-    <Compile Include="Models\Contexts\GameContext.cs" />
-    <Compile Include="Models\GameEntities\ExerciseType.cs" />
-    <Compile Include="Models\GameEntities\Game.cs" />
-    <Compile Include="Models\GameEntities\Level.cs" />
+    <Compile Include="Models\Contexts\ExerciseContext.cs" />
+    <Compile Include="Models\ExerciseEntities\ExerciseType.cs" />
+    <Compile Include="Models\ExerciseEntities\Exercise.cs" />
+    <Compile Include="Models\ExerciseEntities\Level.cs" />
     <Compile Include="Models\IRepository.cs" />
     <Compile Include="Models\Contexts\SchoolContext.cs" />
     <Compile Include="Models\SchoolEntities\Chapter.cs" />
-    <Compile Include="Models\SchoolEntities\Grade.cs" />
+    <Compile Include="Models\SchoolEntities\Class.cs" />
     <Compile Include="Models\SchoolEntities\Matter.cs" />
     <Compile Include="Models\SchoolEntities\Theme.cs" />
-    <Compile Include="Models\Contexts\SocialNetworkContext.cs" />
-    <Compile Include="Models\SocialNetworkEntities\Friendship.cs" />
-    <Compile Include="Models\SocialNetworkEntities\Status.cs" />
     <Compile Include="Models\SQLRepository.cs" />
     <Compile Include="Models\Contexts\UserContext.cs" />
-    <Compile Include="Models\UserEntities\Belonging.cs" />
-    <Compile Include="Models\UserEntities\Control.cs" />
     <Compile Include="Models\UserEntities\Group.cs" />
     <Compile Include="Models\UserEntities\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="User1.cs">
-      <DependentUpon>MyModel.tt</DependentUpon>
+    <Compile Include="SchoolContextMigrations\201506162026533_Initial.cs" />
+    <Compile Include="SchoolContextMigrations\201506162026533_Initial.Designer.cs">
+      <DependentUpon>201506162026533_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserContextMigrations\201506081206562_Initial.cs" />
-    <Compile Include="UserContextMigrations\201506081206562_Initial.Designer.cs">
-      <DependentUpon>201506081206562_Initial.cs</DependentUpon>
+    <Compile Include="SchoolContextMigrations\201506161019380_Initial1.cs" />
+    <Compile Include="SchoolContextMigrations\201506161019380_Initial1.Designer.cs">
+      <DependentUpon>201506161019380_Initial1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SchoolContextMigrations\Configuration.cs" />
+    <Compile Include="UserContextMigrations\201506162024076_Initial.cs" />
+    <Compile Include="UserContextMigrations\201506162024076_Initial.Designer.cs">
+      <DependentUpon>201506162024076_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="UserContextMigrations\Configuration.cs" />
   </ItemGroup>
@@ -6752,13 +6729,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\version.json" />
-<<<<<<< HEAD
     <Content Include="Scripts\app.config" />
     <Content Include="Views\TestInput\Input.cshtml" />
-=======
     <Content Include="Scripts\jquery-2.1.3.min.map" />
-    <Content Include="Views\BackOffice\Drag.cshtml" />
->>>>>>> local_guenole
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -6767,6 +6740,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="Scripts\i18n\ngLocale\" />
     <Folder Include="Views\Data\" />
   </ItemGroup>
@@ -6778,9 +6752,32 @@
     <TypeScriptCompile Include="Scripts\collections.d.ts" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="UserContextMigrations\201506081206562_Initial.resx">
-      <DependentUpon>201506081206562_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="ExerciseClozeContextMigrations\201506162116288_Initial.resx">
+      <DependentUpon>201506162116288_Initial.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ExerciseContextMigrations\201506162039503_Initial.resx">
+      <DependentUpon>201506162039503_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExerciseDictationContextMigrations\201506162050019_Initial.resx">
+      <DependentUpon>201506162050019_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SchoolContextMigrations\201506162026533_Initial.resx">
+      <DependentUpon>201506162026533_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+<<<<<<< HEAD
+    <EmbeddedResource Include="SchoolContextMigrations\201506161019380_Initial1.resx">
+      <DependentUpon>201506161019380_Initial1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserContextMigrations\201506110359496_Initial.resx">
+      <DependentUpon>201506110359496_Initial.cs</DependentUpon>
+=======
+    <EmbeddedResource Include="UserContextMigrations\201506162024076_Initial.resx">
+      <DependentUpon>201506162024076_Initial.cs</DependentUpon>
+>>>>>>> origin/Michat
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -5,13 +5,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace ITI.ItSchool.Models.SchoolEntities
+namespace ITI.ItSchool.Models.ExerciseEntities
 {
-    [Table("Matters")]
-    public class Matter
+    [Table( "Levels" )]
+    public class Level
     {
         [Key]
-        public int MatterId { get; set; }
+        public int LevelId { get; set; }
 
         [Required]
         [MinLength( 3 )]

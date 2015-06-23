@@ -120,9 +120,16 @@ namespace ITI.ItSchool.Models
                         using (SchoolContext sc = new SchoolContext())
                         {
                             sc.Configuration.LazyLoadingEnabled = false;
+<<<<<<< HEAD
+                            grade = sc.Grades.Where( g => g.Name.Equals( user.Grade.Name ) ).FirstOrDefault();
+                            user.Grade = grade;
+                            user.Grade = null;
+                            user.GradeId = grade.GradeId;
+=======
                             aClass = sc.Classes.Where(c => c.Name.Equals(user.Class.Name)).FirstOrDefault();
                             user.Class = null;
                             user.ClassId = aClass.ClassId;
+>>>>>>> origin/Michat
                         }
                         User searchedUser = userContext.Users.OrderByDescending(u => u.UserId).FirstOrDefault();
                         userAvatar.User = null;
@@ -253,6 +260,12 @@ namespace ITI.ItSchool.Models
             using( var db = new ExerciseClozeContext() )
             {
                 db.Configuration.LazyLoadingEnabled = false;
+<<<<<<< HEAD
+                grades = db.Grades.ToList();
+                grades = db.Grades.OrderBy( g => g.GradeId ).ToList();
+                var jsonData = new JsonResult { Data = grades, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                return jsonData;
+=======
                 //var query = from e in db.ExerciseCloze
                 //            where e.Name == "Mon premier texte à trous"
                 //            select e;
@@ -276,6 +289,7 @@ namespace ITI.ItSchool.Models
                 db.Configuration.LazyLoadingEnabled = false;
                 classes = db.Classes.ToList();
                 jsonData = new JsonResult { Data = classes, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+>>>>>>> origin/Michat
             }
             return jsonData;
         }

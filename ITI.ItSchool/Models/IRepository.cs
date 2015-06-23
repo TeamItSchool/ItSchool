@@ -1,4 +1,5 @@
-﻿using ITI.ItSchool.Models.SchoolEntities;
+﻿using ITI.ItSchool.Models.Entities;
+using ITI.ItSchool.Models.SchoolEntities;
 using ITI.ItSchool.Models.UserEntities;
 using System;
 using System.Collections.Generic;
@@ -11,34 +12,38 @@ namespace ITI.ItSchool.Models
 {
     public interface IRepository
     {
-        User FindByNickname( string nickname );
+        JsonResult FindUserByNickname(string nickname);
 
-        IList<User> FindAllUsers();
+        JsonResult GetChapters();
 
-        JsonResult FindUserByNickname( string nickname );
-
-        JsonResult GetGrades();
+        JsonResult GetClasses();
 
         JsonResult GetGroups();
 
-        IList<User> Update( User u );
-        
-        User FindById( int id );
-        
-        User FindByMail( string mail );
+        JsonResult GetLevels();
 
-        User FindByGrade( string grade );
+        JsonResult GetClozeExerciseContent();
 
-        bool Create( User u );
+        JsonResult SetExercise(Exercise exercise);
 
-        bool Create( Game g );
+        User FindByNickname(string nickname);
 
-        bool Create( Grade g );
+        User FindById(int id);
 
-        bool Remove( User u );
+        User FindByMail(string mail);
 
-        bool Remove( int id );
+        User FindByGrade(string grade);
 
-        JsonResult SetExercise(Game g);
+        bool Create(User u);
+
+        bool Create(Class g);
+
+        bool Remove(User u);
+
+        bool Remove(int id);
+
+        IList<User> Update(User u);
+
+        IList<User> FindAllUsers();
     }
 }
