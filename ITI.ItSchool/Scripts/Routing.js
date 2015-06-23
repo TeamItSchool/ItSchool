@@ -456,25 +456,21 @@
         //alert( jQuery.inArray( 'hello', wordsText ) );
 
         for(var i = 0; i < wordsText.length; i++ ) {
-            if (jQuery.inArray(wordsText[i], uniqueWords) == -1) {
-                var word = {
-                    "word": word[i],
-                    "count": 0
-                };
-                uniqueWords.push( word );
+            if (jQuery.inArray(wordsText[i], uniqueWords ) == -1) {
+                uniqueWords.push( wordsText[ i ] );
             } else {
                 alert("Exists!")
             }
         }
 
-        //for( var j = 0; j < uniqueWords.length; j++ ) {
-        //    var word = {
-        //        "word": uniqueWords[ j ],
-        //        "count": 0
-        //    };
+        for( var j = 0; j < uniqueWords.length; j++ ) {
+            var word = {
+                "word": uniqueWords[ j ],
+                "count": 0
+            };
 
-        //    wordsWithCount.push( word );
-        //}
+            wordsWithCount.push( word );
+        }
 
         $scope.myData = wordsWithCount;
     }, function (error) {
