@@ -449,30 +449,45 @@
         $scope.Exercise.Words = d.data.Words;
         $scope.Exercise.Text = d.data.Text;
         $scope.Selections = [];
-        var wordsText = d.data.Text.split(/[\s,.]+/);
+
+        var textLowerCase = d.data.Text.toLowerCase();
+        var wordsText = textLowerCase.split(/[\s,.]+/);
         var wordsWithCount = [];
         var uniqueWords = [];
+        var arrayJsonFormat = [];
 
-        //alert( jQuery.inArray( 'hello', wordsText ) );
+        var savedIndex = 0;
 
-        for(var i = 0; i < wordsText.length; i++ ) {
-            if (jQuery.inArray(wordsText[i], uniqueWords ) == -1) {
-                uniqueWords.push( wordsText[ i ] );
+        // Sorting as we have a unique words array
+        for(var i = 0; i < wordsText.length; ++i ) {
+            if ($.inArray(wordsText[i], uniqueWords) == -1) {
+                var word = {
+                    'value': wordsText[i],
+                    'count': 1
+                };
+                arrayJsonFormat.push( word );
+                uniqueWords.push(wordsText[i]);
+                savedIndex = i+1;
             } else {
-                alert("Exists!")
+                for (var j = 0; j < arrayJsonFormat.length; j++) {
+                    if( arrayJsonFormat[j].value == wordsText[i] ) {
+                        arrayJsonFormat[j].count += 1;
+                        break;
+                    }
+                }
             }
         }
 
-        for( var j = 0; j < uniqueWords.length; j++ ) {
-            var word = {
-                "word": uniqueWords[ j ],
-                "count": 0
-            };
+        //for( var j = 0; j < uniqueWords.length; j++ ) {
+        //    var word = {
+        //        "word": uniqueWords[ j ],
+        //        "count": 1
+        //    };
 
-            wordsWithCount.push( word );
-        }
+        //    wordsWithCount.push( word );
+        //}
 
-        $scope.myData = wordsWithCount;
+        $scope.myData = arrayJsonFormat;
     }, function (error) {
         alert("An error occured");
     });
