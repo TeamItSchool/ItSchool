@@ -298,7 +298,7 @@ namespace ITI.ItSchool.Models
             {
                 db.Configuration.LazyLoadingEnabled = false;
                 grades = db.Grades.ToList();
-                grades = db.Grades.OrderBy( g => g.Name ).ToList();
+                grades = db.Grades.OrderBy( g => g.GradeId ).ToList();
                 var jsonData = new JsonResult { Data = grades, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 return jsonData;
             }
