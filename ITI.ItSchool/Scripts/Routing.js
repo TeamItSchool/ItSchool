@@ -1,4 +1,4 @@
-﻿angular.module('TheApp', ['ngRoute', 'ngMaterial']) // ['ngRoute'] is required for the routing and
+﻿angular.module('TheApp', ['ngRoute', 'ngMaterial', 'ngGrid']) // ['ngRoute'] is required for the routing and
     //['ngMaterial'] for the material design components
 .run(function ($log, $rootScope) {
     $log.debug("startApp running");
@@ -36,8 +36,7 @@
         controller: 'TeacherSelectExercicesController'
     })
     .when('/teacher/exercices/cloze_exercise', {
-        templateUrl: '/Templates/TeacherCustomizeClozeExercisePage.html',
-        controller: 'TeacherClozeExerciseController'
+        templateUrl: '/Templates/TeacherCustomizeClozeExercisePage.html'
     })
     .when('/teacher/exercices/drag_drop', {
         templateUrl: '/Templates/TeacherCustomizeDragAndDropPage.html',
@@ -450,17 +449,43 @@
         $scope.Exercise.Words = d.data.Words;
         $scope.Exercise.Text = d.data.Text;
         $scope.Selections = [];
-
         var wordsText = d.data.Text.split(/[\s,.]+/);
-        $scope.gridOptions = {
-            data: d.data.Words,
-            selectedItems: $scope.Selections,
-            multiSelect: true
+        var wordsWithCount = [];
+        var uniqueWords = [];
+
+        //alert( jQuery.inArray( 'hello', wordsText ) );
+
+        for(var i = 0; i < wordsText.length; i++ ) {
+            if (jQuery.inArray(wordsText[i], uniqueWords) == -1) {
+                var word = {
+                    "word": word[i],
+                    "count": 0
+                };
+                uniqueWords.push( word );
+            } else {
+                alert("Exists!")
+            }
         }
 
+        //for( var j = 0; j < uniqueWords.length; j++ ) {
+        //    var word = {
+        //        "word": uniqueWords[ j ],
+        //        "count": 0
+        //    };
+
+        //    wordsWithCount.push( word );
+        //}
+
+        $scope.myData = wordsWithCount;
     }, function (error) {
         alert("An error occured");
     });
+
+    $scope.gridOptions = {
+        data: 'myData',
+        selectedItems: $scope.Selections,
+        multiSelect: true
+    };
 
     $scope.$watch('ClozeExercise', function (newValue) {
         $scope.IsFormValid = newValue;
@@ -844,6 +869,10 @@
             defer.reject(e);
         });
         return defer.promise;
+    }
+
+    fac.GetClasses = function () {
+        return $http.get('/Data/GetClasses')
     }
     return fac;		
 })

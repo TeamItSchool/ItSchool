@@ -261,8 +261,7 @@ namespace ITI.ItSchool.Models
             }
             return data;
         }
-
-
+       
         /// <summary>
         /// Gets all pupils' classes.
         /// </summary>

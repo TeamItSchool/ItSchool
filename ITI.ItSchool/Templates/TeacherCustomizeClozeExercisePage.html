@@ -1,5 +1,4 @@
 ﻿<div ng-controller="TeacherClozeExerciseController">
-    <script src="~/Scripts/ng-grid.js"></script>
     <center>
         <h1>{{ Message }}</h1>
         <form name="ClozeExercise" ng-submit="SaveData()">
@@ -18,5 +17,7 @@
                 {{ Exercise.Text }}
             </textarea><br />
         </form>
+        <div class="gridWords" ng-grid="gridOptions"></div>
+        <div class="selectedItems">{{ Selections }}</div>
     </center>
 </div>
