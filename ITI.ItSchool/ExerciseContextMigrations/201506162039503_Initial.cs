@@ -123,46 +123,46 @@ namespace ITI.ItSchool.ExerciseContextMigrations
             //        })
             //    .PrimaryKey(t => t.ExerciseTypeId);
             
-            CreateTable(
-                "dbo.Levels",
-                c => new
-                    {
-                        LevelId = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false, maxLength: 45),
-                        Remarks = c.String(maxLength: 200),
-                    })
-                .PrimaryKey(t => t.LevelId);
+            //CreateTable(
+            //    "dbo.Levels",
+            //    c => new
+            //        {
+            //            LevelId = c.Int(nullable: false, identity: true),
+            //            Name = c.String(nullable: false, maxLength: 45),
+            //            Remarks = c.String(maxLength: 200),
+            //        })
+            //    .PrimaryKey(t => t.LevelId);
             
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.Exercises", "ExerciseTypeId", "dbo.ExercisesTypes");
-            DropForeignKey("dbo.Exercises", "AffectedClass", "dbo.Classes");
-            DropForeignKey("dbo.Users", "GroupId", "dbo.Groups");
-            DropForeignKey("dbo.Users", "ClassId", "dbo.Classes");
-            DropForeignKey("dbo.Avatars", "AvatarId", "dbo.Users");
-            DropForeignKey("dbo.Avatars", "LegsId", "dbo.Legs");
-            DropForeignKey("dbo.Avatars", "FootId", "dbo.Feet");
-            DropForeignKey("dbo.Avatars", "BodyId", "dbo.Bodies");
-            DropIndex("dbo.Avatars", new[] { "BodyId" });
-            DropIndex("dbo.Avatars", new[] { "LegsId" });
-            DropIndex("dbo.Avatars", new[] { "FootId" });
-            DropIndex("dbo.Avatars", new[] { "AvatarId" });
-            DropIndex("dbo.Users", new[] { "GroupId" });
-            DropIndex("dbo.Users", new[] { "ClassId" });
-            DropIndex("dbo.Exercises", new[] { "AffectedClass" });
-            DropIndex("dbo.Exercises", new[] { "ExerciseTypeId" });
-            DropTable("dbo.Levels");
-            DropTable("dbo.ExercisesTypes");
-            DropTable("dbo.Groups");
-            DropTable("dbo.Legs");
-            DropTable("dbo.Feet");
-            DropTable("dbo.Bodies");
-            DropTable("dbo.Avatars");
-            DropTable("dbo.Users");
-            DropTable("dbo.Classes");
-            DropTable("dbo.Exercises");
+            //DropForeignKey("dbo.Exercises", "ExerciseTypeId", "dbo.ExercisesTypes");
+            //DropForeignKey("dbo.Exercises", "AffectedClass", "dbo.Classes");
+            //DropForeignKey("dbo.Users", "GroupId", "dbo.Groups");
+            //DropForeignKey("dbo.Users", "ClassId", "dbo.Classes");
+            //DropForeignKey("dbo.Avatars", "AvatarId", "dbo.Users");
+            //DropForeignKey("dbo.Avatars", "LegsId", "dbo.Legs");
+            //DropForeignKey("dbo.Avatars", "FootId", "dbo.Feet");
+            //DropForeignKey("dbo.Avatars", "BodyId", "dbo.Bodies");
+            //DropIndex("dbo.Avatars", new[] { "BodyId" });
+            //DropIndex("dbo.Avatars", new[] { "LegsId" });
+            //DropIndex("dbo.Avatars", new[] { "FootId" });
+            //DropIndex("dbo.Avatars", new[] { "AvatarId" });
+            //DropIndex("dbo.Users", new[] { "GroupId" });
+            //DropIndex("dbo.Users", new[] { "ClassId" });
+            //DropIndex("dbo.Exercises", new[] { "AffectedClass" });
+            //DropIndex("dbo.Exercises", new[] { "ExerciseTypeId" });
+            //DropTable("dbo.Levels");
+            //DropTable("dbo.ExercisesTypes");
+            //DropTable("dbo.Groups");
+            //DropTable("dbo.Legs");
+            //DropTable("dbo.Feet");
+            //DropTable("dbo.Bodies");
+            //DropTable("dbo.Avatars");
+            //DropTable("dbo.Users");
+            //DropTable("dbo.Classes");
+            //DropTable("dbo.Exercises");
         }
     }
 }
