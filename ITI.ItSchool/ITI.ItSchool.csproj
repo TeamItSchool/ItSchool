@@ -6679,7 +6679,10 @@
     <Compile Include="Controllers\DrawController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TestInputController.cs" />
-    <Compile Include="ExerciseBattleCardContextMigrations\201506191648164_Initial.cs" />
+    <Compile Include="ExerciseBattleCardContextMigrations\201506241942382_Initial.cs" />
+    <Compile Include="ExerciseBattleCardContextMigrations\201506241942382_Initial.Designer.cs">
+      <DependentUpon>201506241942382_Initial.cs</DependentUpon>
+    </Compile>
     <Compile Include="ExerciseBattleCardContextMigrations\Configuration.cs" />
     <Compile Include="ExerciseClozeContextMigrations\201506162116288_Initial.cs" />
     <Compile Include="ExerciseClozeContextMigrations\201506162116288_Initial.Designer.cs">
@@ -6783,6 +6786,9 @@
     <TypeScriptCompile Include="Scripts\collections.d.ts" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ExerciseBattleCardContextMigrations\201506241942382_Initial.resx">
+      <DependentUpon>201506241942382_Initial.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ExerciseClozeContextMigrations\201506162116288_Initial.resx">
       <DependentUpon>201506162116288_Initial.cs</DependentUpon>
     </EmbeddedResource>

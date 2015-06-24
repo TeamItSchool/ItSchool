@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,13 +19,11 @@ namespace ITI.ItSchool.Models.ExerciseEntities
 
         public int UserId { get; set; }
 
-        [ForeignKey( "UserId" )]
-        public virtual User User { get; set; }
+        public User User { get; set; }
 
         public int ExerciseId { get; set; }
 
-        [ForeignKey( "ExerciseId" )]
-        public virtual Exercise Exercise { get; set; }
+        public Exercise Exercise { get; set; }
 
         public DateTime CreationDate { get; set; }
 
