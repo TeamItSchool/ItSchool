@@ -115,32 +115,29 @@ namespace ITI.ItSchool.SchoolContextMigrations
             //        })
             //    .PrimaryKey(t => t.GroupId);
             
-            CreateTable(
-                "dbo.Exercises",
-                c => new
-                    {
-                        ExerciseId = c.Int(nullable: false, identity: true),
-                        ExerciseTypeId = c.Int(nullable: false),
-                        AffectedClass = c.Int(nullable: false),
-                        Chapter_ChapterId = c.Int(),
-                    })
-                .PrimaryKey(t => t.ExerciseId)
-                .ForeignKey("dbo.Classes", t => t.AffectedClass, cascadeDelete: true)
-                .ForeignKey("dbo.ExercisesTypes", t => t.ExerciseTypeId, cascadeDelete: true)
-                .ForeignKey("dbo.Chapters", t => t.Chapter_ChapterId)
-                .Index(t => t.ExerciseTypeId)
-                .Index(t => t.AffectedClass)
-                .Index(t => t.Chapter_ChapterId);
+            //CreateTable(
+            //    "dbo.Exercises",
+            //    c => new
+            //        {
+            //            ExerciseId = c.Int(nullable: false, identity: true),
+            //            ExerciseTypeId = c.Int(nullable: false),
+            //            Chapter_ChapterId = c.Int(),
+            //        })
+            //    .PrimaryKey(t => t.ExerciseId)
+            //    .ForeignKey("dbo.ExercisesTypes", t => t.ExerciseTypeId, cascadeDelete: true)
+            //    .ForeignKey("dbo.Chapters", t => t.Chapter_ChapterId)
+            //    .Index(t => t.ExerciseTypeId)
+            //    .Index(t => t.Chapter_ChapterId);
             
-            CreateTable(
-                "dbo.ExercisesTypes",
-                c => new
-                    {
-                        ExerciseTypeId = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false, maxLength: 45),
-                        Description = c.String(maxLength: 200),
-                    })
-                .PrimaryKey(t => t.ExerciseTypeId);
+            //CreateTable(
+            //    "dbo.ExercisesTypes",
+            //    c => new
+            //        {
+            //            ExerciseTypeId = c.Int(nullable: false, identity: true),
+            //            Name = c.String(nullable: false, maxLength: 45),
+            //            Description = c.String(maxLength: 200),
+            //        })
+            //    .PrimaryKey(t => t.ExerciseTypeId);
             
             CreateTable(
                 "dbo.Themes",
@@ -173,7 +170,6 @@ namespace ITI.ItSchool.SchoolContextMigrations
             DropForeignKey("dbo.Themes", "MatterId", "dbo.Matters");
             DropForeignKey("dbo.Exercises", "Chapter_ChapterId", "dbo.Chapters");
             DropForeignKey("dbo.Exercises", "ExerciseTypeId", "dbo.ExercisesTypes");
-            DropForeignKey("dbo.Exercises", "AffectedClass", "dbo.Classes");
             DropForeignKey("dbo.Chapters", "ChapterId", "dbo.Classes");
             DropForeignKey("dbo.Users", "GroupId", "dbo.Groups");
             DropForeignKey("dbo.Users", "ClassId", "dbo.Classes");
@@ -183,7 +179,6 @@ namespace ITI.ItSchool.SchoolContextMigrations
             DropForeignKey("dbo.Avatars", "BodyId", "dbo.Bodies");
             DropIndex("dbo.Themes", new[] { "MatterId" });
             DropIndex("dbo.Exercises", new[] { "Chapter_ChapterId" });
-            DropIndex("dbo.Exercises", new[] { "AffectedClass" });
             DropIndex("dbo.Exercises", new[] { "ExerciseTypeId" });
             DropIndex("dbo.Avatars", new[] { "BodyId" });
             DropIndex("dbo.Avatars", new[] { "LegsId" });

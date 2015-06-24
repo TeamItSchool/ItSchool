@@ -1,0 +1,19 @@
+﻿<div ng-controller="MicrophoneController">
+    <h1>Record to MP3 Test</h1>
+
+    <md-button class="md-raised md-primary" ng-click="startRecording(this);" id="StartButton" disabled>record</md-button>
+    <md-button class="md-raised md-primary" ng-click="stopRecording(this);" id="StopButton" disabled>stop</md-button>
+    <md-button class="md-raised md-primary" ng-click="enableMicrophone()" id="EnableMicrophone">Activer le micro</md-button>
+    <md-button class="md-raised md-primary" onclick="disableMicrophone()" id="DisableMicrophone" disabled>Désactiver le micro</md-button>
+
+    <h2>Recordings</h2>
+    <ul id="recordingslist"></ul>
+
+    <h2>Log</h2>
+    <pre id="log"></pre>
+    <script>
+        function disableMicrophone() {
+            location.reload();
+        }
+    </script>
+</div>

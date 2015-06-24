@@ -12,13 +12,19 @@ namespace ITI.ItSchool.Models
 {
     public interface IRepository
     {
+        JsonResult FindUserByNickname(string nickname);
+
+<<<<<<< HEAD
+        JsonResult GetChapters();
+=======
         JsonResult GetChildrenByClassId( int id );
 
         List<User> GetChildrenListByClassId( int id );
 
-        JsonResult FindUserByNickname(string nickname);
+        IList<User> FindAllUsers();
 
-        JsonResult GetChapters();
+        JsonResult FindUserByNickname( string nickname );
+>>>>>>> ItSchool/guenole
 
         JsonResult GetClasses();
 

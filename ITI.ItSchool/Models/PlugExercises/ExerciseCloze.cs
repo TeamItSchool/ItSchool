@@ -1,4 +1,5 @@
-﻿using ITI.ItSchool.Models.ExerciseEntities;
+﻿using ITI.ItSchool.Models.Entities;
+using ITI.ItSchool.Models.ExerciseEntities;
 using ITI.ItSchool.Models.ExercisesEntities;
 using ITI.ItSchool.Models.SchoolEntities;
 using System;
@@ -14,6 +15,9 @@ namespace ITI.ItSchool.Models.PlugExercises
     public class ExerciseCloze
     {
         public int ExerciseClozeId { get; set; }
+
+        [ForeignKey( "ExerciseClozeId" )]
+        public virtual Exercise Exercise { get; set; }
 
         [MaxLength(50)]
         public string Name { get; set; }

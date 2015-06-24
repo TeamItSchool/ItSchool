@@ -135,6 +135,7 @@ namespace ITI.ItSchool.Models
                         user.GroupId = group.GroupId;
                         userContext.Users.Add(user);
                         userContext.SaveChanges();
+                        group = userContext.Groups.Include("Users").Where( gr => gr.Name.Equals( user.Group.Name ) ).FirstOrDefault();
                         return true;
                     }
                     else return false;
@@ -244,6 +245,46 @@ namespace ITI.ItSchool.Models
 
                 return userToUpdate;
             }
+        }
+
+        /// <summary>
+        /// Get users
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public JsonResult GetChildrenByClassId( int id)
+        {
+            List<User> users = new List<User>();
+            JsonResult data = null;
+            using( UserContext uc = new UserContext() )
+            {
+                uc.Configuration.LazyLoadingEnabled = false;
+                users = uc.Users
+                    .Include("Avatar")
+                    .Include("Class")
+                    .Include("Group")
+                    .Where( u => u.ClassId.Equals( id ) ).Where( u => u.Group.Name.Equals( "Élèves" ) ).ToList();
+
+                for( int i = 0; i < users.Count(); i++ )
+                {
+                    users[i].Class.Users = null;
+                    users[i].Group.Users = null;
+                    users[i].Avatar.User = null;
+
+                }
+                data = new JsonResult { Data = users, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+            return data;
+        }
+
+        public List<User> GetChildrenListByClassId( int id )
+        {
+            List<User> children = new List<User>();
+            using( UserContext uc = new UserContext() )
+            {
+                children = uc.Users.Where( u => u.ClassId.Equals( id ) ).Where( u => u.Group.Name.Equals( "Élèves" ) ).ToList();
+            }
+            return children;
         }
 
         public JsonResult GetClozeExerciseContent()

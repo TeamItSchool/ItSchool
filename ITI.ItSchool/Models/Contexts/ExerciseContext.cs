@@ -20,6 +20,6 @@ namespace ITI.ItSchool.Models.Contexts
 
         public DbSet<ExerciseType> ExerciseTypes { get; set; }
 
-        public DbSet<Level> Levels { get; set; }
+        public DbSet<ExerciseAffection> ExercisesAffectations { get; set; }
     }
 }
