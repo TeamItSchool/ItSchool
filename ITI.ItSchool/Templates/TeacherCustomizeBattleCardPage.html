@@ -98,17 +98,48 @@
         </div>
         <div ng-show="MediumSelected">
             <h1>{{Message}}</h1>
-            <button type="button" id="alphabet">Alphabet</button>
-            <button type="button" id="chiffre">Chiffre</button>
-            <!--<textarea ng-model="ExerciseDictation.Text" name="text" placeholder="Texte de la dictée..." rows="5" cols="40"></textarea><br />-->
+            <form name="FormChoice" ng-submit="SaveChoice()">
+                <select id="choice" value="choice" ng-model="ExerciseBattleCard.Choice">
+                    <option value="alphabet" id="alphabet">Alphabet</option>
+                    <option disabled id="choiceTitle">Chiffres et nombres</option>
+                    <option value="0-10">0-10</option>
+                    <option value="0-100">0-100</option>
+                    <option value="0-500">0-500</option>
+                    <option value="0-999">0-999</option>
+                </select>
+
+                <div ng-repeat="child in Children">
+                    <md-checkbox ng-checked="exists(child, selected)" ng-click="toggle(child, selected)">
+                        {{child.FirstName}} <span ng-if="exists(child,selected)">selected</span>
+                    </md-checkbox>
+                </div>
+                 <code style="display: block; padding : 8px;">{{selected | json}}</code> 
+                <md-button id="saveExercise" class="md-raised md-primary" type="submit" name="SaveMediumChoice">{{Button}}</md-button>
+                <h2>{{ExerciseBattleCard.Choice}} + {{ExerciseBattleCard.Level.Name}} + {{ExerciseBattleCard.Users.FirstName}}</h2>
+                </form>
         </div>
         <div ng-show="HardSelected">
             <h1>{{Message}}</h1>
-            <button type="button" id="alphabet">Alphabet</button>
-            <button type="button" id="chiffre">Chiffre</button>
+            <form name="FormChoice" ng-submit="SaveChoice()">
+                <select id="choice" value="choice" ng-model="ExerciseBattleCard.Choice">
+                    <option value="alphabet" id="alphabet">Alphabet</option>
+                    <option disabled id="choiceTitle">Chiffres et nombres</option>
+                    <option value="0-10">0-10</option>
+                    <option value="0-100">0-100</option>
+                    <option value="0-500">0-500</option>
+                    <option value="0-999">0-999</option>
+                </select>
+
+                <div ng-repeat="child in Children">
+                    <md-checkbox ng-checked="exists(child, selected)" ng-click="toggle(child, selected)">
+                        {{child.FirstName}} <span ng-if="exists(child,selected)">selected</span>
+                    </md-checkbox>
+                </div>
+                <!-- <code style="display: block; padding : 8px;">{{selected | json}}</code> -->
+                <md-button id="saveExercise" class="md-raised md-primary" type="submit" name="SaveHardChoice">{{Button}}</md-button>
+                <h2>{{ExerciseBattleCard.Choice}} + {{ExerciseBattleCard.Level.Name}}</h2>
+            </form>
         </div>
         </center>
-
     </div>
-
 </div >

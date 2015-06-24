@@ -22,6 +22,8 @@ namespace ITI.ItSchool.Models
 
         JsonResult GetGroups();
 
+        JsonResult getUsersByClasses(int id);
+
         IList<User> Update( User u );
         
         User FindById( int id );
@@ -39,5 +41,7 @@ namespace ITI.ItSchool.Models
         bool Remove( int id );
 
         JsonResult SetExercise( Exercise exercise );
+
+        JsonResult getBattleCardChoice();
     }
 }

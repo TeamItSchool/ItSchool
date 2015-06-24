@@ -7,22 +7,22 @@ namespace ITI.ItSchool.SchoolContextMigrations
     {
         public override void Up()
         {
-            CreateTable(
-                "dbo.Chapters",
-                c => new
-                    {
-                        ChapterId = c.Int(nullable: false),
-                        Name = c.String(nullable: false, maxLength: 45),
-                        ThemeId = c.Int(nullable: false),
-                        ClassId = c.Int(nullable: false),
-                        Remarks = c.String(maxLength: 200),
-                    })
-                .PrimaryKey(t => t.ChapterId)
-                .ForeignKey("dbo.Classes", t => t.ChapterId)
-                .ForeignKey("dbo.Themes", t => t.ThemeId, cascadeDelete: true)
-                .Index(t => t.ChapterId)
-                .Index(t => t.ThemeId);
-            
+            //CreateTable(
+            //    "dbo.Chapters",
+            //    c => new
+            //        {
+            //            ChapterId = c.Int(nullable: false),
+            //            Name = c.String(nullable: false, maxLength: 45),
+            //            ThemeId = c.Int(nullable: false),
+            //            ClassId = c.Int(nullable: false),
+            //            Remarks = c.String(maxLength: 200),
+            //        })
+            //    .PrimaryKey(t => t.ChapterId)
+            //    .ForeignKey("dbo.Classes", t => t.ChapterId)
+            //    .ForeignKey("dbo.Themes", t => t.ThemeId, cascadeDelete: true)
+            //    .Index(t => t.ChapterId)
+            //    .Index(t => t.ThemeId);
+
             //CreateTable(
             //    "dbo.Classes",
             //    c => new
@@ -115,55 +115,55 @@ namespace ITI.ItSchool.SchoolContextMigrations
             //        })
             //    .PrimaryKey(t => t.GroupId);
             
-            CreateTable(
-                "dbo.Exercises",
-                c => new
-                    {
-                        ExerciseId = c.Int(nullable: false, identity: true),
-                        ExerciseTypeId = c.Int(nullable: false),
-                        AffectedClass = c.Int(nullable: false),
-                        Chapter_ChapterId = c.Int(),
-                    })
-                .PrimaryKey(t => t.ExerciseId)
-                .ForeignKey("dbo.Classes", t => t.AffectedClass, cascadeDelete: true)
-                .ForeignKey("dbo.ExercisesTypes", t => t.ExerciseTypeId, cascadeDelete: true)
-                .ForeignKey("dbo.Chapters", t => t.Chapter_ChapterId)
-                .Index(t => t.ExerciseTypeId)
-                .Index(t => t.AffectedClass)
-                .Index(t => t.Chapter_ChapterId);
+            //CreateTable(
+            //    "dbo.Exercises",
+            //    c => new
+            //        {
+            //            ExerciseId = c.Int(nullable: false, identity: true),
+            //            ExerciseTypeId = c.Int(nullable: false),
+            //            AffectedClass = c.Int(nullable: false),
+            //            Chapter_ChapterId = c.Int(),
+            //        })
+            //    .PrimaryKey(t => t.ExerciseId)
+            //    .ForeignKey("dbo.Classes", t => t.AffectedClass, cascadeDelete: true)
+            //    .ForeignKey("dbo.ExercisesTypes", t => t.ExerciseTypeId, cascadeDelete: true)
+            //    .ForeignKey("dbo.Chapters", t => t.Chapter_ChapterId)
+            //    .Index(t => t.ExerciseTypeId)
+            //    .Index(t => t.AffectedClass)
+            //    .Index(t => t.Chapter_ChapterId);
             
-            CreateTable(
-                "dbo.ExercisesTypes",
-                c => new
-                    {
-                        ExerciseTypeId = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false, maxLength: 45),
-                        Description = c.String(maxLength: 200),
-                    })
-                .PrimaryKey(t => t.ExerciseTypeId);
+            //CreateTable(
+            //    "dbo.ExercisesTypes",
+            //    c => new
+            //        {
+            //            ExerciseTypeId = c.Int(nullable: false, identity: true),
+            //            Name = c.String(nullable: false, maxLength: 45),
+            //            Description = c.String(maxLength: 200),
+            //        })
+            //    .PrimaryKey(t => t.ExerciseTypeId);
             
-            CreateTable(
-                "dbo.Themes",
-                c => new
-                    {
-                        ThemeId = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false, maxLength: 200),
-                        MatterId = c.Int(nullable: false),
-                        Remarks = c.String(maxLength: 200),
-                    })
-                .PrimaryKey(t => t.ThemeId)
-                .ForeignKey("dbo.Matters", t => t.MatterId, cascadeDelete: true)
-                .Index(t => t.MatterId);
+            //CreateTable(
+            //    "dbo.Themes",
+            //    c => new
+            //        {
+            //            ThemeId = c.Int(nullable: false, identity: true),
+            //            Name = c.String(nullable: false, maxLength: 200),
+            //            MatterId = c.Int(nullable: false),
+            //            Remarks = c.String(maxLength: 200),
+            //        })
+            //    .PrimaryKey(t => t.ThemeId)
+            //    .ForeignKey("dbo.Matters", t => t.MatterId, cascadeDelete: true)
+            //    .Index(t => t.MatterId);
             
-            CreateTable(
-                "dbo.Matters",
-                c => new
-                    {
-                        MatterId = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false, maxLength: 45),
-                        Remarks = c.String(maxLength: 200),
-                    })
-                .PrimaryKey(t => t.MatterId);
+            //CreateTable(
+            //    "dbo.Matters",
+            //    c => new
+            //        {
+            //            MatterId = c.Int(nullable: false, identity: true),
+            //            Name = c.String(nullable: false, maxLength: 45),
+            //            Remarks = c.String(maxLength: 200),
+            //        })
+            //    .PrimaryKey(t => t.MatterId);
             
         }
         

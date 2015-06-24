@@ -52,8 +52,8 @@
         controller: 'TeacherDescriptionBattleCardController'
     })
     .when('/teacher/exercices/battleCard/customize', {
-        templateUrl: '/Templates/TeacherCustomizeBattleCardPage.html',
-        controller: 'TeacherCustomizeBattleCardController'
+        templateUrl: '/Templates/TeacherCustomizeBattleCardPage.html'
+        //controller: 'TeacherCustomizeBattleCardController'
     })
     .when('/kid', {
         templateUrl: '/Templates/KidHomePage.html',
@@ -728,6 +728,7 @@
     var monobjet = JSON.parse(monobjet_json);
     // Affichage dans la console
     console.log(monobjet.data.FirstName + " est dans la modification de card game");
+    console.log("ClassId : " + monobjet.data.ClassId)
 
     $scope.Message = 'Choix du niveau';
     $scope.EasySelected = false;
@@ -744,7 +745,40 @@
         },
         ExerciseType: {
             Name: 'CardGame'
-        }
+        },
+        Users :''
+    };
+
+    $scope.Children = null;
+    $scope.selected = [];
+
+    SaveBattleCardChoice.GetUsers(monobjet.data.ClassId).then(function (d) {
+        //console.log("test");
+        //console.log(d);
+        //console.log("Taille de la data : " + d.data.length);
+        //console.log(d.data);
+        //console.log(d.data[0]);
+        //console.log(d.data[1]);
+        //console.log(d.data[0].FirstName);
+        //console.log(d.data[0].LastName);
+        //console.log(d.data[0].Nickname);
+        //console.log(d.data[0].ClassId);
+
+        $scope.Children = d.data;
+        $scope.ExerciseBattleCard.Users = $scope.Children;
+        console.log($scope.ExerciseBattleCard.Users);
+    });
+
+    $scope.toggle = function (child, list) {
+        var idx = list.indexOf(child);
+        if (idx > -1)
+            list.splice(idx, 1);
+        else
+            list.push(child);
+    };
+
+    $scope.exists = function (child, list) {
+        return list.indexOf(child) > -1;
     };
 
     //Check if Form is valid or not // here FormChoice is our form Name
@@ -758,6 +792,12 @@
             $scope.ExerciseBattleCard.Choice.trim();
             $scope.ExerciseBattleCard.Choice = monobjet.data.Nickname + "/" + $scope.ExerciseBattleCard.Choice;
             var res = $scope.ExerciseBattleCard.Choice.split("/");
+
+            if ($scope.ExerciseBattleCard.Level.Name != "Easy") {
+                console.log($scope.ExerciseBattleCard.Level.Name);
+                $scope.ExerciseBattleCard.Users = $scope.selected;
+            }
+                
 
             SaveBattleCardChoice.GetChoice($scope.ExerciseBattleCard).then(function (d) {
                 $scope.ExerciseBattleCard.Choice = res[1];
@@ -792,6 +832,10 @@
 .factory('SaveBattleCardChoice', function ($http) {
     var fac = {};
     var data = "";
+    fac.GetUsers = function (data) {
+        //return $http.get('/Data/GetClasses')
+        return $http.get('/Data/GetUsersByClasses/' + data)
+    }
     fac.GetChoice = function (d) {
         return $http({
             url: '/Data/SaveBattleCard',
@@ -810,6 +854,12 @@
 
 // Play BattleCard
 .controller('KidPlayBattleCardController', function ($scope) {
+    var monobjet_json = sessionStorage.getItem("objet");
+    var monobjet = JSON.parse(monobjet_json);
+    // Affichage dans la console
+    console.log(monobjet.data.FirstName + " est dans la page de jeu card game");
+
+
     $scope.Time = 'Vous avez 1 minutes ! ';
     $scope.Score = 0
     $scope.svgCard = "/Images/redCard.svg";

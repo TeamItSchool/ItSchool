@@ -248,7 +248,7 @@ namespace ITI.ItSchool.Models
                 db.Configuration.LazyLoadingEnabled = false;
                 classes = db.Classes.ToList();
                 jsonData = new JsonResult { Data = classes, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-            } 
+            }
             return jsonData;
         }
 
@@ -286,6 +286,42 @@ namespace ITI.ItSchool.Models
         public bool Remove( User u )
         {
             throw new NotImplementedException();
+        }
+
+
+        public JsonResult getBattleCardChoice()
+        {
+            using(var db = new ExerciseBattleCardContext())
+            {
+                //db.ExerciseBattleCard.Where(exBattle => exBattle.Choice.Equals())
+            }
+            throw new NotImplementedException();
+        }
+
+
+        public JsonResult getUsersByClasses(int id)
+        {
+            List<User> users = new List<User>();
+            JsonResult data = null;
+            using(var uc = new UserContext())
+            {
+                uc.Configuration.LazyLoadingEnabled = false;
+                
+                users = uc.Users
+                    .Include("Avatar")
+                    .Include("Class")
+                    .Include("Group")
+                    .Where(u => u.ClassId.Equals(id)).Where( u => u.Group.Name.Equals("Élèves") ).ToList();
+
+                for (int i = 0; i < users.Count(); ++i)
+                {
+                    users[i].Class.Users = null;
+                    users[i].Group.Users = null;
+                    users[i].Avatar.User = null;
+                }
+                data =  new JsonResult { Data = users, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+            return data;
         }
     }
 }

@@ -6723,10 +6723,6 @@
     <Compile Include="SchoolContextMigrations\201506162026533_Initial.Designer.cs">
       <DependentUpon>201506162026533_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="SchoolContextMigrations\201506151035088_Initial1.cs" />
-    <Compile Include="SchoolContextMigrations\201506151035088_Initial1.Designer.cs">
-      <DependentUpon>201506151035088_Initial1.cs</DependentUpon>
-    </Compile>
     <Compile Include="SchoolContextMigrations\Configuration.cs" />
     <Compile Include="UserContextMigrations\201506162024076_Initial.cs" />
     <Compile Include="UserContextMigrations\201506162024076_Initial.Designer.cs">
@@ -6783,9 +6779,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SchoolContextMigrations\201506162026533_Initial.resx">
       <DependentUpon>201506162026533_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SchoolContextMigrations\201506151035088_Initial1.resx">
-      <DependentUpon>201506151035088_Initial1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserContextMigrations\201506162024076_Initial.resx">
       <DependentUpon>201506162024076_Initial.cs</DependentUpon>

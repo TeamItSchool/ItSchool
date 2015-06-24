@@ -192,26 +192,34 @@ namespace ITI.ItSchool.Controllers
                     exoBattleCard.Chapter = null;
                     
                 }
-                ExerciseBattleCard battleCard = exoBattleCardContext.ExerciseBattleCard.Where(ebattleCard => ebattleCard.Name.Equals(exoBattleCard.Name)).FirstOrDefault();
+                ExerciseBattleCard battleCard = exoBattleCardContext.ExerciseBattleCard.Where(ebattleCard => ebattleCard.Name.Equals(exoBattleCard.Name) && ebattleCard.Level.Name.Equals(exoBattleCard.Level.Name)).FirstOrDefault();
                 if (battleCard == null)
                 {
-                    exoBattleCardContext.ExerciseBattleCard.Add(exoBattleCard);
-                    exoBattleCardContext.SaveChanges();
+                    //exoBattleCardContext.ExerciseBattleCard.Add(exoBattleCard);
+                    //exoBattleCardContext.SaveChanges();
                     message = "Jeu enregistré";
                 }
                 else
                 {
-                    battleCard.Choice = exoBattleCard.Choice;
-                    //3. Mark entity as modified
-                    exoBattleCardContext.Entry(battleCard).State = System.Data.Entity.EntityState.Modified;
+                    //battleCard.Choice = exoBattleCard.Choice;
+                    //battleCard.Users = exoBattleCard.Users;
+                    ////3. Mark entity as modified
+                    //exoBattleCardContext.Entry(battleCard).State = System.Data.Entity.EntityState.Modified;
 
-                    //4. call SaveChanges
-                    exoBattleCardContext.SaveChanges();
+                    ////4. call SaveChanges
+                    //exoBattleCardContext.SaveChanges();
                     message = "Choix mis à jour.";
                 }
                 JsonResult data = new JsonResult { Data = message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 return data;
             }
+        }
+
+        public JsonResult GetUsersByClasses(int id)
+        {
+            IRepository repo = new SQLRepository();
+            var jsonData = repo.getUsersByClasses(id);
+            return jsonData;
         }
 
         /// <summary>
