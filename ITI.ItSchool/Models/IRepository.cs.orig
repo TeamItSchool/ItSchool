@@ -24,12 +24,21 @@ namespace ITI.ItSchool.Models
 
         JsonResult GetGroups();
 
+<<<<<<< HEAD
         JsonResult GetClozeExerciseContent();
-        JsonResult getUsersByClasses(int id);
 
         JsonResult SetExercise(Exercise exercise);
 
         User FindByNickname(string nickname);
+=======
+        JsonResult getUsersByClasses(int id);
+
+        IList<User> Update( User u );
+        
+        User FindById( int id );
+        
+        User FindByMail( string mail );
+>>>>>>> origin/guenole
 
         User FindById(int id);
 
@@ -41,12 +50,18 @@ namespace ITI.ItSchool.Models
 
         bool Create(Class g);
 
+<<<<<<< HEAD
         bool Remove(User u);
 
         bool Remove(int id);
 
         IList<User> Update(User u);
 
+        IList<User> FindAllUsers();
+=======
+        JsonResult SetExercise( Exercise exercise );
+
         JsonResult getBattleCardChoice();
+>>>>>>> origin/guenole
     }
 }

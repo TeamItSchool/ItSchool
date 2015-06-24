@@ -1,4 +1,4 @@
-﻿angular.module('TheApp', ['ngRoute', 'ngMaterial']) // ['ngRoute'] is required for the routing and
+﻿angular.module('TheApp', ['ngRoute', 'ngMaterial', 'ngGrid']) // ['ngRoute'] is required for the routing and
     //['ngMaterial'] for the material design components
 .run(function ($log, $rootScope) {
     $log.debug("startApp running");
@@ -40,8 +40,7 @@
         controller: 'TeacherSelectExercicesController'
     })
     .when('/teacher/exercices/cloze_exercise', {
-        templateUrl: '/Templates/TeacherCustomizeClozeExercisePage.html',
-        controller: 'TeacherClozeExerciseController'
+        templateUrl: '/Templates/TeacherCustomizeClozeExercisePage.html'
     })
     .when('/teacher/exercices/drag_drop', {
         templateUrl: '/Templates/TeacherCustomizeDragAndDropPage.html',
@@ -473,7 +472,7 @@
                 else {
                     $scope.LoginData.Username = "";
                     $scope.LoginData.Password = "";
-                    alert("Aïe.. Quelque chose s'est mal passé. vois avec tes parents ou ton professeur.")
+                    alert("Aïe.. Quelque chose s'est mal passé. Vois avec tes parents ou ton professeur.")
                 }
 
                 console.log(d.data);
@@ -749,17 +748,94 @@
     $scope.Message = 'Configuration de l\'exercice';
     $scope.Button = 'Sauvegarder';
     $scope.IsFormValid = false;
-    $scope.test = '';
-
-    //Mettre toutes les propriétés du Game
-    
-    $scope.Game = {
-        //A REMPLIR
-        Data: '',
+    $scope.Exercise = {
+        Text: '',
         Level: {
             Name: '',
-            Remarks: ''
+        },
+        Words: '',
+        Chapter: {
+            Name: '',
+        },
+        ExerciseType: {
+            Name: '',
         }
+    };
+
+    $scope.DatabaseText = null;
+    $scope.Words = null;
+    $scope.Levels = null;
+    $scope.TextFromDb = null;
+    $scope.Chapters = null;
+    $scope.DetailledWords = null;
+
+    ExerciseDatas.GetChapters().then(function (d) {
+        $scope.Chapters = d.data;
+    }, function (error) {
+        alert('An error occured. See console for more details.')
+        console.log('Error L435 is ' + error);
+    });
+
+    ExerciseDatas.GetLevels().then(function (d) {
+        $scope.Levels = d.data;
+        console.log("in levels");
+    }, function (error) {
+        alert('An error occured. See console for more details.');
+        console.log(error);
+    });
+
+    ExerciseDatas.GetClozeExercise().then(function (d) {
+        $scope.DatabaseText = d.data.Text;
+        $scope.Exercise.Words = d.data.Words;
+        $scope.Exercise.Text = d.data.Text;
+        $scope.Selections = [];
+
+        var textLowerCase = d.data.Text.toLowerCase();
+        var wordsText = textLowerCase.split(/[\s,.]+/);
+        var wordsWithCount = [];
+        var uniqueWords = [];
+        var arrayJsonFormat = [];
+
+        var savedIndex = 0;
+
+        // Sorting as we have a unique words array
+        for(var i = 0; i < wordsText.length; ++i ) {
+            if ($.inArray(wordsText[i], uniqueWords) == -1) {
+                var word = {
+                    'value': wordsText[i],
+                    'count': 1
+                };
+                arrayJsonFormat.push( word );
+                uniqueWords.push(wordsText[i]);
+                savedIndex = i+1;
+            } else {
+                for (var j = 0; j < arrayJsonFormat.length; j++) {
+                    if( arrayJsonFormat[j].value == wordsText[i] ) {
+                        arrayJsonFormat[j].count += 1;
+                        break;
+                    }
+                }
+            }
+        }
+
+        //for( var j = 0; j < uniqueWords.length; j++ ) {
+        //    var word = {
+        //        "word": uniqueWords[ j ],
+        //        "count": 1
+        //    };
+
+        //    wordsWithCount.push( word );
+        //}
+
+        $scope.myData = arrayJsonFormat;
+    }, function (error) {
+        alert("An error occured");
+    });
+
+    $scope.gridOptions = {
+        data: 'myData',
+        selectedItems: $scope.Selections,
+        multiSelect: true
     };
 
     $scope.$watch('ClozeExercise', function (newValue) {
@@ -767,9 +843,9 @@
     });
 
     $scope.SaveData = function () {
-        console.log( "Là : " + ExerciseDatas + "L240: " + $scope.Game.Level );
+        console.log("Là : " + ExerciseDatas + "L240: " + $scope.Exercise.Level);
         if ($scope.IsFormValid) {
-            ExerciseDatas.SaveClozeExercise($scope.Game).then(function (data) {
+            ExerciseDatas.SaveClozeExercise($scope.Exercise).then(function (data) {
                 console.log("SaveData");
             });
         }
@@ -804,7 +880,6 @@
 
     RegistrationService.GetClasses().then(function (d) {
         $scope.Classes = d.data;
-        //alert($scope.Grades[0].Name);
     }, function (error) {
         alert('Error on classes 424');
     });
@@ -1659,11 +1734,9 @@
         });
         return defer.promise;
     }
+
     fac.GetClasses = function () {
         return $http.get('/Data/GetClasses')
-    }
-    fac.GetGroups = function () {
-        return $http.get('/Data/GetGroups')
     }
     return fac;
 })
@@ -1682,7 +1755,26 @@
         }).error(function (e) {
             defert.reject(e);
         });
-};
+    };
+
+    fac.GetClozeExercise = function () {
+        return $http.get( '/Data/GetClozeExercise' );
+    };
+
+    fac.GetClasses = function () {
+        return $http.get('/Data/GetClasses')
+    }
+    fac.GetGroups = function () {
+        return $http.get('/Data/GetGroups')
+    }
+
+    fac.GetChapters = function () {
+        return $http.get('/Data/GetChapters')
+    }
+
+    fac.GetLevels = function () {
+        return $http.get('/Data/GetLevels');
+    }
 
     return fac;
 });

@@ -1442,6 +1442,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Draggable.css" />
+    <Content Include="Content\ng-grid.css" />
+    <Content Include="Content\ng-grid.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\style.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -6632,6 +6634,10 @@
     <Content Include="Scripts\libmp3lame.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\mp3Worker.js" />
+    <Content Include="Scripts\ng-grid.js" />
+=======
+    <Content Include="Scripts\mp3Worker.js" />
+>>>>>>> ItSchool/guenole
     <Content Include="Scripts\ng-polymer-elements.js" />
     <Content Include="Scripts\painting.js" />
     <Content Include="Scripts\ng-polymer-elements.min.js" />
@@ -6654,6 +6660,7 @@
     <Content Include="Templates\KidLoginPage.html" />
     <Content Include="Templates\KidRegistrationPage.html" />
     <Content Include="Templates\TeacherCustomizeBattleCardPage.html" />
+    <Content Include="Templates\TeacherCustomizeClozeExercisePage.html" />
     <Content Include="Templates\TeacherDescriptionBattleCardPage.html" />
     <Content Include="Templates\TeacherCustomizeDictationPage.html" />
     <Content Include="Templates\TeacherCustomizeDragAndDropPage.html" />
@@ -6808,9 +6815,14 @@
     <EmbeddedResource Include="ExerciseContextMigrations\201506241439338_AddExerciseAffectation.resx">
       <DependentUpon>201506241439338_AddExerciseAffectation.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ExerciseDictationContextMigrations\201506162050019_Initial.resx">
-      <DependentUpon>201506162050019_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="ExerciseContextMigrations\201506241326573_Initial.resx">
+      <DependentUpon>201506241326573_Initial.cs</DependentUpon>
 >>>>>>> local_alexandre
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExerciseDictationContextMigrations\201506241357343_Initial.resx">
+      <DependentUpon>201506241357343_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="SchoolContextMigrations\201506241345098_Initial.resx">
+      <DependentUpon>201506241345098_Initial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SchoolContextMigrations\201506241345098_Initial.resx">
       <DependentUpon>201506241345098_Initial.cs</DependentUpon>
@@ -6818,6 +6830,9 @@
     <EmbeddedResource Include="UserContextMigrations\201506162024076_Initial.resx">
       <DependentUpon>201506162024076_Initial.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

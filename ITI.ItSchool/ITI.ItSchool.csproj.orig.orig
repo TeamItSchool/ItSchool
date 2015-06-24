@@ -6657,9 +6657,13 @@
     <Content Include="Templates\KidLobbyPage.html" />
     <Content Include="Templates\KidLoginPage.html" />
     <Content Include="Templates\KidRegistrationPage.html" />
+<<<<<<< HEAD
+    <Content Include="Templates\TeacherCustomizeClozeExercisePage.html" />
+=======
     <Content Include="Templates\TeacherCustomizeBattleCardPage.html" />
     <Content Include="Templates\TeacherCustomizeClozeExercisePage.html" />
     <Content Include="Templates\TeacherDescriptionBattleCardPage.html" />
+>>>>>>> origin/guenole
     <Content Include="Templates\TeacherCustomizeDictationPage.html" />
     <Content Include="Templates\TeacherCustomizeDragAndDropPage.html" />
     <Content Include="Templates\TeacherLobbyPage.html" />

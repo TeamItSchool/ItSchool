@@ -1,15 +1,22 @@
 ﻿<div ng-controller="TeacherClozeExerciseController">
     <center>
-        <h1>{{Message}}</h1>
+        <h1>{{ Message }}</h1>
         <form name="ClozeExercise" ng-submit="SaveData()">
-            <textarea ng-model="Game.Data"></textarea><br />
-            <select ng-model="Game.Level.Name">
-                <option value="facile">Facile</option>
-                <option value="moyen">Moyen</option>
-            </select>
+            <md-select ng-model="Exercise.Level.Name" placeholder="Niveau" required>
+                <md-option ng-repeat="level in Levels" value="{{ level.Name }}" ng-model="Exercise.Level.Name">{{ level.Name }}</md-option>
+            </md-select>
+
+            <md-select ng-model="Exercise.Chapter.Name" placeholder="Chapitre">
+                <md-option ng-repeat="chapter in Chapters" value="{{ chapter.Name }}" ng-model="Exercise.Chapter.Name">{{ chapter.Name }}</md-option>
+            </md-select>
+
             <md-button class="md-raised md-primary" type="submit" name="saveText">{{Button}}</md-button>
-            Debug message : currently selected : {{ {"selected item": Game.Level.Name} }}
-            Debug message : current text : [ {{ Game.Data  }}]
+
+            <textarea rows="15" cols="50" ng-model="Exercise.Text">
+                {{ Exercise.Text }}
+            </textarea><br />
         </form>
+        <div class="gridWords" ng-grid="gridOptions"></div>
+        <div class="selectedItems">{{ Selections }}</div>
     </center>
 </div>

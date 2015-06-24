@@ -104,7 +104,6 @@ namespace ITI.ItSchool.Controllers
                 return data;
             }
         }
-
         public JsonResult GetSpecificChilden( int id )
         {
             IRepository repo = new SQLRepository();
@@ -237,11 +236,6 @@ namespace ITI.ItSchool.Controllers
             return new JsonResult { Data = message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
-        public void SaveClozeExercise( Exercise exercise )
-        {
-            throw new NotImplementedException();
-        }
-
         public JsonResult GetClasses()
         {
             IRepository repo = new SQLRepository();
@@ -249,11 +243,30 @@ namespace ITI.ItSchool.Controllers
             return jsonData;
         }
 
+        public JsonResult GetClozeExercise()
+        {
+            IRepository db = new SQLRepository();
+            var exerciseData = db.GetClozeExerciseContent();
+            return exerciseData;
+        }
+
         public JsonResult GetGroups()
         {
             IRepository repo = new SQLRepository();
             var jsonData = repo.GetGroups();
             return jsonData;
+        }
+
+        public void SaveClozeExercise(ExerciseCloze exerciseCloze)
+        {
+
+        }
+
+        public JsonResult GetChapters()
+        {
+            IRepository db = new SQLRepository();
+            var chapters = db.GetChapters();
+            return chapters;
         }
     }
 }

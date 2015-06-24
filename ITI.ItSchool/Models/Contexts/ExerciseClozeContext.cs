@@ -14,7 +14,7 @@ namespace ITI.ItSchool.Models.Contexts
         public ExerciseClozeContext()
             : base("ItSchool") 
         {
-            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ExerciseDictationContext>());
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ExerciseClozeContext>());
         }
 
         public DbSet<ExerciseCloze> ExerciseCloze { get; set; }
