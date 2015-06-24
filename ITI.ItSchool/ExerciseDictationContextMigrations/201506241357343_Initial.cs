@@ -29,21 +29,21 @@ namespace ITI.ItSchool.ExerciseDictationContextMigrations
                 .Index(t => t.LevelId)
                 .Index(t => t.ChapterId);
             
-            CreateTable(
-                "dbo.Chapters",
-                c => new
-                    {
-                        ChapterId = c.Int(nullable: false),
-                        Name = c.String(nullable: false, maxLength: 45),
-                        ThemeId = c.Int(nullable: false),
-                        ClassId = c.Int(nullable: false),
-                        Remarks = c.String(maxLength: 200),
-                    })
-                .PrimaryKey(t => t.ChapterId)
-                .ForeignKey("dbo.Classes", t => t.ChapterId)
-                .ForeignKey("dbo.Themes", t => t.ThemeId, cascadeDelete: true)
-                .Index(t => t.ChapterId)
-                .Index(t => t.ThemeId);
+            //CreateTable(
+            //    "dbo.Chapters",
+            //    c => new
+            //        {
+            //            ChapterId = c.Int(nullable: false),
+            //            Name = c.String(nullable: false, maxLength: 45),
+            //            ThemeId = c.Int(nullable: false),
+            //            ClassId = c.Int(nullable: false),
+            //            Remarks = c.String(maxLength: 200),
+            //        })
+            //    .PrimaryKey(t => t.ChapterId)
+            //    .ForeignKey("dbo.Classes", t => t.ChapterId)
+            //    .ForeignKey("dbo.Themes", t => t.ThemeId, cascadeDelete: true)
+            //    .Index(t => t.ChapterId)
+            //    .Index(t => t.ThemeId);
             
             //CreateTable(
             //    "dbo.Classes",
@@ -161,38 +161,38 @@ namespace ITI.ItSchool.ExerciseDictationContextMigrations
             //        })
             //    .PrimaryKey(t => t.ExerciseTypeId);
             
-            CreateTable(
-                "dbo.Themes",
-                c => new
-                    {
-                        ThemeId = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false, maxLength: 200),
-                        MatterId = c.Int(nullable: false),
-                        Remarks = c.String(maxLength: 200),
-                    })
-                .PrimaryKey(t => t.ThemeId)
-                .ForeignKey("dbo.Matters", t => t.MatterId, cascadeDelete: true)
-                .Index(t => t.MatterId);
+            //CreateTable(
+            //    "dbo.Themes",
+            //    c => new
+            //        {
+            //            ThemeId = c.Int(nullable: false, identity: true),
+            //            Name = c.String(nullable: false, maxLength: 200),
+            //            MatterId = c.Int(nullable: false),
+            //            Remarks = c.String(maxLength: 200),
+            //        })
+            //    .PrimaryKey(t => t.ThemeId)
+            //    .ForeignKey("dbo.Matters", t => t.MatterId, cascadeDelete: true)
+            //    .Index(t => t.MatterId);
             
-            CreateTable(
-                "dbo.Matters",
-                c => new
-                    {
-                        MatterId = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false, maxLength: 45),
-                        Remarks = c.String(maxLength: 200),
-                    })
-                .PrimaryKey(t => t.MatterId);
+            //CreateTable(
+            //    "dbo.Matters",
+            //    c => new
+            //        {
+            //            MatterId = c.Int(nullable: false, identity: true),
+            //            Name = c.String(nullable: false, maxLength: 45),
+            //            Remarks = c.String(maxLength: 200),
+            //        })
+            //    .PrimaryKey(t => t.MatterId);
             
-            CreateTable(
-                "dbo.Levels",
-                c => new
-                    {
-                        LevelId = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false, maxLength: 45),
-                        Remarks = c.String(maxLength: 200),
-                    })
-                .PrimaryKey(t => t.LevelId);
+            //CreateTable(
+            //    "dbo.Levels",
+            //    c => new
+            //        {
+            //            LevelId = c.Int(nullable: false, identity: true),
+            //            Name = c.String(nullable: false, maxLength: 45),
+            //            Remarks = c.String(maxLength: 200),
+            //        })
+            //    .PrimaryKey(t => t.LevelId);
             
         }
         

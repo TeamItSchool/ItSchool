@@ -6685,10 +6685,6 @@
     <Compile Include="ExerciseClozeContextMigrations\201506162116288_Initial.Designer.cs">
       <DependentUpon>201506162116288_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="ExerciseClozeContextMigrations\201506241407333_UpdatedId.cs" />
-    <Compile Include="ExerciseClozeContextMigrations\201506241407333_UpdatedId.Designer.cs">
-      <DependentUpon>201506241407333_UpdatedId.cs</DependentUpon>
-    </Compile>
     <Compile Include="ExerciseClozeContextMigrations\Configuration.cs" />
     <Compile Include="ExerciseContextMigrations\201506241326573_Initial.cs" />
     <Compile Include="ExerciseContextMigrations\201506241326573_Initial.Designer.cs">
@@ -6785,9 +6781,6 @@
   <ItemGroup>
     <EmbeddedResource Include="ExerciseClozeContextMigrations\201506162116288_Initial.resx">
       <DependentUpon>201506162116288_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ExerciseClozeContextMigrations\201506241407333_UpdatedId.resx">
-      <DependentUpon>201506241407333_UpdatedId.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ExerciseContextMigrations\201506241326573_Initial.resx">
       <DependentUpon>201506241326573_Initial.cs</DependentUpon>
