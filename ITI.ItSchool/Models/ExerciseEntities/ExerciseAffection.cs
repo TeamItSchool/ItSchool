@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace ITI.ItSchool.Models.ExerciseEntities
 {
-    [Table( "ExercisesAffections" )]
-    public class ExerciseAffection
+    [Table( "ExercisesAffectations" )]
+    public class ExerciseAffectation
     {
         [Key]
-        public int ExerciseAffectionId { get; set; }
+        public int ExerciseAffectationId { get; set; }
 
         public int UserId { get; set; }
 

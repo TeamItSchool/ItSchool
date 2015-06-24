@@ -6678,6 +6678,10 @@
     <Compile Include="ExerciseContextMigrations\201506241326573_Initial.Designer.cs">
       <DependentUpon>201506241326573_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="ExerciseContextMigrations\201506241523339_RenamingCorrectlyAffectation.cs" />
+    <Compile Include="ExerciseContextMigrations\201506241523339_RenamingCorrectlyAffectation.Designer.cs">
+      <DependentUpon>201506241523339_RenamingCorrectlyAffectation.cs</DependentUpon>
+    </Compile>
     <Compile Include="ExerciseContextMigrations\Configuration.cs" />
     <Compile Include="ExerciseDictationContextMigrations\201506241357343_Initial.cs" />
     <Compile Include="ExerciseDictationContextMigrations\201506241357343_Initial.Designer.cs">
@@ -6769,6 +6773,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ExerciseContextMigrations\201506241326573_Initial.resx">
       <DependentUpon>201506241326573_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExerciseContextMigrations\201506241523339_RenamingCorrectlyAffectation.resx">
+      <DependentUpon>201506241523339_RenamingCorrectlyAffectation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ExerciseDictationContextMigrations\201506241357343_Initial.resx">
       <DependentUpon>201506241357343_Initial.cs</DependentUpon>
