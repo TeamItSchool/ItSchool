@@ -36,10 +36,10 @@ namespace ITI.ItSchool.Controllers
 
         public JsonResult SaveDictation( ExerciseDictation dictationExo )
         {
-            
+
             string[] words = dictationExo.Text.Split( '/' );
-            string nickname = words[ 0 ];
-            dictationExo.Text = words[ 1 ];
+            string nickname = words[0];
+            dictationExo.Text = words[1];
             string message = "";
 
             IRepository repo = new SQLRepository();
@@ -74,11 +74,11 @@ namespace ITI.ItSchool.Controllers
                                             .FirstOrDefault();
                     dictationExo.Chapter = null;
                 }
-                ExerciseDictation dictation = edc.ExerciseDictation.Where(exDictation => exDictation.Name.Equals(dictationExo.Name)).FirstOrDefault();
+                ExerciseDictation dictation = edc.ExerciseDictation.Where( exDictation => exDictation.Name.Equals( dictationExo.Name ) ).FirstOrDefault();
                 if( dictation == null )
                 {
-                    if(dictationExo.LevelId.Equals(1))
-                        dictationExo.Users = repo.GetChildrenListByClassId( user.ClassId );
+                    if( dictationExo.LevelId.Equals( 1 ) )
+                        //dictationExo.Users = repo.GetChildrenListByClassId( user.ClassId );
 
                     edc.ExerciseDictation.Add( dictationExo );
                     edc.SaveChanges();
@@ -86,13 +86,16 @@ namespace ITI.ItSchool.Controllers
                 }
                 else
                 {
+                    ExerciseDictation refExoDic = new ExerciseDictation();
+                    using( ExerciseDictationContext exoDictationContext = new ExerciseDictationContext() )
+                    {
+                        refExoDic = exoDictationContext.ExerciseDictation.Where( ex => ex.Name.Equals( dictationExo.Name ) ).FirstOrDefault();
+                    }
                     dictation.Text = dictationExo.Text;
-                    dictation.Users = dictationExo.Users;
-                    dictation.AudioData = dictationExo.AudioData;
 
+                    dictation.AudioData = dictationExo.AudioData;
                     //3. Mark entity as modified
                     edc.Entry( dictation ).State = System.Data.Entity.EntityState.Modified;
-
                     //4. call SaveChanges
                     edc.SaveChanges();
                     message = "Texte mis à jour.";
@@ -102,7 +105,7 @@ namespace ITI.ItSchool.Controllers
             }
         }
 
-        public JsonResult GetSpecificChilden(int id)
+        public JsonResult GetSpecificChilden( int id )
         {
             IRepository repo = new SQLRepository();
             JsonResult data = repo.GetChildrenByClassId( id );
@@ -140,7 +143,7 @@ namespace ITI.ItSchool.Controllers
         /// <param name="u">Object User Sent From AngularJS</param>
         /// <returns>JSon Data For AngularJS</returns>
         [HttpPost]
-        public JsonResult Register(User u)
+        public JsonResult Register( User u )
         {
             string message = "";
 

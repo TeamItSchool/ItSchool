@@ -18,10 +18,5 @@ namespace ITI.ItSchool.Models.Entities
 
         [ForeignKey("ExerciseTypeId")]
         public virtual ExerciseType ExerciseType { get; set; }
-
-        public int AffectedClass { get; set; }
-
-        [ForeignKey("AffectedClass")]
-        public virtual Class Class { get; set; }
     }
 }
