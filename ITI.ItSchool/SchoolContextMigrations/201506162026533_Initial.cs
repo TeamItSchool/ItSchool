@@ -169,42 +169,42 @@ namespace ITI.ItSchool.SchoolContextMigrations
         
         public override void Down()
         {
-            DropForeignKey("dbo.Chapters", "ThemeId", "dbo.Themes");
-            DropForeignKey("dbo.Themes", "MatterId", "dbo.Matters");
-            DropForeignKey("dbo.Exercises", "Chapter_ChapterId", "dbo.Chapters");
-            DropForeignKey("dbo.Exercises", "ExerciseTypeId", "dbo.ExercisesTypes");
-            DropForeignKey("dbo.Exercises", "AffectedClass", "dbo.Classes");
-            DropForeignKey("dbo.Chapters", "ChapterId", "dbo.Classes");
-            DropForeignKey("dbo.Users", "GroupId", "dbo.Groups");
-            DropForeignKey("dbo.Users", "ClassId", "dbo.Classes");
-            DropForeignKey("dbo.Avatars", "AvatarId", "dbo.Users");
-            DropForeignKey("dbo.Avatars", "LegsId", "dbo.Legs");
-            DropForeignKey("dbo.Avatars", "FootId", "dbo.Feet");
-            DropForeignKey("dbo.Avatars", "BodyId", "dbo.Bodies");
-            DropIndex("dbo.Themes", new[] { "MatterId" });
-            DropIndex("dbo.Exercises", new[] { "Chapter_ChapterId" });
-            DropIndex("dbo.Exercises", new[] { "AffectedClass" });
-            DropIndex("dbo.Exercises", new[] { "ExerciseTypeId" });
-            DropIndex("dbo.Avatars", new[] { "BodyId" });
-            DropIndex("dbo.Avatars", new[] { "LegsId" });
-            DropIndex("dbo.Avatars", new[] { "FootId" });
-            DropIndex("dbo.Avatars", new[] { "AvatarId" });
-            DropIndex("dbo.Users", new[] { "GroupId" });
-            DropIndex("dbo.Users", new[] { "ClassId" });
-            DropIndex("dbo.Chapters", new[] { "ThemeId" });
-            DropIndex("dbo.Chapters", new[] { "ChapterId" });
-            DropTable("dbo.Matters");
-            DropTable("dbo.Themes");
-            DropTable("dbo.ExercisesTypes");
-            DropTable("dbo.Exercises");
-            DropTable("dbo.Groups");
-            DropTable("dbo.Legs");
-            DropTable("dbo.Feet");
-            DropTable("dbo.Bodies");
-            DropTable("dbo.Avatars");
-            DropTable("dbo.Users");
-            DropTable("dbo.Classes");
-            DropTable("dbo.Chapters");
+            //DropForeignKey("dbo.Chapters", "ThemeId", "dbo.Themes");
+            //DropForeignKey("dbo.Themes", "MatterId", "dbo.Matters");
+            //DropForeignKey("dbo.Exercises", "Chapter_ChapterId", "dbo.Chapters");
+            //DropForeignKey("dbo.Exercises", "ExerciseTypeId", "dbo.ExercisesTypes");
+            //DropForeignKey("dbo.Exercises", "AffectedClass", "dbo.Classes");
+            //DropForeignKey("dbo.Chapters", "ChapterId", "dbo.Classes");
+            //DropForeignKey("dbo.Users", "GroupId", "dbo.Groups");
+            //DropForeignKey("dbo.Users", "ClassId", "dbo.Classes");
+            //DropForeignKey("dbo.Avatars", "AvatarId", "dbo.Users");
+            //DropForeignKey("dbo.Avatars", "LegsId", "dbo.Legs");
+            //DropForeignKey("dbo.Avatars", "FootId", "dbo.Feet");
+            //DropForeignKey("dbo.Avatars", "BodyId", "dbo.Bodies");
+            //DropIndex("dbo.Themes", new[] { "MatterId" });
+            //DropIndex("dbo.Exercises", new[] { "Chapter_ChapterId" });
+            //DropIndex("dbo.Exercises", new[] { "AffectedClass" });
+            //DropIndex("dbo.Exercises", new[] { "ExerciseTypeId" });
+            //DropIndex("dbo.Avatars", new[] { "BodyId" });
+            //DropIndex("dbo.Avatars", new[] { "LegsId" });
+            //DropIndex("dbo.Avatars", new[] { "FootId" });
+            //DropIndex("dbo.Avatars", new[] { "AvatarId" });
+            //DropIndex("dbo.Users", new[] { "GroupId" });
+            //DropIndex("dbo.Users", new[] { "ClassId" });
+            //DropIndex("dbo.Chapters", new[] { "ThemeId" });
+            //DropIndex("dbo.Chapters", new[] { "ChapterId" });
+            //DropTable("dbo.Matters");
+            //DropTable("dbo.Themes");
+            //DropTable("dbo.ExercisesTypes");
+            //DropTable("dbo.Exercises");
+            //DropTable("dbo.Groups");
+            //DropTable("dbo.Legs");
+            //DropTable("dbo.Feet");
+            //DropTable("dbo.Bodies");
+            //DropTable("dbo.Avatars");
+            //DropTable("dbo.Users");
+            //DropTable("dbo.Classes");
+            //DropTable("dbo.Chapters");
         }
     }
 }

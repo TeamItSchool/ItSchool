@@ -6681,6 +6681,10 @@
     <Compile Include="ExerciseContextMigrations\201506162039503_Initial.Designer.cs">
       <DependentUpon>201506162039503_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="ExerciseContextMigrations\201506241439338_AddExerciseAffectation.cs" />
+    <Compile Include="ExerciseContextMigrations\201506241439338_AddExerciseAffectation.Designer.cs">
+      <DependentUpon>201506241439338_AddExerciseAffectation.cs</DependentUpon>
+    </Compile>
     <Compile Include="ExerciseContextMigrations\Configuration.cs" />
     <Compile Include="ExerciseDictationContextMigrations\201506162050019_Initial.cs" />
     <Compile Include="ExerciseDictationContextMigrations\201506162050019_Initial.Designer.cs">
@@ -6694,6 +6698,7 @@
     <Compile Include="Models\AvatarEntities\Foot.cs" />
     <Compile Include="Models\AvatarEntities\Legs.cs" />
     <Compile Include="Models\CardsData.cs" />
+    <Compile Include="Models\ExerciseEntities\ExerciseAffectation.cs" />
     <Compile Include="Models\Contexts\ExerciseBattleCardContext.cs" />
     <Compile Include="Models\Contexts\ExerciseClozeContext.cs" />
     <Compile Include="Models\Contexts\ExerciseDictationContext.cs" />
@@ -6773,6 +6778,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ExerciseContextMigrations\201506162039503_Initial.resx">
       <DependentUpon>201506162039503_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExerciseContextMigrations\201506241439338_AddExerciseAffectation.resx">
+      <DependentUpon>201506241439338_AddExerciseAffectation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ExerciseDictationContextMigrations\201506162050019_Initial.resx">
       <DependentUpon>201506162050019_Initial.cs</DependentUpon>
