@@ -335,21 +335,6 @@ namespace ITI.ItSchool.Models
             }
         }
 
-        /// <summary>
-        /// Gets all the levels of the exercises.
-        /// </summary>
-        /// <returns>The levels as a JSON Format.</returns>
-        public JsonResult GetLevels()
-        {
-            List<Level> levels = new List<Level>();
-            using (var db = new ExerciseContext())
-            {
-                db.Configuration.LazyLoadingEnabled = false;
-                levels = db.Levels.ToList();
-                return new JsonResult { Data = levels, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-            }
-        }
-
         public JsonResult GetChapters()
         {
             List<Chapter> chapters = new List<Chapter>();

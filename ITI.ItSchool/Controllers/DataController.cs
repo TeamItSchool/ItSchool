@@ -192,13 +192,6 @@ namespace ITI.ItSchool.Controllers
 
         }
 
-        public JsonResult GetLevels()
-        {
-            IRepository db = new SQLRepository();
-            var levels = db.GetLevels();
-            return levels;
-        }
-
         public JsonResult GetChapters()
         {
             IRepository db = new SQLRepository();
