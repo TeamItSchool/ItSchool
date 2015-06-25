@@ -1,4 +1,5 @@
 ﻿using ITI.ItSchool.Models;
+using ITI.ItSchool.Models.PlugExercises;
 using ITI.ItSchool.Models.SchoolEntities;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;

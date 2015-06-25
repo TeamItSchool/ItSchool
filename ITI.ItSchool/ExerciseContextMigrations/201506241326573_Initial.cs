@@ -13,23 +13,37 @@ namespace ITI.ItSchool.ExerciseContextMigrations
             //        {
             //            ExerciseId = c.Int(nullable: false, identity: true),
             //            ExerciseTypeId = c.Int(nullable: false),
-            //            AffectedClass = c.Int(nullable: false),
             //        })
             //    .PrimaryKey(t => t.ExerciseId)
-            //    .ForeignKey("dbo.Classes", t => t.AffectedClass, cascadeDelete: true)
             //    .ForeignKey("dbo.ExercisesTypes", t => t.ExerciseTypeId, cascadeDelete: true)
-            //    .Index(t => t.ExerciseTypeId)
-            //    .Index(t => t.AffectedClass);
+            //    .Index(t => t.ExerciseTypeId);
             
             //CreateTable(
-            //    "dbo.Classes",
+            //    "dbo.ExercisesTypes",
             //    c => new
             //        {
-            //            ClassId = c.Int(nullable: false, identity: true),
+            //            ExerciseTypeId = c.Int(nullable: false, identity: true),
             //            Name = c.String(nullable: false, maxLength: 45),
             //            Description = c.String(maxLength: 200),
             //        })
-            //    .PrimaryKey(t => t.ClassId);
+            //    .PrimaryKey(t => t.ExerciseTypeId);
+            
+            CreateTable(
+                "dbo.ExercisesAffectations",
+                c => new
+                    {
+                        ExerciseAffectionId = c.Int(nullable: false, identity: true),
+                        UserId = c.Int(nullable: false),
+                        ExerciseId = c.Int(nullable: false),
+                        CreationDate = c.DateTime(nullable: false),
+                        FirstViewDate = c.DateTime(nullable: false),
+                        EndDate = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.ExerciseAffectionId)
+                .ForeignKey("dbo.Exercises", t => t.ExerciseId, cascadeDelete: false)
+                .ForeignKey("dbo.Users", t => t.UserId, cascadeDelete: false)
+                .Index(t => t.UserId)
+                .Index(t => t.ExerciseId);
             
             //CreateTable(
             //    "dbo.Users",
@@ -104,6 +118,16 @@ namespace ITI.ItSchool.ExerciseContextMigrations
             //    .PrimaryKey(t => t.LegsId);
             
             //CreateTable(
+            //    "dbo.Classes",
+            //    c => new
+            //        {
+            //            ClassId = c.Int(nullable: false, identity: true),
+            //            Name = c.String(nullable: false, maxLength: 45),
+            //            Description = c.String(maxLength: 200),
+            //        })
+            //    .PrimaryKey(t => t.ClassId);
+            
+            //CreateTable(
             //    "dbo.Groups",
             //    c => new
             //        {
@@ -113,55 +137,37 @@ namespace ITI.ItSchool.ExerciseContextMigrations
             //        })
             //    .PrimaryKey(t => t.GroupId);
             
-            //CreateTable(
-            //    "dbo.ExercisesTypes",
-            //    c => new
-            //        {
-            //            ExerciseTypeId = c.Int(nullable: false, identity: true),
-            //            Name = c.String(nullable: false, maxLength: 45),
-            //            Description = c.String(maxLength: 200),
-            //        })
-            //    .PrimaryKey(t => t.ExerciseTypeId);
-            
-            CreateTable(
-                "dbo.Levels",
-                c => new
-                    {
-                        LevelId = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false, maxLength: 45),
-                        Remarks = c.String(maxLength: 200),
-                    })
-                .PrimaryKey(t => t.LevelId);
-            
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.Exercises", "ExerciseTypeId", "dbo.ExercisesTypes");
-            DropForeignKey("dbo.Exercises", "AffectedClass", "dbo.Classes");
+            DropForeignKey("dbo.ExercisesAffections", "UserId", "dbo.Users");
             DropForeignKey("dbo.Users", "GroupId", "dbo.Groups");
             DropForeignKey("dbo.Users", "ClassId", "dbo.Classes");
             DropForeignKey("dbo.Avatars", "AvatarId", "dbo.Users");
             DropForeignKey("dbo.Avatars", "LegsId", "dbo.Legs");
             DropForeignKey("dbo.Avatars", "FootId", "dbo.Feet");
             DropForeignKey("dbo.Avatars", "BodyId", "dbo.Bodies");
+            DropForeignKey("dbo.ExercisesAffections", "ExerciseId", "dbo.Exercises");
+            DropForeignKey("dbo.Exercises", "ExerciseTypeId", "dbo.ExercisesTypes");
             DropIndex("dbo.Avatars", new[] { "BodyId" });
             DropIndex("dbo.Avatars", new[] { "LegsId" });
             DropIndex("dbo.Avatars", new[] { "FootId" });
             DropIndex("dbo.Avatars", new[] { "AvatarId" });
             DropIndex("dbo.Users", new[] { "GroupId" });
             DropIndex("dbo.Users", new[] { "ClassId" });
-            DropIndex("dbo.Exercises", new[] { "AffectedClass" });
+            DropIndex("dbo.ExercisesAffections", new[] { "ExerciseId" });
+            DropIndex("dbo.ExercisesAffections", new[] { "UserId" });
             DropIndex("dbo.Exercises", new[] { "ExerciseTypeId" });
-            DropTable("dbo.Levels");
-            DropTable("dbo.ExercisesTypes");
             DropTable("dbo.Groups");
+            DropTable("dbo.Classes");
             DropTable("dbo.Legs");
             DropTable("dbo.Feet");
             DropTable("dbo.Bodies");
             DropTable("dbo.Avatars");
             DropTable("dbo.Users");
-            DropTable("dbo.Classes");
+            DropTable("dbo.ExercisesAffections");
+            DropTable("dbo.ExercisesTypes");
             DropTable("dbo.Exercises");
         }
     }

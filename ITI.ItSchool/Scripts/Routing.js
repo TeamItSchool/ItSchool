@@ -1,4 +1,4 @@
-﻿angular.module('TheApp', ['ngRoute', 'ngMaterial']) // ['ngRoute'] is required for the routing and
+﻿angular.module('TheApp', ['ngRoute', 'ngMaterial', 'ngGrid']) // ['ngRoute'] is required for the routing and
     //['ngMaterial'] for the material design components
 .run(function ($log, $rootScope) {
     $log.debug("startApp running");
@@ -14,6 +14,10 @@
     .when('/home', {
         templateUrl: '/Templates/Home.html',
         controller: 'HomeController'
+    })
+    .when('/test_microphone', {
+        templateUrl: '/Templates/voiceRecorder.html',
+        controller:'MicrophoneController'
     })
     .when('/teacher', {
         templateUrl: '/Templates/TeacherHomePage.html',
@@ -40,8 +44,7 @@
         controller: 'TeacherSelectMatterController'
     })
     .when('/teacher/exercices/cloze_exercise', {
-        templateUrl: '/Templates/TeacherCustomizeClozeExercisePage.html',
-        controller: 'TeacherClozeExerciseController'
+        templateUrl: '/Templates/TeacherCustomizeClozeExercisePage.html'
     })
     .when('/teacher/exercices/matter/drag_drop_maths', {
         templateUrl: '/Templates/TeacherCustomizeDragAndDropMathsPage.html',
@@ -58,6 +61,14 @@
     .when('/teacher/exercices/dictation', {
         templateUrl: '/Templates/TeacherCustomizeDictationPage.html',
         controller: 'TeacherDictationController'
+    })
+    .when('/teacher/exercices/battleCard', {
+        templateUrl: '/Templates/TeacherDescriptionBattleCardPage.html',
+        controller: 'TeacherDescriptionBattleCardController'
+    })
+    .when('/teacher/exercices/battleCard/customize', {
+        templateUrl: '/Templates/TeacherCustomizeBattleCardPage.html'
+        //controller: 'TeacherCustomizeBattleCardController'
     })
     .when('/kid', {
         templateUrl: '/Templates/KidHomePage.html',
@@ -83,15 +94,339 @@
         templateUrl: '/Templates/KidPlayDictationPage.html',
         controller: 'KidPlayDictationController'
     })
-    .when('/kid/exercices/drag_drop', {
-        templateUrl: '/Templates/KidDragAndDropExercice.html',
-        controller: 'KidDragAndDropController'
+    .when('/kid/exercices/battleCard', {
+        templateUrl: '/Templates/KidDescriptionBattleCardPage.html',
+        controller: 'KidDescriptionBattleCardController'
+    })
+    .when('/kid/exercices/battleCard/play', {
+        templateUrl: '/Templates/KidPlayBattleCardPage.html',
+        controller: 'KidPlayBattleCardController'
     })
     .otherwise({   // This is when any route not matched
     templateUrl: '/Templates/Error.html',
     controller: 'ErrorController'
     })
     $locationProvider.html5Mode(false).hashPrefix('!'); // This is for Hashbang Mode
+})
+.controller('MicrophoneController', function ($scope) {
+    function __log(e, data) {
+        log.innerHTML += "\n" + e + " " + (data || '');
+    }
+
+    var audio_context;
+    var recorder;
+
+    function startUserMedia(stream) {
+        var input = audio_context.createMediaStreamSource(stream);
+        __log('Media stream created.');
+        __log("input sample rate " + input.context.sampleRate);
+
+        input.connect(audio_context.destination);
+        __log('Input connected to audio context destination.');
+
+        recorder = new Recorder(input);
+        __log('Recorder initialised.');
+    }
+
+    $scope.startRecording = function () {
+        var button = document.getElementById("StartButton");
+        recorder && recorder.record();
+        button.disabled = true;
+        button.nextElementSibling.disabled = false;
+        __log('Recording...');
+    }
+
+    $scope.stopRecording = function () {
+        var button = document.getElementById("StopButton")
+        recorder && recorder.stop();
+        button.disabled = true;
+        button.previousElementSibling.disabled = false;
+        __log('Stopped recording.');
+
+        // create WAV download link using audio data blob
+        createDownloadLink();
+
+        recorder.clear();
+    }
+
+    function createDownloadLink() {
+        recorder && recorder.exportWAV(function (blob) {
+            /*var url = URL.createObjectURL(blob);
+            var li = document.createElement('li');
+            var au = document.createElement('audio');
+            var hf = document.createElement('a');
+
+            au.controls = true;
+            au.src = url;
+            hf.href = url;
+            hf.download = new Date().toISOString() + '.wav';
+            hf.innerHTML = hf.download;
+            li.appendChild(au);
+            li.appendChild(hf);
+            recordingslist.appendChild(li);*/
+
+            /*objectURL = window.URL.createObjectURL(blob);
+            window.location.href = objectURL;*/
+            var 
+            objectURL = window.URL.createObjectURL(blob);
+            var url = objectURL;
+            window.open(url, 'Download');
+        });
+    }
+
+    window.onload = function init() {
+        try {
+            // webkit shim
+            window.AudioContext = window.AudioContext || window.webkitAudioContext;
+            navigator.getUserMedia = (navigator.getUserMedia ||
+                            navigator.webkitGetUserMedia ||
+                            navigator.mozGetUserMedia ||
+                            navigator.msGetUserMedia);
+            window.URL = window.URL || window.webkitURL;
+
+            audio_context = new AudioContext;
+            __log('Audio context set up.');
+            __log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
+        } catch (e) {
+            alert('No web audio support in this browser!');
+        }
+        /*navigator.getUserMedia({ audio: true }, startUserMedia, function (e) {
+            __log('No live audio input: ' + e);
+        });*/
+    }
+
+    $scope.enableMicrophone = function () {
+        var button = document.getElementById("EnableMicrophone");
+        button.disabled = true
+        button.nextElementSibling.disabled = false;
+        var buttonStart = document.getElementById("StartButton")
+        buttonStart.disabled = false;
+        navigator.getUserMedia({ audio: true }, startUserMedia, function (e) {
+            __log('No live audio input: ' + e);
+        });
+    }
+    function disableMicrophone() {
+        location.reload();
+    }
+    (function (window) {
+
+        var WORKER_PATH = '/Scripts/recorderWorker.js';
+        var encoderWorker = new Worker('/Scripts/mp3Worker.js');
+
+        var Recorder = function (source, cfg) {
+            var config = cfg || {};
+            var bufferLen = config.bufferLen || 4096;
+            this.context = source.context;
+            this.node = (this.context.createScriptProcessor ||
+                         this.context.createJavaScriptNode).call(this.context,
+                                                                 bufferLen, 2, 2);
+            var worker = new Worker(config.workerPath || WORKER_PATH);
+            worker.postMessage({
+                command: 'init',
+                config: {
+                    sampleRate: this.context.sampleRate
+                }
+            });
+            var recording = false,
+              currCallback;
+
+            this.node.onaudioprocess = function (e) {
+                if (!recording) return;
+                worker.postMessage({
+                    command: 'record',
+                    buffer: [
+                      e.inputBuffer.getChannelData(0),
+                      //e.inputBuffer.getChannelData(1)
+                    ]
+                });
+            }
+
+            this.configure = function (cfg) {
+                for (var prop in cfg) {
+                    if (cfg.hasOwnProperty(prop)) {
+                        config[prop] = cfg[prop];
+                    }
+                }
+            }
+
+            this.record = function () {
+                recording = true;
+            }
+
+            this.stop = function () {
+                recording = false;
+            }
+
+            this.clear = function () {
+                worker.postMessage({ command: 'clear' });
+            }
+
+            this.getBuffer = function (cb) {
+                currCallback = cb || config.callback;
+                worker.postMessage({ command: 'getBuffer' })
+            }
+
+            this.exportWAV = function (cb, type) {
+                currCallback = cb || config.callback;
+                type = type || config.type || 'audio/wav';
+                if (!currCallback) throw new Error('Callback not set');
+                worker.postMessage({
+                    command: 'exportWAV',
+                    type: type
+                });
+            }
+
+            //Mp3 conversion
+            worker.onmessage = function (e) {
+                var blob = e.data;
+                //console.log("the blob " +  blob + " " + blob.size + " " + blob.type);
+
+                var arrayBuffer;
+                var fileReader = new FileReader();
+
+                fileReader.onload = function () {
+                    arrayBuffer = this.result;
+                    var buffer = new Uint8Array(arrayBuffer),
+                    data = parseWav(buffer);
+
+                    console.log(data);
+                    console.log("Converting to Mp3");
+                    log.innerHTML += "\n" + "Converting to Mp3";
+
+                    encoderWorker.postMessage({
+                        cmd: 'init', config: {
+                            mode: 3,
+                            channels: 1,
+                            samplerate: data.sampleRate,
+                            bitrate: data.bitsPerSample
+                        }
+                    });
+
+                    encoderWorker.postMessage({ cmd: 'encode', buf: Uint8ArrayToFloat32Array(data.samples) });
+                    encoderWorker.postMessage({ cmd: 'finish' });
+                    encoderWorker.onmessage = function (e) {
+                        if (e.data.cmd == 'data') {
+
+                            console.log("Done converting to Mp3");
+                            log.innerHTML += "\n" + "Done converting to Mp3";
+
+                            /*var audio = new Audio();
+                            audio.src = 'data:audio/mp3;base64,'+encode64(e.data.buf);
+                            audio.play();*/
+
+                            //console.log ("The Mp3 data " + e.data.buf);
+
+                            var mp3Blob = new Blob([new Uint8Array(e.data.buf)], { type: 'audio/mp3' });
+                            uploadAudio(mp3Blob);
+
+                            var url = 'data:audio/mp3;base64,' + encode64(e.data.buf);
+                            var li = document.createElement('li');
+                            var au = document.createElement('audio');
+                            var hf = document.createElement('a');
+
+                            au.controls = true;
+                            au.src = url;
+                            hf.href = url;
+                            hf.download = 'audio_recording_' + new Date().getTime() + '.mp3';
+                            hf.innerHTML = hf.download;
+                            li.appendChild(au);
+                            li.appendChild(hf);
+                            recordingslist.appendChild(li);
+
+                        }
+                    };
+                };
+
+                fileReader.readAsArrayBuffer(blob);
+
+                currCallback(blob);
+            }
+
+
+            function encode64(buffer) {
+                var binary = '',
+                    bytes = new Uint8Array(buffer),
+                    len = bytes.byteLength;
+
+                for (var i = 0; i < len; i++) {
+                    binary += String.fromCharCode(bytes[i]);
+                }
+                return window.btoa(binary);
+            }
+
+            function parseWav(wav) {
+                function readInt(i, bytes) {
+                    var ret = 0,
+                        shft = 0;
+
+                    while (bytes) {
+                        ret += wav[i] << shft;
+                        shft += 8;
+                        i++;
+                        bytes--;
+                    }
+                    return ret;
+                }
+                if (readInt(20, 2) != 1) throw 'Invalid compression code, not PCM';
+                if (readInt(22, 2) != 1) throw 'Invalid number of channels, not 1';
+                return {
+                    sampleRate: readInt(24, 4),
+                    bitsPerSample: readInt(34, 2),
+                    samples: wav.subarray(44)
+                };
+            }
+
+            function Uint8ArrayToFloat32Array(u8a) {
+                var f32Buffer = new Float32Array(u8a.length);
+                for (var i = 0; i < u8a.length; i++) {
+                    var value = u8a[i << 1] + (u8a[(i << 1) + 1] << 8);
+                    if (value >= 0x8000) value |= ~0x7FFF;
+                    f32Buffer[i] = value / 0x8000;
+                }
+                return f32Buffer;
+            }
+
+            function uploadAudio(mp3Data) {
+                var reader = new FileReader();
+                reader.onload = function (event) {
+                    var fd = new FormData();
+                    var mp3Name = encodeURIComponent('audio_recording_' + new Date().getTime() + '.mp3');
+                    console.log("mp3name = " + mp3Name);
+                    fd.append('fname', mp3Name);
+                    fd.append('data', event.target.result);
+                    $.ajax({
+                        type: 'POST',
+                        url: 'upload.php',
+                        data: fd,
+                        processData: false,
+                        contentType: false
+                    }).done(function (data) {
+                        //console.log(data);
+                        log.innerHTML += "\n" + data;
+                    });
+                };
+                reader.readAsDataURL(mp3Data);
+            }
+
+            source.connect(this.node);
+            this.node.connect(this.context.destination);    //this should not be necessary
+        };
+
+        /*Recorder.forceDownload = function(blob, filename){
+          console.log("Force download");
+          var url = (window.URL || window.webkitURL).createObjectURL(blob);
+          var link = window.document.createElement('a');
+          link.href = url;
+          link.download = filename || 'output.wav';
+          var click = document.createEvent("Event");
+          click.initEvent("click", true, true);
+          link.dispatchEvent(click);
+        }*/
+
+        window.Recorder = Recorder;
+
+    })(window);
+
 })
 .controller('HomeController', function ($scope) {
     $scope.Message = "Bienvenue";
@@ -289,7 +624,7 @@
 .controller('KidSelectExercicesController', function ($scope) {
     $scope.Message = 'A quoi veux-tu jouer ?';
 })
-.controller('KidPlayDictationController', function ($scop, CheckDictationText) {
+.controller('KidPlayDictationController', function ($scope, CheckDictationText) {
     var monobjet_json = sessionStorage.getItem("objet");
     var monobjet = JSON.parse(monobjet_json);
     // Affichage dans la console
@@ -467,16 +802,53 @@
         $scope.Exercise.Text = d.data.Text;
         $scope.Selections = [];
 
-        var wordsText = d.data.Text.split(/[\s,.]+/);
-        $scope.gridOptions = {
-            data: d.data.Words,
-            selectedItems: $scope.Selections,
-            multiSelect: true
+        var textLowerCase = d.data.Text.toLowerCase();
+        var wordsText = textLowerCase.split(/[\s,.]+/);
+        var wordsWithCount = [];
+        var uniqueWords = [];
+        var arrayJsonFormat = [];
+
+        var savedIndex = 0;
+
+        // Sorting as we have a unique words array
+        for(var i = 0; i < wordsText.length; ++i ) {
+            if ($.inArray(wordsText[i], uniqueWords) == -1) {
+                var word = {
+                    'value': wordsText[i],
+                    'count': 1
+                };
+                arrayJsonFormat.push( word );
+                uniqueWords.push(wordsText[i]);
+                savedIndex = i+1;
+            } else {
+                for (var j = 0; j < arrayJsonFormat.length; j++) {
+                    if( arrayJsonFormat[j].value == wordsText[i] ) {
+                        arrayJsonFormat[j].count += 1;
+                        break;
+                    }
+                }
+            }
         }
 
+        //for( var j = 0; j < uniqueWords.length; j++ ) {
+        //    var word = {
+        //        "word": uniqueWords[ j ],
+        //        "count": 1
+        //    };
+
+        //    wordsWithCount.push( word );
+        //}
+
+        $scope.myData = arrayJsonFormat;
     }, function (error) {
         alert("An error occured");
     });
+
+    $scope.gridOptions = {
+        data: 'myData',
+        selectedItems: $scope.Selections,
+        multiSelect: true
+    };
 
     $scope.$watch('ClozeExercise', function (newValue) {
         $scope.IsFormValid = newValue;
@@ -622,6 +994,7 @@
 .controller('TeacherSelectExercicesController', function ($scope) {
     $scope.Message = 'Selectionnez un exercice à modifier';
 })
+
 .controller('TeacherDictationController', function ($scope, SaveDictationText) {
 
     var monobjet_json = sessionStorage.getItem("objet");
@@ -646,13 +1019,38 @@
         },
         ExerciseType: {
             Name: 'Dictée'
-        }
+        },
+        AudioData: '',
+        Users: ''
+    };
+
+    $scope.Children = null;
+    $scope.selected = [];
+
+    SaveDictationText.GetChildren(monobjet.data.ClassId).then(function (d) {
+        $scope.Children = d.data;
+        $scope.ExerciseDictation.Users = $scope.Children;
+        console.log($scope.ExerciseDictation.Users);
+        //alert($scope.Grades[0].Name);
+    });
+
+    $scope.toggle = function (child, list) {
+        var idx = list.indexOf(child);
+        if (idx > -1)
+            list.splice(idx, 1);
+        else
+            list.push(child);
+    };
+
+    $scope.exists = function (child, list) {
+        return list.indexOf(child) > -1;
     };
 
     //Check if Form is valid or not // here DictText is our form Name
     $scope.$watch('DictText.$valid', function (newVal) {
         $scope.IsFormValid = newVal;
     });
+
     $scope.IsFormValid
     $scope.SaveText = function () {
         if ($scope.IsFormValid) {
@@ -660,6 +1058,10 @@
             $scope.ExerciseDictation.Text.trim();
             $scope.ExerciseDictation.Text = monobjet.data.Nickname + "/" + $scope.ExerciseDictation.Text;
             var res = $scope.ExerciseDictation.Text.split("/");
+
+            if ($scope.ExerciseDictation.Level.Name != "Easy")
+                $scope.ExerciseDictation.Users = $scope.selected;
+
             SaveDictationText.GetText($scope.ExerciseDictation).then(function (d) {
                 $scope.ExerciseDictation.Text = res[1];
                 console.log(d.data);
@@ -688,10 +1090,337 @@
         $scope.Message = "Insérez le texte (Niveau difficile)";
         $scope.ExerciseDictation.Level.Name = "Hard";
     }
+
+    function __log(e, data) {
+        log.innerHTML += "\n" + e + " " + (data || '');
+    }
+
+    var audio_context;
+    var recorder;
+
+    function startUserMedia(stream) {
+        var input = audio_context.createMediaStreamSource(stream);
+        __log('Media stream created.');
+        __log("input sample rate " + input.context.sampleRate);
+
+        input.connect(audio_context.destination);
+        __log('Input connected to audio context destination.');
+
+        recorder = new Recorder(input);
+        __log('Recorder initialised.');
+    }
+
+    $scope.startRecording = function () {
+        var button = document.getElementById("StartButton");
+        recorder && recorder.record();
+        button.disabled = true;
+        button.nextElementSibling.disabled = false;
+        __log('Recording...');
+    }
+
+    $scope.stopRecording = function () {
+        var button = document.getElementById("StopButton")
+        recorder && recorder.stop();
+        button.disabled = true;
+        button.previousElementSibling.disabled = false;
+        __log('Stopped recording.');
+
+        // create WAV download link using audio data blob
+        createDownloadLink();
+
+        recorder.clear();
+    }
+
+    function createDownloadLink() {
+        recorder && recorder.exportWAV(function (blob) {
+            /*var url = URL.createObjectURL(blob);
+            var li = document.createElement('li');
+            var au = document.createElement('audio');
+            var hf = document.createElement('a');
+
+            au.controls = true;
+            au.src = url;
+            hf.href = url;
+            hf.download = new Date().toISOString() + '.wav';
+            hf.innerHTML = hf.download;
+            li.appendChild(au);
+            li.appendChild(hf);
+            recordingslist.appendChild(li);*/
+
+            /*objectURL = window.URL.createObjectURL(blob);
+            window.location.href = objectURL;*/
+        });
+    }
+
+    window.onload = function init() {
+        try {
+            // webkit shim
+            window.AudioContext = window.AudioContext || window.webkitAudioContext;
+            navigator.getUserMedia = (navigator.getUserMedia ||
+                            navigator.webkitGetUserMedia ||
+                            navigator.mozGetUserMedia ||
+                            navigator.msGetUserMedia);
+            window.URL = window.URL || window.webkitURL;
+
+            audio_context = new AudioContext;
+            __log('Audio context set up.');
+            __log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
+        } catch (e) {
+            alert('No web audio support in this browser!');
+        }
+        /*navigator.getUserMedia({ audio: true }, startUserMedia, function (e) {
+            __log('No live audio input: ' + e);
+        });*/
+    }
+
+    $scope.enableMicrophone = function () {
+        var button = document.getElementById("EnableMicrophone");
+        button.disabled = true
+        button.nextElementSibling.disabled = false;
+        var buttonStart = document.getElementById("StartButton")
+        buttonStart.disabled = false;
+        navigator.getUserMedia({ audio: true }, startUserMedia, function (e) {
+            __log('No live audio input: ' + e);
+        });
+    }
+    function disableMicrophone() {
+        location.reload();
+    }
+    (function (window) {
+
+        var WORKER_PATH = '/Scripts/recorderWorker.js';
+        var encoderWorker = new Worker('/Scripts/mp3Worker.js');
+
+        var Recorder = function (source, cfg) {
+            var config = cfg || {};
+            var bufferLen = config.bufferLen || 4096;
+            this.context = source.context;
+            this.node = (this.context.createScriptProcessor ||
+                         this.context.createJavaScriptNode).call(this.context,
+                                                                 bufferLen, 2, 2);
+            var worker = new Worker(config.workerPath || WORKER_PATH);
+            worker.postMessage({
+                command: 'init',
+                config: {
+                    sampleRate: this.context.sampleRate
+                }
+            });
+            var recording = false,
+              currCallback;
+
+            this.node.onaudioprocess = function (e) {
+                if (!recording) return;
+                worker.postMessage({
+                    command: 'record',
+                    buffer: [
+                      e.inputBuffer.getChannelData(0),
+                      //e.inputBuffer.getChannelData(1)
+                    ]
+                });
+            }
+
+            this.configure = function (cfg) {
+                for (var prop in cfg) {
+                    if (cfg.hasOwnProperty(prop)) {
+                        config[prop] = cfg[prop];
+                    }
+                }
+            }
+
+            this.record = function () {
+                recording = true;
+            }
+
+            this.stop = function () {
+                recording = false;
+            }
+
+            this.clear = function () {
+                worker.postMessage({ command: 'clear' });
+            }
+
+            this.getBuffer = function (cb) {
+                currCallback = cb || config.callback;
+                worker.postMessage({ command: 'getBuffer' })
+            }
+
+            this.exportWAV = function (cb, type) {
+                currCallback = cb || config.callback;
+                type = type || config.type || 'audio/wav';
+                if (!currCallback) throw new Error('Callback not set');
+                worker.postMessage({
+                    command: 'exportWAV',
+                    type: type
+                });
+            }
+
+            //Mp3 conversion
+            worker.onmessage = function (e) {
+                var blob = e.data;
+                //console.log("the blob " +  blob + " " + blob.size + " " + blob.type);
+
+                var arrayBuffer;
+                var fileReader = new FileReader();
+
+                fileReader.onload = function () {
+                    arrayBuffer = this.result;
+                    var buffer = new Uint8Array(arrayBuffer),
+                    data = parseWav(buffer);
+
+                    console.log(data);
+                    
+                    var bytesArray = [];
+                    for (var i = 0; i < data.samples.length; i++) {
+                        bytesArray.push(data.samples[i]);
+                    }
+
+                    $scope.ExerciseDictation.AudioBytesString = data;
+                    console.log("Converting to Mp3");
+                    log.innerHTML += "\n" + "Converting to Mp3";
+
+                    encoderWorker.postMessage({
+                        cmd: 'init', config: {
+                            mode: 3,
+                            channels: 1,
+                            samplerate: data.sampleRate,
+                            bitrate: data.bitsPerSample
+                        }
+                    });
+
+                    encoderWorker.postMessage({ cmd: 'encode', buf: Uint8ArrayToFloat32Array(data.samples) });
+                    encoderWorker.postMessage({ cmd: 'finish' });
+                    encoderWorker.onmessage = function (e) {
+                        if (e.data.cmd == 'data') {
+
+                            console.log("Done converting to Mp3");
+                            log.innerHTML += "\n" + "Done converting to Mp3";
+
+                            /*var audio = new Audio();
+                            audio.src = 'data:audio/mp3;base64,'+encode64(e.data.buf);
+                            audio.play();*/
+
+                            //console.log ("The Mp3 data " + e.data.buf);
+
+                            var mp3Blob = new Blob([new Uint8Array(e.data.buf)], { type: 'audio/mp3' });
+                            uploadAudio(mp3Blob);
+
+                            var url = 'data:audio/mp3;base64,' + encode64(e.data.buf);
+                            $scope.ExerciseDictation.AudioData = url;
+                            var li = document.createElement('li');
+                            var au = document.createElement('audio');
+                            var hf = document.createElement('a');
+
+                            au.controls = true;
+                            au.src = url;
+                            hf.href = url;
+                            hf.download = 'audio_recording_' + new Date().getTime() + '.mp3';
+                            hf.innerHTML = hf.download;
+                            li.appendChild(au);
+                            li.appendChild(hf);
+                            recordingslist.appendChild(li);
+
+                        }
+                    };
+                };
+
+                fileReader.readAsArrayBuffer(blob);
+
+                currCallback(blob);
+            }
+
+
+            function encode64(buffer) {
+                var binary = '',
+                    bytes = new Uint8Array(buffer),
+                    len = bytes.byteLength;
+
+                for (var i = 0; i < len; i++) {
+                    binary += String.fromCharCode(bytes[i]);
+                }
+                return window.btoa(binary);
+            }
+
+            function parseWav(wav) {
+                function readInt(i, bytes) {
+                    var ret = 0,
+                        shft = 0;
+
+                    while (bytes) {
+                        ret += wav[i] << shft;
+                        shft += 8;
+                        i++;
+                        bytes--;
+                    }
+                    return ret;
+                }
+                if (readInt(20, 2) != 1) throw 'Invalid compression code, not PCM';
+                if (readInt(22, 2) != 1) throw 'Invalid number of channels, not 1';
+                return {
+                    sampleRate: readInt(24, 4),
+                    bitsPerSample: readInt(34, 2),
+                    samples: wav.subarray(44)
+                };
+            }
+
+            function Uint8ArrayToFloat32Array(u8a) {
+                var f32Buffer = new Float32Array(u8a.length);
+                for (var i = 0; i < u8a.length; i++) {
+                    var value = u8a[i << 1] + (u8a[(i << 1) + 1] << 8);
+                    if (value >= 0x8000) value |= ~0x7FFF;
+                    f32Buffer[i] = value / 0x8000;
+                }
+                return f32Buffer;
+            }
+
+            function uploadAudio(mp3Data) {
+                var reader = new FileReader();
+                reader.onload = function (event) {
+                    var fd = new FormData();
+                    var mp3Name = encodeURIComponent('audio_recording_' + new Date().getTime() + '.mp3');
+                    console.log("mp3name = " + mp3Name);
+                    fd.append('fname', mp3Name);
+                    fd.append('data', event.target.result);
+                    $.ajax({
+                        type: 'POST',
+                        url: 'upload.php',
+                        data: fd,
+                        processData: false,
+                        contentType: false
+                    }).done(function (data) {
+                        //console.log(data);
+                        log.innerHTML += "\n" + data;
+                    });
+                };
+                reader.readAsDataURL(mp3Data);
+            }
+
+            source.connect(this.node);
+            this.node.connect(this.context.destination);    //this should not be necessary
+        };
+
+        /*Recorder.forceDownload = function(blob, filename){
+          console.log("Force download");
+          var url = (window.URL || window.webkitURL).createObjectURL(blob);
+          var link = window.document.createElement('a');
+          link.href = url;
+          link.download = filename || 'output.wav';
+          var click = document.createEvent("Event");
+          click.initEvent("click", true, true);
+          link.dispatchEvent(click);
+        }*/
+
+        window.Recorder = Recorder;
+
+    })(window);
 })
 .factory('SaveDictationText', function ($http) {
     var fac = {};
     var data = "";
+
+    fac.GetChildren = function (d) {
+        return $http.get('/Data/GetSpecificChilden/' + d)
+    }
+    
     fac.GetText = function (d) {
         return $http({
             url: '/Data/SaveDictation',
@@ -761,6 +1490,162 @@
 
     return fac;
 })
+
+// Description customize BattleCard
+.controller('TeacherDescriptionBattleCardController', function ($scope) {
+
+})
+
+// Customize BattleCard
+.controller('TeacherCustomizeBattleCardController', function ($scope, SaveBattleCardChoice) {
+    var monobjet_json = sessionStorage.getItem("objet");
+    var monobjet = JSON.parse(monobjet_json);
+    // Affichage dans la console
+    console.log(monobjet.data.FirstName + " est dans la modification de card game");
+    console.log("ClassId : " + monobjet.data.ClassId)
+
+    $scope.Message = 'Choix du niveau';
+    $scope.EasySelected = false;
+    $scope.MediumSelected = false;
+    $scope.HardSelected = false;
+    $scope.IsFormValid = false;
+    $scope.Button = "Sauvegarder";
+
+    $scope.ExerciseBattleCard = {
+        //A REMPLIR
+        Choice: '',
+        Level: {
+            Name: 'Test'
+        },
+        ExerciseType: {
+            Name: 'CardGame'
+        },
+        Users :''
+    };
+
+    $scope.Children = null;
+    $scope.selected = [];
+
+    SaveBattleCardChoice.GetUsers(monobjet.data.ClassId).then(function (d) {
+        //console.log("test");
+        //console.log(d);
+        //console.log("Taille de la data : " + d.data.length);
+        //console.log(d.data);
+        //console.log(d.data[0]);
+        //console.log(d.data[1]);
+        //console.log(d.data[0].FirstName);
+        //console.log(d.data[0].LastName);
+        //console.log(d.data[0].Nickname);
+        //console.log(d.data[0].ClassId);
+
+        $scope.Children = d.data;
+        $scope.ExerciseBattleCard.Users = $scope.Children;
+        console.log($scope.ExerciseBattleCard.Users);
+    });
+
+    $scope.toggle = function (child, list) {
+        var idx = list.indexOf(child);
+        if (idx > -1)
+            list.splice(idx, 1);
+        else
+            list.push(child);
+    };
+
+    $scope.exists = function (child, list) {
+        return list.indexOf(child) > -1;
+    };
+
+    //Check if Form is valid or not // here FormChoice is our form Name
+    $scope.$watch('FormChoice.$valid', function (newVal) {
+        $scope.IsFormValid = newVal;
+    });
+    $scope.IsFormValid
+    $scope.SaveChoice = function () {
+        if ($scope.IsFormValid && $scope.ExerciseBattleCard.Choice != "") {
+            $scope.Button = "Sauvegarde en cours..."
+            $scope.ExerciseBattleCard.Choice.trim();
+            $scope.ExerciseBattleCard.Choice = monobjet.data.Nickname + "/" + $scope.ExerciseBattleCard.Choice;
+            var res = $scope.ExerciseBattleCard.Choice.split("/");
+
+            if ($scope.ExerciseBattleCard.Level.Name != "Easy") {
+                console.log($scope.ExerciseBattleCard.Level.Name);
+                $scope.ExerciseBattleCard.Users = $scope.selected;
+            }
+                
+
+            SaveBattleCardChoice.GetChoice($scope.ExerciseBattleCard).then(function (d) {
+                $scope.ExerciseBattleCard.Choice = res[1];
+                console.log(d.data);
+                if (d.data == "Jeu enregistré")
+                    $scope.Button = "Battle Card sauvegardé";
+                else {
+                    alert(d.data);
+                    $scope.Button = "Sauvegarder"
+                }
+            })
+        }
+    };
+    $scope.Easy = function () {
+        $scope.EasySelected = true;
+        $scope.Message = "Niveau facile";
+        $scope.ExerciseBattleCard.Level.Name = "Easy";
+    }
+
+    $scope.Medium = function () {
+        $scope.MediumSelected = true;
+        $scope.Message = "Niveau moyen";
+        $scope.ExerciseBattleCard.Level.Name = "Medium";
+    }
+    $scope.Hard = function () {
+        $scope.HardSelected = true;
+        $scope.Message = "Niveau difficile";
+        $scope.ExerciseBattleCard.Level.Name = "Hard";
+    }
+})
+
+.factory('SaveBattleCardChoice', function ($http) {
+    var fac = {};
+    var data = "";
+    fac.GetUsers = function (data) {
+        //return $http.get('/Data/GetClasses')
+        return $http.get('/Data/GetUsersByClasses/' + data)
+    }
+    fac.GetChoice = function (d) {
+        return $http({
+            url: '/Data/SaveBattleCard',
+            method: 'POST',
+            data: JSON.stringify(d),
+            headers: { 'content-type': 'application/json' }
+        })
+    };
+    return fac;
+})
+
+// Kid description BattleCard
+.controller('KidDescriptionBattleCardController', function ($scope) {
+
+})
+
+// Play BattleCard
+.controller('KidPlayBattleCardController', function ($scope) {
+    var monobjet_json = sessionStorage.getItem("objet");
+    var monobjet = JSON.parse(monobjet_json);
+    // Affichage dans la console
+    console.log(monobjet.data.FirstName + " est dans la page de jeu card game");
+
+
+    $scope.Time = 'Vous avez 1 minutes ! ';
+    $scope.Score = 0
+    $scope.svgCard = "/Images/redCard.svg";
+})
+
+.controller('KidHomeController', function ($scope) {
+    $scope.Message = 'Page "Élève"';
+})
+//.controller('KidLoginController', function ($scope) {
+//    $scope.Message = "Entre le pseudo et le mot de passe que tu avais choisis.";
+//})
+
 .controller('ErrorController', function ($scope) {
     $scope.Message = "404 Not Found!";
 })
@@ -867,7 +1752,11 @@
         });
         return defer.promise;
     }
-    return fac;		
+
+    fac.GetClasses = function () {
+        return $http.get('/Data/GetClasses')
+    }
+    return fac;
 })
 
 .factory('ExerciseDatas', function ($http) {

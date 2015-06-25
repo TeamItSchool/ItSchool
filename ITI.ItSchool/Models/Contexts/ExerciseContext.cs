@@ -6,6 +6,7 @@ using System.Data.Entity;
 using ITI.ItSchool.Models.ExercisesEntities;
 using ITI.ItSchool.Models.Entities;
 using ITI.ItSchool.Models.ExerciseEntities;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace ITI.ItSchool.Models.Contexts
 {
@@ -20,6 +21,15 @@ namespace ITI.ItSchool.Models.Contexts
 
         public DbSet<ExerciseType> ExerciseTypes { get; set; }
 
-        public DbSet<Level> Levels { get; set; }
+        public DbSet<ExerciseAffectation> ExercisesAffectations { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ExerciseAffectation>()
+                .HasRequired(u => u.User)
+                .WithMany()
+                .HasForeignKey( u => u.UserId )
+                .WillCascadeOnDelete(false);
+        }
     }
 }

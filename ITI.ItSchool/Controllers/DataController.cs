@@ -34,56 +34,68 @@ namespace ITI.ItSchool.Controllers
             return jsonData;
         }
 
-        public JsonResult SaveDictation( ExerciseDictation ed )
+        public JsonResult SaveDictation( ExerciseDictation dictationExo )
         {
-            string[] words = ed.Text.Split( '/' );
-            string nickname = words[ 0 ];
-            ed.Text = words[ 1 ];
+
+            string[] words = dictationExo.Text.Split( '/' );
+            string nickname = words[0];
+            dictationExo.Text = words[1];
             string message = "";
+
+            IRepository repo = new SQLRepository();
+            User user = repo.FindByNickname( nickname );
 
             using( var edc = new ExerciseDictationContext() )
             {
-                using( var uc = new UserContext() )
-                {
-                    IRepository repo = new SQLRepository();
-                    User user = repo.FindByNickname( nickname );
-                    ed.Chapter = new Chapter();
-                    ed.Chapter.ClassId = user.ClassId;
-                    ed.Chapter.Class = null;
-                }
+                dictationExo.Chapter = new Chapter();
+                dictationExo.Chapter.ClassId = user.ClassId;
+                dictationExo.Chapter.Class = null;
 
-                ed.ExerciseTypeId = edc.ExerciseType.Where( e => e.Name.Equals( ed.ExerciseType.Name ) )
+                dictationExo.ExerciseTypeId = edc.ExerciseType.Where( e => e.Name.Equals( dictationExo.ExerciseType.Name ) )
                                                     .Select( e => e.ExerciseTypeId )
                                                     .FirstOrDefault();
-                ed.ExerciseType = null;
-                ed.Chapter.Name = "Dictée";
+                dictationExo.ExerciseType = null;
+                dictationExo.Chapter.Name = "Dictée";
 
                 using( var sc = new SchoolContext() )
                 {
                     Chapter chapter = sc.Chapters.Where( c => c.Name.Equals( "Dictée" ) )
                                                  .FirstOrDefault();
 
-                    ed.ChapterId = chapter.ChapterId;
-                    ed.Chapter = null;
-                    ed.Name = "Dictée " + sc.Classes
-                                            .Where(cl => cl.ClassId.Equals(ed.ChapterId))
-                                            .Select(cl => cl.Name)
+                    dictationExo.ChapterId = chapter.ChapterId;
+                    dictationExo.LevelId = edc.Level.Where( l => l.Name.Equals( dictationExo.Level.Name ) ).Select( l => l.LevelId ).FirstOrDefault();
+                    dictationExo.Level = null;
+                    dictationExo.Name = "Dictée " + sc.Classes
+                                            .Where( cl => cl.ClassId.Equals( dictationExo.Chapter.ClassId ) )
+                                            .Select( cl => cl.Name )
                                             .FirstOrDefault() + edc.Level
-                                            .Where(l => l.LevelId.Equals(ed.LevelId))
-                                            .Select(l => l.Name)
+                                            .Where( l => l.LevelId.Equals( dictationExo.LevelId ) )
+                                            .Select( l => l.Name )
                                             .FirstOrDefault();
+                    dictationExo.Chapter = null;
                 }
-                ExerciseDictation dictation = edc.ExerciseDictation.Where(edictation => edictation.Name.Equals(ed.Name)).FirstOrDefault();
-                if (dictation ==  null) {
-                    edc.ExerciseDictation.Add( ed );
+                ExerciseDictation dictation = edc.ExerciseDictation.Where( exDictation => exDictation.Name.Equals( dictationExo.Name ) ).FirstOrDefault();
+                if( dictation == null )
+                {
+                    if( dictationExo.LevelId.Equals( 1 ) )
+                        //dictationExo.Users = repo.GetChildrenListByClassId( user.ClassId );
+
+                    edc.ExerciseDictation.Add( dictationExo );
                     edc.SaveChanges();
                     message = "Jeu enregistré";
                 }
-                else {
-                    dictation.Text = ed.Text;
+                else
+                {
+                    ExerciseDictation refExoDic = new ExerciseDictation();
+                    using( ExerciseDictationContext exoDictationContext = new ExerciseDictationContext() )
+                    {
+                        refExoDic = exoDictationContext.ExerciseDictation.Where( ex => ex.Name.Equals( dictationExo.Name ) ).FirstOrDefault();
+                    }
+                    dictation.Text = dictationExo.Text;
+
+                    dictation.AudioData = dictationExo.AudioData;
                     //3. Mark entity as modified
                     edc.Entry( dictation ).State = System.Data.Entity.EntityState.Modified;
-
                     //4. call SaveChanges
                     edc.SaveChanges();
                     message = "Texte mis à jour.";
@@ -91,6 +103,12 @@ namespace ITI.ItSchool.Controllers
                 JsonResult data = new JsonResult { Data = message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 return data;
             }
+        }
+        public JsonResult GetSpecificChilden( int id )
+        {
+            IRepository repo = new SQLRepository();
+            JsonResult data = repo.GetChildrenByClassId( id );
+            return data;
         }
 
         public JsonResult CheckDictationText( DictationText d )
@@ -118,13 +136,83 @@ namespace ITI.ItSchool.Controllers
             return jsonData;
         }
 
+        public JsonResult SaveBattleCard(ExerciseBattleCard exoBattleCard)
+        {
+            string[] words = exoBattleCard.Choice.Split('/');
+            string nickname = words[0];
+            exoBattleCard.Choice = words[1];
+            string message = "";
+
+            using (var exoBattleCardContext = new ExerciseBattleCardContext())
+            {
+                using (var uc = new UserContext())
+                {
+                    IRepository repo = new SQLRepository();
+                    User user = repo.FindByNickname(nickname);
+                    exoBattleCard.Chapter = new Chapter();
+                    exoBattleCard.Chapter.ClassId = user.ClassId;
+                    exoBattleCard.Chapter.Class = null;
+                }
+
+                exoBattleCard.ExerciseTypeId = exoBattleCardContext.ExerciseType.Where(e => e.Name.Equals(exoBattleCard.ExerciseType.Name))
+                                                    .Select(e => e.ExerciseTypeId)
+                                                    .FirstOrDefault();
+                exoBattleCard.ExerciseType = null;
+                exoBattleCard.Chapter.Name = "Chapitre 1";
+
+                using (var sc = new SchoolContext())
+                {
+                    Chapter chapter = sc.Chapters.Where(c => c.Name.Equals(exoBattleCard.Chapter.Name))
+                                                 .FirstOrDefault();
+
+                    exoBattleCard.ChapterId = chapter.ChapterId;
+                    exoBattleCard.Name = "BattleCard " + sc.Classes
+                                            .Where(cl => cl.ClassId.Equals(exoBattleCard.Chapter.ClassId))
+                                            .Select(cl => cl.Name)
+                                            .FirstOrDefault() + exoBattleCardContext.Level
+                                            .Where(l => l.LevelId.Equals(exoBattleCard.LevelId))
+                                            .Select(l => l.Name)
+                                            .FirstOrDefault();
+                    exoBattleCard.Chapter = null;
+                    
+                }
+                ExerciseBattleCard battleCard = exoBattleCardContext.ExerciseBattleCard.Where(ebattleCard => ebattleCard.Name.Equals(exoBattleCard.Name) && ebattleCard.Level.Name.Equals(exoBattleCard.Level.Name)).FirstOrDefault();
+                if (battleCard == null)
+                {
+                    //exoBattleCardContext.ExerciseBattleCard.Add(exoBattleCard);
+                    //exoBattleCardContext.SaveChanges();
+                    message = "Jeu enregistré";
+                }
+                else
+                {
+                    //battleCard.Choice = exoBattleCard.Choice;
+                    //battleCard.Users = exoBattleCard.Users;
+                    ////3. Mark entity as modified
+                    //exoBattleCardContext.Entry(battleCard).State = System.Data.Entity.EntityState.Modified;
+
+                    ////4. call SaveChanges
+                    //exoBattleCardContext.SaveChanges();
+                    message = "Choix mis à jour.";
+                }
+                JsonResult data = new JsonResult { Data = message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                return data;
+            }
+        }
+
+        public JsonResult GetUsersByClasses(int id)
+        {
+            IRepository repo = new SQLRepository();
+            var jsonData = repo.getUsersByClasses(id);
+            return jsonData;
+        }
+
         /// <summary>
         /// Save User in DB
         /// </summary>
         /// <param name="u">Object User Sent From AngularJS</param>
         /// <returns>JSon Data For AngularJS</returns>
         [HttpPost]
-        public JsonResult Register(User u)
+        public JsonResult Register( User u )
         {
             string message = "";
 
@@ -172,13 +260,6 @@ namespace ITI.ItSchool.Controllers
         public void SaveClozeExercise(ExerciseCloze exerciseCloze)
         {
 
-        }
-
-        public JsonResult GetLevels()
-        {
-            IRepository db = new SQLRepository();
-            var levels = db.GetLevels();
-            return levels;
         }
 
         public JsonResult GetChapters()

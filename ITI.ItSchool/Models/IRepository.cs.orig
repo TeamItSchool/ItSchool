@@ -1,0 +1,67 @@
+﻿using ITI.ItSchool.Models.Entities;
+using ITI.ItSchool.Models.SchoolEntities;
+using ITI.ItSchool.Models.UserEntities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+
+namespace ITI.ItSchool.Models
+{
+    public interface IRepository
+    {
+        JsonResult GetChildrenByClassId( int id );
+
+        List<User> GetChildrenListByClassId( int id );
+
+        JsonResult FindUserByNickname(string nickname);
+
+        JsonResult GetChapters();
+
+        JsonResult GetClasses();
+
+        JsonResult GetGroups();
+
+<<<<<<< HEAD
+        JsonResult GetClozeExerciseContent();
+
+        JsonResult SetExercise(Exercise exercise);
+
+        User FindByNickname(string nickname);
+=======
+        JsonResult getUsersByClasses(int id);
+
+        IList<User> Update( User u );
+        
+        User FindById( int id );
+        
+        User FindByMail( string mail );
+>>>>>>> origin/guenole
+
+        User FindById(int id);
+
+        User FindByMail(string mail);
+
+        User FindByGrade(string grade);
+
+        bool Create(User u);
+
+        bool Create(Class g);
+
+<<<<<<< HEAD
+        bool Remove(User u);
+
+        bool Remove(int id);
+
+        IList<User> Update(User u);
+
+        IList<User> FindAllUsers();
+=======
+        JsonResult SetExercise( Exercise exercise );
+
+        JsonResult getBattleCardChoice();
+>>>>>>> origin/guenole
+    }
+}

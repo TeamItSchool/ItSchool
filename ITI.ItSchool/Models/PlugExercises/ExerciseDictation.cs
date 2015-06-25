@@ -1,6 +1,8 @@
-﻿using ITI.ItSchool.Models.ExerciseEntities;
+﻿using ITI.ItSchool.Models.Entities;
+using ITI.ItSchool.Models.ExerciseEntities;
 using ITI.ItSchool.Models.ExercisesEntities;
 using ITI.ItSchool.Models.SchoolEntities;
+using ITI.ItSchool.Models.UserEntities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,6 +16,9 @@ namespace ITI.ItSchool.Models.PlugExercises
     public class ExerciseDictation
     {
         public int ExerciseDictationId { get; set; }
+
+        [ForeignKey( "ExerciseDictationId" )]
+        public virtual Exercise Exercise { get; set; }
 
         [MaxLength( 50 )]
         public string Name { get; set; }
@@ -35,5 +40,7 @@ namespace ITI.ItSchool.Models.PlugExercises
 
         [MaxLength]
         public string Text { get; set; }
+
+        public string AudioData { get; set; }
     }
 }

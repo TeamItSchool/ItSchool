@@ -142,6 +142,7 @@ namespace ITI.ItSchool.Models
                         user.GroupId = group.GroupId;
                         userContext.Users.Add(user);
                         userContext.SaveChanges();
+                        group = userContext.Groups.Include("Users").Where( gr => gr.Name.Equals( user.Group.Name ) ).FirstOrDefault();
                         return true;
                     }
                     else return false;
@@ -253,6 +254,7 @@ namespace ITI.ItSchool.Models
             }
         }
 
+<<<<<<< HEAD
         public JsonResult GetClozeExerciseContent()
         {
             ExerciseCloze ec = new ExerciseCloze();
@@ -260,12 +262,6 @@ namespace ITI.ItSchool.Models
             using( var db = new ExerciseClozeContext() )
             {
                 db.Configuration.LazyLoadingEnabled = false;
-<<<<<<< HEAD
-                grades = db.Grades.ToList();
-                grades = db.Grades.OrderBy( g => g.GradeId ).ToList();
-                var jsonData = new JsonResult { Data = grades, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-                return jsonData;
-=======
                 //var query = from e in db.ExerciseCloze
                 //            where e.Name == "Mon premier texte à trous"
                 //            select e;
@@ -274,13 +270,54 @@ namespace ITI.ItSchool.Models
             }
             return data;
         }
-
-
+       
         /// <summary>
         /// Gets all pupils' classes.
         /// </summary>
         /// <returns>All the classes in a list form in JSON Data format.</returns>
         public JsonResult GetClasses()
+=======
+        /// <summary>
+        /// Get users
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public JsonResult GetChildrenByClassId( int id)
+        {
+            List<User> users = new List<User>();
+            JsonResult data = null;
+            using( UserContext uc = new UserContext() )
+            {
+                uc.Configuration.LazyLoadingEnabled = false;
+                users = uc.Users
+                    .Include("Avatar")
+                    .Include("Class")
+                    .Include("Group")
+                    .Where( u => u.ClassId.Equals( id ) ).Where( u => u.Group.Name.Equals( "Élèves" ) ).ToList();
+
+                for( int i = 0; i < users.Count(); i++ )
+                {
+                    users[i].Class.Users = null;
+                    users[i].Group.Users = null;
+                    users[i].Avatar.User = null;
+
+                }
+                data = new JsonResult { Data = users, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+            return data;
+        }
+
+        public List<User> GetChildrenListByClassId( int id )
+        {
+            List<User> children = new List<User>();
+            using( UserContext uc = new UserContext() )
+            {
+                children = uc.Users.Where( u => u.ClassId.Equals( id ) ).Where( u => u.Group.Name.Equals( "Élèves" ) ).ToList();
+            }
+            return children;
+        }
+
+>>>>>>> ItSchool/guenole
         {
             List<Class> classes = new List<Class>();
             JsonResult jsonData = null;

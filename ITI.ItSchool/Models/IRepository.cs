@@ -12,6 +12,10 @@ namespace ITI.ItSchool.Models
 {
     public interface IRepository
     {
+        JsonResult GetChildrenByClassId( int id );
+
+        List<User> GetChildrenListByClassId( int id );
+
         JsonResult FindUserByNickname(string nickname);
 
         JsonResult GetChapters();
@@ -20,9 +24,8 @@ namespace ITI.ItSchool.Models
 
         JsonResult GetGroups();
 
-        JsonResult GetLevels();
-
         JsonResult GetClozeExerciseContent();
+        JsonResult getUsersByClasses(int id);
 
         JsonResult SetExercise(Exercise exercise);
 
@@ -44,6 +47,6 @@ namespace ITI.ItSchool.Models
 
         IList<User> Update(User u);
 
-        IList<User> FindAllUsers();
+        JsonResult getBattleCardChoice();
     }
 }

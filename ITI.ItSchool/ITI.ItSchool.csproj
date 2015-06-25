@@ -1436,9 +1436,13 @@
     <Content Include="Components\webcomponentsjs\webcomponents-lite.min.js" />
     <Content Include="Components\webcomponentsjs\webcomponents.js" />
     <Content Include="Components\webcomponentsjs\webcomponents.min.js" />
+    <Content Include="Content\BattleCardCss\battleCardGame.css" />
+    <Content Include="Content\BattleCardCss\flipclock.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\ng-grid.css" />
+    <Content Include="Content\ng-grid.min.css" />
     <Content Include="Content\style.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -3735,6 +3739,7 @@
     <Content Include="Images\material-design-icons\navigation\svg\production\ic_unfold_more_24px.svg" />
     <Content Include="Images\material-design-icons\navigation\svg\production\ic_unfold_more_36px.svg" />
     <Content Include="Images\material-design-icons\navigation\svg\production\ic_unfold_more_48px.svg" />
+    <Content Include="Images\redCard.svg" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
@@ -3760,6 +3765,9 @@
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\AngularSinglePageScriptApp.js" />
     <Content Include="Scripts\app.js" />
+    <Content Include="Scripts\BattleCardJS\battleCardGame.js" />
+    <Content Include="Scripts\BattleCardJS\flipclock.js" />
+    <Content Include="Scripts\BattleCardJS\snap.svg.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Components\bower_components\core-component-page\bower.json" />
@@ -6617,28 +6625,39 @@
     <Content Include="Scripts\interact-1.2.4.js" />
     <Content Include="Scripts\interact-1.2.4.min.js" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
+    <Content Include="Scripts\jquery-1.11.0.min.js" />
     <Content Include="Scripts\jquery-2.1.3.js" />
     <Content Include="Scripts\jquery-2.1.3.min.js" />
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery.js" />
     <Content Include="Scripts\jsHtml5AudioRecorder.js" />
+    <Content Include="Scripts\libmp3lame.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\mp3Worker.js" />
+    <Content Include="Scripts\ng-grid.js" />
     <Content Include="Scripts\ng-polymer-elements.js" />
     <Content Include="Scripts\painting.js" />
     <Content Include="Scripts\ng-polymer-elements.min.js" />
     <Content Include="Scripts\NG-Polymer.js" />
+    <Content Include="Scripts\recorderWorker.js" />
+    <Content Include="Scripts\recordmp3.js" />
     <Content Include="Scripts\Routing.js" />
+    <Content Include="Templates\style.css" />
     <Content Include="Scripts\version.txt" />
     <Content Include="Templates\Error.html" />
     <Content Include="Templates\home.html" />
+    <Content Include="Templates\KidDescriptionBattleCardPage.html" />
     <Content Include="Templates\KidDragAndDropExercice.html" />
+    <Content Include="Templates\KidPlayBattleCardPage.html" />
     <Content Include="Templates\KidPlayDictationPage.html" />
     <Content Include="Templates\KidSelectExercicesPage.html" />
     <Content Include="Templates\KidHomePage.html" />
     <Content Include="Templates\KidLobbyPage.html" />
     <Content Include="Templates\KidLoginPage.html" />
     <Content Include="Templates\KidRegistrationPage.html" />
+    <Content Include="Templates\TeacherCustomizeBattleCardPage.html" />
     <Content Include="Templates\TeacherCustomizeClozeExercisePage.html" />
+    <Content Include="Templates\TeacherDescriptionBattleCardPage.html" />
     <Content Include="Templates\TeacherCustomizeDictationPage.html" />
     <Content Include="Templates\TeacherCustomizeDragAndDropMathsPage.html" />
     <Content Include="Templates\TeacherLobbyPage.html" />
@@ -6646,7 +6665,7 @@
     <Content Include="Templates\TeacherLoginPage.html" />
     <Content Include="Templates\TeacherRegistrationPage.html" />
     <Content Include="Templates\TeacherSelectExercicesPage.html" />
-    <Content Include="Templates\TeacherSelectMatterPage.html" />
+    <Content Include="Templates\voiceRecorder.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -6658,19 +6677,32 @@
     <Compile Include="Controllers\DrawController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TestInputController.cs" />
+    <Compile Include="ExerciseBattleCardContextMigrations\201506241942382_Initial.cs" />
+    <Compile Include="ExerciseBattleCardContextMigrations\201506241942382_Initial.Designer.cs">
+      <DependentUpon>201506241942382_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExerciseBattleCardContextMigrations\Configuration.cs" />
     <Compile Include="ExerciseClozeContextMigrations\201506162116288_Initial.cs" />
     <Compile Include="ExerciseClozeContextMigrations\201506162116288_Initial.Designer.cs">
       <DependentUpon>201506162116288_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="ExerciseClozeContextMigrations\201506241407333_UpdatedId.cs" />
+    <Compile Include="ExerciseClozeContextMigrations\201506241407333_UpdatedId.Designer.cs">
+      <DependentUpon>201506241407333_UpdatedId.cs</DependentUpon>
+    </Compile>
     <Compile Include="ExerciseClozeContextMigrations\Configuration.cs" />
-    <Compile Include="ExerciseContextMigrations\201506162039503_Initial.cs" />
-    <Compile Include="ExerciseContextMigrations\201506162039503_Initial.Designer.cs">
-      <DependentUpon>201506162039503_Initial.cs</DependentUpon>
+    <Compile Include="ExerciseContextMigrations\201506241326573_Initial.cs" />
+    <Compile Include="ExerciseContextMigrations\201506241326573_Initial.Designer.cs">
+      <DependentUpon>201506241326573_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExerciseContextMigrations\201506241523339_RenamingCorrectlyAffectation.cs" />
+    <Compile Include="ExerciseContextMigrations\201506241523339_RenamingCorrectlyAffectation.Designer.cs">
+      <DependentUpon>201506241523339_RenamingCorrectlyAffectation.cs</DependentUpon>
     </Compile>
     <Compile Include="ExerciseContextMigrations\Configuration.cs" />
-    <Compile Include="ExerciseDictationContextMigrations\201506162050019_Initial.cs" />
-    <Compile Include="ExerciseDictationContextMigrations\201506162050019_Initial.Designer.cs">
-      <DependentUpon>201506162050019_Initial.cs</DependentUpon>
+    <Compile Include="ExerciseDictationContextMigrations\201506241357343_Initial.cs" />
+    <Compile Include="ExerciseDictationContextMigrations\201506241357343_Initial.Designer.cs">
+      <DependentUpon>201506241357343_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="ExerciseDictationContextMigrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
@@ -6680,10 +6712,13 @@
     <Compile Include="Models\AvatarEntities\Foot.cs" />
     <Compile Include="Models\AvatarEntities\Legs.cs" />
     <Compile Include="Models\CardsData.cs" />
+    <Compile Include="Models\Contexts\ExerciseBattleCardContext.cs" />
     <Compile Include="Models\Contexts\ExerciseClozeContext.cs" />
     <Compile Include="Models\Contexts\ExerciseDictationContext.cs" />
     <Compile Include="Models\DictationText.cs" />
+    <Compile Include="Models\ExerciseEntities\ExerciseAffectation.cs" />
     <Compile Include="Models\LoginData.cs" />
+    <Compile Include="Models\PlugExercises\ExerciseBattleCard.cs" />
     <Compile Include="Models\PlugExercises\ExerciseCloze.cs" />
     <Compile Include="Models\PlugExercises\ExerciseDictation.cs" />
     <Compile Include="Models\Contexts\AvatarContext.cs" />
@@ -6703,9 +6738,9 @@
     <Compile Include="Models\UserEntities\Group.cs" />
     <Compile Include="Models\UserEntities\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SchoolContextMigrations\201506162026533_Initial.cs" />
-    <Compile Include="SchoolContextMigrations\201506162026533_Initial.Designer.cs">
-      <DependentUpon>201506162026533_Initial.cs</DependentUpon>
+    <Compile Include="SchoolContextMigrations\201506241345098_Initial.cs" />
+    <Compile Include="SchoolContextMigrations\201506241345098_Initial.Designer.cs">
+      <DependentUpon>201506241345098_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="SchoolContextMigrations\201506161019380_Initial1.cs" />
     <Compile Include="SchoolContextMigrations\201506161019380_Initial1.Designer.cs">
@@ -6752,20 +6787,26 @@
     <TypeScriptCompile Include="Scripts\collections.d.ts" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ExerciseBattleCardContextMigrations\201506241942382_Initial.resx">
+      <DependentUpon>201506241942382_Initial.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ExerciseClozeContextMigrations\201506162116288_Initial.resx">
       <DependentUpon>201506162116288_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ExerciseContextMigrations\201506162039503_Initial.resx">
-      <DependentUpon>201506162039503_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="ExerciseClozeContextMigrations\201506241407333_UpdatedId.resx">
+      <DependentUpon>201506241407333_UpdatedId.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ExerciseDictationContextMigrations\201506162050019_Initial.resx">
-      <DependentUpon>201506162050019_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="ExerciseContextMigrations\201506241326573_Initial.resx">
+      <DependentUpon>201506241326573_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SchoolContextMigrations\201506162026533_Initial.resx">
-      <DependentUpon>201506162026533_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="ExerciseContextMigrations\201506241523339_RenamingCorrectlyAffectation.resx">
+      <DependentUpon>201506241523339_RenamingCorrectlyAffectation.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SchoolContextMigrations\201506161019380_Initial1.resx">
-      <DependentUpon>201506161019380_Initial1.cs</DependentUpon>
+    <EmbeddedResource Include="ExerciseDictationContextMigrations\201506241357343_Initial.resx">
+      <DependentUpon>201506241357343_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SchoolContextMigrations\201506241345098_Initial.resx">
+      <DependentUpon>201506241345098_Initial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserContextMigrations\201506162024076_Initial.resx">
       <DependentUpon>201506162024076_Initial.cs</DependentUpon>

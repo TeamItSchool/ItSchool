@@ -1,0 +1,145 @@
+﻿<div ng-controller="TeacherCustomizeBattleCardController">
+    <style>
+        body, html {
+            background-color: #F0E8D8;
+        }
+        h1 {
+	        text-align : center;
+        }
+
+        #global {
+          padding-bottom : 5%;
+          position: relative; /* on positionne le conteneur */
+          margin-left: auto;
+          margin-right: auto;
+          width: 100%;
+          height : 100%;
+          border : 1px solid black;
+          background: #F0E8D8 -moz-linear-gradient(center bottom , #DACDB1 11%, #F0E8D8 56%) repeat scroll 0% 0%;
+
+        }
+
+        #choice{
+            margin-top : 1.5%;          
+            border : 1px solid black;
+	        box-shadow: 0px 0px 65px #CDBE9F inset, 0px 0px 20px #BEAE8C inset, 0px 0px 5px #816F47;
+	        font-family: Georgia,Times,serif;
+	        line-height: 1.50em;
+        }
+
+        #choiceTitle{
+            text-decoration: underline;
+            font-weight : bold;
+        }
+
+        #alphabet{
+            font-weight : bold;
+        }
+
+        #leftArrow{
+            position : absolute;
+            top : 45%;
+            background-color : #CDBE9F;
+            right: 90%;
+        }
+
+     </style>
+
+    <h1>Customize Battle Card Game</h1>
+
+
+    <div id="global">
+
+        <md-button id="leftArrow" class="md-fab" aria-label="FAB" href="#!/teacher/exercices/battleCard">
+            <md-icon md-svg-src="../Images/material-design-icons/navigation/svg/production/ic_arrow_back_36px.svg"></md-icon>
+        </md-button>
+        <!--<md-button id="rightArrow" class="md-fab" aria-label="FAB" href="#!/teacher/exercices/battleCard/customize">
+            <md-icon md-svg-src="../Images/material-design-icons/navigation/svg/production/ic_arrow_forward_36px.svg"></md-icon>
+        </md-button>-->
+
+        <center>
+            <div ng-show="!EasySelected && !MediumSelected && !HardSelected">
+            <h1>{{Message}}</h1>
+            <table>
+                <tr>
+                    <td>
+                        <form novalidate name="EasyForm" ng-submit="Easy()">
+                            <md-button class="md-raised md-primary" type="submit" name="easy">Facile</md-button>
+                        </form>
+                    </td>
+                    <td>
+                        <form novalidate name="MediumForm" ng-submit="Medium()">
+                            <md-button class="md-raised md-primary" type="submit" name="medium">Moyen</md-button>
+                        </form>
+                    </td>
+                    <td>
+                        <form novalidate name="HardForm" ng-submit="Hard()">
+                            <md-button class="md-raised md-primary" type="submit" name="hard">Difficile</md-button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div ng-show="EasySelected">
+            <h1>{{Message}}</h1>
+            <form name="FormChoice" ng-submit="SaveChoice()">
+                <select id="choice" value="choice" ng-model="ExerciseBattleCard.Choice">
+                    <!--<option selected disabled>Votre choix</option>-->
+                    <option value="alphabet" id="alphabet">Alphabet</option>
+                    <option disabled id="choiceTitle">Chiffres et nombres</option>
+                    <option value="0-10">0-10</option>
+                    <option value="0-100">0-100</option>
+                    <option value="0-500">0-500</option>
+                    <option value="0-999">0-999</option>
+                </select>
+                <md-button id="saveExercise" class="md-raised md-primary" type="submit" name="SaveEasyChoice">{{Button}}</md-button>
+                <h2>{{ExerciseBattleCard.Choice}} + {{ExerciseBattleCard.Level.Name}}</h2>
+            </form>
+        </div>
+        <div ng-show="MediumSelected">
+            <h1>{{Message}}</h1>
+            <form name="FormChoice" ng-submit="SaveChoice()">
+                <select id="choice" value="choice" ng-model="ExerciseBattleCard.Choice">
+                    <option value="alphabet" id="alphabet">Alphabet</option>
+                    <option disabled id="choiceTitle">Chiffres et nombres</option>
+                    <option value="0-10">0-10</option>
+                    <option value="0-100">0-100</option>
+                    <option value="0-500">0-500</option>
+                    <option value="0-999">0-999</option>
+                </select>
+
+                <div ng-repeat="child in Children">
+                    <md-checkbox ng-checked="exists(child, selected)" ng-click="toggle(child, selected)">
+                        {{child.FirstName}} <span ng-if="exists(child,selected)">selected</span>
+                    </md-checkbox>
+                </div>
+                 <code style="display: block; padding : 8px;">{{selected | json}}</code> 
+                <md-button id="saveExercise" class="md-raised md-primary" type="submit" name="SaveMediumChoice">{{Button}}</md-button>
+                <h2>{{ExerciseBattleCard.Choice}} + {{ExerciseBattleCard.Level.Name}} + {{ExerciseBattleCard.Users.FirstName}}</h2>
+                </form>
+        </div>
+        <div ng-show="HardSelected">
+            <h1>{{Message}}</h1>
+            <form name="FormChoice" ng-submit="SaveChoice()">
+                <select id="choice" value="choice" ng-model="ExerciseBattleCard.Choice">
+                    <option value="alphabet" id="alphabet">Alphabet</option>
+                    <option disabled id="choiceTitle">Chiffres et nombres</option>
+                    <option value="0-10">0-10</option>
+                    <option value="0-100">0-100</option>
+                    <option value="0-500">0-500</option>
+                    <option value="0-999">0-999</option>
+                </select>
+
+                <div ng-repeat="child in Children">
+                    <md-checkbox ng-checked="exists(child, selected)" ng-click="toggle(child, selected)">
+                        {{child.FirstName}} <span ng-if="exists(child,selected)">selected</span>
+                    </md-checkbox>
+                </div>
+                <!-- <code style="display: block; padding : 8px;">{{selected | json}}</code> -->
+                <md-button id="saveExercise" class="md-raised md-primary" type="submit" name="SaveHardChoice">{{Button}}</md-button>
+                <h2>{{ExerciseBattleCard.Choice}} + {{ExerciseBattleCard.Level.Name}}</h2>
+            </form>
+        </div>
+        </center>
+    </div>
+</div >
