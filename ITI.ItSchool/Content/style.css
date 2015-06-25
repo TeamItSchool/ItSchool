@@ -481,6 +481,11 @@ h1, h2, h3, h4 {
   box-shadow: .3em .3em .5em rgba(0, 0, 0, .8);
   padding: 20px;
 }
-
-
 /*Drag and drop end*/
+
+
+/*Micro*/
+#Micro {
+    width: 75%;
+    margin-left: 10%;
+}
