@@ -999,11 +999,7 @@
         Level: {
             Name: 'Test'
         },
-        ExerciseType: {
-            Name: 'Dictée'
-        },
-        AudioData: '',
-        Users: ''
+        AudioData: ''
     };
 
     $scope.Children = null;

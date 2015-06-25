@@ -51,10 +51,6 @@ namespace ITI.ItSchool.Controllers
                 dictationExo.Chapter.ClassId = user.ClassId;
                 dictationExo.Chapter.Class = null;
 
-                dictationExo.ExerciseTypeId = edc.ExerciseType.Where( e => e.Name.Equals( dictationExo.ExerciseType.Name ) )
-                                                    .Select( e => e.ExerciseTypeId )
-                                                    .FirstOrDefault();
-                dictationExo.ExerciseType = null;
                 dictationExo.Chapter.Name = "Dictée";
 
                 using( var sc = new SchoolContext() )
@@ -154,10 +150,6 @@ namespace ITI.ItSchool.Controllers
                     exoBattleCard.Chapter.Class = null;
                 }
 
-                exoBattleCard.ExerciseTypeId = exoBattleCardContext.ExerciseType.Where(e => e.Name.Equals(exoBattleCard.ExerciseType.Name))
-                                                    .Select(e => e.ExerciseTypeId)
-                                                    .FirstOrDefault();
-                exoBattleCard.ExerciseType = null;
                 exoBattleCard.Chapter.Name = "Chapitre 1";
 
                 using (var sc = new SchoolContext())
