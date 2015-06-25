@@ -255,6 +255,9 @@ namespace ITI.ItSchool.Models
         }
 
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> origin/Michat
         public JsonResult GetClozeExerciseContent()
         {
             ExerciseCloze ec = new ExerciseCloze();
@@ -262,6 +265,15 @@ namespace ITI.ItSchool.Models
             using( var db = new ExerciseClozeContext() )
             {
                 db.Configuration.LazyLoadingEnabled = false;
+<<<<<<< HEAD
+<<<<<<< HEAD
+                grades = db.Grades.ToList();
+                grades = db.Grades.OrderBy( g => g.GradeId ).ToList();
+                var jsonData = new JsonResult { Data = grades, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                return jsonData;
+=======
+=======
+>>>>>>> origin/Michat
                 //var query = from e in db.ExerciseCloze
                 //            where e.Name == "Mon premier texte à trous"
                 //            select e;
@@ -270,12 +282,19 @@ namespace ITI.ItSchool.Models
             }
             return data;
         }
+<<<<<<< HEAD
+
+
+=======
        
+>>>>>>> origin/Michat
         /// <summary>
         /// Gets all pupils' classes.
         /// </summary>
         /// <returns>All the classes in a list form in JSON Data format.</returns>
         public JsonResult GetClasses()
+<<<<<<< HEAD
+=======
 =======
         /// <summary>
         /// Get users
@@ -317,7 +336,9 @@ namespace ITI.ItSchool.Models
             return children;
         }
 
+        public JsonResult GetClasses() // We talk about pupils classes, sure ;-)
 >>>>>>> ItSchool/guenole
+>>>>>>> origin/Michat
         {
             List<Class> classes = new List<Class>();
             JsonResult jsonData = null;
@@ -326,6 +347,9 @@ namespace ITI.ItSchool.Models
                 db.Configuration.LazyLoadingEnabled = false;
                 classes = db.Classes.ToList();
                 jsonData = new JsonResult { Data = classes, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+<<<<<<< HEAD
+>>>>>>> origin/Michat
+=======
 >>>>>>> origin/Michat
             }
             return jsonData;

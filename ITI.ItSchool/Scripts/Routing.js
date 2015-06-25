@@ -39,12 +39,24 @@
         templateUrl: '/Templates/TeacherSelectExercicesPage.html',
         controller: 'TeacherSelectExercicesController'
     })
+    .when('/teacher/exercices/matter', {
+        templateUrl: '/Templates/TeacherSelectMatterPage.html',
+        controller: 'TeacherSelectMatterController'
+    })
     .when('/teacher/exercices/cloze_exercise', {
         templateUrl: '/Templates/TeacherCustomizeClozeExercisePage.html'
     })
-    .when('/teacher/exercices/drag_drop', {
-        templateUrl: '/Templates/TeacherCustomizeDragAndDropPage.html',
-        controller: 'TeacherDragAndDropController'
+    .when('/teacher/exercices/matter/drag_drop_maths', {
+        templateUrl: '/Templates/TeacherCustomizeDragAndDropMathsPage.html',
+        controller: 'TeacherDragAndDropMathsController'
+    })
+    .when('/teacher/exercices/matter/drag_drop_conjugaiton', {
+        templateUrl: '/Templates/TeacherCustomizeDragAndDropConjugaitonPage.html',
+        controller: 'TeacherDragAndDropConjugaitonController'
+    })
+    .when('/teacher/exercices/matter/drag_drop_english', {
+        templateUrl: '/Templates/TeacherCustomizeDragAndDropEnglishPage.html',
+        controller: 'TeacherDragAndDropEnglishController'
     })
     .when('/teacher/exercices/dictation', {
         templateUrl: '/Templates/TeacherCustomizeDictationPage.html',
@@ -91,8 +103,8 @@
         controller: 'KidPlayBattleCardController'
     })
     .otherwise({   // This is when any route not matched
-        templateUrl: '/Templates/Error.html',
-        controller: 'ErrorController'
+    templateUrl: '/Templates/Error.html',
+    controller: 'ErrorController'
     })
     $locationProvider.html5Mode(false).hashPrefix('!'); // This is for Hashbang Mode
 })
@@ -972,6 +984,12 @@
         $scope.RegisterForm.$setPristine(); // here registerForm is our form name
         $scope.submitted = false;
     }
+})
+.controller('TeacherSelectMatterController', function ($scope) {
+    $scope.Message = "Selectionnez une matière";
+})
+.controller('TeacherDragAndDropMathsController', function ($scope) {
+    $scope.Message = "Drag and Drop";
 })
 .controller('TeacherSelectExercicesController', function ($scope) {
     $scope.Message = 'Selectionnez un exercice à modifier';

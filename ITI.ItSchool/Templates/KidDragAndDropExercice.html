@@ -1,40 +1,14 @@
 ﻿<div ng-controller="TeacherSelectExercicesController">
-    <center>
-        <h1>{{Message}}</h1>
-        <table>
-            <tr>
-                <td><input type="number" ng-model="Impair1" step="2" value="{{Impair1}}" min="1" max="101" required /></td>
-                <td><input type="number" ng-model="Pair1" step="2" value="{{Pair1}}" min="2" max="100" required /></td>
-                <td><input type="number" ng-model="Impair2" step="2" value="{{Impair2}}" min="1" max="101" required /></td>
-                <td><input type="number" ng-model="Pair2" step="2" value="{{Pair2}}" min="2" max="100" required /></td>
-                <td><input type="number" ng-model="Impair3" step="2" value="{{Impair3}}" min="1" max="101" required /><br /></td>
-            </tr>
-            <tr>
-                <td><div id="impair" class="resize-drag drag-drop"> {{Impair1}} </div></td>
-                <td><div id="pair" class="resize-drag drag-drop"> {{Pair1}} </div></td>
-                <td><div id="pair" class="resize-drag drag-drop"> {{Pair2}} </div>
-                <td><div id="impair" class="resize-drag drag-drop"> {{Impair2}} </div></td>
-                <td><div id="impair" class="resize-drag drag-drop"> {{Impair3}} </div></td>
-            </tr>
-            <tr>
-                <td><input type="number" ng-model="Pair3" step="2" value="{{Pair3}}" min="2" max="100" required /></td>
-                <td><input type="number" ng-model="Impair4" step="2" value="{{Impair4}}" min="1" max="101" required /></td>
-                <td><input type="number" ng-model="Pair4" step="2" value="{{Pair4}}" min="2" max="100" required /></td>
-                <td><input type="number" ng-model="Impair5" step="2" value="{{Impair5}}" min="1" max="101" required /></td>
-                <td><input type="number" ng-model="Pair4" step="2" value="{{Pair5}}" min="2" max="100" required /><br /></td>
-            </tr>
-            <tr>
-                <td><div id="pair" class="resize-drag drag-drop"> {{Pair3}} </div></td>
-                <td><div id="impair" class="resize-drag drag-drop"> {{Impair4}} </div></td>
-                <td><div id="pair" class="resize-drag drag-drop"> {{Pair4}} </div></td>
-                <td><div id="impair" class="resize-drag drag-drop"> {{Impair5}} </div></td>
-                <td><div id="pair" class="resize-drag drag-drop"> {{Pair5}} </div></td>
-            </tr>
-        </table>
-    </center>
+    <div id="content">
+        <div id="subContent">
+            <div id="cardPile"></div>
+            <div id="cardSlots"></div>
+        </div>
 
-    <div id="zone-pair" class="dropzonePair">Zone Paire</div>
-    <div id="zone-impair" class="dropzoneImpair">Zone impaire</div>
+        <div id="successMessage">
+            <h2>Bravo ! Tu as gagné.</h2>
+            <button onclick="init()">Play Again</button>
+        </div>
 
-
+    </div>
 </div>
