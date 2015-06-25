@@ -6687,21 +6687,15 @@
     <Compile Include="ExerciseClozeContextMigrations\201506162116288_Initial.cs" />
     <Compile Include="ExerciseClozeContextMigrations\201506162116288_Initial.Designer.cs">
       <DependentUpon>201506162116288_Initial.cs</DependentUpon>
-      
     </Compile>
     <Compile Include="ExerciseClozeContextMigrations\201506250854489_RemoveExType.cs" />
     <Compile Include="ExerciseClozeContextMigrations\201506250854489_RemoveExType.Designer.cs">
       <DependentUpon>201506250854489_RemoveExType.cs</DependentUpon>
     </Compile>
-
     <Compile Include="ExerciseClozeContextMigrations\Configuration.cs" />
     <Compile Include="ExerciseContextMigrations\201506241326573_Initial.cs" />
     <Compile Include="ExerciseContextMigrations\201506241326573_Initial.Designer.cs">
       <DependentUpon>201506241326573_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ExerciseContextMigrations\201506241523339_RenamingCorrectlyAffectation.cs" />
-    <Compile Include="ExerciseContextMigrations\201506241523339_RenamingCorrectlyAffectation.Designer.cs">
-      <DependentUpon>201506241523339_RenamingCorrectlyAffectation.cs</DependentUpon>
     </Compile>
     <Compile Include="ExerciseContextMigrations\Configuration.cs" />
     <Compile Include="ExerciseDictationContextMigrations\201506241357343_Initial.cs" />
@@ -6803,9 +6797,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ExerciseContextMigrations\201506241326573_Initial.resx">
       <DependentUpon>201506241326573_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ExerciseContextMigrations\201506241523339_RenamingCorrectlyAffectation.resx">
-      <DependentUpon>201506241523339_RenamingCorrectlyAffectation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ExerciseDictationContextMigrations\201506241357343_Initial.resx">
       <DependentUpon>201506241357343_Initial.cs</DependentUpon>
