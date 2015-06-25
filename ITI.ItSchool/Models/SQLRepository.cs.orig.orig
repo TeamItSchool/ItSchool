@@ -120,9 +120,16 @@ namespace ITI.ItSchool.Models
                         using (SchoolContext sc = new SchoolContext())
                         {
                             sc.Configuration.LazyLoadingEnabled = false;
+<<<<<<< HEAD
+                            grade = sc.Grades.Where( g => g.Name.Equals( user.Grade.Name ) ).FirstOrDefault();
+                            user.Grade = grade;
+                            user.Grade = null;
+                            user.GradeId = grade.GradeId;
+=======
                             aClass = sc.Classes.Where(c => c.Name.Equals(user.Class.Name)).FirstOrDefault();
                             user.Class = null;
                             user.ClassId = aClass.ClassId;
+>>>>>>> origin/Michat
                         }
                         User searchedUser = userContext.Users.OrderByDescending(u => u.UserId).FirstOrDefault();
                         userAvatar.User = null;
@@ -135,7 +142,6 @@ namespace ITI.ItSchool.Models
                         user.GroupId = group.GroupId;
                         userContext.Users.Add(user);
                         userContext.SaveChanges();
-                        int i = user.UserId;
                         group = userContext.Groups.Include("Users").Where( gr => gr.Name.Equals( user.Group.Name ) ).FirstOrDefault();
                         return true;
                     }
@@ -248,6 +254,48 @@ namespace ITI.ItSchool.Models
             }
         }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> origin/Michat
+        public JsonResult GetClozeExerciseContent()
+        {
+            ExerciseCloze ec = new ExerciseCloze();
+            JsonResult data = null;
+            using( var db = new ExerciseClozeContext() )
+            {
+                db.Configuration.LazyLoadingEnabled = false;
+<<<<<<< HEAD
+<<<<<<< HEAD
+                grades = db.Grades.ToList();
+                grades = db.Grades.OrderBy( g => g.GradeId ).ToList();
+                var jsonData = new JsonResult { Data = grades, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                return jsonData;
+=======
+=======
+>>>>>>> origin/Michat
+                //var query = from e in db.ExerciseCloze
+                //            where e.Name == "Mon premier texte à trous"
+                //            select e;
+                ec = db.ExerciseCloze.Where(e => e.Name.Equals("Mon premier texte à trous")).FirstOrDefault();
+                data = new JsonResult { Data = ec, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+            return data;
+        }
+<<<<<<< HEAD
+
+
+=======
+       
+>>>>>>> origin/Michat
+        /// <summary>
+        /// Gets all pupils' classes.
+        /// </summary>
+        /// <returns>All the classes in a list form in JSON Data format.</returns>
+        public JsonResult GetClasses()
+<<<<<<< HEAD
+=======
+=======
         /// <summary>
         /// Get users
         /// </summary>
@@ -288,37 +336,9 @@ namespace ITI.ItSchool.Models
             return children;
         }
 
-        public List<int> GetChildrenListIdByClassId( int id )
-        {
-            List<int> childrenIDs = new List<int>();
-            using( UserContext uc = new UserContext() )
-            {
-                childrenIDs = uc.Users.Where( u => u.ClassId.Equals( id ) ).Where( u => u.Group.Name.Equals( "Élèves" ) ).Select( u => u.UserId ).ToList();
-            }
-            return childrenIDs;
-        }
-
-        public JsonResult GetClozeExerciseContent()
-        {
-            ExerciseCloze ec = new ExerciseCloze();
-            JsonResult data = null;
-            using( var db = new ExerciseClozeContext() )
-            {
-                db.Configuration.LazyLoadingEnabled = false;
-                //var query = from e in db.ExerciseCloze
-                //            where e.Name == "Mon premier texte à trous"
-                //            select e;
-                ec = db.ExerciseCloze.Where(e => e.Name.Equals("Mon premier texte à trous")).FirstOrDefault();
-                data = new JsonResult { Data = ec, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-            }
-            return data;
-        }
-       
-        /// <summary>
-        /// Gets all pupils' classes.
-        /// </summary>
-        /// <returns>All the classes in a list form in JSON Data format.</returns>
-        public JsonResult GetClasses()
+        public JsonResult GetClasses() // We talk about pupils classes, sure ;-)
+>>>>>>> ItSchool/guenole
+>>>>>>> origin/Michat
         {
             List<Class> classes = new List<Class>();
             JsonResult jsonData = null;
@@ -327,6 +347,10 @@ namespace ITI.ItSchool.Models
                 db.Configuration.LazyLoadingEnabled = false;
                 classes = db.Classes.ToList();
                 jsonData = new JsonResult { Data = classes, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+<<<<<<< HEAD
+>>>>>>> origin/Michat
+=======
+>>>>>>> origin/Michat
             }
             return jsonData;
         }
@@ -343,6 +367,21 @@ namespace ITI.ItSchool.Models
                 groups = db.Groups.OrderBy(g => g.Name).ToList();
                 var jsonData = new JsonResult { Data = groups, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 return jsonData;
+            }
+        }
+
+        /// <summary>
+        /// Gets all the levels of the exercises.
+        /// </summary>
+        /// <returns>The levels as a JSON Format.</returns>
+        public JsonResult GetLevels()
+        {
+            List<Level> levels = new List<Level>();
+            using (var db = new ExerciseContext())
+            {
+                db.Configuration.LazyLoadingEnabled = false;
+                levels = db.Levels.ToList();
+                return new JsonResult { Data = levels, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
         }
 
@@ -380,42 +419,6 @@ namespace ITI.ItSchool.Models
         public bool Remove( User u )
         {
             throw new NotImplementedException();
-        }
-
-
-        public JsonResult getBattleCardChoice()
-        {
-            using(var db = new ExerciseBattleCardContext())
-            {
-                //db.ExerciseBattleCard.Where(exBattle => exBattle.Choice.Equals())
-            }
-            throw new NotImplementedException();
-        }
-
-
-        public JsonResult getUsersByClasses(int id)
-        {
-            List<User> users = new List<User>();
-            JsonResult data = null;
-            using(var uc = new UserContext())
-            {
-                uc.Configuration.LazyLoadingEnabled = false;
-                
-                users = uc.Users
-                    .Include("Avatar")
-                    .Include("Class")
-                    .Include("Group")
-                    .Where(u => u.ClassId.Equals(id)).Where( u => u.Group.Name.Equals("Élèves") ).ToList();
-
-                for (int i = 0; i < users.Count(); ++i)
-                {
-                    users[i].Class.Users = null;
-                    users[i].Group.Users = null;
-                    users[i].Avatar.User = null;
-                }
-                data =  new JsonResult { Data = users, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-            }
-            return data;
         }
     }
 }

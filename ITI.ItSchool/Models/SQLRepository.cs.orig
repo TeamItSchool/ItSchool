@@ -120,9 +120,16 @@ namespace ITI.ItSchool.Models
                         using (SchoolContext sc = new SchoolContext())
                         {
                             sc.Configuration.LazyLoadingEnabled = false;
+<<<<<<< HEAD
+                            grade = sc.Grades.Where( g => g.Name.Equals( user.Grade.Name ) ).FirstOrDefault();
+                            user.Grade = grade;
+                            user.Grade = null;
+                            user.GradeId = grade.GradeId;
+=======
                             aClass = sc.Classes.Where(c => c.Name.Equals(user.Class.Name)).FirstOrDefault();
                             user.Class = null;
                             user.ClassId = aClass.ClassId;
+>>>>>>> origin/Michat
                         }
                         User searchedUser = userContext.Users.OrderByDescending(u => u.UserId).FirstOrDefault();
                         userAvatar.User = null;
@@ -310,7 +317,6 @@ namespace ITI.ItSchool.Models
             return children;
         }
 
-        public JsonResult GetClasses() // We talk about pupils classes, sure ;-)
 >>>>>>> ItSchool/guenole
         {
             List<Class> classes = new List<Class>();
@@ -320,6 +326,7 @@ namespace ITI.ItSchool.Models
                 db.Configuration.LazyLoadingEnabled = false;
                 classes = db.Classes.ToList();
                 jsonData = new JsonResult { Data = classes, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+>>>>>>> origin/Michat
             }
             return jsonData;
         }

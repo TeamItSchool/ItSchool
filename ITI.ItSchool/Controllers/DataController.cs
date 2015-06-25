@@ -1,6 +1,9 @@
 ﻿using ITI.ItSchool.Models;
+using ITI.ItSchool.Models.ClassExercicesPlug;
 using ITI.ItSchool.Models.Contexts;
 using ITI.ItSchool.Models.Entities;
+using ITI.ItSchool.Models.ExerciseEntities;
+using ITI.ItSchool.Models.ExercisesEntities;
 using ITI.ItSchool.Models.PlugExercises;
 using ITI.ItSchool.Models.SchoolEntities;
 using ITI.ItSchool.Models.UserEntities;
@@ -34,17 +37,29 @@ namespace ITI.ItSchool.Controllers
             return jsonData;
         }
 
-        public JsonResult SaveDictation( ExerciseDictation dictationExo )
+        public JsonResult SaveDictation( ExerciseDictationData dictationData )
         {
+            ExerciseDictation dictationExo = new ExerciseDictation();
+            List<int> usersIds = new List<int>();
+            //Affecting users' ids to a list.
+            //This will be used for the affectation LATER
+            if(dictationData.UsersIds != null) 
+                usersIds = dictationData.UsersIds.ToList();
 
-            string[] words = dictationExo.Text.Split( '/' );
-            string nickname = words[0];
-            dictationExo.Text = words[1];
             string message = "";
+
+            string[] words = dictationData.Text.Split( '/' );
+
+            //User Nickname is getted here
+            string nickname = words[0];
+
+            // Reaffecting correct data on the exercise
+            dictationExo.Text = words[1];
 
             IRepository repo = new SQLRepository();
             User user = repo.FindByNickname( nickname );
 
+            #region SaveExercise
             using( var edc = new ExerciseDictationContext() )
             {
                 dictationExo.Chapter = new Chapter();
@@ -58,7 +73,7 @@ namespace ITI.ItSchool.Controllers
                                                  .FirstOrDefault();
 
                     dictationExo.ChapterId = chapter.ChapterId;
-                    dictationExo.LevelId = edc.Level.Where( l => l.Name.Equals( dictationExo.Level.Name ) ).Select( l => l.LevelId ).FirstOrDefault();
+                    dictationExo.LevelId = edc.Level.Where( l => l.Name.Equals( dictationData.Level.Name ) ).Select( l => l.LevelId ).FirstOrDefault();
                     dictationExo.Level = null;
                     dictationExo.Name = "Dictée " + sc.Classes
                                             .Where( cl => cl.ClassId.Equals( dictationExo.Chapter.ClassId ) )
@@ -70,13 +85,40 @@ namespace ITI.ItSchool.Controllers
                     dictationExo.Chapter = null;
                 }
                 ExerciseDictation dictation = edc.ExerciseDictation.Where( exDictation => exDictation.Name.Equals( dictationExo.Name ) ).FirstOrDefault();
+                
                 if( dictation == null )
                 {
-                    if( dictationExo.LevelId.Equals( 1 ) )
-                        //dictationExo.Users = repo.GetChildrenListByClassId( user.ClassId );
+                    Exercise exercise = new Exercise();
+                    int exerciseId = 0;
+                    using(ExerciseContext exoContext = new ExerciseContext()) 
+                    {
+                        ExerciseType exoType = exoContext.ExerciseTypes.Where(exType => exType.Name.Equals("Dictée")).FirstOrDefault();
+                        exercise.ExerciseTypeId = exoType.ExerciseTypeId;
+                        exoContext.Exercises.Add(exercise);
 
+                        exoContext.SaveChanges();
+                        exerciseId = exercise.ExerciseId;
+                    }
+
+                    //Then we save the Exercise Plug
+                    dictationExo.ExerciseDictationId = exerciseId;
                     edc.ExerciseDictation.Add( dictationExo );
                     edc.SaveChanges();
+
+                    //Finally we affect the exercise to
+                    if( dictationExo.LevelId.Equals( 1 ) )
+                    {
+                        usersIds = null;
+                        usersIds = repo.GetChildrenListIdByClassId( user.ClassId );
+                    }
+                    else
+                    {
+
+                    }
+                    ExerciseAffectation( usersIds, exerciseId );
+
+
+                   
                     message = "Jeu enregistré";
                 }
                 else
@@ -95,10 +137,31 @@ namespace ITI.ItSchool.Controllers
                     edc.SaveChanges();
                     message = "Texte mis à jour.";
                 }
-                JsonResult data = new JsonResult { Data = message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-                return data;
             }
+            JsonResult data = new JsonResult { Data = message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            return data;
+            #endregion
         }
+
+        public void ExerciseAffectation( List<int> usersIds, int exerciseId )
+        {
+            using( ExerciseContext exerciseContext = new ExerciseContext() )
+            {
+                for( int i = 0; i < usersIds.Count(); i++ )
+                {
+                    ExerciseAffectation exerciseAffectation = new ExerciseAffectation();
+                    exerciseAffectation.UserId = usersIds[i];
+                    exerciseAffectation.ExerciseId = exerciseId;
+                    exerciseAffectation.CreationDate = DateTime.Now;
+                    exerciseAffectation.FirstViewDate = exerciseAffectation.CreationDate;
+                    exerciseAffectation.EndDate = DateTime.Now;
+                    exerciseContext.ExercisesAffectations.Add( exerciseAffectation );
+                    exerciseContext.SaveChanges();
+                }
+            }
+                
+        }
+
         public JsonResult GetSpecificChilden( int id )
         {
             IRepository repo = new SQLRepository();
