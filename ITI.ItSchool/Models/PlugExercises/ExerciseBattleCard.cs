@@ -23,11 +23,6 @@ namespace ITI.ItSchool.Models.PlugExercises
         [MaxLength(50)]
         public string Name { get; set; }
 
-        public int ExerciseTypeId { get; set; }
-
-        [ForeignKey("ExerciseTypeId")]
-        public virtual ExerciseType ExerciseType { get; set; }
-
         public int LevelId { get; set; }
 
         [ForeignKey("LevelId")]
