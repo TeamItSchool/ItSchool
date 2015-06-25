@@ -49,6 +49,5 @@ namespace ITI.ItSchool.Models.UserEntities
 
         [MaxLength( 200 )]
         public string Remarks { get; set; }
-
     }
 }

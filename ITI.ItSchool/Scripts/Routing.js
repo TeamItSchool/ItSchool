@@ -999,7 +999,6 @@
         Level: {
             Name: 'Test'
         },
-        AudioData: ''
     };
 
     $scope.Children = null;
@@ -1494,11 +1493,7 @@
         Choice: '',
         Level: {
             Name: 'Test'
-        },
-        ExerciseType: {
-            Name: 'CardGame'
-        },
-        Users :''
+        }
     };
 
     $scope.Children = null;

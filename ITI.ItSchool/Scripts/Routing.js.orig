@@ -999,11 +999,11 @@
         Level: {
             Name: 'Test'
         },
-        ExerciseType: {
-            Name: 'Dictée'
-        },
+<<<<<<< HEAD
+        AudioData: ''
+=======
         AudioData: '',
-        Users: ''
+>>>>>>> ItSchool/Michat
     };
 
     $scope.Children = null;
@@ -1498,11 +1498,7 @@
         Choice: '',
         Level: {
             Name: 'Test'
-        },
-        ExerciseType: {
-            Name: 'CardGame'
-        },
-        Users :''
+        }
     };
 
     $scope.Children = null;
@@ -1738,14 +1734,7 @@
     fac.GetClasses = function () {
         return $http.get('/Data/GetClasses')
     }
-<<<<<<< HEAD
-    return fac;		
-=======
-    fac.GetGroups = function () {
-        return $http.get('/Data/GetGroups')
-    }
     return fac;
->>>>>>> origin/guenole
 })
 
 .factory('ExerciseDatas', function ($http) {

@@ -50,7 +50,6 @@ namespace ITI.ItSchool.Controllers
                 dictationExo.Chapter = new Chapter();
                 dictationExo.Chapter.ClassId = user.ClassId;
                 dictationExo.Chapter.Class = null;
-
                 dictationExo.Chapter.Name = "Dictée";
 
                 using( var sc = new SchoolContext() )
