@@ -135,6 +135,7 @@ namespace ITI.ItSchool.Models
                         user.GroupId = group.GroupId;
                         userContext.Users.Add(user);
                         userContext.SaveChanges();
+                        int i = user.UserId;
                         group = userContext.Groups.Include("Users").Where( gr => gr.Name.Equals( user.Group.Name ) ).FirstOrDefault();
                         return true;
                     }
@@ -285,6 +286,16 @@ namespace ITI.ItSchool.Models
                 children = uc.Users.Where( u => u.ClassId.Equals( id ) ).Where( u => u.Group.Name.Equals( "Élèves" ) ).ToList();
             }
             return children;
+        }
+
+        public List<int> GetChildrenListIdByClassId( int id )
+        {
+            List<int> childrenIDs = new List<int>();
+            using( UserContext uc = new UserContext() )
+            {
+                childrenIDs = uc.Users.Where( u => u.ClassId.Equals( id ) ).Where( u => u.Group.Name.Equals( "Élèves" ) ).Select( u => u.UserId ).ToList();
+            }
+            return childrenIDs;
         }
 
         public JsonResult GetClozeExerciseContent()
