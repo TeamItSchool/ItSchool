@@ -3,7 +3,7 @@ namespace ITI.ItSchool.ExerciseBattleCardContextMigrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Initial : DbMigration
+    public partial class RemoveExType : DbMigration
     {
         public override void Up()
         {
@@ -13,7 +13,6 @@ namespace ITI.ItSchool.ExerciseBattleCardContextMigrations
                     {
                         ExerciseBattleCardId = c.Int(nullable: false),
                         Name = c.String(maxLength: 50),
-                        ExerciseTypeId = c.Int(nullable: false),
                         LevelId = c.Int(nullable: false),
                         ChapterId = c.Int(nullable: false),
                         Choice = c.String(),
@@ -21,10 +20,8 @@ namespace ITI.ItSchool.ExerciseBattleCardContextMigrations
                 .PrimaryKey(t => t.ExerciseBattleCardId)
                 .ForeignKey("dbo.Chapters", t => t.ChapterId, cascadeDelete: true)
                 .ForeignKey("dbo.Exercises", t => t.ExerciseBattleCardId)
-                .ForeignKey("dbo.ExercisesTypes", t => t.ExerciseTypeId, cascadeDelete: true)
                 .ForeignKey("dbo.Levels", t => t.LevelId, cascadeDelete: true)
                 .Index(t => t.ExerciseBattleCardId)
-                .Index(t => t.ExerciseTypeId)
                 .Index(t => t.LevelId)
                 .Index(t => t.ChapterId);
             
@@ -198,7 +195,6 @@ namespace ITI.ItSchool.ExerciseBattleCardContextMigrations
         public override void Down()
         {
             DropForeignKey("dbo.ExerciseBattleCard", "LevelId", "dbo.Levels");
-            DropForeignKey("dbo.ExerciseBattleCard", "ExerciseTypeId", "dbo.ExercisesTypes");
             DropForeignKey("dbo.ExerciseBattleCard", "ExerciseBattleCardId", "dbo.Exercises");
             DropForeignKey("dbo.ExerciseBattleCard", "ChapterId", "dbo.Chapters");
             DropForeignKey("dbo.Chapters", "ThemeId", "dbo.Themes");
@@ -225,7 +221,6 @@ namespace ITI.ItSchool.ExerciseBattleCardContextMigrations
             DropIndex("dbo.Chapters", new[] { "ChapterId" });
             DropIndex("dbo.ExerciseBattleCard", new[] { "ChapterId" });
             DropIndex("dbo.ExerciseBattleCard", new[] { "LevelId" });
-            DropIndex("dbo.ExerciseBattleCard", new[] { "ExerciseTypeId" });
             DropIndex("dbo.ExerciseBattleCard", new[] { "ExerciseBattleCardId" });
             DropTable("dbo.Levels");
             DropTable("dbo.Matters");
