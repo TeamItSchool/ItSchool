@@ -115,10 +115,7 @@ namespace ITI.ItSchool.Controllers
                     {
 
                     }
-                    ExerciseAffectation( usersIds, exerciseId );
-
-
-                   
+                    ExerciseAffectation( usersIds, exerciseId ); 
                     message = "Jeu enregistré";
                 }
                 else
@@ -194,47 +191,89 @@ namespace ITI.ItSchool.Controllers
             return jsonData;
         }
 
-        public JsonResult SaveBattleCard(ExerciseBattleCard exoBattleCard)
+        public JsonResult SaveBattleCard(ExerciseBattleCardData exoBattleCardData)
         {
-            string[] words = exoBattleCard.Choice.Split('/');
-            string nickname = words[0];
-            exoBattleCard.Choice = words[1];
+            ExerciseBattleCard battleCardExo = new ExerciseBattleCard();
+            List<int> usersIds = new List<int>();
+            //Affecting users' ids to a list.
+            //This will be used for the affectation LATER
+            if (exoBattleCardData.UsersIds != null)
+                usersIds = exoBattleCardData.UsersIds.ToList();
+
             string message = "";
 
+            string[] words = exoBattleCardData.ChoiceData.Split('/');
+
+            //User Nickname is getted here
+            string nickname = words[0];
+
+            // Reaffecting correct data on the exercise
+            battleCardExo.Choice = words[1];
+
+
+            IRepository repo = new SQLRepository();
+            User user = repo.FindByNickname(nickname);
+
+            #region SaveExercise
             using (var exoBattleCardContext = new ExerciseBattleCardContext())
             {
                 using (var uc = new UserContext())
                 {
-                    IRepository repo = new SQLRepository();
-                    User user = repo.FindByNickname(nickname);
-                    exoBattleCard.Chapter = new Chapter();
-                    exoBattleCard.Chapter.ClassId = user.ClassId;
-                    exoBattleCard.Chapter.Class = null;
+                    battleCardExo.Chapter = new Chapter();
+                    battleCardExo.Chapter.ClassId = user.ClassId;
+                    battleCardExo.Chapter.Class = null;
                 }
 
-                exoBattleCard.Chapter.Name = "Chapitre 1";
+                battleCardExo.Chapter.Name = "Chapitre 1";
 
                 using (var sc = new SchoolContext())
                 {
-                    Chapter chapter = sc.Chapters.Where(c => c.Name.Equals(exoBattleCard.Chapter.Name))
+                    Chapter chapter = sc.Chapters.Where(c => c.Name.Equals(battleCardExo.Chapter.Name))
                                                  .FirstOrDefault();
 
-                    exoBattleCard.ChapterId = chapter.ChapterId;
-                    exoBattleCard.Name = "BattleCard " + sc.Classes
-                                            .Where(cl => cl.ClassId.Equals(exoBattleCard.Chapter.ClassId))
+                    battleCardExo.ChapterId = chapter.ChapterId;
+                    battleCardExo.Name = "BattleCard " + sc.Classes
+                                            .Where(cl => cl.ClassId.Equals(battleCardExo.Chapter.ClassId))
                                             .Select(cl => cl.Name)
                                             .FirstOrDefault() + exoBattleCardContext.Level
-                                            .Where(l => l.LevelId.Equals(exoBattleCard.LevelId))
+                                            .Where(l => l.LevelId.Equals(battleCardExo.LevelId))
                                             .Select(l => l.Name)
                                             .FirstOrDefault();
-                    exoBattleCard.Chapter = null;
+                    battleCardExo.Chapter = null;
                     
                 }
-                ExerciseBattleCard battleCard = exoBattleCardContext.ExerciseBattleCard.Where(ebattleCard => ebattleCard.Name.Equals(exoBattleCard.Name) && ebattleCard.Level.Name.Equals(exoBattleCard.Level.Name)).FirstOrDefault();
+                //ExerciseBattleCard battleCard = exoBattleCardContext.ExerciseBattleCard.Where(ebattleCard => ebattleCard.Name.Equals(battleCardExo.Name) && ebattleCard.Level.Name.Equals(battleCardExo.Level.Name)).FirstOrDefault();
+                ExerciseBattleCard battleCard = exoBattleCardContext.ExerciseBattleCard.Where(ebattleCard => ebattleCard.Name.Equals(battleCardExo.Name)).FirstOrDefault();                
                 if (battleCard == null)
                 {
-                    //exoBattleCardContext.ExerciseBattleCard.Add(exoBattleCard);
-                    //exoBattleCardContext.SaveChanges();
+                    Exercise exercise = new Exercise();
+                    int exerciseId = 0;
+                    using (ExerciseContext exoContext = new ExerciseContext())
+                    {
+                        ExerciseType exoType = exoContext.ExerciseTypes.Where(exType => exType.Name.Equals("CardGame")).FirstOrDefault();
+                        exercise.ExerciseTypeId = exoType.ExerciseTypeId;
+                        exoContext.Exercises.Add(exercise);
+
+                        exoContext.SaveChanges();
+                        exerciseId = exercise.ExerciseId;
+                    }
+
+                    //Then we save the Exercise Plug
+                    battleCardExo.ExerciseBattleCardId = exerciseId;
+                    exoBattleCardContext.ExerciseBattleCard.Add(battleCardExo);
+                    exoBattleCardContext.SaveChanges();
+
+                    //Finally we affect the exercise to
+                    if (battleCardExo.LevelId.Equals(1))
+                    {
+                        usersIds = null;
+                        usersIds = repo.GetChildrenListIdByClassId(user.ClassId);
+                    }
+                    else
+                    {
+
+                    }
+                    ExerciseAffectation(usersIds, exerciseId);
                     message = "Jeu enregistré";
                 }
                 else
@@ -251,6 +290,7 @@ namespace ITI.ItSchool.Controllers
                 JsonResult data = new JsonResult { Data = message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 return data;
             }
+            #endregion
         }
 
         public JsonResult GetUsersByClasses(int id)

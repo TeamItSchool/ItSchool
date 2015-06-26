@@ -83,7 +83,7 @@
         <div ng-show="EasySelected">
             <h1>{{Message}}</h1>
             <form name="FormChoice" ng-submit="SaveChoice()">
-                <select id="choice" value="choice" ng-model="ExerciseBattleCard.Choice">
+                <select id="choice" value="choice" ng-model="ExerciseBattleCardData.ChoiceData">
                     <!--<option selected disabled>Votre choix</option>-->
                     <option value="alphabet" id="alphabet">Alphabet</option>
                     <option disabled id="choiceTitle">Chiffres et nombres</option>
@@ -93,7 +93,7 @@
                     <option value="0-999">0-999</option>
                 </select>
                 <md-button id="saveExercise" class="md-raised md-primary" type="submit" name="SaveEasyChoice">{{Button}}</md-button>
-                <h2>{{ExerciseBattleCard.Choice}} + {{ExerciseBattleCard.Level.Name}}</h2>
+                <h2>{{ExerciseBattleCardData.ChoiceData}} + {{ExerciseBattleCardData.Level.Name}}</h2>
             </form>
         </div>
         <div ng-show="MediumSelected">
@@ -115,7 +115,7 @@
                 </div>
                  <code style="display: block; padding : 8px;">{{selected | json}}</code> 
                 <md-button id="saveExercise" class="md-raised md-primary" type="submit" name="SaveMediumChoice">{{Button}}</md-button>
-                <h2>{{ExerciseBattleCard.Choice}} + {{ExerciseBattleCard.Level.Name}} + {{ExerciseBattleCard.Users.FirstName}}</h2>
+                <h2>{{ExerciseBattleCardData.ChoiceData}} + {{ExerciseBattleCardData.Level.Name}} + {{ExerciseBattleCardData.Users.FirstName}}</h2>
                 </form>
         </div>
         <div ng-show="HardSelected">
@@ -137,7 +137,7 @@
                 </div>
                 <!-- <code style="display: block; padding : 8px;">{{selected | json}}</code> -->
                 <md-button id="saveExercise" class="md-raised md-primary" type="submit" name="SaveHardChoice">{{Button}}</md-button>
-                <h2>{{ExerciseBattleCard.Choice}} + {{ExerciseBattleCard.Level.Name}}</h2>
+                <h2>{{ExerciseBattleCardData.ChoiceData}} + {{ExerciseBattleCardData.Level.Name}}</h2>
             </form>
         </div>
         </center>
