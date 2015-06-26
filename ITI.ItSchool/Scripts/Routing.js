@@ -1508,7 +1508,6 @@
 
     $scope.ExerciseBattleCardData = {
         //A REMPLIR      
-        Text: '',
         Level: {
             Name: 'Test'
         },
@@ -1560,10 +1559,8 @@
             $scope.ExerciseBattleCardData.ChoiceData = monobjet.data.Nickname + "/" + $scope.ExerciseBattleCardData.ChoiceData;
             var res = $scope.ExerciseBattleCardData.ChoiceData.split("/");
 
-            if ($scope.ExerciseBattleCardData.Level.Name != "Easy") {
-                console.log($scope.ExerciseBattleCardData.Level.Name);
-                $scope.ExerciseBattleCardData.UsersIds = $scope.selected;
-            }
+
+            $scope.ExerciseBattleCardData.UsersIds = $scope.selected;
                 
 
             SaveBattleCardChoice.GetChoice($scope.ExerciseBattleCardData).then(function (d) {

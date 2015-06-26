@@ -570,6 +570,8 @@ namespace ITI.ItSchool.Models
                                                  .FirstOrDefault();
 
                     battleCardExo.ChapterId = chapter.ChapterId;
+                    battleCardExo.LevelId = exoBattleCardContext.Level.Where(l => l.Name.Equals(exoBattleCardData.Level.Name)).Select(l => l.LevelId).FirstOrDefault();
+                    battleCardExo.Level = null;
                     battleCardExo.Name = "BattleCard " + sc.Classes
                                             .Where(cl => cl.ClassId.Equals(battleCardExo.Chapter.ClassId))
                                             .Select(cl => cl.Name)
