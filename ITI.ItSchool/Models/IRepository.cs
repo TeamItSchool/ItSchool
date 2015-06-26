@@ -1,4 +1,6 @@
-﻿using ITI.ItSchool.Models.Entities;
+﻿using ITI.ItSchool.Models.ClassExercicesPlug;
+using ITI.ItSchool.Models.Entities;
+using ITI.ItSchool.Models.PlugExercises;
 using ITI.ItSchool.Models.SchoolEntities;
 using ITI.ItSchool.Models.UserEntities;
 using System;
@@ -19,6 +21,10 @@ namespace ITI.ItSchool.Models
         List<int> GetChildrenListIdByClassId( int id );
 
         JsonResult FindUserByNickname(string nickname);
+
+        JsonResult SaveDictation( ExerciseDictationData dictationData );
+
+        // void ExerciseAffectation( List<int> usersIds, int exerciseId );
 
         JsonResult GetChapters();
 
