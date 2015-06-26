@@ -31,6 +31,14 @@
         </div>
         <div ng-show="EasySelected">
             <h1>{{Message}}</h1>
+            
+        </div>
+        <div ng-show="MediumSelected">
+            <h1>{{Message}}</h1>
+            
+        </div>
+        <div ng-show="HardSelected">
+            <h1>{{Message}}</h1>
             <form name="DictText" ng-submit="SaveText()">
                 <div ng-repeat="child in Children">
                     <md-checkbox ng-checked="exists(child, selected)" ng-click="toggle(child, selected)">
@@ -48,17 +56,11 @@
 
                 <h2>Log</h2>
                 <pre id="log"></pre>
-                
-                <textarea ng-model="ExerciseDictation.Text" name="text" placeholder="Texte de la dictée..." rows="5" cols="40"></textarea><br />
+
+                <textarea ng-model="ExerciseDictationData.Text" name="text" placeholder="Texte de la dictée..." rows="5" cols="40"></textarea><br />
                 <md-button class="md-raised md-primary" type="submit" name="SaveEasyText">{{Button}}</md-button>
-                <h2>{{ExerciseDictation.Text}} + {{ExerciseDictation.Level.Name}}</h2>
+                <h2>{{ExerciseDictationData.Text}} + {{ExerciseDictationData.Level.Name}}</h2>
             </form>
-        </div>
-        <div ng-show="MediumSelected">
-            <h1>{{Message}}</h1>
-        </div>
-        <div ng-show="HardSelected">
-            <h1>{{Message}}</h1>
         </div>
     </center>
 </div>

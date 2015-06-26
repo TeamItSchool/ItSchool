@@ -16,6 +16,8 @@ namespace ITI.ItSchool.Models
 
         List<User> GetChildrenListByClassId( int id );
 
+        List<int> GetChildrenListIdByClassId( int id );
+
         JsonResult FindUserByNickname(string nickname);
 
         JsonResult GetChapters();
