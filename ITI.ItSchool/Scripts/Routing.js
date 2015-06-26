@@ -477,8 +477,8 @@
                 } else if (d.data.Nickname != null && d.data.Group.Name == "Professeurs") {
                     $scope.LoginData.Username = "";
                     $scope.LoginData.Password = "";
-                    alert("Attention, vous vous trouvez actuellement dans l'espace des élèves.\n Veuillez cliquez sur le bouton 'Espace Professeur'.");
-                    $scope.Message = "Rejoins l'espace 'Enfant'";
+                    alert("Attention, vous vous trouvez actuellement dans l'espace des élèves.\nVeuillez cliquez sur le bouton 'Espace Professeur'.");
+                    $scope.Message = "Nous vous invitons à rejoindre l'espace 'Professeur'";
                     $scope.IsTeacher = true;
                 }
                 else {
@@ -865,6 +865,7 @@
 })
 .controller("TeacherRegistrationController", function ($scope, RegistrationService, LoginService) {
 
+    console.log(sessionStorage.getItem("objet"));
     sessionStorage.removeItem("objet");
     $scope.submitText = "Inscription";
     $scope.submitted = false;
@@ -1055,12 +1056,7 @@
             $scope.ExerciseDictationData.Text = monobjet.data.Nickname + "/" + $scope.ExerciseDictationData.Text;
             var res = $scope.ExerciseDictationData.Text.split("/");
 
-            if ($scope.ExerciseDictationData.Level.Name != "Easy")
-                $scope.ExerciseDictationData.UsersIds = $scope.selected;
-            //else if ($scope.ExerciseDictationData.Level.Name != "Medium")
-            //    $scope.ExerciseDictationData.UsersIds = $scope.selected;
-            //else if ($scope.ExerciseDictationData.Level.Name != "Hard")
-            //    $scope.ExerciseDictationData.UsersIds = $scope.selected;
+            $scope.ExerciseDictationData.UsersIds = $scope.selected;
 
             SaveDictationText.GetText($scope.ExerciseDictationData).then(function (d) {
                 $scope.ExerciseDictationData.Text = res[1];
