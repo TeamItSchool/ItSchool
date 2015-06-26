@@ -757,22 +757,42 @@
     };
 })
 .controller("TeacherClozeExerciseController", function ($scope, ExerciseDatas) {
+
+    $scope.Message = 'Sélectionnez un niveau.';
+    $scope.EasySelected = false;
+    $scope.MediumSelected = false;
+    $scope.HardSelected = false;
     $scope.Message = 'Configuration de l\'exercice';
     $scope.Button = 'Sauvegarder';
     $scope.IsFormValid = false;
-    $scope.Exercise = {
+    $scope.ExerciseClozeData = {
         Text: '',
+        Words: '',
         Level: {
             Name: '',
         },
-        Words: '',
         Chapter: {
-            Name: '',
-        },
-        ExerciseType: {
             Name: '',
         }
     };
+
+    $scope.Easy = function () {
+        $scope.EasySelected = true;
+        $scope.Message = "Insérez le texte (Niveau 'facile')";
+        $scope.ExerciseDictationData.Level.Name = "Easy";
+    }
+
+    $scope.Medium = function () {
+        $scope.MediumSelected = true;
+        $scope.Message = "Insérez le texte (Niveau 'moyen')";
+        $scope.ExerciseDictationData.Level.Name = "Medium";
+    }
+
+    $scope.Hard = function () {
+        $scope.HardSelected = true;
+        $scope.Message = "Insérez le texte (Niveau 'difficile')";
+        $scope.ExerciseDictationData.Level.Name = "Hard";
+    }
 
     $scope.DatabaseText = null;
     $scope.Words = null;
@@ -786,14 +806,6 @@
     }, function (error) {
         alert('An error occured. See console for more details.')
         console.log('Error L435 is ' + error);
-    });
-
-    ExerciseDatas.GetLevels().then(function (d) {
-        $scope.Levels = d.data;
-        console.log("in levels");
-    }, function (error) {
-        alert('An error occured. See console for more details.');
-        console.log(error);
     });
 
     ExerciseDatas.GetClozeExercise().then(function (d) {
@@ -819,7 +831,6 @@
                 };
                 arrayJsonFormat.push( word );
                 uniqueWords.push(wordsText[i]);
-                savedIndex = i+1;
             } else {
                 for (var j = 0; j < arrayJsonFormat.length; j++) {
                     if( arrayJsonFormat[j].value == wordsText[i] ) {
@@ -829,16 +840,6 @@
                 }
             }
         }
-
-        //for( var j = 0; j < uniqueWords.length; j++ ) {
-        //    var word = {
-        //        "word": uniqueWords[ j ],
-        //        "count": 1
-        //    };
-
-        //    wordsWithCount.push( word );
-        //}
-
         $scope.myData = arrayJsonFormat;
     }, function (error) {
         alert("An error occured");

@@ -6720,6 +6720,7 @@
     <Compile Include="Models\AvatarEntities\Foot.cs" />
     <Compile Include="Models\AvatarEntities\Legs.cs" />
     <Compile Include="Models\CardsData.cs" />
+    <Compile Include="Models\ClassExercicesPlug\ExerciseClozeData.cs" />
     <Compile Include="Models\ClassExercicesPlug\ExerciseDictationData.cs" />
     <Compile Include="Models\Contexts\ExerciseBattleCardContext.cs" />
     <Compile Include="Models\Contexts\ExerciseClozeContext.cs" />

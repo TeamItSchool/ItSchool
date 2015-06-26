@@ -159,7 +159,6 @@ namespace ITI.ItSchool.Controllers
                     exerciseContext.SaveChanges();
                 }
             }
-                
         }
 
         public JsonResult GetSpecificChilden( int id )
@@ -311,9 +310,11 @@ namespace ITI.ItSchool.Controllers
             return jsonData;
         }
 
-        public void SaveClozeExercise(ExerciseCloze exerciseCloze)
+        public string CreateClozeExercise( ExerciseClozeData exerciseCloze )
         {
-
+            IRepository db = new SQLRepository();
+            string creationInfo = db.CreateExerciseCloze( exerciseCloze );
+            return creationInfo;
         }
 
         public JsonResult GetChapters()

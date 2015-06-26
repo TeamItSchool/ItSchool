@@ -1,7 +1,9 @@
 ﻿using ITI.ItSchool.Models.AvatarEntities;
+using ITI.ItSchool.Models.ClassExercicesPlug;
 using ITI.ItSchool.Models.Contexts;
 using ITI.ItSchool.Models.Entities;
 using ITI.ItSchool.Models.ExerciseEntities;
+using ITI.ItSchool.Models.ExercisesEntities;
 using ITI.ItSchool.Models.PlugExercises;
 using ITI.ItSchool.Models.SchoolEntities;
 using ITI.ItSchool.Models.UserEntities;
@@ -30,7 +32,7 @@ namespace ITI.ItSchool.Models
             return false;
         }
         /// <summary>
-        /// 
+        /// Checks if there is an existing mail in the db when the user submits it's register.
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
@@ -297,22 +299,6 @@ namespace ITI.ItSchool.Models
             }
             return childrenIDs;
         }
-
-        public JsonResult GetClozeExerciseContent()
-        {
-            ExerciseCloze ec = new ExerciseCloze();
-            JsonResult data = null;
-            using( var db = new ExerciseClozeContext() )
-            {
-                db.Configuration.LazyLoadingEnabled = false;
-                //var query = from e in db.ExerciseCloze
-                //            where e.Name == "Mon premier texte à trous"
-                //            select e;
-                ec = db.ExerciseCloze.Where(e => e.Name.Equals("Mon premier texte à trous")).FirstOrDefault();
-                data = new JsonResult { Data = ec, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-            }
-            return data;
-        }
        
         /// <summary>
         /// Gets all pupils' classes.
@@ -416,6 +402,70 @@ namespace ITI.ItSchool.Models
                 data =  new JsonResult { Data = users, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
             return data;
+        }
+
+
+        public JsonResult GetClozeExerciseContent()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Creates a new cloze exercise. 
+        /// </summary>
+        /// <param name="exCloze">The exercise to Create</param>
+        /// <returns>3 probables possibilities : "created" means that we had well create the exercise, 
+        /// "error existing name" means that there is already an exercise named with the same name received, "not created" 
+        /// in any other case.</returns>
+        public string CreateClozeExercise( ExerciseClozeData exCloze )
+        {
+            List<int> userIds = new List<int>();
+            if( exCloze.UsersIds != null ) userIds = exCloze.UsersIds.ToList();
+
+            ExerciseType et = new ExerciseType();
+            Exercise exercise = new Exercise();
+            ExerciseCloze ec = new ExerciseCloze();
+            Chapter c = new Chapter();
+            Level l = new Level();
+            string exerciseName = "";
+            string levelReceived = exCloze.Level.Name;
+            string chapterReceived = exCloze.Chapter.Name;
+            string isCreated = "not created";
+
+            // Get the Id of the Exercise Type and create a new Exercise
+            using( var db = new ExerciseContext() )
+            {
+                et = db.ExerciseTypes.Where( ex => ex.Name.Equals("Texte à trous") ).FirstOrDefault();
+                exercise.ExerciseTypeId = et.ExerciseTypeId;
+                db.Exercises.Add( exercise );
+            }
+
+            // Get the Id of the Chapter which what we refer to
+            using( var db = new SchoolContext() )
+            {
+                c = db.Chapters.Where( ch => ch.Name.Equals( chapterReceived ) ).FirstOrDefault();
+            }
+
+            // We create the Exercise cloze after catching all the FK we needed, and assign to the exercise an
+            // unique id
+            using( var db = new ExerciseClozeContext() )
+            {
+                // Before we check if the we already have an exercise cloze with an existing name
+                ec = db.ExerciseCloze.Where( ex => ex.Name.Equals( exCloze.Name ) ).FirstOrDefault();
+                exerciseName = ec.Name;
+
+                if ( !String.IsNullOrEmpty(exerciseName) ) return "error existing name";
+
+                l = db.Level.Where( lv => lv.Name.Equals( levelReceived ) ).FirstOrDefault();
+                exCloze.ExerciseClozeId = 
+                exCloze.Level.LevelId = l.LevelId;
+                exCloze.ChapterId = c.ChapterId;
+                db.ExerciseCloze.Add( exCloze );
+                //isCreated = "created";
+            }
+
+
+            return isCreated;
         }
     }
 }
