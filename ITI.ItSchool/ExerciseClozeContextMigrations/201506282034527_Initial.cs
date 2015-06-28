@@ -11,9 +11,8 @@ namespace ITI.ItSchool.ExerciseClozeContextMigrations
                 "dbo.ExerciseCloze",
                 c => new
                     {
-                        ExerciseClozeId = c.Int(nullable: false, identity: true),
+                        ExerciseClozeId = c.Int(nullable: false),
                         Name = c.String(maxLength: 50),
-                        ExerciseTypeId = c.Int(nullable: false),
                         LevelId = c.Int(nullable: false),
                         ChapterId = c.Int(nullable: false),
                         Text = c.String(),
@@ -21,9 +20,9 @@ namespace ITI.ItSchool.ExerciseClozeContextMigrations
                     })
                 .PrimaryKey(t => t.ExerciseClozeId)
                 .ForeignKey("dbo.Chapters", t => t.ChapterId, cascadeDelete: true)
-                .ForeignKey("dbo.ExercisesTypes", t => t.ExerciseTypeId, cascadeDelete: true)
+                .ForeignKey("dbo.Exercises", t => t.ExerciseClozeId)
                 .ForeignKey("dbo.Levels", t => t.LevelId, cascadeDelete: true)
-                .Index(t => t.ExerciseTypeId)
+                .Index(t => t.ExerciseClozeId)
                 .Index(t => t.LevelId)
                 .Index(t => t.ChapterId);
             
@@ -141,15 +140,12 @@ namespace ITI.ItSchool.ExerciseClozeContextMigrations
             //        {
             //            ExerciseId = c.Int(nullable: false, identity: true),
             //            ExerciseTypeId = c.Int(nullable: false),
-            //            AffectedClass = c.Int(nullable: false),
             //            Chapter_ChapterId = c.Int(),
             //        })
             //    .PrimaryKey(t => t.ExerciseId)
-            //    .ForeignKey("dbo.Classes", t => t.AffectedClass, cascadeDelete: true)
             //    .ForeignKey("dbo.ExercisesTypes", t => t.ExerciseTypeId, cascadeDelete: true)
             //    .ForeignKey("dbo.Chapters", t => t.Chapter_ChapterId)
             //    .Index(t => t.ExerciseTypeId)
-            //    .Index(t => t.AffectedClass)
             //    .Index(t => t.Chapter_ChapterId);
             
             //CreateTable(
@@ -200,13 +196,12 @@ namespace ITI.ItSchool.ExerciseClozeContextMigrations
         public override void Down()
         {
             DropForeignKey("dbo.ExerciseCloze", "LevelId", "dbo.Levels");
-            DropForeignKey("dbo.ExerciseCloze", "ExerciseTypeId", "dbo.ExercisesTypes");
+            DropForeignKey("dbo.ExerciseCloze", "ExerciseClozeId", "dbo.Exercises");
             DropForeignKey("dbo.ExerciseCloze", "ChapterId", "dbo.Chapters");
             DropForeignKey("dbo.Chapters", "ThemeId", "dbo.Themes");
             DropForeignKey("dbo.Themes", "MatterId", "dbo.Matters");
             DropForeignKey("dbo.Exercises", "Chapter_ChapterId", "dbo.Chapters");
             DropForeignKey("dbo.Exercises", "ExerciseTypeId", "dbo.ExercisesTypes");
-            DropForeignKey("dbo.Exercises", "AffectedClass", "dbo.Classes");
             DropForeignKey("dbo.Chapters", "ChapterId", "dbo.Classes");
             DropForeignKey("dbo.Users", "GroupId", "dbo.Groups");
             DropForeignKey("dbo.Users", "ClassId", "dbo.Classes");
@@ -216,7 +211,6 @@ namespace ITI.ItSchool.ExerciseClozeContextMigrations
             DropForeignKey("dbo.Avatars", "BodyId", "dbo.Bodies");
             DropIndex("dbo.Themes", new[] { "MatterId" });
             DropIndex("dbo.Exercises", new[] { "Chapter_ChapterId" });
-            DropIndex("dbo.Exercises", new[] { "AffectedClass" });
             DropIndex("dbo.Exercises", new[] { "ExerciseTypeId" });
             DropIndex("dbo.Avatars", new[] { "BodyId" });
             DropIndex("dbo.Avatars", new[] { "LegsId" });
@@ -228,7 +222,7 @@ namespace ITI.ItSchool.ExerciseClozeContextMigrations
             DropIndex("dbo.Chapters", new[] { "ChapterId" });
             DropIndex("dbo.ExerciseCloze", new[] { "ChapterId" });
             DropIndex("dbo.ExerciseCloze", new[] { "LevelId" });
-            DropIndex("dbo.ExerciseCloze", new[] { "ExerciseTypeId" });
+            DropIndex("dbo.ExerciseCloze", new[] { "ExerciseClozeId" });
             DropTable("dbo.Levels");
             DropTable("dbo.Matters");
             DropTable("dbo.Themes");

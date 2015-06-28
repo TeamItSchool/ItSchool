@@ -17,15 +17,30 @@ namespace ITI.ItSchool.Models
     public class SQLRepository : IRepository
     {
         /// <summary>
+        /// [HELPER METHOD] Finds a user by it's id.
+        /// </summary>
+        /// <param name="id">The id of the user we are looking for.</param>
+        /// <returns>The user we found.</returns>
+        private User FindById( int id )
+        {
+            User userFound = null;
+            using( var db = new UserContext() )
+            {
+                userFound = db.Users.Where( u => u.UserId.Equals( id ) ).FirstOrDefault();
+            }
+            return userFound;
+        }
+
+        /// <summary>
         /// Checks if the fields on the client side are well filled
         /// </summary>
         /// <param name="user">The user which contains the fields (name, class, nickname...)</param>
         /// <returns>True if all the specified fields are not empty.</returns>
-        private bool CheckEmptyFields( User user )
+        private bool CheckEmptyFields(User user)
         {
-            if( String.IsNullOrEmpty( user.FirstName ) || String.IsNullOrEmpty( user.LastName ) ||
-                String.IsNullOrEmpty( user.Mail ) || String.IsNullOrEmpty( user.Nickname ) ||
-                String.IsNullOrEmpty( user.Password ) )
+            if (String.IsNullOrEmpty(user.FirstName) || String.IsNullOrEmpty(user.LastName) ||
+                String.IsNullOrEmpty(user.Mail) || String.IsNullOrEmpty(user.Nickname) ||
+                String.IsNullOrEmpty(user.Password))
             {
                 return true;
             }
@@ -36,16 +51,16 @@ namespace ITI.ItSchool.Models
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        private bool CheckExistingMail( User user )
+        private bool CheckExistingMail(User user)
         {
             User usersMail = null;
 
-            using( var db = new UserContext() )
+            using (var db = new UserContext())
             {
-                usersMail = db.Users.Where( u => u.Mail.Equals( user.Mail ) ).FirstOrDefault();
+                usersMail = db.Users.Where(u => u.Mail.Equals(user.Mail)).FirstOrDefault();
 
-                if( usersMail == null ) return false;
-       
+                if (usersMail == null) return false;
+
                 return true;
             }
         }
@@ -55,13 +70,13 @@ namespace ITI.ItSchool.Models
         /// </summary>
         /// <param name="class">The class object to create.</param>
         /// <returns>True if it has well created.</returns>
-        public bool Create( Class @class )
+        public bool Create(Class @class)
         {
             bool isCreated = false;
-            using( var db = new SchoolContext() )
+            using (var db = new SchoolContext())
             {
                 db.Configuration.LazyLoadingEnabled = false;
-                db.Classes.Add( @class );
+                db.Classes.Add(@class);
                 db.SaveChanges();
                 isCreated = true;
             }
@@ -74,7 +89,7 @@ namespace ITI.ItSchool.Models
         /// </summary>
         /// <param name="user">The user to create as an object</param>
         /// <returns>True if the user was well created.</returns>
-        public bool Create( User user )
+        public bool Create(User user)
         {
             User userToCreate = null;
             Avatar userAvatar = new Avatar();
@@ -83,14 +98,14 @@ namespace ITI.ItSchool.Models
             bool mailExists = true;
             bool emptyFields = false;
 
-            if( user == null ) throw new ArgumentNullException( "The 'User' as an object type is null.", "user" );
+            if (user == null) throw new ArgumentNullException("The 'User' as an object type is null.", "user");
 
-            using ( var userContext = new UserContext() )
+            using (var userContext = new UserContext())
             {
                 userContext.Configuration.LazyLoadingEnabled = false;
-                userToCreate = userContext.Users.Where(u => u.Nickname.Equals( user.Nickname ) ).FirstOrDefault();
-                mailExists = this.CheckExistingMail( user );
-                emptyFields = this.CheckEmptyFields( user );
+                userToCreate = userContext.Users.Where(u => u.Nickname.Equals(user.Nickname)).FirstOrDefault();
+                mailExists = this.CheckExistingMail(user);
+                emptyFields = this.CheckEmptyFields(user);
 
                 if (userToCreate == null)
                 {
@@ -138,7 +153,7 @@ namespace ITI.ItSchool.Models
                         userContext.Users.Add(user);
                         userContext.SaveChanges();
                         int i = user.UserId;
-                        group = userContext.Groups.Include("Users").Where( gr => gr.Name.Equals( user.Group.Name ) ).FirstOrDefault();
+                        group = userContext.Groups.Include("Users").Where(gr => gr.Name.Equals(user.Group.Name)).FirstOrDefault();
                         return true;
                     }
                     else return false;
@@ -153,12 +168,12 @@ namespace ITI.ItSchool.Models
         /// </summary>
         /// <param name="nickname">The concerned user's nickname.</param>
         /// <returns>the User</returns>
-        public User FindByNickname( string nickname )
+        public User FindByNickname(string nickname)
         {
             User user = null;
-            using( var uc = new UserContext() )
+            using (var uc = new UserContext())
             {
-                user = uc.Users.Where( a => a.Nickname.Equals( nickname ) ).FirstOrDefault();
+                user = uc.Users.Where(a => a.Nickname.Equals(nickname)).FirstOrDefault();
             }
             return user;
         }
@@ -168,19 +183,19 @@ namespace ITI.ItSchool.Models
         /// </summary>
         /// <param name="nickname">String which represent the concerd user's nickname</param>
         /// <returns>JSon Data for AngularJS</returns>
-        public JsonResult FindUserByNickname( string nickname )
+        public JsonResult FindUserByNickname(string nickname)
         {
             JsonResult jsonData = null;
-            using( var uc = new UserContext() )
+            using (var uc = new UserContext())
             {
                 uc.Configuration.LazyLoadingEnabled = false;
                 User user = uc.Users
                     .Include("Class")
                     .Include("Group")
                     .Include("Avatar")
-                    .Where( a => a.Nickname.Equals( nickname ) ).FirstOrDefault();
+                    .Where(a => a.Nickname.Equals(nickname)).FirstOrDefault();
                 jsonData = new JsonResult { Data = user, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-                if( user != null )
+                if (user != null)
                 {
                     user.Class.Users = null;
                     user.Group.Users = null;
@@ -197,13 +212,13 @@ namespace ITI.ItSchool.Models
             return jsonData;
         }
 
-        public JsonResult SetExercise( Exercise exercise )
+        public JsonResult SetExercise(Exercise exercise)
         {
             JsonResult jr = null;
 
-            using ( var db = new ExerciseContext() )
+            using (var db = new ExerciseContext())
             {
-                Exercise e = db.Exercises.Add( exercise );
+                Exercise e = db.Exercises.Add(exercise);
                 db.SaveChanges();
                 var jsonData = new JsonResult { Data = e, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 jr = jsonData;
@@ -218,7 +233,7 @@ namespace ITI.ItSchool.Models
         public IList<User> FindAllUsers()
         {
             IList<User> users = new List<User>();
-            using( UserContext userContext = new UserContext() )
+            using (UserContext userContext = new UserContext())
             {
                 users = userContext.Users.ToList();
             }
@@ -226,10 +241,10 @@ namespace ITI.ItSchool.Models
             return users;
         }
 
-        public IList<User> Update( User user )
+        public IList<User> Update(User user)
         {
             IList<User> userToUpdate = new List<User>();
-            using( var db = new UserContext() )
+            using (var db = new UserContext())
             {
                 var query = from u in db.Users
                             where u.UserId == user.UserId
@@ -255,20 +270,20 @@ namespace ITI.ItSchool.Models
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public JsonResult GetChildrenByClassId( int id)
+        public JsonResult GetChildrenByClassId(int id)
         {
             List<User> users = new List<User>();
             JsonResult data = null;
-            using( UserContext uc = new UserContext() )
+            using (UserContext uc = new UserContext())
             {
                 uc.Configuration.LazyLoadingEnabled = false;
                 users = uc.Users
                     .Include("Avatar")
                     .Include("Class")
                     .Include("Group")
-                    .Where( u => u.ClassId.Equals( id ) ).Where( u => u.Group.Name.Equals( "Élèves" ) ).ToList();
+                    .Where(u => u.ClassId.Equals(id)).Where(u => u.Group.Name.Equals("Élèves")).ToList();
 
-                for( int i = 0; i < users.Count(); i++ )
+                for (int i = 0; i < users.Count(); i++)
                 {
                     users[i].Class.Users = null;
                     users[i].Group.Users = null;
@@ -280,26 +295,26 @@ namespace ITI.ItSchool.Models
             return data;
         }
 
-        public List<User> GetChildrenListByClassId( int id )
+        public List<User> GetChildrenListByClassId(int id)
         {
             List<User> children = new List<User>();
-            using( UserContext uc = new UserContext() )
+            using (UserContext uc = new UserContext())
             {
-                children = uc.Users.Where( u => u.ClassId.Equals( id ) ).Where( u => u.Group.Name.Equals( "Élèves" ) ).ToList();
+                children = uc.Users.Where(u => u.ClassId.Equals(id)).Where(u => u.Group.Name.Equals("Élèves")).ToList();
             }
             return children;
         }
 
-        public List<int> GetChildrenListIdByClassId( int id )
+        public List<int> GetChildrenListIdByClassId(int id)
         {
             List<int> childrenIDs = new List<int>();
-            using( UserContext uc = new UserContext() )
+            using (UserContext uc = new UserContext())
             {
-                childrenIDs = uc.Users.Where( u => u.ClassId.Equals( id ) ).Where( u => u.Group.Name.Equals( "Élèves" ) ).Select( u => u.UserId ).ToList();
+                childrenIDs = uc.Users.Where(u => u.ClassId.Equals(id)).Where(u => u.Group.Name.Equals("Élèves")).Select(u => u.UserId).ToList();
             }
             return childrenIDs;
         }
-       
+
         /// <summary>
         /// Gets all pupils' classes.
         /// </summary>
@@ -343,27 +358,22 @@ namespace ITI.ItSchool.Models
             }
         }
 
-        public User FindById( int id )
+        public User FindByGrade(string grade)
         {
             throw new NotImplementedException();
         }
 
-        public User FindByGrade( string grade )
+        public User FindByMail(string mail)
         {
             throw new NotImplementedException();
         }
 
-        public User FindByMail( string mail )
+        public bool Remove(int id)
         {
             throw new NotImplementedException();
         }
 
-        public bool Remove( int id )
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Remove( User u )
+        public bool Remove(User u)
         {
             throw new NotImplementedException();
         }
@@ -371,7 +381,7 @@ namespace ITI.ItSchool.Models
 
         public JsonResult getBattleCardChoice()
         {
-            using(var db = new ExerciseBattleCardContext())
+            using (var db = new ExerciseBattleCardContext())
             {
                 //db.ExerciseBattleCard.Where(exBattle => exBattle.Choice.Equals())
             }
@@ -383,15 +393,15 @@ namespace ITI.ItSchool.Models
         {
             List<User> users = new List<User>();
             JsonResult data = null;
-            using(var uc = new UserContext())
+            using (var uc = new UserContext())
             {
                 uc.Configuration.LazyLoadingEnabled = false;
-                
+
                 users = uc.Users
                     .Include("Avatar")
                     .Include("Class")
                     .Include("Group")
-                    .Where(u => u.ClassId.Equals(id)).Where( u => u.Group.Name.Equals("Élèves") ).ToList();
+                    .Where(u => u.ClassId.Equals(id)).Where(u => u.Group.Name.Equals("Élèves")).ToList();
 
                 for (int i = 0; i < users.Count(); ++i)
                 {
@@ -399,7 +409,7 @@ namespace ITI.ItSchool.Models
                     users[i].Group.Users = null;
                     users[i].Avatar.User = null;
                 }
-                data =  new JsonResult { Data = users, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                data = new JsonResult { Data = users, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
             return data;
         }
@@ -414,58 +424,98 @@ namespace ITI.ItSchool.Models
         /// Creates a new cloze exercise. 
         /// </summary>
         /// <param name="exCloze">The exercise to Create</param>
-        /// <returns>3 probables possibilities : "created" means that we had well create the exercise, 
+        /// <returns>3 probables possibilities : "created" means that we have well created the exercise, 
         /// "error existing name" means that there is already an exercise named with the same name received, "not created" 
         /// in any other case.</returns>
-        public string CreateClozeExercise( ExerciseClozeData exCloze )
+        public string CreateExerciseCloze( ExerciseClozeData exCloze )
         {
-            List<int> userIds = new List<int>();
-            if( exCloze.UsersIds != null ) userIds = exCloze.UsersIds.ToList();
-
+            List<int> usersIds = new List<int>();
             ExerciseType et = new ExerciseType();
             Exercise exercise = new Exercise();
             ExerciseCloze ec = new ExerciseCloze();
             Chapter c = new Chapter();
             Level l = new Level();
+            User pupil = new User();
             string exerciseName = "";
+            string nameReceived = exCloze.Name;
             string levelReceived = exCloze.Level.Name;
             string chapterReceived = exCloze.Chapter.Name;
-            string isCreated = "not created";
+            string creationInfo = "not created";
 
-            // Get the Id of the Exercise Type and create a new Exercise
-            using( var db = new ExerciseContext() )
-            {
-                et = db.ExerciseTypes.Where( ex => ex.Name.Equals("Texte à trous") ).FirstOrDefault();
-                exercise.ExerciseTypeId = et.ExerciseTypeId;
-                db.Exercises.Add( exercise );
-            }
+            if( exCloze.UsersIds != null ) usersIds.ToList();
+
+            pupil = this.FindById( usersIds[0] );
 
             // Get the Id of the Chapter which what we refer to
-            using( var db = new SchoolContext() )
+            using (var db = new SchoolContext())
             {
-                c = db.Chapters.Where( ch => ch.Name.Equals( chapterReceived ) ).FirstOrDefault();
+                c = db.Chapters.Where(ch => ch.Name.Equals(chapterReceived)).FirstOrDefault();
             }
 
             // We create the Exercise cloze after catching all the FK we needed, and assign to the exercise an
             // unique id
-            using( var db = new ExerciseClozeContext() )
+            using (var db = new ExerciseClozeContext())
             {
                 // Before we check if the we already have an exercise cloze with an existing name
-                ec = db.ExerciseCloze.Where( ex => ex.Name.Equals( exCloze.Name ) ).FirstOrDefault();
+                ec = db.ExerciseCloze.Where( ex => ex.Name.Equals( nameReceived ) ).FirstOrDefault();
                 exerciseName = ec.Name;
 
-                if ( !String.IsNullOrEmpty(exerciseName) ) return "error existing name";
+                if ( !String.IsNullOrEmpty( exerciseName ) ) return "error existing name";
+
+                // Get the Id of the Exercise Type and create a new Exercise
+                using (var exerciseContext = new ExerciseContext())
+                {
+                    et = exerciseContext.ExerciseTypes.Where(ex => ex.Name.Equals("Texte à trous")).FirstOrDefault();
+                    exercise.ExerciseTypeId = et.ExerciseTypeId;
+                    exerciseContext.Exercises.Add(exercise);
+                }
 
                 l = db.Level.Where( lv => lv.Name.Equals( levelReceived ) ).FirstOrDefault();
-                exCloze.ExerciseClozeId = 
-                exCloze.Level.LevelId = l.LevelId;
-                exCloze.ChapterId = c.ChapterId;
-                db.ExerciseCloze.Add( exCloze );
-                //isCreated = "created";
+                
+                // Create the cloze exercise
+                ec.Name = exCloze.Name;
+                ec.Text = exCloze.Text;
+                ec.Words = exCloze.HiddenWords;
+                ec.ChapterId = c.ChapterId;
+                ec.LevelId = l.LevelId;
+
+                db.ExerciseCloze.Add( ec );
+                db.SaveChanges();
+                creationInfo = "created";
             }
 
+            // Finally, we affect the exercise : if the level is Easy, we affect the exercise to all the class.
+            // Else, we affect it to some pupils only : the list which we have received. 
+            if (ec.LevelId == 1)
+            {
+                usersIds = null;
+                usersIds = this.GetChildrenListIdByClassId( pupil.ClassId );
+                this.AffectExercise( usersIds, exercise.ExerciseId );
+            }
+            else
+            {
+                this.AffectExercise( usersIds, exercise.ExerciseId );
+            }
 
-            return isCreated;
+            return creationInfo;
+        }
+
+        public void AffectExercise( List<int> usersIds, int exerciseId )
+        {
+            using (ExerciseContext exerciseContext = new ExerciseContext())
+            {
+                for (int i = 0; i < usersIds.Count(); i++)
+                {
+                    ExerciseAffectation exerciseAffectation = new ExerciseAffectation();
+                    exerciseAffectation.UserId = usersIds[i];
+                    exerciseAffectation.ExerciseId = exerciseId;
+                    exerciseAffectation.CreationDate = DateTime.Now;
+                    exerciseAffectation.FirstViewDate = exerciseAffectation.CreationDate;
+                    exerciseAffectation.EndDate = DateTime.Now;
+                    exerciseContext.ExercisesAffectations.Add(exerciseAffectation);
+                    exerciseContext.SaveChanges();
+                }
+            }
         }
     }
 }

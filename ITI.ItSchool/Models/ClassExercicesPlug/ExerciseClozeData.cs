@@ -9,6 +9,8 @@ namespace ITI.ItSchool.Models.ClassExercicesPlug
 {
     public class ExerciseClozeData
     {
+        public string Name { get; set; }
+
         public string Text { get; set; }
 
         public string HiddenWords { get; set; }

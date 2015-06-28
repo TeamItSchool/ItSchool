@@ -1,4 +1,4 @@
-namespace ITI.ItSchool.UserContextMigrations
+namespace ITI.ItSchool.ExerciseContextMigrations
 {
     using System;
     using System.Data.Entity.Migrations;
@@ -8,14 +8,42 @@ namespace ITI.ItSchool.UserContextMigrations
         public override void Up()
         {
             //CreateTable(
-            //    "dbo.Groups",
+            //    "dbo.Exercises",
             //    c => new
             //        {
-            //            GroupId = c.Int(nullable: false, identity: true),
-            //            Name = c.String(nullable: false, maxLength: 45),
-            //            Remarks = c.String(maxLength: 200),
+            //            ExerciseId = c.Int(nullable: false, identity: true),
+            //            ExerciseTypeId = c.Int(nullable: false),
             //        })
-            //    .PrimaryKey(t => t.GroupId);
+            //    .PrimaryKey(t => t.ExerciseId)
+            //    .ForeignKey("dbo.ExercisesTypes", t => t.ExerciseTypeId, cascadeDelete: true)
+            //    .Index(t => t.ExerciseTypeId);
+            
+            //CreateTable(
+            //    "dbo.ExercisesTypes",
+            //    c => new
+            //        {
+            //            ExerciseTypeId = c.Int(nullable: false, identity: true),
+            //            Name = c.String(nullable: false, maxLength: 45),
+            //            Description = c.String(maxLength: 200),
+            //        })
+            //    .PrimaryKey(t => t.ExerciseTypeId);
+            
+            CreateTable(
+                "dbo.ExercisesAffectations",
+                c => new
+                    {
+                        ExerciseAffectationId = c.Int(nullable: false, identity: true),
+                        UserId = c.Int(nullable: false),
+                        ExerciseId = c.Int(nullable: false),
+                        CreationDate = c.DateTime(nullable: false),
+                        FirstViewDate = c.DateTime(nullable: false),
+                        EndDate = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.ExerciseAffectationId)
+                .ForeignKey("dbo.Exercises", t => t.ExerciseId, cascadeDelete: true)
+                .ForeignKey("dbo.Users", t => t.UserId)
+                .Index(t => t.UserId)
+                .Index(t => t.ExerciseId);
             
             //CreateTable(
             //    "dbo.Users",
@@ -99,29 +127,48 @@ namespace ITI.ItSchool.UserContextMigrations
             //        })
             //    .PrimaryKey(t => t.ClassId);
             
+            //CreateTable(
+            //    "dbo.Groups",
+            //    c => new
+            //        {
+            //            GroupId = c.Int(nullable: false, identity: true),
+            //            Name = c.String(nullable: false, maxLength: 45),
+            //            Remarks = c.String(maxLength: 200),
+            //        })
+            //    .PrimaryKey(t => t.GroupId);
+            
         }
         
         public override void Down()
         {
-            //DropForeignKey("dbo.Users", "GroupId", "dbo.Groups");
-            //DropForeignKey("dbo.Users", "ClassId", "dbo.Classes");
-            //DropForeignKey("dbo.Avatars", "AvatarId", "dbo.Users");
-            //DropForeignKey("dbo.Avatars", "LegsId", "dbo.Legs");
-            //DropForeignKey("dbo.Avatars", "FootId", "dbo.Feet");
-            //DropForeignKey("dbo.Avatars", "BodyId", "dbo.Bodies");
-            //DropIndex("dbo.Avatars", new[] { "BodyId" });
-            //DropIndex("dbo.Avatars", new[] { "LegsId" });
-            //DropIndex("dbo.Avatars", new[] { "FootId" });
-            //DropIndex("dbo.Avatars", new[] { "AvatarId" });
-            //DropIndex("dbo.Users", new[] { "GroupId" });
-            //DropIndex("dbo.Users", new[] { "ClassId" });
-            //DropTable("dbo.Classes");
-            //DropTable("dbo.Legs");
-            //DropTable("dbo.Feet");
-            //DropTable("dbo.Bodies");
-            //DropTable("dbo.Avatars");
-            //DropTable("dbo.Users");
-            //DropTable("dbo.Groups");
+            DropForeignKey("dbo.ExercisesAffectations", "UserId", "dbo.Users");
+            DropForeignKey("dbo.Users", "GroupId", "dbo.Groups");
+            DropForeignKey("dbo.Users", "ClassId", "dbo.Classes");
+            DropForeignKey("dbo.Avatars", "AvatarId", "dbo.Users");
+            DropForeignKey("dbo.Avatars", "LegsId", "dbo.Legs");
+            DropForeignKey("dbo.Avatars", "FootId", "dbo.Feet");
+            DropForeignKey("dbo.Avatars", "BodyId", "dbo.Bodies");
+            DropForeignKey("dbo.ExercisesAffectations", "ExerciseId", "dbo.Exercises");
+            DropForeignKey("dbo.Exercises", "ExerciseTypeId", "dbo.ExercisesTypes");
+            DropIndex("dbo.Avatars", new[] { "BodyId" });
+            DropIndex("dbo.Avatars", new[] { "LegsId" });
+            DropIndex("dbo.Avatars", new[] { "FootId" });
+            DropIndex("dbo.Avatars", new[] { "AvatarId" });
+            DropIndex("dbo.Users", new[] { "GroupId" });
+            DropIndex("dbo.Users", new[] { "ClassId" });
+            DropIndex("dbo.ExercisesAffectations", new[] { "ExerciseId" });
+            DropIndex("dbo.ExercisesAffectations", new[] { "UserId" });
+            DropIndex("dbo.Exercises", new[] { "ExerciseTypeId" });
+            DropTable("dbo.Groups");
+            DropTable("dbo.Classes");
+            DropTable("dbo.Legs");
+            DropTable("dbo.Feet");
+            DropTable("dbo.Bodies");
+            DropTable("dbo.Avatars");
+            DropTable("dbo.Users");
+            DropTable("dbo.ExercisesAffectations");
+            DropTable("dbo.ExercisesTypes");
+            DropTable("dbo.Exercises");
         }
     }
 }

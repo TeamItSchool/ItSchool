@@ -769,37 +769,31 @@
         Text: '',
         Words: '',
         Level: {
-            Name: '',
+            Name: ''
         },
         Chapter: {
-            Name: '',
-        }
+            Name: ''
+        },
+        UsersIds: ''
     };
 
     $scope.Easy = function () {
         $scope.EasySelected = true;
         $scope.Message = "Insérez le texte (Niveau 'facile')";
-        $scope.ExerciseDictationData.Level.Name = "Easy";
+        $scope.ExerciseClozeData.Level.Name = "Easy";
     }
 
     $scope.Medium = function () {
         $scope.MediumSelected = true;
         $scope.Message = "Insérez le texte (Niveau 'moyen')";
-        $scope.ExerciseDictationData.Level.Name = "Medium";
+        $scope.ExerciseClozeData.Level.Name = "Medium";
     }
 
     $scope.Hard = function () {
         $scope.HardSelected = true;
         $scope.Message = "Insérez le texte (Niveau 'difficile')";
-        $scope.ExerciseDictationData.Level.Name = "Hard";
+        $scope.ExerciseClozeData.Level.Name = "Hard";
     }
-
-    $scope.DatabaseText = null;
-    $scope.Words = null;
-    $scope.Levels = null;
-    $scope.TextFromDb = null;
-    $scope.Chapters = null;
-    $scope.DetailledWords = null;
 
     ExerciseDatas.GetChapters().then(function (d) {
         $scope.Chapters = d.data;
@@ -808,58 +802,57 @@
         console.log('Error L435 is ' + error);
     });
 
-    ExerciseDatas.GetClozeExercise().then(function (d) {
-        $scope.DatabaseText = d.data.Text;
-        $scope.Exercise.Words = d.data.Words;
-        $scope.Exercise.Text = d.data.Text;
-        $scope.Selections = [];
+    //ExerciseDatas.GetClozeExercise().then(function (d) {
+    //    $scope.DatabaseText = d.data.Text;
+    //    $scope.Exercise.Words = d.data.Words;
+    //    $scope.Exercise.Text = d.data.Text;
+    //    $scope.Selections = [];
 
-        var textLowerCase = d.data.Text.toLowerCase();
-        var wordsText = textLowerCase.split(/[\s,.]+/);
-        var wordsWithCount = [];
-        var uniqueWords = [];
-        var arrayJsonFormat = [];
+        //var textLowerCase = d.data.Text.toLowerCase();
+        //var wordsText = textLowerCase.split(/[\s,.]+/);
+        //var wordsWithCount = [];
+        //var uniqueWords = [];
+        //var arrayJsonFormat = [];
 
-        var savedIndex = 0;
+        //var savedIndex = 0;
 
         // Sorting as we have a unique words array
-        for(var i = 0; i < wordsText.length; ++i ) {
-            if ($.inArray(wordsText[i], uniqueWords) == -1) {
-                var word = {
-                    'value': wordsText[i],
-                    'count': 1
-                };
-                arrayJsonFormat.push( word );
-                uniqueWords.push(wordsText[i]);
-            } else {
-                for (var j = 0; j < arrayJsonFormat.length; j++) {
-                    if( arrayJsonFormat[j].value == wordsText[i] ) {
-                        arrayJsonFormat[j].count += 1;
-                        break;
-                    }
-                }
-            }
-        }
-        $scope.myData = arrayJsonFormat;
-    }, function (error) {
-        alert("An error occured");
-    });
+    //    for(var i = 0; i < wordsText.length; ++i ) {
+    //        if ($.inArray(wordsText[i], uniqueWords) == -1) {
+    //            var word = {
+    //                'value': wordsText[i],
+    //                'count': 1
+    //            };
+    //            arrayJsonFormat.push( word );
+    //            uniqueWords.push(wordsText[i]);
+    //        } else {
+    //            for (var j = 0; j < arrayJsonFormat.length; j++) {
+    //                if( arrayJsonFormat[j].value == wordsText[i] ) {
+    //                    arrayJsonFormat[j].count += 1;
+    //                    break;
+    //                }
+    //            }
+    //        }
+    //    }
+    //    $scope.myData = arrayJsonFormat;
+    //}, function (error) {
+    //    alert("An error occured");
+    //});
 
-    $scope.gridOptions = {
-        data: 'myData',
-        selectedItems: $scope.Selections,
-        multiSelect: true
-    };
+    //$scope.gridOptions = {
+    //    data: 'myData',
+    //    selectedItems: $scope.Selections,
+    //    multiSelect: true
+    //};
 
     $scope.$watch('ClozeExercise', function (newValue) {
         $scope.IsFormValid = newValue;
     });
 
     $scope.SaveData = function () {
-        console.log("Là : " + ExerciseDatas + "L240: " + $scope.Exercise.Level);
         if ($scope.IsFormValid) {
-            ExerciseDatas.SaveClozeExercise($scope.Exercise).then(function (data) {
-                console.log("SaveData");
+            ExerciseDatas.CreateClozeExercise($scope.ExerciseClozeData).then(function (data) {
+                console.log( 'State: exercise saved, L861/ $scope.SaveData' );
             });
         }
     };
@@ -1630,7 +1623,7 @@
     console.log(monobjet.data.FirstName + " est dans la page de jeu card game");
 
 
-    $scope.Time = 'Vous avez 1 minutes ! ';
+    $scope.Time = 'Vous avez 1 minute(s) ! ';
     $scope.Score = 0
     $scope.svgCard = "/Images/redCard.svg";
 })
@@ -1755,9 +1748,9 @@
 .factory('ExerciseDatas', function ($http) {
     var fac = {};
     var data = "";
-    fac.SaveClozeExercise = function (d) {
+    fac.CreateClozeExercise = function (d) {
         return $http({
-            url: '/Data/SaveClozeExercise',
+            url: '/Data/CreateClozeExercise',
             method: 'POST',
             data: JSON.stringify(d),
             headers: { 'content-type': 'application/json' }

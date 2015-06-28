@@ -9,8 +9,7 @@ namespace ITI.ItSchool.SchoolContextMigrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
-            AutomaticMigrationDataLossAllowed = true;
+            AutomaticMigrationsEnabled = false;
             MigrationsDirectory = @"SchoolContextMigrations";
         }
 

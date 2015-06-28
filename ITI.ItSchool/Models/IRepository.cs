@@ -9,6 +9,8 @@ namespace ITI.ItSchool.Models
 {
     public interface IRepository
     {
+        void AffectExercise( List<int> usersIds, int exerciseId );
+
         List<User> GetChildrenListByClassId( int id );
 
         List<int> GetChildrenListIdByClassId( int id );
@@ -33,17 +35,15 @@ namespace ITI.ItSchool.Models
 
         User FindByNickname(string nickname);
 
-        User FindById(int id);
-
         User FindByMail(string mail);
 
         User FindByGrade(string grade);
 
-        string CreateClozeExercise( ExerciseClozeData ec );
+        string CreateExerciseCloze(ExerciseClozeData ec);
 
         bool Create(User u);
 
-        bool Create(Class g);
+        bool Create(Class c);
 
         bool Remove(User u);
 

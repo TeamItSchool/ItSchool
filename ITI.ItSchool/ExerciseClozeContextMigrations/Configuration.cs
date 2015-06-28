@@ -5,16 +5,15 @@ namespace ITI.ItSchool.ExerciseClozeContextMigrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<ITI.ItSchool.Models.Contexts.ExerciseClozeContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<ITI.ItSchool.Models.Contexts.ExerciseBattleCardContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
-            AutomaticMigrationDataLossAllowed = true;
+            AutomaticMigrationsEnabled = false;
             MigrationsDirectory = @"ExerciseClozeContextMigrations";
         }
 
-        protected override void Seed(ITI.ItSchool.Models.Contexts.ExerciseClozeContext context)
+        protected override void Seed(ITI.ItSchool.Models.Contexts.ExerciseBattleCardContext context)
         {
             //  This method will be called after migrating to the latest version.
 

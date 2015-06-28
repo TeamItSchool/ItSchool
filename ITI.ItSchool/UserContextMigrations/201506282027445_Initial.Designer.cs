@@ -13,7 +13,7 @@ namespace ITI.ItSchool.UserContextMigrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201506162024076_Initial"; }
+            get { return "201506282027445_Initial"; }
         }
         
         string IMigrationMetadata.Source

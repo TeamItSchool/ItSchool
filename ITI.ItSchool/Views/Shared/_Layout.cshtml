@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
     <title>@ViewBag.Title</title>
     <link href="~/Components/angular-material/angular-material.css" rel="stylesheet" />
-    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+   <!-- <link href="~/Content/Site.css" rel="stylesheet" type="text/css" /> --> 
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
 
     <link href="~/Content/ng-grid.css" rel="stylesheet" type="text/css" />
@@ -39,15 +39,10 @@
             @RenderBody()
             
         </div>
-
-        <footer>
-            <p>&copy; @DateTime.Now.Year - It'School Application</p>
-        </footer>
     </div>
         <script src="~/Scripts/jquery-ui.js"></script>
         <script src="~/Scripts/jquery.js"></script>
         <script src="~/Scripts/DragNDrop.js"></script>
-        <script src="~/Scripts/angular.min.js"></script>
         <script src="~/Scripts/angular-route.min.js"></script>
         <script src="~/Scripts/bootstrap.min.js"></script>
         <script src="../Components/angular-animate/angular-animate.js"></script>
@@ -55,5 +50,9 @@
         <script type="text/javascript" src="../Components/angular-material/angular-material.js"></script>
         <script src="~/Scripts/jquery-2.1.3.js"></script>
         @RenderSection("Scripts", required: false)
+
+    <footer>
+        <p>&copy; @DateTime.Now.Year - It'School Application</p>
+    </footer>
 </body>
 </html>
