@@ -103,7 +103,22 @@ p {
 	padding: 1% 0% 5% 3%;
 }
 
+/*Button exercice choice*/
+#selectExercices{
+    background-color: #028;
+    color: white;
+}
 
+#selectExercices:hover{
+    background-color: white;
+    color: #028;
+}
+
+#selectExercices:active{
+    background-color: #028;
+    color: white;
+}
+/*end button exercice choice*/
 .blueColors {
     margin-top: 150px;
     margin-bottom: 150px;
@@ -455,4 +470,20 @@ h1, h2, h3, h4 {
     right: 90%;
 }
 
+#play{
+    background: #028;
+    color: white;
+    margin-top: 2%;
+    margin-left: 43%;
+}
+
+#play:hover{
+    background: #FFF;
+    color: #028;
+}
+
+#play:active{
+    background: #028;
+    color: white;
+}
 /*Battle Card end*/
