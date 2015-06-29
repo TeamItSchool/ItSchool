@@ -51,6 +51,33 @@ namespace ITI.ItSchool.Controllers
             return data;
         }
 
+        /// <summary>
+        /// Will search the exercise dictation in db from the user id and will define if a level is showable for the kid
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetExerciseDictation(int id)
+        {
+            List<ExerciseDictation> exercises = new List<ExerciseDictation>();
+            List<ExerciseAffectation> childAffectations = new List<ExerciseAffectation>();
+            List<int> exercisesIDs = new List<int>();
+
+            IRepository repo = new SQLRepository();
+
+            // Warning : It can't be null
+            User concernedChild = repo.FindById( id );
+
+            childAffectations = repo.GetExerciseAffectationListByUserId( concernedChild.UserId );
+
+            for(int i = 0; i<childAffectations.Count(); i++) {
+                exercisesIDs.Add( childAffectations[i].ExerciseId );
+            }
+
+            exercises = repo.GetExerciseDictationListById( exercisesIDs );
+
+            JsonResult data = new JsonResult { Data = exercises, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            return data;
+        }
+
         public JsonResult CheckDictationText( DictationText d )
         {
             d.Text.Trim();

@@ -6678,24 +6678,12 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TestInputController.cs" />
     <Compile Include="ExerciseBattleCardContextMigrations\201506261307370_Initial.cs" />
-    <Compile Include="ExerciseBattleCardContextMigrations\201506261307370_Initial.Designer.cs">
-      <DependentUpon>201506261307370_Initial.cs</DependentUpon>
-    </Compile>
     <Compile Include="ExerciseBattleCardContextMigrations\Configuration.cs" />
     <Compile Include="ExerciseClozeContextMigrations\201506261311033_Initial.cs" />
-    <Compile Include="ExerciseClozeContextMigrations\201506261311033_Initial.Designer.cs">
-      <DependentUpon>201506261311033_Initial.cs</DependentUpon>
-    </Compile>
     <Compile Include="ExerciseClozeContextMigrations\Configuration.cs" />
     <Compile Include="ExerciseContextMigrations\201506261306027_Initial.cs" />
-    <Compile Include="ExerciseContextMigrations\201506261306027_Initial.Designer.cs">
-      <DependentUpon>201506261306027_Initial.cs</DependentUpon>
-    </Compile>
     <Compile Include="ExerciseContextMigrations\Configuration.cs" />
     <Compile Include="ExerciseDictationContextMigrations\201506261309003_Initial.cs" />
-    <Compile Include="ExerciseDictationContextMigrations\201506261309003_Initial.Designer.cs">
-      <DependentUpon>201506261309003_Initial.cs</DependentUpon>
-    </Compile>
     <Compile Include="ExerciseDictationContextMigrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -6733,9 +6721,6 @@
     <Compile Include="Models\UserEntities\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SchoolContextMigrations\201506261302321_Initial.cs" />
-    <Compile Include="SchoolContextMigrations\201506261302321_Initial.Designer.cs">
-      <DependentUpon>201506261302321_Initial.cs</DependentUpon>
-    </Compile>
     <Compile Include="SchoolContextMigrations\Configuration.cs" />
     <Compile Include="UserContextMigrations\201506162024076_Initial.cs" />
     <Compile Include="UserContextMigrations\201506162024076_Initial.Designer.cs">
@@ -6777,21 +6762,6 @@
     <TypeScriptCompile Include="Scripts\collections.d.ts" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ExerciseBattleCardContextMigrations\201506261307370_Initial.resx">
-      <DependentUpon>201506261307370_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ExerciseClozeContextMigrations\201506261311033_Initial.resx">
-      <DependentUpon>201506261311033_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ExerciseContextMigrations\201506261306027_Initial.resx">
-      <DependentUpon>201506261306027_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ExerciseDictationContextMigrations\201506261309003_Initial.resx">
-      <DependentUpon>201506261309003_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SchoolContextMigrations\201506261302321_Initial.resx">
-      <DependentUpon>201506261302321_Initial.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="UserContextMigrations\201506162024076_Initial.resx">
       <DependentUpon>201506162024076_Initial.cs</DependentUpon>
     </EmbeddedResource>

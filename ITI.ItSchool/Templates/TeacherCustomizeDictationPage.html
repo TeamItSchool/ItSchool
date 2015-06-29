@@ -29,13 +29,41 @@
                 </tr>
             </table>
         </div>
+        <div ng-show="ShowRecorder">
+            <md-button class="md-raised md-primary" ng-click="startRecording(this);" id="StartButton" disabled>Enregistrer</md-button>
+            <md-button class="md-raised md-primary" ng-click="stopRecording(this);" id="StopButton" disabled>Arrêter</md-button>
+            <md-button class="md-raised md-primary" ng-click="enableMicrophone()" id="EnableMicrophone">Activer le micro</md-button>
+            <md-button class="md-raised md-primary" onclick="disableMicrophone()" id="DisableMicrophone" disabled>Désactiver le micro</md-button>
+            <audio id="myAudio"></audio>
+            <h2>Recordings</h2>
+            <ul id="recordingslist"></ul>
+
+            <h2>Log</h2>
+            <pre id="log"></pre>
+        </div>
+        
         <div ng-show="EasySelected">
             <h1>{{Message}}</h1>
-            
+            <form name="DictText" ng-submit="SaveText()">
+
+                <textarea ng-model="ExerciseDictationData.Text" name="text" placeholder="Texte de la dictée..." rows="5" cols="40"></textarea><br />
+                <md-button class="md-raised md-primary" type="submit" name="SaveEasyText">{{Button}}</md-button>
+                <h2>{{ExerciseDictationData.Text}} + {{ExerciseDictationData.Level.Name}}</h2>
+            </form>
         </div>
         <div ng-show="MediumSelected">
             <h1>{{Message}}</h1>
-            
+            <form name="DictText" ng-submit="SaveText()">
+                <div ng-repeat="child in Children">
+                    <md-checkbox ng-checked="exists(child, selected)" ng-click="toggle(child, selected)">
+                        {{ "Élève : " + child.FirstName + " " + child.LastName + " (Pseudo : " + child.Nickname + ")"}}
+                    </md-checkbox>
+                </div>
+
+                <textarea ng-model="ExerciseDictationData.Text" name="text" placeholder="Texte de la dictée..." rows="5" cols="40"></textarea><br />
+                <md-button class="md-raised md-primary" type="submit" name="SaveMediumText">{{Button}}</md-button>
+                <h2>{{ExerciseDictationData.Text}} + {{ExerciseDictationData.Level.Name}}</h2>
+            </form>
         </div>
         <div ng-show="HardSelected">
             <h1>{{Message}}</h1>
@@ -46,19 +74,8 @@
                     </md-checkbox>
                 </div>
 
-                <md-button class="md-raised md-primary" ng-click="startRecording(this);" id="StartButton" disabled>Enregistrer</md-button>
-                <md-button class="md-raised md-primary" ng-click="stopRecording(this);" id="StopButton" disabled>Arrêter</md-button>
-                <md-button class="md-raised md-primary" ng-click="enableMicrophone()" id="EnableMicrophone">Activer le micro</md-button>
-                <md-button class="md-raised md-primary" onclick="disableMicrophone()" id="DisableMicrophone" disabled>Désactiver le micro</md-button>
-                <audio id="myAudio"></audio>
-                <h2>Recordings</h2>
-                <ul id="recordingslist"></ul>
-
-                <h2>Log</h2>
-                <pre id="log"></pre>
-
                 <textarea ng-model="ExerciseDictationData.Text" name="text" placeholder="Texte de la dictée..." rows="5" cols="40"></textarea><br />
-                <md-button class="md-raised md-primary" type="submit" name="SaveEasyText">{{Button}}</md-button>
+                <md-button class="md-raised md-primary" type="submit" name="SaveHardText">{{Button}}</md-button>
                 <h2>{{ExerciseDictationData.Text}} + {{ExerciseDictationData.Level.Name}}</h2>
             </form>
         </div>

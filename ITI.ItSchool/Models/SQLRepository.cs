@@ -361,7 +361,12 @@ namespace ITI.ItSchool.Models
 
         public User FindById( int id )
         {
-            throw new NotImplementedException();
+            User user = null;
+            using( var uc = new UserContext() )
+            {
+                user = uc.Users.Where( a => a.UserId.Equals( id ) ).FirstOrDefault();
+            }
+            return user;
         }
 
         public User FindByGrade( string grade )
@@ -421,21 +426,28 @@ namespace ITI.ItSchool.Models
         }
 
         /// <summary>
-        /// 
+        /// Create Or Update a Dictation
+        /// It create a new Exercise only if the dictation doesn't exists in the DB
+        /// It create a new ExerciseDictation if it doesn't exist in the DB
+        /// It Updates a dictation if it doesn't exists in the DB
         /// </summary>
         /// <param name="dictationData"></param>
         /// <returns></returns>
         public JsonResult SaveDictation( ExerciseDictationData dictationData )
         {
+            // The Message that will be in the Json
+            string message = "";
+
+            //The Exercise that will be saved in the DB if it's the first time.
             ExerciseDictation dictationExo = new ExerciseDictation();
 
+            // The list which will contain the users' IDs sent from the dictationData Object recieved in the parameter
             List<int> usersIds = new List<int>();
+
             //Affecting users' ids to a list.
             //This will be used for the affectation LATER
             if( dictationData.UsersIds != null )
                 usersIds = dictationData.UsersIds.ToList();
-
-            string message = "";
 
             //Here we stock the user's nickname and the text data
             string[] words = dictationData.Text.Split( '/' );
@@ -446,9 +458,13 @@ namespace ITI.ItSchool.Models
             // Reaffecting correct data on the exercise
             dictationExo.Text = words[1];
 
+            // Affecting the audio data to the Dictation Exercise Entity
+            dictationExo.AudioData = dictationData.AudioData;
+
+
             IRepository repo = new SQLRepository();
 
-            //Here we get our teacher user
+            //Here we get our teacher user from the DataBase (IT CAN'T BE NULL !!!! IMPOSSIBLE !!)
             User user = repo.FindByNickname( nickname );
 
             #region SaveExercise
@@ -510,12 +526,17 @@ namespace ITI.ItSchool.Models
                 else
                 {
                     ExerciseDictation refExoDictation = new ExerciseDictation();
-
                     refExoDictation = edc.ExerciseDictation.Where( ex => ex.Name.Equals( dictationExo.Name ) ).FirstOrDefault();
+
+                    if( dictationExo.LevelId.Equals( 1 ) )
+                        usersIds = null;
+                        usersIds = repo.GetChildrenListIdByClassId( user.ClassId );
 
                     ExerciseAffectation( usersIds, refExoDictation.ExerciseDictationId );
                     dictation.Text = dictationExo.Text;
-                    dictation.AudioData = dictationExo.AudioData;
+
+                    if(dictationExo.AudioData != null)
+                        dictation.AudioData = dictationExo.AudioData;
 
                     //3. Mark entity as modified
                     edc.Entry( dictation ).State = System.Data.Entity.EntityState.Modified;
@@ -635,7 +656,7 @@ namespace ITI.ItSchool.Models
         }
 
         /// <summary>
-        /// 
+        /// Affects a specific exercise to on or multiple users
         /// </summary>
         /// <param name="usersIds"></param>
         /// <param name="exerciseId"></param>
@@ -662,6 +683,36 @@ namespace ITI.ItSchool.Models
                     }
                 }
             }
+        }
+
+        public List<ExerciseAffectation> GetExerciseAffectationListByUserId( int id )
+        {
+            List<ExerciseAffectation> affectations = new List<ExerciseAffectation>();
+            using( ExerciseContext exoContext = new ExerciseContext() )
+            {
+                affectations = exoContext.ExercisesAffectations.Where( eA => eA.UserId.Equals( id ) ).ToList();
+            }
+            return affectations;
+        }
+
+        public List<ExerciseDictation> GetExerciseDictationListById( List<int> IDs )
+        {
+            List<ExerciseDictation> allDictations = new List<ExerciseDictation>();
+            List<ExerciseDictation> affectedDictations = new List<ExerciseDictation>();
+
+            using( ExerciseDictationContext exoDictationContext = new ExerciseDictationContext() )
+            {
+                exoDictationContext.Configuration.LazyLoadingEnabled = false;
+                //allDictations = exoDictationContext.ExerciseDictation.ToList();
+                for(int i = 0; i < IDs.Count(); i++ ) {
+                    ExerciseDictation exoDictation = new ExerciseDictation();
+                    int id = IDs[i];
+                    exoDictation = exoDictationContext.ExerciseDictation.Where( eD => eD.ExerciseDictationId.Equals( id ) ).FirstOrDefault();
+                    affectedDictations.Add( exoDictation );
+                }
+
+            }
+            return affectedDictations;
         }
     }
 }
