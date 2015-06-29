@@ -1,4 +1,4 @@
-namespace ITI.ItSchool.SchoolContextMigrations
+namespace ITI.ItSchool.ExerciseBattleCardContextMigrations
 {
     using System;
     using System.Data.Entity.Migrations;
@@ -7,6 +7,24 @@ namespace ITI.ItSchool.SchoolContextMigrations
     {
         public override void Up()
         {
+            CreateTable(
+                "dbo.ExerciseBattleCard",
+                c => new
+                    {
+                        ExerciseBattleCardId = c.Int(nullable: false),
+                        Name = c.String(maxLength: 50),
+                        LevelId = c.Int(nullable: false),
+                        ChapterId = c.Int(nullable: false),
+                        Choice = c.String(),
+                    })
+                .PrimaryKey(t => t.ExerciseBattleCardId)
+                .ForeignKey("dbo.Chapters", t => t.ChapterId, cascadeDelete: true)
+                .ForeignKey("dbo.Exercises", t => t.ExerciseBattleCardId)
+                .ForeignKey("dbo.Levels", t => t.LevelId, cascadeDelete: true)
+                .Index(t => t.ExerciseBattleCardId)
+                .Index(t => t.LevelId)
+                .Index(t => t.ChapterId);
+            
             //CreateTable(
             //    "dbo.Chapters",
             //    c => new
@@ -22,7 +40,7 @@ namespace ITI.ItSchool.SchoolContextMigrations
             //    .ForeignKey("dbo.Themes", t => t.ThemeId, cascadeDelete: true)
             //    .Index(t => t.ChapterId)
             //    .Index(t => t.ThemeId);
-
+            
             //CreateTable(
             //    "dbo.Classes",
             //    c => new
@@ -121,24 +139,12 @@ namespace ITI.ItSchool.SchoolContextMigrations
             //        {
             //            ExerciseId = c.Int(nullable: false, identity: true),
             //            ExerciseTypeId = c.Int(nullable: false),
-<<<<<<< HEAD:ITI.ItSchool/SchoolContextMigrations/201506241345098_Initial.cs
             //            Chapter_ChapterId = c.Int(),
             //        })
             //    .PrimaryKey(t => t.ExerciseId)
             //    .ForeignKey("dbo.ExercisesTypes", t => t.ExerciseTypeId, cascadeDelete: true)
             //    .ForeignKey("dbo.Chapters", t => t.Chapter_ChapterId)
             //    .Index(t => t.ExerciseTypeId)
-=======
-            //            AffectedClass = c.Int(nullable: false),
-            //            Chapter_ChapterId = c.Int(),
-            //        })
-            //    .PrimaryKey(t => t.ExerciseId)
-            //    .ForeignKey("dbo.Classes", t => t.AffectedClass, cascadeDelete: true)
-            //    .ForeignKey("dbo.ExercisesTypes", t => t.ExerciseTypeId, cascadeDelete: true)
-            //    .ForeignKey("dbo.Chapters", t => t.Chapter_ChapterId)
-            //    .Index(t => t.ExerciseTypeId)
-            //    .Index(t => t.AffectedClass)
->>>>>>> local_alexandre:ITI.ItSchool/SchoolContextMigrations/201506162026533_Initial.cs
             //    .Index(t => t.Chapter_ChapterId);
             
             //CreateTable(
@@ -174,11 +180,23 @@ namespace ITI.ItSchool.SchoolContextMigrations
             //        })
             //    .PrimaryKey(t => t.MatterId);
             
+            //CreateTable(
+            //    "dbo.Levels",
+            //    c => new
+            //        {
+            //            LevelId = c.Int(nullable: false, identity: true),
+            //            Name = c.String(nullable: false, maxLength: 45),
+            //            Remarks = c.String(maxLength: 200),
+            //        })
+            //    .PrimaryKey(t => t.LevelId);
+            
         }
         
         public override void Down()
         {
-<<<<<<< HEAD:ITI.ItSchool/SchoolContextMigrations/201506241345098_Initial.cs
+            DropForeignKey("dbo.ExerciseBattleCard", "LevelId", "dbo.Levels");
+            DropForeignKey("dbo.ExerciseBattleCard", "ExerciseBattleCardId", "dbo.Exercises");
+            DropForeignKey("dbo.ExerciseBattleCard", "ChapterId", "dbo.Chapters");
             DropForeignKey("dbo.Chapters", "ThemeId", "dbo.Themes");
             DropForeignKey("dbo.Themes", "MatterId", "dbo.Matters");
             DropForeignKey("dbo.Exercises", "Chapter_ChapterId", "dbo.Chapters");
@@ -201,6 +219,10 @@ namespace ITI.ItSchool.SchoolContextMigrations
             DropIndex("dbo.Users", new[] { "ClassId" });
             DropIndex("dbo.Chapters", new[] { "ThemeId" });
             DropIndex("dbo.Chapters", new[] { "ChapterId" });
+            DropIndex("dbo.ExerciseBattleCard", new[] { "ChapterId" });
+            DropIndex("dbo.ExerciseBattleCard", new[] { "LevelId" });
+            DropIndex("dbo.ExerciseBattleCard", new[] { "ExerciseBattleCardId" });
+            DropTable("dbo.Levels");
             DropTable("dbo.Matters");
             DropTable("dbo.Themes");
             DropTable("dbo.ExercisesTypes");
@@ -213,44 +235,7 @@ namespace ITI.ItSchool.SchoolContextMigrations
             DropTable("dbo.Users");
             DropTable("dbo.Classes");
             DropTable("dbo.Chapters");
-=======
-            //DropForeignKey("dbo.Chapters", "ThemeId", "dbo.Themes");
-            //DropForeignKey("dbo.Themes", "MatterId", "dbo.Matters");
-            //DropForeignKey("dbo.Exercises", "Chapter_ChapterId", "dbo.Chapters");
-            //DropForeignKey("dbo.Exercises", "ExerciseTypeId", "dbo.ExercisesTypes");
-            //DropForeignKey("dbo.Exercises", "AffectedClass", "dbo.Classes");
-            //DropForeignKey("dbo.Chapters", "ChapterId", "dbo.Classes");
-            //DropForeignKey("dbo.Users", "GroupId", "dbo.Groups");
-            //DropForeignKey("dbo.Users", "ClassId", "dbo.Classes");
-            //DropForeignKey("dbo.Avatars", "AvatarId", "dbo.Users");
-            //DropForeignKey("dbo.Avatars", "LegsId", "dbo.Legs");
-            //DropForeignKey("dbo.Avatars", "FootId", "dbo.Feet");
-            //DropForeignKey("dbo.Avatars", "BodyId", "dbo.Bodies");
-            //DropIndex("dbo.Themes", new[] { "MatterId" });
-            //DropIndex("dbo.Exercises", new[] { "Chapter_ChapterId" });
-            //DropIndex("dbo.Exercises", new[] { "AffectedClass" });
-            //DropIndex("dbo.Exercises", new[] { "ExerciseTypeId" });
-            //DropIndex("dbo.Avatars", new[] { "BodyId" });
-            //DropIndex("dbo.Avatars", new[] { "LegsId" });
-            //DropIndex("dbo.Avatars", new[] { "FootId" });
-            //DropIndex("dbo.Avatars", new[] { "AvatarId" });
-            //DropIndex("dbo.Users", new[] { "GroupId" });
-            //DropIndex("dbo.Users", new[] { "ClassId" });
-            //DropIndex("dbo.Chapters", new[] { "ThemeId" });
-            //DropIndex("dbo.Chapters", new[] { "ChapterId" });
-            //DropTable("dbo.Matters");
-            //DropTable("dbo.Themes");
-            //DropTable("dbo.ExercisesTypes");
-            //DropTable("dbo.Exercises");
-            //DropTable("dbo.Groups");
-            //DropTable("dbo.Legs");
-            //DropTable("dbo.Feet");
-            //DropTable("dbo.Bodies");
-            //DropTable("dbo.Avatars");
-            //DropTable("dbo.Users");
-            //DropTable("dbo.Classes");
-            //DropTable("dbo.Chapters");
->>>>>>> local_alexandre:ITI.ItSchool/SchoolContextMigrations/201506162026533_Initial.cs
+            DropTable("dbo.ExerciseBattleCard");
         }
     }
 }
