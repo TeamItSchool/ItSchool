@@ -33,6 +33,8 @@ namespace ITI.ItSchool.Models
 
         List<ExerciseDictation> GetExerciseDictationListById( List<int> IDs );
 
+        ExerciseDictation FindExerciseDictationById( int id );
+
         JsonResult GetClasses();
 
         JsonResult GetGroups();

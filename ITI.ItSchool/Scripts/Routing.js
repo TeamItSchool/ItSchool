@@ -638,6 +638,7 @@
     $scope.IsFormValid = false;
     $scope.Button = "Valider";
     $scope.ShowDictationAudio = false;
+    $scope.ChildTextWritted = "";
 
     $scope.ExerciseDictationData = {
         //A REMPLIR
@@ -650,36 +651,40 @@
     };
 
     $scope.ExerciseDictation = {
-        //A REMPLIR
+
     };
+
 
     $scope.ExerciseDictationList = null;
 
+    var easyDictationFound = false;
+    var mediumDictationFound = false;
+    var hardDictationFound = false;
+
     GetChildExerciseDictation.GetExerciseDictation(monobjet.data.UserId).then(function (d) {
         $scope.ExerciseDictationList = d.data;
+
+        for (var i = 0; i < $scope.ExerciseDictationList.length; i++) {
+            if ($scope.ExerciseDictationList[i].LevelId == 1)
+                easyDictationFound = true;
+            if ($scope.ExerciseDictationList[i].LevelId == 2)
+                mediumDictationFound = true;
+            if ($scope.ExerciseDictationList[i].LevelId == 3)
+                hardDictationFound = true;
+        }
+        var button;
+        if (easyDictationFound == false)
+            document.getElementById("easy").disabled = true;
+        if (mediumDictationFound == false) {
+            document.getElementById("medium").disabled = true;
+        }
+        if (hardDictationFound == false)
+            document.getElementById("hard").disabled = true;
+
+        console.log(hardDictationFound);
         console.log($scope.ExerciseDictationList);
     });
-
-    //for (var i = 0; i < $scope.ExerciseDictationList.length; i++) {
-
-    //}
-
-    //Check if Form is valid or not // here DictText is our form Name
-    $scope.$watch('DictText.$valid', function (newVal) {
-        $scope.IsFormValid = newVal;
-    });
-    $scope.IsFormValid
-    $scope.SaveText = function () {
-        if ($scope.IsFormValid) {
-            $scope.Button = "Validtion en cours..."
-            $scope.Game.Data.trim();
-            $scope.ExerciseDictationData.Text = monobjet.data.Nickname + "/" + $scope.ExerciseDictationData.Text;
-            SaveDictationText.GetText($scope.ExerciseDictationData).then(function (d) {
-                $scope.Button = "Dictée sauvegardée";
-            })
-        }
-    };
-
+    
     $scope.Easy = function () {
         for (var i = 0; i < $scope.ExerciseDictationList.length ; i++) {
             if ($scope.ExerciseDictationList[i].LevelId == 1) {
@@ -688,13 +693,13 @@
 
                 var audio = document.getElementById("dictationAudio");
                 audio.src = $scope.ExerciseDictation.AudioData;
-               //audio.play();
+                //audio.play();
             }
             console.log($scope.ExerciseDictation.AudioData);
         }
         $scope.EasySelected = true;
         $scope.Message = "Niveau Facile : Tu peux le faire !";
-        $scope.ExerciseDictationData.Level.Name = "Easy";
+        //$scope.ExerciseDictationData.Level.Name = "Easy";
     }
     $scope.Medium = function () {
         for (var i = 0; i < $scope.ExerciseDictationList.length ; i++) {
@@ -710,7 +715,7 @@
         }
         $scope.MediumSelected = true;
         $scope.Message = "Niveau Moyen : Fonce, tu peux y arriver !";
-        $scope.ExerciseDictationData.Level.Name = "Medium";
+        //$scope.ExerciseDictationData.Level.Name = "Medium";
     }
     $scope.Hard = function () {
         for (var i = 0; i < $scope.ExerciseDictationList.length ; i++) {
@@ -726,8 +731,36 @@
         }
         $scope.HardSelected = true;
         $scope.Message = "Niveau Difficle : Tu es le meilleur, donne tout ce que tu as !";
-        $scope.ExerciseDictationData.Level.Name = "Hard";
+        //$scope.ExerciseDictationData.Level.Name = "Hard";
     }
+
+    //Check if Form is valid or not // here DictText is our form Name
+    $scope.$watch('DictText.$valid', function (newVal) {
+        $scope.IsFormValid = newVal;
+    });
+
+    $scope.SubmitText = function () {
+        if ($scope.IsFormValid) {
+            $scope.Button = "Validtion en cours..."
+            $scope.ExerciseDictation.Text = monobjet.data.Nickname + "/" + $scope.ChildTextWritted;
+            CheckDictationText.GetDictationText($scope.ExerciseDictation).then(function (d) {
+                alert(d.data);
+                $scope.Button = "Dictée envoyée";
+            })
+        }
+    };
+
+    /*$scope.SaveText = function () {
+        if ($scope.IsFormValid) {
+            $scope.Button = "Validtion en cours..."
+            $scope.Game.Data.trim();
+            $scope.ExerciseDictationData.Text = monobjet.data.Nickname + "/" + $scope.ExerciseDictationData.Text;
+            SaveDictationText.GetText($scope.ExerciseDictationData).then(function (d) {
+                $scope.Button = "Dictée sauvegardée";
+            })
+        }
+    };*/
+
 })
 .factory('CheckDictationText', function ($http) {
     var fac = {};
