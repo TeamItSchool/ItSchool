@@ -697,7 +697,6 @@ namespace ITI.ItSchool.Models
 
         public List<ExerciseDictation> GetExerciseDictationListById( List<int> IDs )
         {
-            List<ExerciseDictation> allDictations = new List<ExerciseDictation>();
             List<ExerciseDictation> affectedDictations = new List<ExerciseDictation>();
 
             using( ExerciseDictationContext exoDictationContext = new ExerciseDictationContext() )
@@ -713,6 +712,26 @@ namespace ITI.ItSchool.Models
 
             }
             return affectedDictations;
+        }
+
+
+        public List<ExerciseBattleCard> GetExerciseBattleCardListById(List<int> IDs)
+        {
+            List<ExerciseBattleCard> affectedBattleCard = new List<ExerciseBattleCard>();
+
+            using (ExerciseBattleCardContext exoBattleCardContext = new ExerciseBattleCardContext())
+            {
+                exoBattleCardContext.Configuration.LazyLoadingEnabled = false;
+                for (int i = 0; i < IDs.Count(); i++)
+                {
+                    ExerciseBattleCard exoBattleCard = new ExerciseBattleCard();
+                    int id = IDs[i];
+                    exoBattleCard = exoBattleCardContext.ExerciseBattleCard.Where(eBC => eBC.ExerciseBattleCardId.Equals(id)).FirstOrDefault();
+                    if(exoBattleCard != null)
+                        affectedBattleCard.Add(exoBattleCard);
+                }
+            }
+            return affectedBattleCard;
         }
     }
 }
