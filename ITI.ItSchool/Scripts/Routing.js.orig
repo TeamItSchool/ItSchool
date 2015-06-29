@@ -1023,11 +1023,11 @@
         Level: {
             Name: 'Test'
         },
-        ExerciseType: {
-            Name: 'Dictée'
-        },
+<<<<<<< HEAD
+        AudioData: ''
+=======
         AudioData: '',
-        Users: ''
+>>>>>>> ItSchool/Michat
     };
 
     $scope.Children = null;
@@ -1522,11 +1522,7 @@
         Choice: '',
         Level: {
             Name: 'Test'
-        },
-        ExerciseType: {
-            Name: 'CardGame'
-        },
-        Users :''
+        }
     };
 
     $scope.Children = null;

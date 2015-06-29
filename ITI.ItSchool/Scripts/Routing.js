@@ -12,95 +12,95 @@
         }
     })
     .when('/home', {
-        templateUrl: '/Templates/Home.html',
-        controller: 'HomeController'
+        templateUrl: '/Templates/Home.html'/*,
+        controller: 'HomeController'*/
     })
     .when('/test_microphone', {
-        templateUrl: '/Templates/voiceRecorder.html',
-        controller:'MicrophoneController'
+        templateUrl: '/Templates/voiceRecorder.html'/*,
+        controller:'MicrophoneController'*/
     })
     .when('/teacher', {
-        templateUrl: '/Templates/TeacherHomePage.html',
-        controller: 'TeacherHomeController'
+        templateUrl: '/Templates/TeacherHomePage.html'/*,
+        controller: 'TeacherHomeController'*/
     })
     .when('/teacher/login', {
-        templateUrl: '/Templates/TeacherLoginPage.html',
-        controller: 'TeacherLoginController'
+        templateUrl: '/Templates/TeacherLoginPage.html'/*,
+        controller: 'TeacherLoginController'*/
     })
     .when('/teacher/registration', {
-        templateUrl: '/Templates/TeacherRegistrationPage.html',
-        controller: 'TeacherRegistrationController'
+        templateUrl: '/Templates/TeacherRegistrationPage.html'/*,
+        controller: 'TeacherRegistrationController'*/
     })
     .when('/teacher/lobby', {
-        templateUrl: '/Templates/TeacherLobbyPage.html',
-        controller: 'TeacherLobbyController'
+        templateUrl: '/Templates/TeacherLobbyPage.html'/*,
+        controller: 'TeacherLobbyController'*/
     })
     .when('/teacher/exercices', {
-        templateUrl: '/Templates/TeacherSelectExercicesPage.html',
-        controller: 'TeacherSelectExercicesController'
+        templateUrl: '/Templates/TeacherSelectExercicesPage.html'/*,
+        controller: 'TeacherSelectExercicesController'*/
     })
     .when('/teacher/exercices/matter', {
-        templateUrl: '/Templates/TeacherSelectMatterPage.html',
-        controller: 'TeacherSelectMatterController'
+        templateUrl: '/Templates/TeacherSelectMatterPage.html'/*,
+        controller: 'TeacherSelectMatterController'*/
     })
     .when('/teacher/exercices/cloze_exercise', {
         templateUrl: '/Templates/TeacherCustomizeClozeExercisePage.html'
     })
     .when('/teacher/exercices/matter/drag_drop_maths', {
-        templateUrl: '/Templates/TeacherCustomizeDragAndDropMathsPage.html',
-        controller: 'TeacherDragAndDropMathsController'
+        templateUrl: '/Templates/TeacherCustomizeDragAndDropMathsPage.html'/*,
+        controller: 'TeacherDragAndDropMathsController'*/
     })
     .when('/teacher/exercices/matter/drag_drop_conjugaiton', {
-        templateUrl: '/Templates/TeacherCustomizeDragAndDropConjugaitonPage.html',
-        controller: 'TeacherDragAndDropConjugaitonController'
+        templateUrl: '/Templates/TeacherCustomizeDragAndDropConjugaitonPage.html'/*,
+        controller: 'TeacherDragAndDropConjugaitonController'*/
     })
     .when('/teacher/exercices/matter/drag_drop_english', {
-        templateUrl: '/Templates/TeacherCustomizeDragAndDropEnglishPage.html',
-        controller: 'TeacherDragAndDropEnglishController'
+        templateUrl: '/Templates/TeacherCustomizeDragAndDropEnglishPage.html'/*,
+        controller: 'TeacherDragAndDropEnglishController'*/
     })
     .when('/teacher/exercices/dictation', {
-        templateUrl: '/Templates/TeacherCustomizeDictationPage.html',
-        controller: 'TeacherDictationController'
+        templateUrl: '/Templates/TeacherCustomizeDictationPage.html'/*,
+        controller: 'TeacherDictationController'*/
     })
     .when('/teacher/exercices/battleCard', {
-        templateUrl: '/Templates/TeacherDescriptionBattleCardPage.html',
-        controller: 'TeacherDescriptionBattleCardController'
+        templateUrl: '/Templates/TeacherDescriptionBattleCardPage.html'/*,
+        controller: 'TeacherDescriptionBattleCardController'*/
     })
     .when('/teacher/exercices/battleCard/customize', {
         templateUrl: '/Templates/TeacherCustomizeBattleCardPage.html'
         //controller: 'TeacherCustomizeBattleCardController'
     })
     .when('/kid', {
-        templateUrl: '/Templates/KidHomePage.html',
-        controller: 'KidHomeController'
+        templateUrl: '/Templates/KidHomePage.html'/*,
+        controller: 'KidHomeController'*/
     })
     .when('/kid/login', {
-        templateUrl: '/Templates/KidLoginPage.html',
-        controller: 'KidLoginController'
+        templateUrl: '/Templates/KidLoginPage.html'/*,
+        controller: 'KidLoginController'*/
     })
     .when('/kid/registration', {
-        templateUrl: '/Templates/KidRegistrationPage.html',
-        controller: 'KidRegistrationController'
+        templateUrl: '/Templates/KidRegistrationPage.html'/*,
+        controller: 'KidRegistrationController'*/
     })
     .when('/kid/lobby', {
-        templateUrl: '/Templates/KidLobbyPage.html',
-        controller: 'KidLobbyController'
+        templateUrl: '/Templates/KidLobbyPage.html'/*,
+        controller: 'KidLobbyController'*/
     })
     .when('/kid/exercices', {
-        templateUrl: '/Templates/KidSelectExercicesPage.html',
-        controller: 'KidSelectExercicesController'
+        templateUrl: '/Templates/KidSelectExercicesPage.html'/*,
+        controller: 'KidSelectExercicesController'*/
     })
     .when('/kid/exercices/dictation', {
-        templateUrl: '/Templates/KidPlayDictationPage.html',
-        controller: 'KidPlayDictationController'
+        templateUrl: '/Templates/KidPlayDictationPage.html'/*,
+        controller: 'KidPlayDictationController'*/
     })
     .when('/kid/exercices/battleCard', {
-        templateUrl: '/Templates/KidDescriptionBattleCardPage.html',
-        controller: 'KidDescriptionBattleCardController'
+        templateUrl: '/Templates/KidDescriptionBattleCardPage.html'/*,
+        controller: 'KidDescriptionBattleCardController'*/
     })
     .when('/kid/exercices/battleCard/play', {
-        templateUrl: '/Templates/KidPlayBattleCardPage.html',
-        controller: 'KidPlayBattleCardController'
+        templateUrl: '/Templates/KidPlayBattleCardPage.html'/*,
+        controller: 'KidPlayBattleCardController'*/
     })
     .otherwise({   // This is when any route not matched
     templateUrl: '/Templates/Error.html',
@@ -477,8 +477,8 @@
                 } else if (d.data.Nickname != null && d.data.Group.Name == "Professeurs") {
                     $scope.LoginData.Username = "";
                     $scope.LoginData.Password = "";
-                    alert("Attention, vous vous trouvez actuellement dans l'espace des élèves.\n Veuillez cliquez sur le bouton 'Espace Professeur'.");
-                    $scope.Message = "Rejoins l'espace 'Enfant'";
+                    alert("Attention, vous vous trouvez actuellement dans l'espace des élèves.\nVeuillez cliquez sur le bouton 'Espace Professeur'.");
+                    $scope.Message = "Nous vous invitons à rejoindre l'espace 'Professeur'";
                     $scope.IsTeacher = true;
                 }
                 else {
@@ -624,7 +624,7 @@
 .controller('KidSelectExercicesController', function ($scope) {
     $scope.Message = 'A quoi veux-tu jouer ?';
 })
-.controller('KidPlayDictationController', function ($scope, CheckDictationText) {
+.controller('KidPlayDictationController', function ($scope, GetChildExerciseDictation, CheckDictationText) {
     var monobjet_json = sessionStorage.getItem("objet");
     var monobjet = JSON.parse(monobjet_json);
     // Affichage dans la console
@@ -637,17 +637,28 @@
     $scope.Message2 = "";
     $scope.IsFormValid = false;
     $scope.Button = "Valider";
+    $scope.ShowDictationAudio = false;
 
-    $scope.Game = {
+    $scope.ExerciseDictationData = {
         //A REMPLIR
-        Data: '',
+        Text: '',
         Level: {
             Name: 'Test'
         },
-        ExerciseType: {
-            Name: 'Dictation'
-        }
+        AudioData: '',
+        UsersIds: ''
     };
+
+    $scope.ExerciseDictation = {
+        //A REMPLIR
+    };
+
+    $scope.ExerciseDictationList = null;
+
+    GetChildExerciseDictation.GetExerciseDictation(monobjet.data.UserId).then(function (d) {
+        $scope.ExerciseDictationList = d.data;
+        console.log($scope.ExerciseDictationList);
+    });
 
     //Check if Form is valid or not // here DictText is our form Name
     $scope.$watch('DictText.$valid', function (newVal) {
@@ -658,28 +669,81 @@
         if ($scope.IsFormValid) {
             $scope.Button = "Validtion en cours..."
             $scope.Game.Data.trim();
-            $scope.Game.Data = monobjet.data.Nickname + "/" + $scope.Game.Data;
-            SaveDictationText.GetText($scope.Game).then(function (d) {
+            $scope.ExerciseDictationData.Text = monobjet.data.Nickname + "/" + $scope.ExerciseDictationData.Text;
+            SaveDictationText.GetText($scope.ExerciseDictationData).then(function (d) {
                 $scope.Button = "Dictée sauvegardée";
             })
         }
     };
 
     $scope.Easy = function () {
+        for (var i = 0; i < $scope.ExerciseDictationList.length ; i++) {
+            if ($scope.ExerciseDictationList[i].LevelId == 1) {
+                $scope.ShowDictationAudio = true;
+                $scope.ExerciseDictation = $scope.ExerciseDictationList[i];
+
+                var audio = document.getElementById("dictationAudio");
+                audio.src = $scope.ExerciseDictation.AudioData;
+                audio.play();
+            }
+            console.log($scope.ExerciseDictation.AudioData);
+        }
         $scope.EasySelected = true;
-        $scope.Message = "Insérez le texte (Niveau facile)";
-        $scope.Game.Level.Name = "Easy";
+        $scope.Message = "Niveau Facile : Tu peux le faire !";
+        $scope.ExerciseDictationData.Level.Name = "Easy";
     }
     $scope.Medium = function () {
+        for (var i = 0; i < $scope.ExerciseDictationList.length ; i++) {
+            if ($scope.ExerciseDictationList[i].LevelId == 2) {
+                $scope.ShowDictationAudio = true;
+                $scope.ExerciseDictation = $scope.ExerciseDictationList[i];
+
+                var audio = document.getElementById("dictationAudio2");
+                audio.src = $scope.ExerciseDictation.AudioData;
+                audio.play();
+            }
+            console.log($scope.ExerciseDictation.AudioData);
+        }
         $scope.MediumSelected = true;
-        $scope.Message = "Insérez le texte (Niveau moyen)";
-        $scope.Game.Level.Name = "Medium";
+        $scope.Message = "Niveau Moyen : Fonce, tu peux y arriver !";
+        $scope.ExerciseDictationData.Level.Name = "Medium";
     }
     $scope.Hard = function () {
+        for (var i = 0; i < $scope.ExerciseDictationList.length ; i++) {
+            if ($scope.ExerciseDictationList[i].LevelId == 3) {
+                $scope.ShowDictationAudio = true;
+                $scope.ExerciseDictation = $scope.ExerciseDictationList[i];
+
+                var audio = document.getElementById("dictationAudio3");
+                audio.src = $scope.ExerciseDictation.AudioData;
+                audio.play();
+            }
+            console.log($scope.ExerciseDictation.AudioData);
+        }
         $scope.HardSelected = true;
-        $scope.Message = "Insérez le texte (Niveau difficile)";
-        $scope.Game.Level.Name = "Hard";
+        $scope.Message = "Niveau Difficle : Tu es le meilleur, donne tout ce que tu as !";
+        $scope.ExerciseDictationData.Level.Name = "Hard";
     }
+})
+.factory('CheckDictationText', function ($http) {
+    var fac = {};
+    var data = "";
+    fac.GetDictationText = function (d) {
+        return $http({
+            url: '/Data/CheckDictationText',
+            method: 'POST',
+            data: JSON.stringify(d),
+            header: { 'content-type': 'application/json' }
+        })
+    };
+    return fac;
+})
+.factory('GetChildExerciseDictation', function ($http) {
+    var fac = {};
+    fac.GetExerciseDictation = function (d) {
+        return $http.get('/Data/GetExerciseDictation/' + d)
+    };
+    return fac;
 })
 .controller('KidHomeController', function ($scope) {
     $scope.Message = 'Page "Élève"';
@@ -865,6 +929,7 @@
 })
 .controller("TeacherRegistrationController", function ($scope, RegistrationService, LoginService) {
 
+    console.log(sessionStorage.getItem("objet"));
     sessionStorage.removeItem("objet");
     $scope.submitText = "Inscription";
     $scope.submitted = false;
@@ -994,7 +1059,6 @@
 .controller('TeacherSelectExercicesController', function ($scope) {
     $scope.Message = 'Selectionnez un exercice à modifier';
 })
-
 .controller('TeacherDictationController', function ($scope, SaveDictationText) {
 
     var monobjet_json = sessionStorage.getItem("objet");
@@ -1008,16 +1072,18 @@
     $scope.MediumSelected = false;
     $scope.HardSelected = false;
     $scope.Message2 = "";
+    $scope.ShowRecorder = false;
     $scope.IsFormValid = false;
     $scope.Button = "Sauvegarder";
 
-    $scope.ExerciseDictation = {
+    $scope.ExerciseDictationData = {
         //A REMPLIR
         Text: '',
         Level: {
             Name: 'Test'
         },
         AudioData: '',
+        UsersIds: ''
     };
 
     $scope.Children = null;
@@ -1025,21 +1091,21 @@
 
     SaveDictationText.GetChildren(monobjet.data.ClassId).then(function (d) {
         $scope.Children = d.data;
-        $scope.ExerciseDictation.Users = $scope.Children;
-        console.log($scope.ExerciseDictation.Users);
+        $scope.ExerciseDictationData.UsersIds = $scope.Children;
+        console.log($scope.ExerciseDictationData.UsersIds);
         //alert($scope.Grades[0].Name);
     });
 
     $scope.toggle = function (child, list) {
-        var idx = list.indexOf(child);
+        var idx = list.indexOf(child.UserId);
         if (idx > -1)
             list.splice(idx, 1);
         else
-            list.push(child);
+            list.push(child.UserId);
     };
 
     $scope.exists = function (child, list) {
-        return list.indexOf(child) > -1;
+        return list.indexOf(child.UserId) > -1;
     };
 
     //Check if Form is valid or not // here DictText is our form Name
@@ -1051,15 +1117,14 @@
     $scope.SaveText = function () {
         if ($scope.IsFormValid) {
             $scope.Button = "Sauvegarde en cours..."
-            $scope.ExerciseDictation.Text.trim();
-            $scope.ExerciseDictation.Text = monobjet.data.Nickname + "/" + $scope.ExerciseDictation.Text;
-            var res = $scope.ExerciseDictation.Text.split("/");
+            $scope.ExerciseDictationData.Text.trim();
+            $scope.ExerciseDictationData.Text = monobjet.data.Nickname + "/" + $scope.ExerciseDictationData.Text;
+            var res = $scope.ExerciseDictationData.Text.split("/");
 
-            if ($scope.ExerciseDictation.Level.Name != "Easy")
-                $scope.ExerciseDictation.Users = $scope.selected;
+            $scope.ExerciseDictationData.UsersIds = $scope.selected;
 
-            SaveDictationText.GetText($scope.ExerciseDictation).then(function (d) {
-                $scope.ExerciseDictation.Text = res[1];
+            SaveDictationText.GetText($scope.ExerciseDictationData).then(function (d) {
+                $scope.ExerciseDictationData.Text = res[1];
                 console.log(d.data);
                 if (d.data == "Jeu enregistré")
                     $scope.Button = "Dictée sauvegardée";
@@ -1073,18 +1138,21 @@
 
     $scope.Easy = function () {
         $scope.EasySelected = true;
+        $scope.ShowRecorder = true;
         $scope.Message = "Insérez le texte (Niveau facile)";
-        $scope.ExerciseDictation.Level.Name = "Easy";
+        $scope.ExerciseDictationData.Level.Name = "Easy";
     }
     $scope.Medium = function () {
         $scope.MediumSelected = true;
+        $scope.ShowRecorder = true;
         $scope.Message = "Insérez le texte (Niveau moyen)";
-        $scope.ExerciseDictation.Level.Name = "Medium";
+        $scope.ExerciseDictationData.Level.Name = "Medium";
     }
     $scope.Hard = function () {
         $scope.HardSelected = true;
+        $scope.ShowRecorder = true;
         $scope.Message = "Insérez le texte (Niveau difficile)";
-        $scope.ExerciseDictation.Level.Name = "Hard";
+        $scope.ExerciseDictationData.Level.Name = "Hard";
     }
 
     function __log(e, data) {
@@ -1270,7 +1338,6 @@
                         bytesArray.push(data.samples[i]);
                     }
 
-                    $scope.ExerciseDictation.AudioBytesString = data;
                     console.log("Converting to Mp3");
                     log.innerHTML += "\n" + "Converting to Mp3";
 
@@ -1301,7 +1368,7 @@
                             uploadAudio(mp3Blob);
 
                             var url = 'data:audio/mp3;base64,' + encode64(e.data.buf);
-                            $scope.ExerciseDictation.AudioData = url;
+                            $scope.ExerciseDictationData.AudioData = url;
                             var li = document.createElement('li');
                             var au = document.createElement('audio');
                             var hf = document.createElement('a');
@@ -1634,9 +1701,6 @@
 .controller('KidHomeController', function ($scope) {
     $scope.Message = 'Page "Élève"';
 })
-//.controller('KidLoginController', function ($scope) {
-//    $scope.Message = "Entre le pseudo et le mot de passe que tu avais choisis.";
-//})
 
 .controller('ErrorController', function ($scope) {
     $scope.Message = "404 Not Found!";
@@ -1708,19 +1772,6 @@
         })
     };
 
-    return fac;
-})
-.factory('CheckDictationText', function ($http) {
-    var fac = {};
-    var data = "";
-    fac.GetDictationText = function (d) {
-        return $http({
-            url: '/Data/CheckDictationText',
-            method: 'POST',
-            data: JSON.stringify(d),
-            header: { 'content-type': 'application/json' }
-        })
-    };
     return fac;
 })
     //Registration Factory

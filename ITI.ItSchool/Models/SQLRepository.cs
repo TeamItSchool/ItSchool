@@ -1,7 +1,9 @@
 ﻿using ITI.ItSchool.Models.AvatarEntities;
+using ITI.ItSchool.Models.ClassExercicesPlug;
 using ITI.ItSchool.Models.Contexts;
 using ITI.ItSchool.Models.Entities;
 using ITI.ItSchool.Models.ExerciseEntities;
+using ITI.ItSchool.Models.ExercisesEntities;
 using ITI.ItSchool.Models.PlugExercises;
 using ITI.ItSchool.Models.SchoolEntities;
 using ITI.ItSchool.Models.UserEntities;
@@ -135,6 +137,7 @@ namespace ITI.ItSchool.Models
                         user.GroupId = group.GroupId;
                         userContext.Users.Add(user);
                         userContext.SaveChanges();
+                        int i = user.UserId;
                         group = userContext.Groups.Include("Users").Where( gr => gr.Name.Equals( user.Group.Name ) ).FirstOrDefault();
                         return true;
                     }
@@ -287,6 +290,16 @@ namespace ITI.ItSchool.Models
             return children;
         }
 
+        public List<int> GetChildrenListIdByClassId( int id )
+        {
+            List<int> childrenIDs = new List<int>();
+            using( UserContext uc = new UserContext() )
+            {
+                childrenIDs = uc.Users.Where( u => u.ClassId.Equals( id ) ).Where( u => u.Group.Name.Equals( "Élèves" ) ).Select( u => u.UserId ).ToList();
+            }
+            return childrenIDs;
+        }
+
         public JsonResult GetClozeExerciseContent()
         {
             ExerciseCloze ec = new ExerciseCloze();
@@ -348,7 +361,12 @@ namespace ITI.ItSchool.Models
 
         public User FindById( int id )
         {
-            throw new NotImplementedException();
+            User user = null;
+            using( var uc = new UserContext() )
+            {
+                user = uc.Users.Where( a => a.UserId.Equals( id ) ).FirstOrDefault();
+            }
+            return user;
         }
 
         public User FindByGrade( string grade )
@@ -405,6 +423,193 @@ namespace ITI.ItSchool.Models
                 data =  new JsonResult { Data = users, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
             return data;
+        }
+
+        /// <summary>
+        /// Create Or Update a Dictation
+        /// It create a new Exercise only if the dictation doesn't exists in the DB
+        /// It create a new ExerciseDictation if it doesn't exist in the DB
+        /// It Updates a dictation if it doesn't exists in the DB
+        /// </summary>
+        /// <param name="dictationData"></param>
+        /// <returns></returns>
+        public JsonResult SaveDictation( ExerciseDictationData dictationData )
+        {
+            // The Message that will be in the Json
+            string message = "";
+
+            //The Exercise that will be saved in the DB if it's the first time.
+            ExerciseDictation dictationExo = new ExerciseDictation();
+
+            // The list which will contain the users' IDs sent from the dictationData Object recieved in the parameter
+            List<int> usersIds = new List<int>();
+
+            //Affecting users' ids to a list.
+            //This will be used for the affectation LATER
+            if( dictationData.UsersIds != null )
+                usersIds = dictationData.UsersIds.ToList();
+
+            //Here we stock the user's nickname and the text data
+            string[] words = dictationData.Text.Split( '/' );
+
+            //User Nickname is getted here
+            string nickname = words[0];
+
+            // Reaffecting correct data on the exercise
+            dictationExo.Text = words[1];
+
+            // Affecting the audio data to the Dictation Exercise Entity
+            dictationExo.AudioData = dictationData.AudioData;
+
+
+            IRepository repo = new SQLRepository();
+
+            //Here we get our teacher user from the DataBase (IT CAN'T BE NULL !!!! IMPOSSIBLE !!)
+            User user = repo.FindByNickname( nickname );
+
+            #region SaveExercise
+            using( var edc = new ExerciseDictationContext() )
+            {
+                dictationExo.Chapter = new Chapter();
+                dictationExo.Chapter.ClassId = user.ClassId;
+                dictationExo.Chapter.Class = null;
+                dictationExo.Chapter.Name = "Dictée";
+
+                using( var sc = new SchoolContext() )
+                {
+                    Chapter chapter = sc.Chapters.Where( c => c.Name.Equals( "Dictée" ) )
+                                                 .FirstOrDefault();
+
+                    dictationExo.ChapterId = chapter.ChapterId;
+                    dictationExo.LevelId = edc.Level.Where( l => l.Name.Equals( dictationData.Level.Name ) ).Select( l => l.LevelId ).FirstOrDefault();
+                    dictationExo.Level = null;
+                    dictationExo.Name = "Dictée " + sc.Classes
+                                            .Where( cl => cl.ClassId.Equals( dictationExo.Chapter.ClassId ) )
+                                            .Select( cl => cl.Name )
+                                            .FirstOrDefault() + edc.Level
+                                            .Where( l => l.LevelId.Equals( dictationExo.LevelId ) )
+                                            .Select( l => l.Name )
+                                            .FirstOrDefault();
+                    dictationExo.Chapter = null;
+                }
+                ExerciseDictation dictation = edc.ExerciseDictation.Where( exDictation => exDictation.Name.Equals( dictationExo.Name ) ).FirstOrDefault();
+
+                if( dictation == null )
+                {
+                    Exercise exercise = new Exercise();
+                    int exerciseId = 0;
+                    using( ExerciseContext exoContext = new ExerciseContext() )
+                    {
+                        ExerciseType exoType = exoContext.ExerciseTypes.Where( exType => exType.Name.Equals( "Dictée" ) ).FirstOrDefault();
+                        exercise.ExerciseTypeId = exoType.ExerciseTypeId;
+                        exoContext.Exercises.Add( exercise );
+
+                        exoContext.SaveChanges();
+                        exerciseId = exercise.ExerciseId;
+                    }
+
+                    //Then we save the Exercise Plug
+                    dictationExo.ExerciseDictationId = exerciseId;
+                    edc.ExerciseDictation.Add( dictationExo );
+                    edc.SaveChanges();
+
+                    //Finally we affect the exercise to
+                    if( dictationExo.LevelId.Equals( 1 ) )
+                    {
+                        usersIds = null;
+                        usersIds = repo.GetChildrenListIdByClassId( user.ClassId );
+                    }
+                    ExerciseAffectation( usersIds, exerciseId );
+
+                    message = "Jeu enregistré";
+                }
+                else
+                {
+                    ExerciseDictation refExoDictation = new ExerciseDictation();
+                    refExoDictation = edc.ExerciseDictation.Where( ex => ex.Name.Equals( dictationExo.Name ) ).FirstOrDefault();
+
+                    if( dictationExo.LevelId.Equals( 1 ) )
+                    {
+                        usersIds = null;
+                        usersIds = repo.GetChildrenListIdByClassId( user.ClassId );
+                    }
+
+                    ExerciseAffectation( usersIds, refExoDictation.ExerciseDictationId );
+                    dictation.Text = dictationExo.Text;
+
+                    if(dictationExo.AudioData != null)
+                        dictation.AudioData = dictationExo.AudioData;
+
+                    //3. Mark entity as modified
+                    edc.Entry( dictation ).State = System.Data.Entity.EntityState.Modified;
+                    //4. call SaveChanges
+                    edc.SaveChanges();
+                    message = "Texte mis à jour.";
+                }
+            }
+            JsonResult data = new JsonResult { Data = message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            return data;
+            #endregion
+        }
+
+        /// <summary>
+        /// Affects a specific exercise to on or multiple users
+        /// </summary>
+        /// <param name="usersIds"></param>
+        /// <param name="exerciseId"></param>
+        private void ExerciseAffectation( List<int> usersIds, int exerciseId )
+        {
+            using( ExerciseContext exerciseContext = new ExerciseContext() )
+            {
+                for( int i = 0; i < usersIds.Count(); i++ )
+                {
+                    ExerciseAffectation exerciseAffectation = new ExerciseAffectation();
+                    exerciseAffectation.UserId = usersIds[i];
+                    int id = usersIds[i];
+                    exerciseAffectation.ExerciseId = exerciseId;
+                    exerciseAffectation.CreationDate = DateTime.Now;
+                    exerciseAffectation.FirstViewDate = exerciseAffectation.CreationDate;
+                    exerciseAffectation.EndDate = DateTime.Now;
+
+                    //We look if the affectation already exist or no
+                    ExerciseAffectation exA = exerciseContext.ExercisesAffectations.Where( e => e.UserId.Equals( id ) ).Where( e => e.ExerciseId.Equals( exerciseId ) ).FirstOrDefault();
+                    if( exA == null )
+                    {
+                        exerciseContext.ExercisesAffectations.Add( exerciseAffectation );
+                        exerciseContext.SaveChanges();
+                    }
+                }
+            }
+        }
+
+        public List<ExerciseAffectation> GetExerciseAffectationListByUserId( int id )
+        {
+            List<ExerciseAffectation> affectations = new List<ExerciseAffectation>();
+            using( ExerciseContext exoContext = new ExerciseContext() )
+            {
+                affectations = exoContext.ExercisesAffectations.Where( eA => eA.UserId.Equals( id ) ).ToList();
+            }
+            return affectations;
+        }
+
+        public List<ExerciseDictation> GetExerciseDictationListById( List<int> IDs )
+        {
+            List<ExerciseDictation> allDictations = new List<ExerciseDictation>();
+            List<ExerciseDictation> affectedDictations = new List<ExerciseDictation>();
+
+            using( ExerciseDictationContext exoDictationContext = new ExerciseDictationContext() )
+            {
+                exoDictationContext.Configuration.LazyLoadingEnabled = false;
+                //allDictations = exoDictationContext.ExerciseDictation.ToList();
+                for(int i = 0; i < IDs.Count(); i++ ) {
+                    ExerciseDictation exoDictation = new ExerciseDictation();
+                    int id = IDs[i];
+                    exoDictation = exoDictationContext.ExerciseDictation.Where( eD => eD.ExerciseDictationId.Equals( id ) ).FirstOrDefault();
+                    affectedDictations.Add( exoDictation );
+                }
+
+            }
+            return affectedDictations;
         }
     }
 }

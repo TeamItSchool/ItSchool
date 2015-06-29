@@ -1,4 +1,7 @@
-﻿using ITI.ItSchool.Models.Entities;
+﻿using ITI.ItSchool.Models.ClassExercicesPlug;
+using ITI.ItSchool.Models.Entities;
+using ITI.ItSchool.Models.ExerciseEntities;
+using ITI.ItSchool.Models.PlugExercises;
 using ITI.ItSchool.Models.SchoolEntities;
 using ITI.ItSchool.Models.UserEntities;
 using System;
@@ -16,9 +19,17 @@ namespace ITI.ItSchool.Models
 
         List<User> GetChildrenListByClassId( int id );
 
+        List<int> GetChildrenListIdByClassId( int id );
+
         JsonResult FindUserByNickname(string nickname);
 
+        JsonResult SaveDictation( ExerciseDictationData dictationData );
+
         JsonResult GetChapters();
+
+        List<ExerciseAffectation> GetExerciseAffectationListByUserId( int id );
+
+        List<ExerciseDictation> GetExerciseDictationListById( List<int> IDs );
 
         JsonResult GetClasses();
 

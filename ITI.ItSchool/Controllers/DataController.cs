@@ -1,6 +1,9 @@
 ﻿using ITI.ItSchool.Models;
+using ITI.ItSchool.Models.ClassExercicesPlug;
 using ITI.ItSchool.Models.Contexts;
 using ITI.ItSchool.Models.Entities;
+using ITI.ItSchool.Models.ExerciseEntities;
+using ITI.ItSchool.Models.ExercisesEntities;
 using ITI.ItSchool.Models.PlugExercises;
 using ITI.ItSchool.Models.SchoolEntities;
 using ITI.ItSchool.Models.UserEntities;
@@ -34,75 +37,44 @@ namespace ITI.ItSchool.Controllers
             return jsonData;
         }
 
-        public JsonResult SaveDictation( ExerciseDictation dictationExo )
+        public JsonResult SaveDictation( ExerciseDictationData dictationData )
         {
-
-            string[] words = dictationExo.Text.Split( '/' );
-            string nickname = words[0];
-            dictationExo.Text = words[1];
-            string message = "";
-
             IRepository repo = new SQLRepository();
-            User user = repo.FindByNickname( nickname );
-
-            using( var edc = new ExerciseDictationContext() )
-            {
-                dictationExo.Chapter = new Chapter();
-                dictationExo.Chapter.ClassId = user.ClassId;
-                dictationExo.Chapter.Class = null;
-                dictationExo.Chapter.Name = "Dictée";
-
-                using( var sc = new SchoolContext() )
-                {
-                    Chapter chapter = sc.Chapters.Where( c => c.Name.Equals( "Dictée" ) )
-                                                 .FirstOrDefault();
-
-                    dictationExo.ChapterId = chapter.ChapterId;
-                    dictationExo.LevelId = edc.Level.Where( l => l.Name.Equals( dictationExo.Level.Name ) ).Select( l => l.LevelId ).FirstOrDefault();
-                    dictationExo.Level = null;
-                    dictationExo.Name = "Dictée " + sc.Classes
-                                            .Where( cl => cl.ClassId.Equals( dictationExo.Chapter.ClassId ) )
-                                            .Select( cl => cl.Name )
-                                            .FirstOrDefault() + edc.Level
-                                            .Where( l => l.LevelId.Equals( dictationExo.LevelId ) )
-                                            .Select( l => l.Name )
-                                            .FirstOrDefault();
-                    dictationExo.Chapter = null;
-                }
-                ExerciseDictation dictation = edc.ExerciseDictation.Where( exDictation => exDictation.Name.Equals( dictationExo.Name ) ).FirstOrDefault();
-                if( dictation == null )
-                {
-                    if( dictationExo.LevelId.Equals( 1 ) )
-                        //dictationExo.Users = repo.GetChildrenListByClassId( user.ClassId );
-
-                    edc.ExerciseDictation.Add( dictationExo );
-                    edc.SaveChanges();
-                    message = "Jeu enregistré";
-                }
-                else
-                {
-                    ExerciseDictation refExoDic = new ExerciseDictation();
-                    using( ExerciseDictationContext exoDictationContext = new ExerciseDictationContext() )
-                    {
-                        refExoDic = exoDictationContext.ExerciseDictation.Where( ex => ex.Name.Equals( dictationExo.Name ) ).FirstOrDefault();
-                    }
-                    dictation.Text = dictationExo.Text;
-
-                    dictation.AudioData = dictationExo.AudioData;
-                    //3. Mark entity as modified
-                    edc.Entry( dictation ).State = System.Data.Entity.EntityState.Modified;
-                    //4. call SaveChanges
-                    edc.SaveChanges();
-                    message = "Texte mis à jour.";
-                }
-                JsonResult data = new JsonResult { Data = message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-                return data;
-            }
+            JsonResult messageData = repo.SaveDictation( dictationData );
+            return messageData;
         }
+
         public JsonResult GetSpecificChilden( int id )
         {
             IRepository repo = new SQLRepository();
             JsonResult data = repo.GetChildrenByClassId( id );
+            return data;
+        }
+
+        /// <summary>
+        /// Will search the exercise dictation in db from the user id and will define if a level is showable for the kid
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetExerciseDictation(int id)
+        {
+            List<ExerciseDictation> exercises = new List<ExerciseDictation>();
+            List<ExerciseAffectation> childAffectations = new List<ExerciseAffectation>();
+            List<int> exercisesIDs = new List<int>();
+
+            IRepository repo = new SQLRepository();
+
+            // Warning : It can't be null
+            User concernedChild = repo.FindById( id );
+
+            childAffectations = repo.GetExerciseAffectationListByUserId( concernedChild.UserId );
+
+            for(int i = 0; i<childAffectations.Count(); i++) {
+                exercisesIDs.Add( childAffectations[i].ExerciseId );
+            }
+
+            exercises = repo.GetExerciseDictationListById( exercisesIDs );
+
+            JsonResult data = new JsonResult { Data = exercises, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             return data;
         }
 
