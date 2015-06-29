@@ -1745,7 +1745,7 @@
                 battleCardService.addChoice($scope.ExerciseBattleCardList[i].Choice);
         }
         $scope.EasySelected = true;
-        $scope.Message = "Niveau facile : Tu peux le faire !";
+        $scope.Message = "Niveau Facile : Tu peux le faire !";
         $scope.ExerciseBattleCardData.Level.Name = "Easy";
     }
 
@@ -1755,12 +1755,16 @@
                 battleCardService.addChoice($scope.ExerciseBattleCardList[i].Choice);
         }
         $scope.MediumSelected = true;
-        $scope.Message = "Niveau moyen";
+        $scope.Message = "Niveau Moyen : Fonce, tu peux y arriver !";
         $scope.ExerciseBattleCardData.Level.Name = "Medium";
     }
     $scope.Hard = function () {
+        for (i = 0; i < $scope.ExerciseBattleCardList.length ; i++) {
+            if ($scope.ExerciseBattleCardList[i].LevelId == 3)
+                battleCardService.addChoice($scope.ExerciseBattleCardList[i].Choice);
+        }
         $scope.HardSelected = true;
-        $scope.Message = "Niveau difficile";
+        $scope.Message = "Niveau Difficle : Tu es le meilleur, donne tout ce que tu as !";
         $scope.ExerciseBattleCardData.Level.Name = "Hard";
     }
 })
