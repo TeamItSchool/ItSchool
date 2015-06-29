@@ -612,6 +612,7 @@ namespace ITI.ItSchool.Models
                     ExerciseAffectation(usersIds, exerciseId);
                     message = "Jeu enregistré";
                 }
+                // If the exercise was already in bdd, update the data
                 else
                 {
                     ExerciseBattleCard refExoBattleCard = new ExerciseBattleCard();

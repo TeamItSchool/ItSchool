@@ -484,7 +484,7 @@
                 else {
                     $scope.LoginData.Username = "";
                     $scope.LoginData.Password = "";
-                    alert("Aïe.. Quelque chose s'est mal passé. Vois avec tes parents ou ton professeur.")
+                    alert("Aïe.. Quelque chose s'est mal passée. Vois avec tes parents ou ton professeur.")
                 }
 
                 console.log(d.data);
