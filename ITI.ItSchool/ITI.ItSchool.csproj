@@ -6722,10 +6722,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SchoolContextMigrations\201506261302321_Initial.cs" />
     <Compile Include="SchoolContextMigrations\Configuration.cs" />
-    <Compile Include="UserContextMigrations\201506291950073_Initial.cs" />
-    <Compile Include="UserContextMigrations\201506291950073_Initial.Designer.cs">
-      <DependentUpon>201506291950073_Initial.cs</DependentUpon>
-    </Compile>
+    <Compile Include="UserContextMigrations\201506162024076_Initial.cs" />
     <Compile Include="UserContextMigrations\Configuration.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -6763,11 +6760,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="UserContextMigrations\201506291950073_Initial.resx">
-      <DependentUpon>201506291950073_Initial.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
