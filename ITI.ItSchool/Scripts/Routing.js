@@ -618,7 +618,7 @@
     var monobjet = JSON.parse(monobjet_json);
     // Affichage dans la console
     console.log(monobjet.data.FirstName);
-    $scope.Message = "Bonjour " + monobjet.data.FirstName;
+    $scope.Message = "Bonjour " + monobjet.data.Nickname;
 
 })
 .controller('KidSelectExercicesController', function ($scope) {
