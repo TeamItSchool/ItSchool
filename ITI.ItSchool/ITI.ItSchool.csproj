@@ -6726,6 +6726,14 @@
     <Compile Include="UserContextMigrations\201506162024076_Initial.Designer.cs">
       <DependentUpon>201506162024076_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserContextMigrations\201506261227350_Initial1.cs" />
+    <Compile Include="UserContextMigrations\201506261227350_Initial1.Designer.cs">
+      <DependentUpon>201506261227350_Initial1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserContextMigrations\201506261236245_Initial2.cs" />
+    <Compile Include="UserContextMigrations\201506261236245_Initial2.Designer.cs">
+      <DependentUpon>201506261236245_Initial2.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserContextMigrations\Configuration.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -6764,6 +6772,12 @@
   <ItemGroup>
     <EmbeddedResource Include="UserContextMigrations\201506162024076_Initial.resx">
       <DependentUpon>201506162024076_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserContextMigrations\201506261227350_Initial1.resx">
+      <DependentUpon>201506261227350_Initial1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserContextMigrations\201506261236245_Initial2.resx">
+      <DependentUpon>201506261236245_Initial2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
