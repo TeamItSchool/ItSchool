@@ -1,53 +1,4 @@
 ﻿<div ng-controller="TeacherCustomizeBattleCardController">
-    <style>
-        body, html {
-            background-color: #F0E8D8;
-        }
-        h1 {
-	        text-align : center;
-        }
-
-        #global {
-          padding-bottom : 5%;
-          position: relative; /* on positionne le conteneur */
-          margin-left: auto;
-          margin-right: auto;
-          width: 100%;
-          height : 100%;
-          border : 1px solid black;
-          background: #F0E8D8 -moz-linear-gradient(center bottom , #DACDB1 11%, #F0E8D8 56%) repeat scroll 0% 0%;
-
-        }
-
-        #choice{
-            margin-top : 1.5%;          
-            border : 1px solid black;
-	        box-shadow: 0px 0px 65px #CDBE9F inset, 0px 0px 20px #BEAE8C inset, 0px 0px 5px #816F47;
-	        font-family: Georgia,Times,serif;
-	        line-height: 1.50em;
-        }
-
-        #choiceTitle{
-            text-decoration: underline;
-            font-weight : bold;
-        }
-
-        #alphabet{
-            font-weight : bold;
-        }
-
-        #leftArrow{
-            position : absolute;
-            top : 45%;
-            background-color : #CDBE9F;
-            right: 90%;
-        }
-
-     </style>
-
-    <h1>Customize Battle Card Game</h1>
-
-
     <div id="global">
 
         <md-button id="leftArrow" class="md-fab" aria-label="FAB" href="#!/teacher/exercices/battleCard">
@@ -59,7 +10,7 @@
 
         <center>
             <div ng-show="!EasySelected && !MediumSelected && !HardSelected">
-            <h1>{{Message}}</h1>
+                <h1 class="ng-binding">{{Message}}</h1>
             <table>
                 <tr>
                     <td>

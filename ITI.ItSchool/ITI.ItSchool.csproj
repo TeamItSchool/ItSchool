@@ -6746,18 +6746,22 @@
     <Compile Include="Models\UserEntities\Group.cs" />
     <Compile Include="Models\UserEntities\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SchoolContextMigrations\201506241345098_Initial.cs" />
-    <Compile Include="SchoolContextMigrations\201506241345098_Initial.Designer.cs">
-      <DependentUpon>201506241345098_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SchoolContextMigrations\201506161019380_Initial1.cs" />
-    <Compile Include="SchoolContextMigrations\201506161019380_Initial1.Designer.cs">
-      <DependentUpon>201506161019380_Initial1.cs</DependentUpon>
+    <Compile Include="SchoolContextMigrations\201506261237304_Initial.cs" />
+    <Compile Include="SchoolContextMigrations\201506261237304_Initial.Designer.cs">
+      <DependentUpon>201506261237304_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="SchoolContextMigrations\Configuration.cs" />
     <Compile Include="UserContextMigrations\201506162024076_Initial.cs" />
     <Compile Include="UserContextMigrations\201506162024076_Initial.Designer.cs">
       <DependentUpon>201506162024076_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserContextMigrations\201506261227350_Initial1.cs" />
+    <Compile Include="UserContextMigrations\201506261227350_Initial1.Designer.cs">
+      <DependentUpon>201506261227350_Initial1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserContextMigrations\201506261236245_Initial2.cs" />
+    <Compile Include="UserContextMigrations\201506261236245_Initial2.Designer.cs">
+      <DependentUpon>201506261236245_Initial2.cs</DependentUpon>
     </Compile>
     <Compile Include="UserContextMigrations\Configuration.cs" />
   </ItemGroup>
@@ -6819,11 +6823,17 @@
     <EmbeddedResource Include="ExerciseDictationContextMigrations\201506250859117_RemoveExType.resx">
       <DependentUpon>201506250859117_RemoveExType.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SchoolContextMigrations\201506241345098_Initial.resx">
-      <DependentUpon>201506241345098_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="SchoolContextMigrations\201506261237304_Initial.resx">
+      <DependentUpon>201506261237304_Initial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserContextMigrations\201506162024076_Initial.resx">
       <DependentUpon>201506162024076_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserContextMigrations\201506261227350_Initial1.resx">
+      <DependentUpon>201506261227350_Initial1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserContextMigrations\201506261236245_Initial2.resx">
+      <DependentUpon>201506261236245_Initial2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
