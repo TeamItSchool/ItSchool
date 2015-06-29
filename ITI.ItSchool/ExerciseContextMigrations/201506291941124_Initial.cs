@@ -7,26 +7,26 @@ namespace ITI.ItSchool.ExerciseContextMigrations
     {
         public override void Up()
         {
-            //CreateTable(
-            //    "dbo.Exercises",
-            //    c => new
-            //        {
-            //            ExerciseId = c.Int(nullable: false, identity: true),
-            //            ExerciseTypeId = c.Int(nullable: false),
-            //        })
-            //    .PrimaryKey(t => t.ExerciseId)
-            //    .ForeignKey("dbo.ExercisesTypes", t => t.ExerciseTypeId, cascadeDelete: true)
-            //    .Index(t => t.ExerciseTypeId);
+            CreateTable(
+                "dbo.Exercises",
+                c => new
+                    {
+                        ExerciseId = c.Int(nullable: false, identity: true),
+                        ExerciseTypeId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ExerciseId)
+                .ForeignKey("dbo.ExercisesTypes", t => t.ExerciseTypeId, cascadeDelete: true)
+                .Index(t => t.ExerciseTypeId);
             
-            //CreateTable(
-            //    "dbo.ExercisesTypes",
-            //    c => new
-            //        {
-            //            ExerciseTypeId = c.Int(nullable: false, identity: true),
-            //            Name = c.String(nullable: false, maxLength: 45),
-            //            Description = c.String(maxLength: 200),
-            //        })
-            //    .PrimaryKey(t => t.ExerciseTypeId);
+            CreateTable(
+                "dbo.ExercisesTypes",
+                c => new
+                    {
+                        ExerciseTypeId = c.Int(nullable: false, identity: true),
+                        Name = c.String(nullable: false, maxLength: 45),
+                        Description = c.String(maxLength: 200),
+                    })
+                .PrimaryKey(t => t.ExerciseTypeId);
             
             CreateTable(
                 "dbo.ExercisesAffectations",

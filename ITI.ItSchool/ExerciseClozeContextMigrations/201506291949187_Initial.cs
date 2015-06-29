@@ -1,4 +1,4 @@
-namespace ITI.ItSchool.ExerciseDictationContextMigrations
+namespace ITI.ItSchool.ExerciseClozeContextMigrations
 {
     using System;
     using System.Data.Entity.Migrations;
@@ -8,21 +8,21 @@ namespace ITI.ItSchool.ExerciseDictationContextMigrations
         public override void Up()
         {
             CreateTable(
-                "dbo.ExerciseDictations",
+                "dbo.ExerciseCloze",
                 c => new
                     {
-                        ExerciseDictationId = c.Int(nullable: false),
+                        ExerciseClozeId = c.Int(nullable: false),
                         Name = c.String(maxLength: 50),
                         LevelId = c.Int(nullable: false),
                         ChapterId = c.Int(nullable: false),
                         Text = c.String(),
-                        AudioData = c.String(),
+                        Words = c.String(),
                     })
-                .PrimaryKey(t => t.ExerciseDictationId)
+                .PrimaryKey(t => t.ExerciseClozeId)
                 .ForeignKey("dbo.Chapters", t => t.ChapterId, cascadeDelete: true)
-                .ForeignKey("dbo.Exercises", t => t.ExerciseDictationId)
+                .ForeignKey("dbo.Exercises", t => t.ExerciseClozeId)
                 .ForeignKey("dbo.Levels", t => t.LevelId, cascadeDelete: true)
-                .Index(t => t.ExerciseDictationId)
+                .Index(t => t.ExerciseClozeId)
                 .Index(t => t.LevelId)
                 .Index(t => t.ChapterId);
             
@@ -195,9 +195,9 @@ namespace ITI.ItSchool.ExerciseDictationContextMigrations
         
         public override void Down()
         {
-            DropForeignKey("dbo.ExerciseDictations", "LevelId", "dbo.Levels");
-            DropForeignKey("dbo.ExerciseDictations", "ExerciseDictationId", "dbo.Exercises");
-            DropForeignKey("dbo.ExerciseDictations", "ChapterId", "dbo.Chapters");
+            DropForeignKey("dbo.ExerciseCloze", "LevelId", "dbo.Levels");
+            DropForeignKey("dbo.ExerciseCloze", "ExerciseClozeId", "dbo.Exercises");
+            DropForeignKey("dbo.ExerciseCloze", "ChapterId", "dbo.Chapters");
             DropForeignKey("dbo.Chapters", "ThemeId", "dbo.Themes");
             DropForeignKey("dbo.Themes", "MatterId", "dbo.Matters");
             DropForeignKey("dbo.Exercises", "Chapter_ChapterId", "dbo.Chapters");
@@ -220,9 +220,9 @@ namespace ITI.ItSchool.ExerciseDictationContextMigrations
             DropIndex("dbo.Users", new[] { "ClassId" });
             DropIndex("dbo.Chapters", new[] { "ThemeId" });
             DropIndex("dbo.Chapters", new[] { "ChapterId" });
-            DropIndex("dbo.ExerciseDictations", new[] { "ChapterId" });
-            DropIndex("dbo.ExerciseDictations", new[] { "LevelId" });
-            DropIndex("dbo.ExerciseDictations", new[] { "ExerciseDictationId" });
+            DropIndex("dbo.ExerciseCloze", new[] { "ChapterId" });
+            DropIndex("dbo.ExerciseCloze", new[] { "LevelId" });
+            DropIndex("dbo.ExerciseCloze", new[] { "ExerciseClozeId" });
             DropTable("dbo.Levels");
             DropTable("dbo.Matters");
             DropTable("dbo.Themes");
@@ -236,7 +236,7 @@ namespace ITI.ItSchool.ExerciseDictationContextMigrations
             DropTable("dbo.Users");
             DropTable("dbo.Classes");
             DropTable("dbo.Chapters");
-            DropTable("dbo.ExerciseDictations");
+            DropTable("dbo.ExerciseCloze");
         }
     }
 }

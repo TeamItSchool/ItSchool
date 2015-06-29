@@ -476,7 +476,7 @@ namespace ITI.ItSchool.Models
                 // Create the cloze exercise
                 ec = new ExerciseCloze();
 
-                //ec.ExerciseClozeId = exercise.ExerciseId;
+                ec.ExerciseClozeId = exercise.ExerciseId;
                 ec.Name = exCloze.Name;
                 ec.Text = exCloze.Text;
                 ec.Words = exCloze.HiddenWords;
