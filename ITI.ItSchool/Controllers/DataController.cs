@@ -135,6 +135,30 @@ namespace ITI.ItSchool.Controllers
             return messageData;
         }
 
+        public JsonResult GetExerciseBattleCard(int id)
+        {
+            List<ExerciseBattleCard> exercises = new List<ExerciseBattleCard>();
+            List<ExerciseAffectation> childAffectations = new List<ExerciseAffectation>();
+            List<int> exercisesIDs = new List<int>();
+
+            IRepository repo = new SQLRepository();
+
+            // Warning : It can't be null
+            User concernedChild = repo.FindById(id);
+
+            childAffectations = repo.GetExerciseAffectationListByUserId(concernedChild.UserId);
+
+            for (int i = 0; i < childAffectations.Count(); i++)
+            {
+                exercisesIDs.Add(childAffectations[i].ExerciseId);
+            }
+
+            exercises = repo.GetExerciseBattleCardListById(exercisesIDs);
+
+            JsonResult data = new JsonResult { Data = exercises, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            return data;
+        }
+
         public JsonResult GetUsersByClasses(int id)
         {
             IRepository repo = new SQLRepository();
