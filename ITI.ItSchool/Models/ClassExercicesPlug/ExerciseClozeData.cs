@@ -1,5 +1,6 @@
 ﻿using ITI.ItSchool.Models.ExerciseEntities;
 using ITI.ItSchool.Models.SchoolEntities;
+using ITI.ItSchool.Models.UserEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -758,6 +758,9 @@
 })
 .controller("TeacherClozeExerciseController", function ($scope, ExerciseDatas) {
 
+    var sessions_elements_json = sessionStorage.getItem("objet");
+    var sessions_elements = JSON.parse(sessions_elements_json);
+    console.log('Class id is equal to ' + sessions_elements.data.ClassId);
     $scope.Message = 'Sélectionnez un niveau.';
     $scope.EasySelected = false;
     $scope.MediumSelected = false;
@@ -766,16 +769,31 @@
     $scope.Button = 'Sauvegarder';
     $scope.IsFormValid = false;
     $scope.ExerciseClozeData = {
+        Name: '', 
         Text: '',
-        Words: '',
+        HiddenWords: '',
         Level: {
             Name: ''
         },
         Chapter: {
             Name: ''
         },
-        UsersIds: ''
+        UsersIds: []
     };
+
+    $scope.Children = null;
+    
+    ExerciseDatas.GetChildren(sessions_elements.data.Class.ClassId).then(function (d) {
+        console.log( 'Data GetChildren: ' + d.data );
+        $scope.Children = d.data;
+
+        for (var i = 0; i < $scope.Children.length; i++ ) {
+            $scope.ExerciseClozeData.UsersIds.push( $scope.Children[i].UserId );
+        }
+
+        //$scope.ExerciseClozeData.UsersIds = $scope.Children;
+        console.log('UsersIds in scope : ' + $scope.ExerciseClozeData.UsersIds);
+    });
 
     $scope.Easy = function () {
         $scope.EasySelected = true;
@@ -851,7 +869,7 @@
 
     $scope.SaveData = function () {
         if ($scope.IsFormValid) {
-            ExerciseDatas.CreateClozeExercise($scope.ExerciseClozeData).then(function (data) {
+            ExerciseDatas.CreateClozeExercise( $scope.ExerciseClozeData ).then(function (data) {
                 console.log( 'State: exercise saved, L861/ $scope.SaveData' );
             });
         }
@@ -1768,6 +1786,11 @@
     fac.GetClasses = function () {
         return $http.get('/Data/GetClasses')
     }
+
+    fac.GetChildren = function ( data ) {
+        return $http.get('/Data/GetUsersByClasses/' + data);
+    }
+
     fac.GetGroups = function () {
         return $http.get('/Data/GetGroups')
     }

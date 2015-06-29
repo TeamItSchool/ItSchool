@@ -6681,9 +6681,9 @@
       <DependentUpon>201506282038188_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="ExerciseBattleCardContextMigrations\Configuration.cs" />
-    <Compile Include="ExerciseClozeContextMigrations\201506282034527_Initial.cs" />
-    <Compile Include="ExerciseClozeContextMigrations\201506282034527_Initial.Designer.cs">
-      <DependentUpon>201506282034527_Initial.cs</DependentUpon>
+    <Compile Include="ExerciseClozeContextMigrations\201506291143394_Initial.cs" />
+    <Compile Include="ExerciseClozeContextMigrations\201506291143394_Initial.Designer.cs">
+      <DependentUpon>201506291143394_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="ExerciseClozeContextMigrations\Configuration.cs" />
     <Compile Include="ExerciseContextMigrations\201506282029213_Initial.cs" />
@@ -6779,8 +6779,8 @@
     <EmbeddedResource Include="ExerciseBattleCardContextMigrations\201506282038188_Initial.resx">
       <DependentUpon>201506282038188_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ExerciseClozeContextMigrations\201506282034527_Initial.resx">
-      <DependentUpon>201506282034527_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="ExerciseClozeContextMigrations\201506291143394_Initial.resx">
+      <DependentUpon>201506291143394_Initial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ExerciseContextMigrations\201506282029213_Initial.resx">
       <DependentUpon>201506282029213_Initial.cs</DependentUpon>

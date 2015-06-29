@@ -9,6 +9,7 @@ using ITI.ItSchool.Models.SchoolEntities;
 using ITI.ItSchool.Models.UserEntities;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -398,17 +399,17 @@ namespace ITI.ItSchool.Models
                 uc.Configuration.LazyLoadingEnabled = false;
 
                 users = uc.Users
-                    .Include("Avatar")
-                    .Include("Class")
-                    .Include("Group")
+                //    .Include("Avatar")
+                //    .Include("Class")
+                //    .Include("Group")
                     .Where(u => u.ClassId.Equals(id)).Where(u => u.Group.Name.Equals("Élèves")).ToList();
 
-                for (int i = 0; i < users.Count(); ++i)
-                {
-                    users[i].Class.Users = null;
-                    users[i].Group.Users = null;
-                    users[i].Avatar.User = null;
-                }
+                //for (int i = 0; i < users.Count(); ++i)
+                //{
+                //    users[i].Class.Users = null;
+                //    users[i].Group.Users = null;
+                //    users[i].Avatar.User = null;
+                //}
                 data = new JsonResult { Data = users, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
             return data;
@@ -432,17 +433,16 @@ namespace ITI.ItSchool.Models
             List<int> usersIds = new List<int>();
             ExerciseType et = new ExerciseType();
             Exercise exercise = new Exercise();
-            ExerciseCloze ec = new ExerciseCloze();
+            ExerciseCloze ec = null;
             Chapter c = new Chapter();
             Level l = new Level();
             User pupil = new User();
-            string exerciseName = "";
             string nameReceived = exCloze.Name;
             string levelReceived = exCloze.Level.Name;
             string chapterReceived = exCloze.Chapter.Name;
             string creationInfo = "not created";
 
-            if( exCloze.UsersIds != null ) usersIds.ToList();
+            if( exCloze.UsersIds != null ) usersIds = exCloze.UsersIds.ToList();
 
             pupil = this.FindById( usersIds[0] );
 
@@ -456,11 +456,11 @@ namespace ITI.ItSchool.Models
             // unique id
             using (var db = new ExerciseClozeContext())
             {
+                db.Configuration.LazyLoadingEnabled = false;
                 // Before we check if the we already have an exercise cloze with an existing name
                 ec = db.ExerciseCloze.Where( ex => ex.Name.Equals( nameReceived ) ).FirstOrDefault();
-                exerciseName = ec.Name;
 
-                if ( !String.IsNullOrEmpty( exerciseName ) ) return "error existing name";
+                if ( ec != null ) return "error existing name";
 
                 // Get the Id of the Exercise Type and create a new Exercise
                 using (var exerciseContext = new ExerciseContext())
@@ -468,20 +468,32 @@ namespace ITI.ItSchool.Models
                     et = exerciseContext.ExerciseTypes.Where(ex => ex.Name.Equals("Texte à trous")).FirstOrDefault();
                     exercise.ExerciseTypeId = et.ExerciseTypeId;
                     exerciseContext.Exercises.Add(exercise);
+                    exerciseContext.SaveChanges();
                 }
 
                 l = db.Level.Where( lv => lv.Name.Equals( levelReceived ) ).FirstOrDefault();
                 
                 // Create the cloze exercise
+                ec = new ExerciseCloze();
+
+                //ec.ExerciseClozeId = exercise.ExerciseId;
                 ec.Name = exCloze.Name;
                 ec.Text = exCloze.Text;
                 ec.Words = exCloze.HiddenWords;
                 ec.ChapterId = c.ChapterId;
                 ec.LevelId = l.LevelId;
-
-                db.ExerciseCloze.Add( ec );
-                db.SaveChanges();
-                creationInfo = "created";
+                ec.Level = null;
+                try
+                {
+                    db.ExerciseCloze.Add(ec);
+                    db.SaveChanges();
+                    creationInfo = "created";
+                }
+                catch( Exception ex )
+                {
+                    throw;
+                }
+                
             }
 
             // Finally, we affect the exercise : if the level is Easy, we affect the exercise to all the class.

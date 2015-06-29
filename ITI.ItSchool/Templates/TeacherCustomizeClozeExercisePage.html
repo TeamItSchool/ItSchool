@@ -26,10 +26,10 @@
         <div ng-show="EasySelected">
             <h1>{{ Message }}</h1>
             <form name="ClozeExercise" ng-submit="SaveData()">
-                <md-select ng-model="ExerciseClozeData.Chapter.Name" placeholder="Chapitre">
-                    <md-option ng-repeat="chapter in Chapters" value="{{ ExerciseClozeData.Chapter.Name }} ng-model="ExerciseClozeData.Chapter.name">{{ chapter.Name }}</md-option>
+                <md-select ng-model="ExerciseClozeData.Chapter.Name" placeholder="Chapitre...">
+                    <md-option ng-repeat="chapter in Chapters" value="{{ chapter.Name }}" ng-model="ExerciseClozeData.Chapter.name">{{ chapter.Name }}</md-option>
                 </md-select>
-
+                <input type="text" name="exericiseName" ng-model="ExerciseClozeData.Name">
                 <md-button class="md-raised md-primary" type="submit" name="saveText">{{ Button }}</md-button>
 
                 Texte : 
@@ -38,8 +38,8 @@
                 </textarea><br />
 
                 Mots à cacher : 
-                <textarea rows="10" cols="50" ng-model="ExerciseClozeData.Words">
-                    {{ ExerciseClozeData.Words }}
+                <textarea rows="10" cols="50" ng-model="ExerciseClozeData.HiddenWords">
+                    {{ ExerciseClozeData.HiddenWords }}
                 </textarea><br />
 
                 Debug message : text is : [ {{ ExerciseClozeData.Text }} ]
