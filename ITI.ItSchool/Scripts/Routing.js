@@ -660,6 +660,10 @@
         console.log($scope.ExerciseDictationList);
     });
 
+    //for (var i = 0; i < $scope.ExerciseDictationList.length; i++) {
+
+    //}
+
     //Check if Form is valid or not // here DictText is our form Name
     $scope.$watch('DictText.$valid', function (newVal) {
         $scope.IsFormValid = newVal;
@@ -684,7 +688,7 @@
 
                 var audio = document.getElementById("dictationAudio");
                 audio.src = $scope.ExerciseDictation.AudioData;
-                audio.play();
+               // audio.play();
             }
             console.log($scope.ExerciseDictation.AudioData);
         }
