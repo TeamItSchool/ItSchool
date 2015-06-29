@@ -25,6 +25,8 @@ namespace ITI.ItSchool.Models
 
         JsonResult SaveDictation( ExerciseDictationData dictationData );
 
+        JsonResult SaveBattleCard(ExerciseBattleCardData battleCardData);
+
         JsonResult GetChapters();
 
         List<ExerciseAffectation> GetExerciseAffectationListByUserId( int id );

@@ -1574,12 +1574,13 @@
     $scope.IsFormValid = false;
     $scope.Button = "Sauvegarder";
 
-    $scope.ExerciseBattleCard = {
-        //A REMPLIR
-        Choice: '',
+    $scope.ExerciseBattleCardData = {
+        //A REMPLIR      
         Level: {
             Name: 'Test'
-        }
+        },
+        ChoiceData: '',
+        UsersIds: ''
     };
 
     $scope.Children = null;
@@ -1598,20 +1599,20 @@
         //console.log(d.data[0].ClassId);
 
         $scope.Children = d.data;
-        $scope.ExerciseBattleCard.Users = $scope.Children;
-        console.log($scope.ExerciseBattleCard.Users);
+        $scope.ExerciseBattleCardData.UsersIds = $scope.Children;
+        console.log($scope.ExerciseBattleCardData.UsersIds);
     });
 
     $scope.toggle = function (child, list) {
-        var idx = list.indexOf(child);
+        var idx = list.indexOf(child.UserId);
         if (idx > -1)
             list.splice(idx, 1);
         else
-            list.push(child);
+            list.push(child.UserId);
     };
 
     $scope.exists = function (child, list) {
-        return list.indexOf(child) > -1;
+        return list.indexOf(child.UserId) > -1;
     };
 
     //Check if Form is valid or not // here FormChoice is our form Name
@@ -1620,20 +1621,18 @@
     });
     $scope.IsFormValid
     $scope.SaveChoice = function () {
-        if ($scope.IsFormValid && $scope.ExerciseBattleCard.Choice != "") {
+        if ($scope.IsFormValid && $scope.ExerciseBattleCardData.ChoiceData != "") {
             $scope.Button = "Sauvegarde en cours..."
-            $scope.ExerciseBattleCard.Choice.trim();
-            $scope.ExerciseBattleCard.Choice = monobjet.data.Nickname + "/" + $scope.ExerciseBattleCard.Choice;
-            var res = $scope.ExerciseBattleCard.Choice.split("/");
+            $scope.ExerciseBattleCardData.ChoiceData.trim();
+            $scope.ExerciseBattleCardData.ChoiceData = monobjet.data.Nickname + "/" + $scope.ExerciseBattleCardData.ChoiceData;
+            var res = $scope.ExerciseBattleCardData.ChoiceData.split("/");
 
-            if ($scope.ExerciseBattleCard.Level.Name != "Easy") {
-                console.log($scope.ExerciseBattleCard.Level.Name);
-                $scope.ExerciseBattleCard.Users = $scope.selected;
-            }
+
+            $scope.ExerciseBattleCardData.UsersIds = $scope.selected;
                 
 
-            SaveBattleCardChoice.GetChoice($scope.ExerciseBattleCard).then(function (d) {
-                $scope.ExerciseBattleCard.Choice = res[1];
+            SaveBattleCardChoice.GetChoice($scope.ExerciseBattleCardData).then(function (d) {
+                $scope.ExerciseBattleCardData.ChoiceData = res[1];
                 console.log(d.data);
                 if (d.data == "Jeu enregistré")
                     $scope.Button = "Battle Card sauvegardé";
@@ -1647,18 +1646,18 @@
     $scope.Easy = function () {
         $scope.EasySelected = true;
         $scope.Message = "Niveau facile";
-        $scope.ExerciseBattleCard.Level.Name = "Easy";
+        $scope.ExerciseBattleCardData.Level.Name = "Easy";
     }
 
     $scope.Medium = function () {
         $scope.MediumSelected = true;
         $scope.Message = "Niveau moyen";
-        $scope.ExerciseBattleCard.Level.Name = "Medium";
+        $scope.ExerciseBattleCardData.Level.Name = "Medium";
     }
     $scope.Hard = function () {
         $scope.HardSelected = true;
         $scope.Message = "Niveau difficile";
-        $scope.ExerciseBattleCard.Level.Name = "Hard";
+        $scope.ExerciseBattleCardData.Level.Name = "Hard";
     }
 })
 
