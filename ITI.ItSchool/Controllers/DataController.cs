@@ -69,7 +69,9 @@ namespace ITI.ItSchool.Controllers
             childAffectations = repo.GetExerciseAffectationListByUserId( concernedChild.UserId );
 
             for(int i = 0; i<childAffectations.Count(); i++) {
-                exercisesIDs.Add( childAffectations[i].ExerciseId );
+                ExerciseDictation dictation = repo.FindExerciseDictationById( childAffectations[i].ExerciseId );
+                if(dictation != null)
+                    exercisesIDs.Add( childAffectations[i].ExerciseId );
             }
 
             exercises = repo.GetExerciseDictationListById( exercisesIDs );

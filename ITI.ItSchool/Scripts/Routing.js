@@ -664,24 +664,27 @@
     GetChildExerciseDictation.GetExerciseDictation(monobjet.data.UserId).then(function (d) {
         $scope.ExerciseDictationList = d.data;
 
-        for (var i = 0; i < $scope.ExerciseDictationList.length; i++) {
-            if ($scope.ExerciseDictationList[i].LevelId == 1)
-                easyDictationFound = true;
-            if ($scope.ExerciseDictationList[i].LevelId == 2)
-                mediumDictationFound = true;
-            if ($scope.ExerciseDictationList[i].LevelId == 3)
-                hardDictationFound = true;
+        if ($scope.ExerciseDictationList != null) {
+            for (var i = 0; i < $scope.ExerciseDictationList.length; i++) {
+                if ($scope.ExerciseDictationList[i].LevelId == 1)
+                    easyDictationFound = true;
+                if ($scope.ExerciseDictationList[i].LevelId == 2)
+                    mediumDictationFound = true;
+                if ($scope.ExerciseDictationList[i].LevelId == 3)
+                    hardDictationFound = true;
+            }
+            if (easyDictationFound == false)
+                document.getElementById("easy").disabled = true;
+            if (mediumDictationFound == false)
+                document.getElementById("medium").disabled = true;
+            if (hardDictationFound == false)
+                document.getElementById("hard").disabled = true;
         }
-        var button;
-        if (easyDictationFound == false)
+        else {
             document.getElementById("easy").disabled = true;
-        if (mediumDictationFound == false) {
             document.getElementById("medium").disabled = true;
-        }
-        if (hardDictationFound == false)
             document.getElementById("hard").disabled = true;
-
-        console.log(hardDictationFound);
+        }
         console.log($scope.ExerciseDictationList);
     });
     
@@ -709,7 +712,6 @@
 
                 var audio = document.getElementById("dictationAudio2");
                 audio.src = $scope.ExerciseDictation.AudioData;
-                audio.play();
             }
             console.log($scope.ExerciseDictation.AudioData);
         }
@@ -725,7 +727,6 @@
 
                 var audio = document.getElementById("dictationAudio3");
                 audio.src = $scope.ExerciseDictation.AudioData;
-                audio.play();
             }
             console.log($scope.ExerciseDictation.AudioData);
         }
@@ -1257,15 +1258,9 @@
         try {
             // webkit shim
             window.AudioContext = window.AudioContext || window.webkitAudioContext;
-            navigator.getUserMedia = (navigator.getUserMedia ||
-                            navigator.webkitGetUserMedia ||
-                            navigator.mozGetUserMedia ||
-                            navigator.msGetUserMedia);
             window.URL = window.URL || window.webkitURL;
 
             audio_context = new AudioContext;
-            __log('Audio context set up.');
-            __log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
         } catch (e) {
             alert('No web audio support in this browser!');
         }
@@ -1280,6 +1275,13 @@
         button.nextElementSibling.disabled = false;
         var buttonStart = document.getElementById("StartButton")
         buttonStart.disabled = false;
+        navigator.getUserMedia = (navigator.getUserMedia ||
+                       navigator.webkitGetUserMedia ||
+                       navigator.mozGetUserMedia ||
+                       navigator.msGetUserMedia);
+        __log('Audio context set up.');
+        __log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
+        audio_context = new AudioContext;
         navigator.getUserMedia({ audio: true }, startUserMedia, function (e) {
             __log('No live audio input: ' + e);
         });
