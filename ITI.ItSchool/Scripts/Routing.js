@@ -688,7 +688,7 @@
 
                 var audio = document.getElementById("dictationAudio");
                 audio.src = $scope.ExerciseDictation.AudioData;
-               // audio.play();
+               //audio.play();
             }
             console.log($scope.ExerciseDictation.AudioData);
         }
