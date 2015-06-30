@@ -78,24 +78,6 @@ namespace ITI.ItSchool.Controllers
             return data;
         }
 
-        public void ExerciseAffectation(List<int> usersIds, int exerciseId)
-        {
-            using (ExerciseContext exerciseContext = new ExerciseContext())
-            {
-                for (int i = 0; i < usersIds.Count(); i++)
-                {
-                    ExerciseAffectation exerciseAffectation = new ExerciseAffectation();
-                    exerciseAffectation.UserId = usersIds[i];
-                    exerciseAffectation.ExerciseId = exerciseId;
-                    exerciseAffectation.CreationDate = DateTime.Now;
-                    exerciseAffectation.FirstViewDate = exerciseAffectation.CreationDate;
-                    exerciseAffectation.EndDate = DateTime.Now;
-                    exerciseContext.ExercisesAffectations.Add(exerciseAffectation);
-                    exerciseContext.SaveChanges();
-                }
-            }
-        }
-
         public JsonResult CheckDictationText(DictationText d)
         {
             d.Text.Trim();
