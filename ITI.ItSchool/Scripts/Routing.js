@@ -760,7 +760,13 @@
 
     var sessions_elements_json = sessionStorage.getItem("objet");
     var sessions_elements = JSON.parse(sessions_elements_json);
-    console.log('Class id is equal to ' + sessions_elements.data.ClassId);
+
+    $scope.Message = 'Que voulez-vous faire ?';
+    $scope.NewExerciseSelected = false;
+    $scope.SetExistingExerciseSelected = false;
+
+    $scope.new_exercise = function () {
+    $scope.NewExerciseSelected = true;
     $scope.Message = 'Sélectionnez un niveau.';
     $scope.EasySelected = false;
     $scope.MediumSelected = false;
@@ -784,16 +790,62 @@
     $scope.Children = null;
     
     ExerciseDatas.GetChildren(sessions_elements.data.Class.ClassId).then(function (d) {
-        console.log( 'Data GetChildren: ' + d.data );
-        $scope.Children = d.data;
+            console.log( 'Data GetChildren: ' + d.data );
+            $scope.Children = d.data;
 
-        for (var i = 0; i < $scope.Children.length; i++ ) {
-            $scope.ExerciseClozeData.UsersIds.push( $scope.Children[i].UserId );
+            for (var i = 0; i < $scope.Children.length; i++ ) {
+                $scope.ExerciseClozeData.UsersIds.push( $scope.Children[i].UserId );
+            }
+            console.log( 'UsersIds in scope : ' + $scope.ExerciseClozeData.UsersIds );
+        });
+    }
+
+    $scope.set_exercise = function() {
+        $scope.SetExistingExerciseSelected = true;
+
+        ExerciseDatas.GetClozeExercise().then(function (d) {
+            $scope.DatabaseText = d.data.Text;
+            $scope.Exercise.Words = d.data.Words;
+            $scope.Exercise.Text = d.data.Text;
+            $scope.Selections = [];
+
+        var textLowerCase = d.data.Text.toLowerCase();
+        var wordsText = textLowerCase.split(/[\s,.:;]+/);
+        var wordsWithCount = [];
+        var uniqueWords = [];
+        var arrayJsonFormat = [];
+
+        var savedIndex = 0;
+
+        // Sorting as we have a unique words array
+        for(var i = 0; i < wordsText.length; ++i ) {
+            if ($.inArray(wordsText[i], uniqueWords) == -1) {
+                var word = {
+                    'value': wordsText[i],
+                    'count': 1
+                };
+                arrayJsonFormat.push( word );
+                uniqueWords.push(wordsText[i]);
+            } else {
+                for (var j = 0; j < arrayJsonFormat.length; j++) {
+                    if( arrayJsonFormat[j].value == wordsText[i] ) {
+                        arrayJsonFormat[j].count += 1;
+                        break;
+                    }
+                }
+            }
         }
+        $scope.myData = arrayJsonFormat;
+        }, function (error) {
+            alert("An error occured");
+        });
 
-        //$scope.ExerciseClozeData.UsersIds = $scope.Children;
-        console.log('UsersIds in scope : ' + $scope.ExerciseClozeData.UsersIds);
-    });
+        $scope.gridOptions = {
+            data: 'myData',
+            selectedItems: $scope.Selections,
+            multiSelect: true
+        };
+    }
 
     $scope.Easy = function () {
         $scope.EasySelected = true;
@@ -870,7 +922,12 @@
     $scope.SaveData = function () {
         if ($scope.IsFormValid) {
             ExerciseDatas.CreateClozeExercise( $scope.ExerciseClozeData ).then(function (data) {
-                console.log( 'State: exercise saved, L861/ $scope.SaveData' );
+                console.log('State: exercise saved, L861/ $scope.SaveData');
+                if( data == 'created' ) {
+                    $scope.Button = 'Exercice sauvgardé !'
+                } else {
+                    alert( 'L\'exercice n\'a pas pu être sauvegardé. Vérifiez vos entrées ou recommencez.' );
+                }
             });
         }
     };

@@ -1,81 +1,97 @@
 ﻿<div ng-controller="TeacherClozeExerciseController">
     <center>
         <h1>{{ Message }}</h1>
-        <div ng-show="!EasySelected && !MediumSelected && !HardSelected">
-            <h1>{{Message}}</h1>
+        <div ng-show="!NewExerciseSelected && !SetExistingExerciseSelected">
+
             <table>
-                <tr>
-                    <td>
-                        <form novalidate name="EasyForm" ng-submit="Easy()">
-                            <md-button class="md-raised md-primary" type="submit" name="easy">Facile</md-button>
-                        </form>
-                    </td>
-                    <td>
-                        <form novalidate name="MediumForm" ng-submit="Medium()">
-                            <md-button class="md-raised md-primary" type="submit" name="medium">Moyen</md-button>
-                        </form>
-                    </td>
-                    <td>
-                        <form novalidate name="HardForm" ng-submit="Hard()">
-                            <md-button class="md-raised md-primary" type="submit" name="hard">Difficile</md-button>
-                        </form>
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    <form novalidate name="newExercise" ng-submit="new_exercise()">
+                        <md-button class="md-raised md-primary" type="submit" name="newEx">Créer un exercice</md-button>
+                    </form>
+                </td>
+                <td>
+                    <form novalidate name="MediumForm" ng-submit="set_exercise()">
+                        <md-button class="md-raised md-primary" type="submit" name="setEx">Configurer un exercice</md-button>
+                    </form>
+                </td>
+            </tr>
             </table>
         </div>
-        <div ng-show="EasySelected">
-            <h1>{{ Message }}</h1>
-            <form name="ClozeExercise" ng-submit="SaveData()">
-                <md-select ng-model="ExerciseClozeData.Chapter.Name" placeholder="Chapitre...">
-                    <md-option ng-repeat="chapter in Chapters" value="{{ chapter.Name }}" ng-model="ExerciseClozeData.Chapter.name">{{ chapter.Name }}</md-option>
-                </md-select>
-                <input type="text" name="exericiseName" ng-model="ExerciseClozeData.Name">
-                <md-button class="md-raised md-primary" type="submit" name="saveText">{{ Button }}</md-button>
+        <div ng-show="NewExerciseSelected">
+            <div ng-show="!EasySelected && !MediumSelected && !HardSelected">
+                    <table>
+                        <tr>
+                            <td>
+                                <form novalidate name="EasyForm" ng-submit="Easy()">
+                                    <md-button class="md-raised md-primary" type="submit" name="easy">Facile</md-button>
+                                </form>
+                            </td>
+                            <td>
+                                <form novalidate name="MediumForm" ng-submit="Medium()">
+                                    <md-button class="md-raised md-primary" type="submit" name="medium">Moyen</md-button>
+                                </form>
+                            </td>
+                            <td>
+                                <form novalidate name="HardForm" ng-submit="Hard()">
+                                    <md-button class="md-raised md-primary" type="submit" name="hard">Difficile</md-button>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
+             </div>
+            <div ng-show="EasySelected">
+                <form name="ClozeExercise" ng-submit="SaveData()">
+                    <md-select ng-model="ExerciseClozeData.Chapter.Name" placeholder="Chapitre...">
+                        <md-option ng-repeat="chapter in Chapters" value="{{ chapter.Name }}" ng-model="ExerciseClozeData.Chapter.name">{{ chapter.Name }}</md-option>
+                    </md-select>
+                    <input type="text" name="exericiseName" ng-model="ExerciseClozeData.Name">
+                    <md-button class="md-raised md-primary" type="submit" name="saveText">{{ Button }}</md-button>
 
-                Texte : 
-                <textarea rows="15" cols="50" ng-model="ExerciseClozeData.Text">
-                    {{ ExerciseClozeData.Text }}
-                </textarea><br />
+                    Texte :
+                    <textarea rows="15" cols="50" ng-model="ExerciseClozeData.Text">
+                        {{ ExerciseClozeData.Text }}
+                    </textarea><br />
 
-                Mots à cacher : 
-                <textarea rows="10" cols="50" ng-model="ExerciseClozeData.HiddenWords">
-                    {{ ExerciseClozeData.HiddenWords }}
-                </textarea><br />
+                    Mots à cacher :
+                    <textarea rows="10" cols="50" ng-model="ExerciseClozeData.HiddenWords">
+                        {{ ExerciseClozeData.HiddenWords }}
+                    </textarea><br />
 
-                Debug message : text is : [ {{ ExerciseClozeData.Text }} ]
-                Chapter selected : [ {{ ExerciseClozeData.Chapter.Name }} ]
-                Level selected : [ {{ ExerciseClozeData.Level.Name }} ]
-                Hidden words : [ {{ ExerciseClozeData.Words }} ]
-            </form>
+                    Debug message : text is : [ {{ ExerciseClozeData.Text }} ]
+                    Chapter selected : [ {{ ExerciseClozeData.Chapter.Name }} ]
+                    Level selected : [ {{ ExerciseClozeData.Level.Name }} ]
+                    Hidden words : [ {{ ExerciseClozeData.HiddenWords }} ]
+                </form>
+            </div>
+            <div ng-show="MediumSelected">
+                <form name="ClozeExercise" ng-submit="SaveData()">
+                    <md-select ng-model="Exercise.Chapter.Name" placeholder="Chapitre">
+                        <md-option ng-repeat="chapter in Chapters" value="{{ chapter.Name }}" ng-model="Exercise.Chapter.Name">{{ chapter.Name }}</md-option>
+                    </md-select>
+
+                    <md-button class="md-raised md-primary" type="submit" name="saveText">{{ Button }}</md-button>
+
+                    <textarea rows="15" cols="50" ng-model="Exercise.Text">
+                        {{ Exercise.Text }}
+                    </textarea><br />
+                </form>
+            </div>
+            <div ng-show="HardSelected">
+                <form name="ClozeExercise" ng-submit="SaveData()">
+                    <md-select ng-model="Exercise.Chapter.Name" placeholder="Chapitre">
+                        <md-option ng-repeat="chapter in Chapters" value="{{ chapter.Name }}" ng-model="Exercise.Chapter.Name">{{ chapter.Name }}</md-option>
+                    </md-select>
+
+                    <md-button class="md-raised md-primary" type="submit" name="saveText">{{ Button }}</md-button>
+
+                    <textarea rows="15" cols="50" ng-model="Exercise.Text">
+                        {{ Exercise.Text }}
+                    </textarea><br />
+                </form>
+            </div>
         </div>
-        <div ng-show="MediumSelected">
-            <h1>{{ Message }}</h1>
-            <form name="ClozeExercise" ng-submit="SaveData()">
-                <md-select ng-model="Exercise.Chapter.Name" placeholder="Chapitre">
-                    <md-option ng-repeat="chapter in Chapters" value="{{ chapter.Name }}" ng-model="Exercise.Chapter.Name">{{ chapter.Name }}</md-option>
-                </md-select>
-
-                <md-button class="md-raised md-primary" type="submit" name="saveText">{{ Button }}</md-button>
-
-                <textarea rows="15" cols="50" ng-model="Exercise.Text">
-                    {{ Exercise.Text }}
-                </textarea><br />
-            </form>
-        </div>
-        <div ng-show="HardSelected">
-            <h1>{{ Message }}</h1>
-            <form name="ClozeExercise" ng-submit="SaveData()">
-                <md-select ng-model="Exercise.Chapter.Name" placeholder="Chapitre">
-                    <md-option ng-repeat="chapter in Chapters" value="{{ chapter.Name }}" ng-model="Exercise.Chapter.Name">{{ chapter.Name }}</md-option>
-                </md-select>
-
-                <md-button class="md-raised md-primary" type="submit" name="saveText">{{ Button }}</md-button>
-
-                <textarea rows="15" cols="50" ng-model="Exercise.Text">
-                    {{ Exercise.Text }}
-                </textarea><br />
-            </form>
-        </div>
+        
         <div class="gridWords" ng-grid="gridOptions"></div>
         <div class="selectedItems">{{ Selections }}</div>
 </center>

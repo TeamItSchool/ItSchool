@@ -416,9 +416,17 @@ namespace ITI.ItSchool.Models
         }
 
 
-        public JsonResult GetClozeExerciseContent()
+        public JsonResult GetClozeExerciseContent( string exerciseName )
         {
-            throw new NotImplementedException();
+            ExerciseCloze ec = new ExerciseCloze();
+            JsonResult data = null;
+            using (var db = new ExerciseClozeContext())
+            {
+                db.Configuration.LazyLoadingEnabled = false;
+                ec = db.ExerciseCloze.Where( e => e.Name.Equals( exerciseName ) ).FirstOrDefault();
+                data = new JsonResult { Data = ec, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+            return data;
         }
 
         /// <summary>
@@ -452,8 +460,8 @@ namespace ITI.ItSchool.Models
                 c = db.Chapters.Where(ch => ch.Name.Equals(chapterReceived)).FirstOrDefault();
             }
 
-            // We create the Exercise cloze after catching all the FK we needed, and assign to the exercise an
-            // unique id
+            /* We create the Exercise cloze after catching all the FK we needed, and assign to the exercise an
+            unique id */
             using (var db = new ExerciseClozeContext())
             {
                 db.Configuration.LazyLoadingEnabled = false;
@@ -496,8 +504,8 @@ namespace ITI.ItSchool.Models
                 
             }
 
-            // Finally, we affect the exercise : if the level is Easy, we affect the exercise to all the class.
-            // Else, we affect it to some pupils only : the list which we have received. 
+            /* Finally, we affect the exercise : if the level is Easy, we affect the exercise to all the class.
+             Else, we affect it to some pupils only : the list which we have received. */
             if (ec.LevelId == 1)
             {
                 usersIds = null;
