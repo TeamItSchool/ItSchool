@@ -6676,7 +6676,6 @@
     <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\DrawController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\TestInputController.cs" />
     <Compile Include="ExerciseBattleCardContextMigrations\201506261307370_Initial.cs" />
     <Compile Include="ExerciseBattleCardContextMigrations\Configuration.cs" />
     <Compile Include="ExerciseClozeContextMigrations\201506261311033_Initial.cs" />
@@ -6693,6 +6692,7 @@
     <Compile Include="Models\AvatarEntities\Legs.cs" />
     <Compile Include="Models\CardsData.cs" />
     <Compile Include="Models\ClassExercicesPlug\ExerciseBattleCardData.cs" />
+    <Compile Include="Models\ClassExercicesPlug\ExerciseClozeData.cs" />
     <Compile Include="Models\ClassExercicesPlug\ExerciseDictationData.cs" />
     <Compile Include="Models\Contexts\ExerciseBattleCardContext.cs" />
     <Compile Include="Models\Contexts\ExerciseClozeContext.cs" />
@@ -6723,9 +6723,6 @@
     <Compile Include="SchoolContextMigrations\201506261302321_Initial.cs" />
     <Compile Include="SchoolContextMigrations\Configuration.cs" />
     <Compile Include="UserContextMigrations\201506162024076_Initial.cs" />
-    <Compile Include="UserContextMigrations\201506162024076_Initial.Designer.cs">
-      <DependentUpon>201506162024076_Initial.cs</DependentUpon>
-    </Compile>
     <Compile Include="UserContextMigrations\Configuration.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -6760,11 +6757,6 @@
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\cloze-game.ts" />
     <TypeScriptCompile Include="Scripts\collections.d.ts" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="UserContextMigrations\201506162024076_Initial.resx">
-      <DependentUpon>201506162024076_Initial.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

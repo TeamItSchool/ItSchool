@@ -18,6 +18,7 @@ namespace ITI.ItSchool
 
             Database.SetInitializer<UserContext>( new DropCreateDatabaseIfModelChanges<UserContext>() );
             Database.SetInitializer<ExerciseContext>( new DropCreateDatabaseIfModelChanges<ExerciseContext>() );
+            Database.SetInitializer<SchoolContext>( new DropCreateDatabaseIfModelChanges<SchoolContext>() );
         }
     }
 }

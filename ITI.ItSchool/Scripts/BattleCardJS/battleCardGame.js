@@ -1,6 +1,16 @@
-function loadBattleCardGame(choice) {
-    
-    var choice = choice; // we get choice from controller
+
+/* Create timer for the game*/
+var clock;
+var stop = false;
+
+function stopClock() {
+    stop = true;
+    clock.stop(stop);
+}
+
+function loadBattleCardGame(data) {
+
+    var choice = data; // we get choice from controller
     var gameZone; // declare drawing zone
     var scoreCounter = 0;
     var values = [];
@@ -35,7 +45,7 @@ function loadBattleCardGame(choice) {
         text.removeChild(text.firstChild);
         text.appendChild(doc.createTextNode(val));
         text.style.fill = color;
-        if(size)
+        if (size)
             text.style.fontSize = "55px";
         var path = doc.getElementsByTagName("path")[0];
         path.style.fill = "#FFEBCD";
@@ -180,8 +190,8 @@ function loadBattleCardGame(choice) {
     }
 
 
-    /* Create timer for the game*/
-    var clock;
+    ///* Create timer for the game*/
+    //var clock;
 
     try {
         $(document).ready(function () {
@@ -252,15 +262,22 @@ function loadBattleCardGame(choice) {
                 autoStart: false,
                 callbacks: {
                     stop: function () {
-
-                        setTimeout(function () {
-                            $('#messageClock').html('La partie est termin&eacutee !')
-                            //alert("Partie terminée : votre score est de " + $('#score').text() + " !");
-                            //window.location.href = "http://localhost:18264/home#!/teacher/exercices";
+                        console.log(stop);
+                        if (stop) {
+                            console.log("La partie n'a pas été finie");
                             for (var i = 0; i < cards.length; i++) {
                                 cards[i].contentDocument.documentElement.onclick = null;
                             }
-                        }, 1000);
+                        } else {
+                            setTimeout(function () {
+                                $('#messageClock').html('La partie est termin&eacutee !')
+                                alert("Partie terminée : votre score est de " + $('#score').text() + " !");
+                                //window.location.href = "http://localhost:18264/home#!/teacher/exercices";
+                                for (var i = 0; i < cards.length; i++) {
+                                    cards[i].contentDocument.documentElement.onclick = null;
+                                }
+                            }, 1000);
+                        }
 
                     }
                 }
@@ -269,7 +286,6 @@ function loadBattleCardGame(choice) {
             clock.setCountdown(true);
             clock.setTime(60);
             clock.start();
-
         });
     } catch (e) {
         alert(e.message);

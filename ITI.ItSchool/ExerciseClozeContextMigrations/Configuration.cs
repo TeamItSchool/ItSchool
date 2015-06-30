@@ -9,8 +9,7 @@ namespace ITI.ItSchool.ExerciseClozeContextMigrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
-            AutomaticMigrationDataLossAllowed = true;
+            AutomaticMigrationsEnabled = false;
             MigrationsDirectory = @"ExerciseClozeContextMigrations";
         }
 

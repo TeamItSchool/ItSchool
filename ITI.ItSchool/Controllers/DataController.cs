@@ -24,30 +24,30 @@ namespace ITI.ItSchool.Controllers
         /// </summary>
         /// <param name="d">LoginData Object (contains Username + Password from method POST)</param>
         /// <returns>JSon Data for AngularJS informations</returns>
-        public JsonResult UserLogin( LoginData d )
+        public JsonResult UserLogin(LoginData d)
         {
             SQLRepository sUserRepo = new SQLRepository();
-            var jsonData = sUserRepo.FindUserByNickname( d.Username );
+            var jsonData = sUserRepo.FindUserByNickname(d.Username);
             return jsonData;
         }
 
-        public JsonResult SaveDragAndDropTeacher( CardsData c )
+        public JsonResult SaveDragAndDropTeacher(CardsData c)
         {
             JsonResult jsonData = null;
             return jsonData;
         }
 
-        public JsonResult SaveDictation( ExerciseDictationData dictationData )
+        public JsonResult SaveDictation(ExerciseDictationData dictationData)
         {
             IRepository repo = new SQLRepository();
-            JsonResult messageData = repo.SaveDictation( dictationData );
+            JsonResult messageData = repo.SaveDictation(dictationData);
             return messageData;
         }
 
-        public JsonResult GetSpecificChilden( int id )
+        public JsonResult GetSpecificChilden(int id)
         {
             IRepository repo = new SQLRepository();
-            JsonResult data = repo.GetChildrenByClassId( id );
+            JsonResult data = repo.GetChildrenByClassId(id);
             return data;
         }
 
@@ -64,17 +64,16 @@ namespace ITI.ItSchool.Controllers
             IRepository repo = new SQLRepository();
 
             // Warning : It can't be null
-            User concernedChild = repo.FindById( id );
+            User concernedChild = repo.FindById(id);
 
-            childAffectations = repo.GetExerciseAffectationListByUserId( concernedChild.UserId );
+            childAffectations = repo.GetExerciseAffectationListByUserId(concernedChild.UserId);
 
-            for(int i = 0; i<childAffectations.Count(); i++) {
+            for (int i = 0; i < childAffectations.Count(); i++)
                 ExerciseDictation dictation = repo.FindExerciseDictationById( childAffectations[i].ExerciseId );
                 if(dictation != null)
                     exercisesIDs.Add( childAffectations[i].ExerciseId );
             }
-
-            exercises = repo.GetExerciseDictationListById( exercisesIDs );
+            exercises = repo.GetExerciseDictationListById(exercisesIDs);
 
             JsonResult data = new JsonResult { Data = exercises, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             return data;
@@ -104,7 +103,7 @@ namespace ITI.ItSchool.Controllers
 
             string[] textPieces = sentExerciseDictation.Text.Split( new Char[] { ' ' } );
             string[] comparativeTextPieces = originalExerciseDictation.Text.Split( new Char[] { ' ' } );
-            if( textPieces.Count() < comparativeTextPieces.Count() )
+            if (textPieces.Count() < comparativeTextPieces.Count())
                 success = false;
             else if( textPieces.Count() > comparativeTextPieces.Count() )
                 success = false;
@@ -174,18 +173,18 @@ namespace ITI.ItSchool.Controllers
         /// <param name="u">Object User Sent From AngularJS</param>
         /// <returns>JSon Data For AngularJS</returns>
         [HttpPost]
-        public JsonResult Register( User u )
+        public JsonResult Register(User u)
         {
             string message = "";
 
             //Here we will save data to the database
-            if( ModelState.IsValid != false )
+            if (ModelState.IsValid != false)
             {
                 SQLRepository sUserRepo = new SQLRepository();
-                var user = sUserRepo.FindByNickname( u.Nickname );
-                if( user == null )
+                var user = sUserRepo.FindByNickname(u.Nickname);
+                if (user == null)
                 {
-                    sUserRepo.Create( u );
+                    sUserRepo.Create(u);
                     message = "Le compte a bien été créé.";
                 }
                 else
@@ -205,10 +204,10 @@ namespace ITI.ItSchool.Controllers
             return jsonData;
         }
 
-        public JsonResult GetClozeExercise()
+        public JsonResult GetClozeExercise(string exerciseName)
         {
             IRepository db = new SQLRepository();
-            var exerciseData = db.GetClozeExerciseContent();
+            var exerciseData = db.GetClozeExerciseContent(exerciseName);
             return exerciseData;
         }
 
@@ -219,9 +218,11 @@ namespace ITI.ItSchool.Controllers
             return jsonData;
         }
 
-        public void SaveClozeExercise(ExerciseCloze exerciseCloze)
+        public string CreateClozeExercise(ExerciseClozeData exerciseCloze)
         {
-
+            IRepository db = new SQLRepository();
+            string creationInfo = db.CreateExerciseCloze(exerciseCloze);
+            return creationInfo;
         }
 
         public JsonResult GetChapters()

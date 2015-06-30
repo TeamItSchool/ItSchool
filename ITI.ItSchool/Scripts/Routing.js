@@ -859,53 +859,60 @@
     };
 })
 .controller("TeacherClozeExerciseController", function ($scope, ExerciseDatas) {
+
+    var sessions_elements_json = sessionStorage.getItem("objet");
+    var sessions_elements = JSON.parse(sessions_elements_json);
+
+    $scope.Message = 'Que voulez-vous faire ?';
+    $scope.NewExerciseSelected = false;
+    $scope.SetExistingExerciseSelected = false;
+
+    $scope.new_exercise = function () {
+    $scope.NewExerciseSelected = true;
+    $scope.Message = 'Sélectionnez un niveau.';
+    $scope.EasySelected = false;
+    $scope.MediumSelected = false;
+    $scope.HardSelected = false;
     $scope.Message = 'Configuration de l\'exercice';
     $scope.Button = 'Sauvegarder';
     $scope.IsFormValid = false;
-    $scope.Exercise = {
+    $scope.ExerciseClozeData = {
+        Name: '', 
         Text: '',
+        HiddenWords: '',
         Level: {
-            Name: '',
+            Name: ''
         },
-        Words: '',
         Chapter: {
-            Name: '',
+            Name: ''
         },
-        ExerciseType: {
-            Name: '',
-        }
+        UsersIds: []
     };
 
-    $scope.DatabaseText = null;
-    $scope.Words = null;
-    $scope.Levels = null;
-    $scope.TextFromDb = null;
-    $scope.Chapters = null;
-    $scope.DetailledWords = null;
+    $scope.Children = null;
+    
+    ExerciseDatas.GetChildren(sessions_elements.data.Class.ClassId).then(function (d) {
+            console.log( 'Data GetChildren: ' + d.data );
+            $scope.Children = d.data;
 
-    ExerciseDatas.GetChapters().then(function (d) {
-        $scope.Chapters = d.data;
-    }, function (error) {
-        alert('An error occured. See console for more details.')
-        console.log('Error L435 is ' + error);
-    });
+            for (var i = 0; i < $scope.Children.length; i++ ) {
+                $scope.ExerciseClozeData.UsersIds.push( $scope.Children[i].UserId );
+            }
+            console.log( 'UsersIds in scope : ' + $scope.ExerciseClozeData.UsersIds );
+        });
+    }
 
-    ExerciseDatas.GetLevels().then(function (d) {
-        $scope.Levels = d.data;
-        console.log("in levels");
-    }, function (error) {
-        alert('An error occured. See console for more details.');
-        console.log(error);
-    });
+    $scope.set_exercise = function() {
+        $scope.SetExistingExerciseSelected = true;
 
-    ExerciseDatas.GetClozeExercise().then(function (d) {
-        $scope.DatabaseText = d.data.Text;
-        $scope.Exercise.Words = d.data.Words;
-        $scope.Exercise.Text = d.data.Text;
-        $scope.Selections = [];
+        ExerciseDatas.GetClozeExercise().then(function (d) {
+            $scope.DatabaseText = d.data.Text;
+            $scope.Exercise.Words = d.data.Words;
+            $scope.Exercise.Text = d.data.Text;
+            $scope.Selections = [];
 
         var textLowerCase = d.data.Text.toLowerCase();
-        var wordsText = textLowerCase.split(/[\s,.]+/);
+        var wordsText = textLowerCase.split(/[\s,.:;]+/);
         var wordsWithCount = [];
         var uniqueWords = [];
         var arrayJsonFormat = [];
@@ -921,7 +928,6 @@
                 };
                 arrayJsonFormat.push( word );
                 uniqueWords.push(wordsText[i]);
-                savedIndex = i+1;
             } else {
                 for (var j = 0; j < arrayJsonFormat.length; j++) {
                     if( arrayJsonFormat[j].value == wordsText[i] ) {
@@ -931,36 +937,99 @@
                 }
             }
         }
-
-        //for( var j = 0; j < uniqueWords.length; j++ ) {
-        //    var word = {
-        //        "word": uniqueWords[ j ],
-        //        "count": 1
-        //    };
-
-        //    wordsWithCount.push( word );
-        //}
-
         $scope.myData = arrayJsonFormat;
+        }, function (error) {
+            alert("An error occured");
+        });
+
+        $scope.gridOptions = {
+            data: 'myData',
+            selectedItems: $scope.Selections,
+            multiSelect: true
+        };
+    }
+
+    $scope.Easy = function () {
+        $scope.EasySelected = true;
+        $scope.Message = "Insérez le texte (Niveau 'facile')";
+        $scope.ExerciseClozeData.Level.Name = "Easy";
+    }
+
+    $scope.Medium = function () {
+        $scope.MediumSelected = true;
+        $scope.Message = "Insérez le texte (Niveau 'moyen')";
+        $scope.ExerciseClozeData.Level.Name = "Medium";
+    }
+
+    $scope.Hard = function () {
+        $scope.HardSelected = true;
+        $scope.Message = "Insérez le texte (Niveau 'difficile')";
+        $scope.ExerciseClozeData.Level.Name = "Hard";
+    }
+
+    ExerciseDatas.GetChapters().then(function (d) {
+        $scope.Chapters = d.data;
     }, function (error) {
-        alert("An error occured");
+        alert('An error occured. See console for more details.')
+        console.log('Error L435 is ' + error);
     });
 
-    $scope.gridOptions = {
-        data: 'myData',
-        selectedItems: $scope.Selections,
-        multiSelect: true
-    };
+    //ExerciseDatas.GetClozeExercise().then(function (d) {
+    //    $scope.DatabaseText = d.data.Text;
+    //    $scope.Exercise.Words = d.data.Words;
+    //    $scope.Exercise.Text = d.data.Text;
+    //    $scope.Selections = [];
+
+        //var textLowerCase = d.data.Text.toLowerCase();
+        //var wordsText = textLowerCase.split(/[\s,.]+/);
+        //var wordsWithCount = [];
+        //var uniqueWords = [];
+        //var arrayJsonFormat = [];
+
+        //var savedIndex = 0;
+
+        // Sorting as we have a unique words array
+    //    for(var i = 0; i < wordsText.length; ++i ) {
+    //        if ($.inArray(wordsText[i], uniqueWords) == -1) {
+    //            var word = {
+    //                'value': wordsText[i],
+    //                'count': 1
+    //            };
+    //            arrayJsonFormat.push( word );
+    //            uniqueWords.push(wordsText[i]);
+    //        } else {
+    //            for (var j = 0; j < arrayJsonFormat.length; j++) {
+    //                if( arrayJsonFormat[j].value == wordsText[i] ) {
+    //                    arrayJsonFormat[j].count += 1;
+    //                    break;
+    //                }
+    //            }
+    //        }
+    //    }
+    //    $scope.myData = arrayJsonFormat;
+    //}, function (error) {
+    //    alert("An error occured");
+    //});
+
+    //$scope.gridOptions = {
+    //    data: 'myData',
+    //    selectedItems: $scope.Selections,
+    //    multiSelect: true
+    //};
 
     $scope.$watch('ClozeExercise', function (newValue) {
         $scope.IsFormValid = newValue;
     });
 
     $scope.SaveData = function () {
-        console.log("Là : " + ExerciseDatas + "L240: " + $scope.Exercise.Level);
         if ($scope.IsFormValid) {
-            ExerciseDatas.SaveClozeExercise($scope.Exercise).then(function (data) {
-                console.log("SaveData");
+            ExerciseDatas.CreateClozeExercise( $scope.ExerciseClozeData ).then(function (data) {
+                console.log('State: exercise saved, L861/ $scope.SaveData');
+                if( data == 'created' ) {
+                    $scope.Button = 'Exercice sauvegardé !'
+                } else {
+                    alert( 'L\'exercice n\'a pas pu être sauvegardé. Vérifiez vos entrées ou recommencez.' );
+                }
             });
         }
     };
@@ -1819,12 +1888,15 @@
     $scope.choice = $localStorage.choiceData;
     console.log($scope.choice);
 
-    
     $scope.Time = 'Vous avez 1 minutes ! ';
     $scope.Score = 0
     $scope.svgCard = "/Images/redCard.svg";
-    
+
     loadBattleCardGame($scope.choice);
+    
+    $scope.$on('$locationChangeStart', function () {
+        stopClock();
+    });
 })
 
 .factory('GetChildExerciseBattleCard', function ($http) {
@@ -1960,9 +2032,9 @@
 .factory('ExerciseDatas', function ($http) {
     var fac = {};
     var data = "";
-    fac.SaveClozeExercise = function (d) {
+    fac.CreateClozeExercise = function (d) {
         return $http({
-            url: '/Data/SaveClozeExercise',
+            url: '/Data/CreateClozeExercise',
             method: 'POST',
             data: JSON.stringify(d),
             headers: { 'content-type': 'application/json' }
@@ -1980,6 +2052,11 @@
     fac.GetClasses = function () {
         return $http.get('/Data/GetClasses')
     }
+
+    fac.GetChildren = function ( data ) {
+        return $http.get('/Data/GetUsersByClasses/' + data);
+    }
+
     fac.GetGroups = function () {
         return $http.get('/Data/GetGroups')
     }

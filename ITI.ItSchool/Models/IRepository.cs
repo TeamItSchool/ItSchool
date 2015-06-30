@@ -4,34 +4,33 @@ using ITI.ItSchool.Models.ExerciseEntities;
 using ITI.ItSchool.Models.PlugExercises;
 using ITI.ItSchool.Models.SchoolEntities;
 using ITI.ItSchool.Models.UserEntities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace ITI.ItSchool.Models
 {
     public interface IRepository
     {
-        JsonResult GetChildrenByClassId( int id );
 
-        List<User> GetChildrenListByClassId( int id );
+        List<User> GetChildrenListByClassId(int id);
 
-        List<int> GetChildrenListIdByClassId( int id );
+        List<int> GetChildrenListIdByClassId(int id);
+
+        JsonResult GetChildrenByClassId(int id);
 
         JsonResult FindUserByNickname(string nickname);
 
-        JsonResult SaveDictation( ExerciseDictationData dictationData );
+        User FindById(int id);
+
+        JsonResult SaveDictation(ExerciseDictationData dictationData);
 
         JsonResult SaveBattleCard(ExerciseBattleCardData battleCardData);
 
         JsonResult GetChapters();
 
-        List<ExerciseAffectation> GetExerciseAffectationListByUserId( int id );
+        List<ExerciseAffectation> GetExerciseAffectationListByUserId(int id);
 
-        List<ExerciseDictation> GetExerciseDictationListById( List<int> IDs );
+        List<ExerciseDictation> GetExerciseDictationListById(List<int> IDs);
 
         ExerciseDictation FindExerciseDictationById( int id );
         List<ExerciseBattleCard> GetExerciseBattleCardListById(List<int> IDs);
@@ -40,29 +39,30 @@ namespace ITI.ItSchool.Models
 
         JsonResult GetGroups();
 
-        JsonResult GetClozeExerciseContent();
+        JsonResult GetClozeExerciseContent(string exerciseName);
+
         JsonResult getUsersByClasses(int id);
 
         JsonResult SetExercise(Exercise exercise);
 
-        User FindByNickname(string nickname);
+        JsonResult getBattleCardChoice();
 
-        User FindById(int id);
+        User FindByNickname(string nickname);
 
         User FindByMail(string mail);
 
         User FindByGrade(string grade);
 
+        string CreateExerciseCloze(ExerciseClozeData ec);
+
         bool Create(User u);
 
-        bool Create(Class g);
+        bool Create(Class c);
 
         bool Remove(User u);
 
         bool Remove(int id);
 
         IList<User> Update(User u);
-
-        JsonResult getBattleCardChoice();
     }
 }
