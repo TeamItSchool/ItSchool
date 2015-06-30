@@ -1799,8 +1799,12 @@
     $scope.Time = 'Vous avez 1 minutes ! ';
     $scope.Score = 0
     $scope.svgCard = "/Images/redCard.svg";
-    
+
     loadBattleCardGame($scope.choice);
+    
+    $scope.$on('$locationChangeStart', function () {
+        stopClock();
+    });
 })
 
 .factory('GetChildExerciseBattleCard', function ($http) {
