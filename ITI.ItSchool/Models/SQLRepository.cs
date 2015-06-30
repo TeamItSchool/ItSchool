@@ -623,17 +623,10 @@ namespace ITI.ItSchool.Models
                 ec.ChapterId = c.ChapterId;
                 ec.LevelId = l.LevelId;
                 ec.Level = null;
-                try
-                {
-                    db.ExerciseCloze.Add(ec);
-                    db.SaveChanges();
-                    creationInfo = "created";
-                }
-                catch( Exception ex )
-                {
-                    throw;
-                }
                 
+                db.ExerciseCloze.Add(ec);
+                db.SaveChanges();
+                creationInfo = "created";
             }
 
             /* Finally, we affect the exercise : if the level is Easy, we affect the exercise to all the class.

@@ -924,7 +924,7 @@
             ExerciseDatas.CreateClozeExercise( $scope.ExerciseClozeData ).then(function (data) {
                 console.log('State: exercise saved, L861/ $scope.SaveData');
                 if( data == 'created' ) {
-                    $scope.Button = 'Exercice sauvgardé !'
+                    $scope.Button = 'Exercice sauvegardé !'
                 } else {
                     alert( 'L\'exercice n\'a pas pu être sauvegardé. Vérifiez vos entrées ou recommencez.' );
                 }

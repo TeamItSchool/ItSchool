@@ -64,30 +64,10 @@
                 </form>
             </div>
             <div ng-show="MediumSelected">
-                <form name="ClozeExercise" ng-submit="SaveData()">
-                    <md-select ng-model="Exercise.Chapter.Name" placeholder="Chapitre">
-                        <md-option ng-repeat="chapter in Chapters" value="{{ chapter.Name }}" ng-model="Exercise.Chapter.Name">{{ chapter.Name }}</md-option>
-                    </md-select>
-
-                    <md-button class="md-raised md-primary" type="submit" name="saveText">{{ Button }}</md-button>
-
-                    <textarea rows="15" cols="50" ng-model="Exercise.Text">
-                        {{ Exercise.Text }}
-                    </textarea><br />
-                </form>
+                
             </div>
             <div ng-show="HardSelected">
-                <form name="ClozeExercise" ng-submit="SaveData()">
-                    <md-select ng-model="Exercise.Chapter.Name" placeholder="Chapitre">
-                        <md-option ng-repeat="chapter in Chapters" value="{{ chapter.Name }}" ng-model="Exercise.Chapter.Name">{{ chapter.Name }}</md-option>
-                    </md-select>
-
-                    <md-button class="md-raised md-primary" type="submit" name="saveText">{{ Button }}</md-button>
-
-                    <textarea rows="15" cols="50" ng-model="Exercise.Text">
-                        {{ Exercise.Text }}
-                    </textarea><br />
-                </form>
+                
             </div>
         </div>
         
