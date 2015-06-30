@@ -107,11 +107,11 @@ p {
 #selectExercices{
     background-color: #028;
     color: white;
+    transition: 1s ease-in-out;
 }
 
 #selectExercices:hover{
-    background-color: white;
-    color: #028;
+    transform : rotate(380deg);
 }
 
 #selectExercices:active{
@@ -473,13 +473,7 @@ h1, h2, h3, h4 {
   -webkit-box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
   box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
 }
- 
-/* Individually coloured cards */
- 
-#card.correct { background: green; }
-
- 
- 
+  
 /* "You did it!" message */
 #successMessage{
   position: absolute;
@@ -510,6 +504,8 @@ h1, h2, h3, h4 {
 #log{
     width: 75%;
 }
+
+/*Micro end*/
 
 /*Battle Card begin*/
 #header{

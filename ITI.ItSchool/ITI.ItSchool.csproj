@@ -6764,6 +6764,10 @@
     <Compile Include="UserContextMigrations\201506261236245_Initial2.Designer.cs">
       <DependentUpon>201506261236245_Initial2.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserContextMigrations\201506300925441_Initial3.cs" />
+    <Compile Include="UserContextMigrations\201506300925441_Initial3.Designer.cs">
+      <DependentUpon>201506300925441_Initial3.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserContextMigrations\Configuration.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -6835,6 +6839,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserContextMigrations\201506261236245_Initial2.resx">
       <DependentUpon>201506261236245_Initial2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserContextMigrations\201506300925441_Initial3.resx">
+      <DependentUpon>201506300925441_Initial3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
