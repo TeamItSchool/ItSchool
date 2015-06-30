@@ -531,6 +531,17 @@ namespace ITI.ItSchool.Models
             return creationInfo;
         }
 
+        public ExerciseDictation FindExerciseDictationById( int id )
+        {
+            ExerciseDictation exerciseDictation = new ExerciseDictation();
+            using( ExerciseDictationContext exoDictationContext = new ExerciseDictationContext() )
+            {
+                exoDictationContext.Configuration.LazyLoadingEnabled = false;
+                exerciseDictation = exoDictationContext.ExerciseDictation.Where( eD => eD.ExerciseDictationId.Equals( id ) ).FirstOrDefault();
+                return exerciseDictation;
+            }
+        }
+
         /// <summary>
         /// Create Or Update a Dictation
         /// It create a new Exercise only if the dictation doesn't exists in the DB

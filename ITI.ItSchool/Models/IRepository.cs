@@ -32,6 +32,7 @@ namespace ITI.ItSchool.Models
 
         List<ExerciseDictation> GetExerciseDictationListById(List<int> IDs);
 
+        ExerciseDictation FindExerciseDictationById( int id );
         List<ExerciseBattleCard> GetExerciseBattleCardListById(List<int> IDs);
 
         JsonResult GetClasses();

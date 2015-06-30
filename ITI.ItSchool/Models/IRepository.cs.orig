@@ -25,18 +25,16 @@ namespace ITI.ItSchool.Models
 
         JsonResult SaveDictation( ExerciseDictationData dictationData );
 
-<<<<<<< HEAD
-=======
         JsonResult SaveBattleCard(ExerciseBattleCardData battleCardData);
 
-        // void ExerciseAffectation( List<int> usersIds, int exerciseId );
-
->>>>>>> ItSchool/alexandre
         JsonResult GetChapters();
 
         List<ExerciseAffectation> GetExerciseAffectationListByUserId( int id );
 
         List<ExerciseDictation> GetExerciseDictationListById( List<int> IDs );
+
+        ExerciseDictation FindExerciseDictationById( int id );
+        List<ExerciseBattleCard> GetExerciseBattleCardListById(List<int> IDs);
 
         JsonResult GetClasses();
 

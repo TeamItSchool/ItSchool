@@ -68,9 +68,10 @@ namespace ITI.ItSchool.Controllers
 
             childAffectations = repo.GetExerciseAffectationListByUserId(concernedChild.UserId);
 
-            for (int i = 0; i < childAffectations.Count(); i++)
-            {
-                exercisesIDs.Add(childAffectations[i].ExerciseId);
+            for (int i = 0; i < childAffectations.Count(); i++) {
+                ExerciseDictation dictation = repo.FindExerciseDictationById( childAffectations[i].ExerciseId );
+                if(dictation != null)
+                    exercisesIDs.Add( childAffectations[i].ExerciseId );
             }
             exercises = repo.GetExerciseDictationListById(exercisesIDs);
 
@@ -78,28 +79,53 @@ namespace ITI.ItSchool.Controllers
             return data;
         }
 
-        public JsonResult CheckDictationText(DictationText d)
+        public JsonResult CheckDictationText( ExerciseDictation sentExerciseDictation )
         {
-            d.Text.Trim();
+            //Here we stock the user's nickname and the text data
+            string[] words = sentExerciseDictation.Text.Split( '/' );
+
+            //User Nickname is getted here
+            string nickname = words[0];
+
+            // Reaffecting correct data on the exercise
+            sentExerciseDictation.Text = words[1];
+
+            sentExerciseDictation.Text.Trim();
             int i = 0;
             bool success = false;
             List<string> wrongEntries = new List<string>();
-            DictationText text = new DictationText();
-            text.Text = "Je suis celui qui me trouve dans la fôret. La fôret est grande, magnifique. Je suis heureux de me trouver dans cette forêt";
-            text.Level = d.Level;
-            string[] textPieces = d.Text.Split(new Char[] { ' ' });
-            string[] comparativeTextPieces = text.Text.Split(new Char[] { ' ' });
+
+            string message = "";
+
+            IRepository repo = new SQLRepository();
+
+            ExerciseDictation originalExerciseDictation = repo.FindExerciseDictationById( sentExerciseDictation.ExerciseDictationId );
+
+            string[] textPieces = sentExerciseDictation.Text.Split( new Char[] { ' ' } );
+            string[] comparativeTextPieces = originalExerciseDictation.Text.Split( new Char[] { ' ' } );
             if (textPieces.Count() < comparativeTextPieces.Count())
                 success = false;
-            foreach (string tP in textPieces)
+            else if( textPieces.Count() > comparativeTextPieces.Count() )
+                success = false;
+            else
             {
-                if (tP != comparativeTextPieces[i])
-                    wrongEntries.Add(tP);
+                foreach( string tP in textPieces )
+                {
+                    if( tP != comparativeTextPieces[i] )
+                        wrongEntries.Add( tP );
+                    i++;
+                }
+                if( wrongEntries.Count == 0 )
+                    success = true;
             }
-            if (wrongEntries.Count == 0)
-                success = true;
 
-            JsonResult jsonData = new JsonResult { Data = text, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            if( success == true )
+                message = "Bravo, tu as parfaitement réussi la dictée !";
+            else
+                message = "La correction va être faite par ton professeur.";
+
+            // Warning, data is initialized to null
+            JsonResult jsonData = new JsonResult { Data = message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             return jsonData;
         }
 

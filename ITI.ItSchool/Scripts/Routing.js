@@ -618,7 +618,7 @@
     var monobjet = JSON.parse(monobjet_json);
     // Affichage dans la console
     console.log(monobjet.data.FirstName);
-    $scope.Message = "Bonjour " + monobjet.data.FirstName;
+    $scope.Message = "Bonjour " + monobjet.data.Nickname;
 
 })
 .controller('KidSelectExercicesController', function ($scope) {
@@ -638,6 +638,7 @@
     $scope.IsFormValid = false;
     $scope.Button = "Valider";
     $scope.ShowDictationAudio = false;
+    $scope.ChildTextWritted = "";
 
     $scope.ExerciseDictationData = {
         //A REMPLIR
@@ -650,36 +651,43 @@
     };
 
     $scope.ExerciseDictation = {
-        //A REMPLIR
+
     };
+
 
     $scope.ExerciseDictationList = null;
 
+    var easyDictationFound = false;
+    var mediumDictationFound = false;
+    var hardDictationFound = false;
+
     GetChildExerciseDictation.GetExerciseDictation(monobjet.data.UserId).then(function (d) {
         $scope.ExerciseDictationList = d.data;
+
+        if ($scope.ExerciseDictationList != null) {
+            for (var i = 0; i < $scope.ExerciseDictationList.length; i++) {
+                if ($scope.ExerciseDictationList[i].LevelId == 1)
+                    easyDictationFound = true;
+                if ($scope.ExerciseDictationList[i].LevelId == 2)
+                    mediumDictationFound = true;
+                if ($scope.ExerciseDictationList[i].LevelId == 3)
+                    hardDictationFound = true;
+            }
+            if (easyDictationFound == false)
+                document.getElementById("easy").disabled = true;
+            if (mediumDictationFound == false)
+                document.getElementById("medium").disabled = true;
+            if (hardDictationFound == false)
+                document.getElementById("hard").disabled = true;
+        }
+        else {
+            document.getElementById("easy").disabled = true;
+            document.getElementById("medium").disabled = true;
+            document.getElementById("hard").disabled = true;
+        }
         console.log($scope.ExerciseDictationList);
     });
-
-    //for (var i = 0; i < $scope.ExerciseDictationList.length; i++) {
-
-    //}
-
-    //Check if Form is valid or not // here DictText is our form Name
-    $scope.$watch('DictText.$valid', function (newVal) {
-        $scope.IsFormValid = newVal;
-    });
-    $scope.IsFormValid
-    $scope.SaveText = function () {
-        if ($scope.IsFormValid) {
-            $scope.Button = "Validtion en cours..."
-            $scope.Game.Data.trim();
-            $scope.ExerciseDictationData.Text = monobjet.data.Nickname + "/" + $scope.ExerciseDictationData.Text;
-            SaveDictationText.GetText($scope.ExerciseDictationData).then(function (d) {
-                $scope.Button = "Dictée sauvegardée";
-            })
-        }
-    };
-
+    
     $scope.Easy = function () {
         for (var i = 0; i < $scope.ExerciseDictationList.length ; i++) {
             if ($scope.ExerciseDictationList[i].LevelId == 1) {
@@ -694,7 +702,7 @@
         }
         $scope.EasySelected = true;
         $scope.Message = "Niveau Facile : Tu peux le faire !";
-        $scope.ExerciseDictationData.Level.Name = "Easy";
+        //$scope.ExerciseDictationData.Level.Name = "Easy";
     }
     $scope.Medium = function () {
         for (var i = 0; i < $scope.ExerciseDictationList.length ; i++) {
@@ -704,13 +712,12 @@
 
                 var audio = document.getElementById("dictationAudio2");
                 audio.src = $scope.ExerciseDictation.AudioData;
-                audio.play();
             }
             console.log($scope.ExerciseDictation.AudioData);
         }
         $scope.MediumSelected = true;
         $scope.Message = "Niveau Moyen : Fonce, tu peux y arriver !";
-        $scope.ExerciseDictationData.Level.Name = "Medium";
+        //$scope.ExerciseDictationData.Level.Name = "Medium";
     }
     $scope.Hard = function () {
         for (var i = 0; i < $scope.ExerciseDictationList.length ; i++) {
@@ -720,14 +727,41 @@
 
                 var audio = document.getElementById("dictationAudio3");
                 audio.src = $scope.ExerciseDictation.AudioData;
-                audio.play();
             }
             console.log($scope.ExerciseDictation.AudioData);
         }
         $scope.HardSelected = true;
         $scope.Message = "Niveau Difficle : Tu es le meilleur, donne tout ce que tu as !";
-        $scope.ExerciseDictationData.Level.Name = "Hard";
+        //$scope.ExerciseDictationData.Level.Name = "Hard";
     }
+
+    //Check if Form is valid or not // here DictText is our form Name
+    $scope.$watch('DictText.$valid', function (newVal) {
+        $scope.IsFormValid = newVal;
+    });
+
+    $scope.SubmitText = function () {
+        if ($scope.IsFormValid) {
+            $scope.Button = "Validtion en cours..."
+            $scope.ExerciseDictation.Text = monobjet.data.Nickname + "/" + $scope.ChildTextWritted;
+            CheckDictationText.GetDictationText($scope.ExerciseDictation).then(function (d) {
+                alert(d.data);
+                $scope.Button = "Dictée envoyée";
+            })
+        }
+    };
+
+    /*$scope.SaveText = function () {
+        if ($scope.IsFormValid) {
+            $scope.Button = "Validtion en cours..."
+            $scope.Game.Data.trim();
+            $scope.ExerciseDictationData.Text = monobjet.data.Nickname + "/" + $scope.ExerciseDictationData.Text;
+            SaveDictationText.GetText($scope.ExerciseDictationData).then(function (d) {
+                $scope.Button = "Dictée sauvegardée";
+            })
+        }
+    };*/
+
 })
 .factory('CheckDictationText', function ($http) {
     var fac = {};
@@ -1293,15 +1327,9 @@
         try {
             // webkit shim
             window.AudioContext = window.AudioContext || window.webkitAudioContext;
-            navigator.getUserMedia = (navigator.getUserMedia ||
-                            navigator.webkitGetUserMedia ||
-                            navigator.mozGetUserMedia ||
-                            navigator.msGetUserMedia);
             window.URL = window.URL || window.webkitURL;
 
             audio_context = new AudioContext;
-            __log('Audio context set up.');
-            __log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
         } catch (e) {
             alert('No web audio support in this browser!');
         }
@@ -1316,6 +1344,13 @@
         button.nextElementSibling.disabled = false;
         var buttonStart = document.getElementById("StartButton")
         buttonStart.disabled = false;
+        navigator.getUserMedia = (navigator.getUserMedia ||
+                       navigator.webkitGetUserMedia ||
+                       navigator.mozGetUserMedia ||
+                       navigator.msGetUserMedia);
+        __log('Audio context set up.');
+        __log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
+        audio_context = new AudioContext;
         navigator.getUserMedia({ audio: true }, startUserMedia, function (e) {
             __log('No live audio input: ' + e);
         });
