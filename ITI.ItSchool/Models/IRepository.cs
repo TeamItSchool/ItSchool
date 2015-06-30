@@ -11,7 +11,6 @@ namespace ITI.ItSchool.Models
 {
     public interface IRepository
     {
-        void AffectExercise(List<int> usersIds, int exerciseId);
 
         List<User> GetChildrenListByClassId(int id);
 
@@ -39,7 +38,7 @@ namespace ITI.ItSchool.Models
 
         JsonResult GetGroups();
 
-        JsonResult GetClozeExerciseContent();
+        JsonResult GetClozeExerciseContent(string exerciseName);
 
         JsonResult getUsersByClasses(int id);
 

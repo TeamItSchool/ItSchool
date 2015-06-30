@@ -427,9 +427,17 @@ namespace ITI.ItSchool.Models
         }
 
 
-        public JsonResult GetClozeExerciseContent()
+        public JsonResult GetClozeExerciseContent(string exerciseName)
         {
-            throw new NotImplementedException();
+            ExerciseCloze ec = new ExerciseCloze();
+            JsonResult data = null;
+            using (var db = new ExerciseClozeContext())
+            {
+                db.Configuration.LazyLoadingEnabled = false;
+                ec = db.ExerciseCloze.Where(e => e.Name.Equals(exerciseName)).FirstOrDefault();
+                data = new JsonResult { Data = ec, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+            return data;
         }
 
         /// <summary>
@@ -463,8 +471,8 @@ namespace ITI.ItSchool.Models
                 c = db.Chapters.Where(ch => ch.Name.Equals(chapterReceived)).FirstOrDefault();
             }
 
-            // We create the Exercise cloze after catching all the FK we needed, and assign to the exercise an
-            // unique id
+            /* We create the Exercise cloze after catching all the FK we needed, and assign to the exercise an
+            unique id */
             using (var db = new ExerciseClozeContext())
             {
                 db.Configuration.LazyLoadingEnabled = false;
@@ -487,13 +495,14 @@ namespace ITI.ItSchool.Models
                 // Create the cloze exercise
                 ec = new ExerciseCloze();
 
-                //ec.ExerciseClozeId = exercise.ExerciseId;
+                ec.ExerciseClozeId = exercise.ExerciseId;
                 ec.Name = exCloze.Name;
                 ec.Text = exCloze.Text;
                 ec.Words = exCloze.HiddenWords;
                 ec.ChapterId = c.ChapterId;
                 ec.LevelId = l.LevelId;
                 ec.Level = null;
+
                 try
                 {
                     db.ExerciseCloze.Add(ec);
@@ -502,43 +511,24 @@ namespace ITI.ItSchool.Models
                 }
                 catch (Exception ex)
                 {
-                    throw;
+                    throw ex;
                 }
-
             }
 
-            // Finally, we affect the exercise : if the level is Easy, we affect the exercise to all the class.
-            // Else, we affect it to some pupils only : the list which we have received. 
+            /* Finally, we affect the exercise : if the level is Easy, we affect the exercise to all the class.
+             Else, we affect it to some pupils only : the list which we have received. */
             if (ec.LevelId == 1)
             {
                 usersIds = null;
                 usersIds = this.GetChildrenListIdByClassId(pupil.ClassId);
-                this.AffectExercise(usersIds, exercise.ExerciseId);
+                ExerciseAffectation(usersIds, exercise.ExerciseId);
             }
             else
             {
-                this.AffectExercise(usersIds, exercise.ExerciseId);
+                ExerciseAffectation(usersIds, exercise.ExerciseId);
             }
 
             return creationInfo;
-        }
-
-        public void AffectExercise(List<int> usersIds, int exerciseId)
-        {
-            using (ExerciseContext exerciseContext = new ExerciseContext())
-            {
-                for (int i = 0; i < usersIds.Count(); i++)
-                {
-                    ExerciseAffectation exerciseAffectation = new ExerciseAffectation();
-                    exerciseAffectation.UserId = usersIds[i];
-                    exerciseAffectation.ExerciseId = exerciseId;
-                    exerciseAffectation.CreationDate = DateTime.Now;
-                    exerciseAffectation.FirstViewDate = exerciseAffectation.CreationDate;
-                    exerciseAffectation.EndDate = DateTime.Now;
-                    exerciseContext.ExercisesAffectations.Add(exerciseAffectation);
-                    exerciseContext.SaveChanges();
-                }
-            }
         }
 
         /// <summary>
