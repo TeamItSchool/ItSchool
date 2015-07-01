@@ -6681,9 +6681,18 @@
     <Compile Include="ExerciseClozeContextMigrations\201506261311033_Initial.cs" />
     <Compile Include="ExerciseClozeContextMigrations\Configuration.cs" />
     <Compile Include="ExerciseContextMigrations\201506261306027_Initial.cs" />
+    <Compile Include="ExerciseContextMigrations\201507011300129_AddingExercisesResults.cs" />
+    <Compile Include="ExerciseContextMigrations\201507011300129_AddingExercisesResults.Designer.cs">
+      <DependentUpon>201507011300129_AddingExercisesResults.cs</DependentUpon>
+    </Compile>
     <Compile Include="ExerciseContextMigrations\Configuration.cs" />
     <Compile Include="ExerciseDictationContextMigrations\201506261309003_Initial.cs" />
     <Compile Include="ExerciseDictationContextMigrations\Configuration.cs" />
+    <Compile Include="ExerciseDictationResultsContextMigrations\201507011330233_Initial.cs" />
+    <Compile Include="ExerciseDictationResultsContextMigrations\201507011330233_Initial.Designer.cs">
+      <DependentUpon>201507011330233_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExerciseDictationResultsContextMigrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -6697,9 +6706,12 @@
     <Compile Include="Models\Contexts\ExerciseBattleCardContext.cs" />
     <Compile Include="Models\Contexts\ExerciseClozeContext.cs" />
     <Compile Include="Models\Contexts\ExerciseDictationContext.cs" />
+    <Compile Include="Models\Contexts\ExerciseDictationResultsContext.cs" />
     <Compile Include="Models\DictationText.cs" />
     <Compile Include="Models\ExerciseEntities\ExerciseAffectation.cs" />
+    <Compile Include="Models\ExerciseEntities\ExercisesResults.cs" />
     <Compile Include="Models\LoginData.cs" />
+    <Compile Include="Models\PlugExercicesResults\ExerciseDictationResults.cs" />
     <Compile Include="Models\PlugExercises\ExerciseBattleCard.cs" />
     <Compile Include="Models\PlugExercises\ExerciseCloze.cs" />
     <Compile Include="Models\PlugExercises\ExerciseDictation.cs" />
@@ -6760,6 +6772,14 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ExerciseContextMigrations\201507011300129_AddingExercisesResults.resx">
+      <DependentUpon>201507011300129_AddingExercisesResults.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExerciseDictationResultsContextMigrations\201507011330233_Initial.resx">
+      <DependentUpon>201507011330233_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
