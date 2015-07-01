@@ -10,7 +10,7 @@
                     </form>
                 </td>
                 <td>
-                    <form novalidate name="MediumForm" ng-submit="set_exercise()">
+                    <form novalidate name="setExercise" ng-submit="set_exercise()">
                         <md-button class="md-raised md-primary" type="submit" name="setEx">Configurer un exercice</md-button>
                     </form>
                 </td>
@@ -38,14 +38,39 @@
                             </td>
                         </tr>
                     </table>
-             </div>
+                </div>
             <div ng-show="EasySelected">
                 <form name="ClozeExercise" ng-submit="SaveData()">
+
                     <md-select ng-model="ExerciseClozeData.Chapter.Name" placeholder="Chapitre...">
                         <md-option ng-repeat="chapter in Chapters" value="{{ chapter.Name }}" ng-model="ExerciseClozeData.Chapter.name">{{ chapter.Name }}</md-option>
                     </md-select>
                     <input type="text" name="exericiseName" ng-model="ExerciseClozeData.Name">
+                   
+                    Texte :
+                    <textarea rows="15" cols="50" ng-model="ExerciseClozeData.Text">
+                        {{ ExerciseClozeData.Text }}
+                    </textarea><br />
+
+                    Mots à cacher :
+                    <textarea rows="10" cols="50" ng-model="ExerciseClozeData.HiddenWords">
+                        {{ ExerciseClozeData.HiddenWords }}
+                    </textarea><br />
+
+                    Debug message : text is : [ {{ ExerciseClozeData.Text }} ]
+                    Chapter selected : [ {{ ExerciseClozeData.Chapter.Name }} ]
+                    Level selected : [ {{ ExerciseClozeData.Level.Name }} ]
+                    Hidden words : [ {{ ExerciseClozeData.HiddenWords }} ]
                     <md-button class="md-raised md-primary" type="submit" name="saveText">{{ Button }}</md-button>
+                </form>
+            </div>
+            <div ng-show="MediumSelected">
+                <form name="ClozeExercise" ng-submit="SaveData()">
+
+                    <md-select ng-model="ExerciseClozeData.Chapter.Name" placeholder="Chapitre...">
+                        <md-option ng-repeat="chapter in Chapters" value="{{ chapter.Name }}" ng-model="ExerciseClozeData.Chapter.name">{{ chapter.Name }}</md-option>
+                    </md-select>
+                    <input type="text" name="exericiseName" ng-model="ExerciseClozeData.Name">
 
                     Texte :
                     <textarea rows="15" cols="50" ng-model="ExerciseClozeData.Text">
@@ -61,17 +86,65 @@
                     Chapter selected : [ {{ ExerciseClozeData.Chapter.Name }} ]
                     Level selected : [ {{ ExerciseClozeData.Level.Name }} ]
                     Hidden words : [ {{ ExerciseClozeData.HiddenWords }} ]
+                    <md-button class="md-raised md-primary" type="submit" name="saveText">{{ Button }}</md-button>
                 </form>
             </div>
-            <div ng-show="MediumSelected">
-                
-            </div>
             <div ng-show="HardSelected">
-                
+                <form name="ClozeExercise" ng-submit="SaveData()">
+                    <md-select ng-model="ExerciseClozeData.Chapter.Name" placeholder="Chapitre...">
+                        <md-option ng-repeat="chapter in Chapters" value="{{ chapter.Name }}" ng-model="ExerciseClozeData.Chapter.name">{{ chapter.Name }}</md-option>
+                    </md-select>
+                    <input type="text" name="exericiseName" ng-model="ExerciseClozeData.Name">
+
+                    Texte :
+                    <textarea rows="15" cols="50" ng-model="ExerciseClozeData.Text">
+                        {{ ExerciseClozeData.Text }}
+                    </textarea><br />
+
+                    Mots à cacher :
+                    <textarea rows="10" cols="50" ng-model="ExerciseClozeData.HiddenWords">
+                        {{ ExerciseClozeData.HiddenWords }}
+                    </textarea><br />
+
+                    Debug message : text is : [ {{ ExerciseClozeData.Text }} ]
+                    Chapter selected : [ {{ ExerciseClozeData.Chapter.Name }} ]
+                    Level selected : [ {{ ExerciseClozeData.Level.Name }} ]
+                    Hidden words : [ {{ ExerciseClozeData.HiddenWords }} ]
+                    <md-button class="md-raised md-primary" type="submit" name="saveText">{{ Button }}</md-button>
+                </form>
             </div>
         </div>
-        
+
+        <div ng-show="SetExistingExerciseSelected">
+            <form name="setExercise" ng-submit="update_data()" >
+
+                <md-select ng-model="ExerciseClozeData.Chapter.Name" placeholder="Chapitre...">
+                <md-option ng-repeat="chapter in Chapters" value="{{ chapter.Name }}" ng-model="ExerciseClozeData.Chapter.name">{{ chapter.Name }}</md-option>
+                </md-select>
+                <input type="text" name="exericiseName" ng-model="ExerciseClozeData.Name">
+
+                Texte :
+                <textarea rows="15" cols="50" ng-model="ExerciseClozeData.Text">
+                    {{ ExerciseClozeData.Text }}
+                </textarea><br />
+
+                Mots à cacher :
+                <textarea rows="10" cols="50" ng-model="ExerciseClozeData.HiddenWords">
+                    {{ ExerciseClozeData.HiddenWords }}
+                </textarea><br />
+
+                <md-button class="md-raised md-primary" type="submit" name="saveText">{{ Button }}</md-button>
+
+                Debug message : text is : [ {{ ExerciseClozeData.Text }} ]
+                Chapter selected : [ {{ ExerciseClozeData.Chapter.Name }} ]
+                Level selected : [ {{ ExerciseClozeData.Level.Name }} ]
+                Hidden words : [ {{ ExerciseClozeData.HiddenWords }} ]
+            </form>
+        </div>
+
+       <!--
         <div class="gridWords" ng-grid="gridOptions"></div>
         <div class="selectedItems">{{ Selections }}</div>
+       -->
 </center>
 </div>

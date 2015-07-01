@@ -317,6 +317,16 @@ namespace ITI.ItSchool.Models
         }
 
         /// <summary>
+        /// Gets all the existing levels to set an exercise.
+        /// As we cannot access to it by context directly, we opted for another method.
+        /// </summary>
+        /// <returns>A list of the levels found.</returns>
+        public JsonResult GetLevels()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Gets all pupils' classes.
         /// </summary>
         /// <returns>All the classes in a list form in JSON Data format.</returns>
@@ -415,7 +425,11 @@ namespace ITI.ItSchool.Models
             return data;
         }
 
-
+        /// <summary>
+        /// Gets the content of a cloze exercise, by his name.
+        /// </summary>
+        /// <param name="exerciseName">The name of the exercise we want to get some contents.</param>
+        /// <returns>The exercise found.</returns>
         public JsonResult GetClozeExerciseContent( string exerciseName )
         {
             ExerciseCloze ec = new ExerciseCloze();
@@ -428,13 +442,6 @@ namespace ITI.ItSchool.Models
             }
             return data;
         }
-
-
-
-
-
-
-
 
         /// <summary>
         /// Create Or Update a Dictation
@@ -615,7 +622,6 @@ namespace ITI.ItSchool.Models
                 
                 // Create the cloze exercise
                 ec = new ExerciseCloze();
-
                 ec.ExerciseClozeId = exercise.ExerciseId;
                 ec.Name = exCloze.Name;
                 ec.Text = exCloze.Text;
@@ -624,6 +630,7 @@ namespace ITI.ItSchool.Models
                 ec.LevelId = l.LevelId;
                 ec.Level = null;
                 
+                // Save it into the DB and return the creation statement
                 db.ExerciseCloze.Add(ec);
                 db.SaveChanges();
                 creationInfo = "created";

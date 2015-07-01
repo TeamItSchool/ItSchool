@@ -25,6 +25,8 @@ namespace ITI.ItSchool.Models
 
         JsonResult GetGroups();
 
+        JsonResult GetLevels();
+
         JsonResult GetClozeExerciseContent(string exerciseName);
 
         JsonResult getUsersByClasses(int id);

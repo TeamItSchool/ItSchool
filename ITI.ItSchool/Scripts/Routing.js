@@ -766,11 +766,36 @@
     $scope.SetExistingExerciseSelected = false;
 
     $scope.new_exercise = function () {
-    $scope.NewExerciseSelected = true;
+        $scope.NewExerciseSelected = true;
+    }
+
+    $scope.set_exercise = function () {
+        $scope.SetExistingExerciseSelected = true;
+    }
+
     $scope.Message = 'Sélectionnez un niveau.';
     $scope.EasySelected = false;
     $scope.MediumSelected = false;
     $scope.HardSelected = false;
+
+    $scope.Easy = function () {
+        $scope.EasySelected = true;
+        $scope.Message = "Insérez le texte (Niveau 'facile')";
+        $scope.ExerciseClozeData.Level.Name = "Easy";
+    }
+
+    $scope.Medium = function () {
+        $scope.MediumSelected = true;
+        $scope.Message = "Insérez le texte (Niveau 'moyen')";
+        $scope.ExerciseClozeData.Level.Name = "Medium";
+    }
+
+    $scope.Hard = function () {
+        $scope.HardSelected = true;
+        $scope.Message = "Insérez le texte (Niveau 'difficile')";
+        $scope.ExerciseClozeData.Level.Name = "Hard";
+    }
+
     $scope.Message = 'Configuration de l\'exercice';
     $scope.Button = 'Sauvegarder';
     $scope.IsFormValid = false;
@@ -798,72 +823,53 @@
             }
             console.log( 'UsersIds in scope : ' + $scope.ExerciseClozeData.UsersIds );
         });
-    }
 
-    $scope.set_exercise = function() {
-        $scope.SetExistingExerciseSelected = true;
+    ExerciseDatas.GetLevels().then(function (d) {
+        //TODO
+    });
 
-        ExerciseDatas.GetClozeExercise().then(function (d) {
-            $scope.DatabaseText = d.data.Text;
-            $scope.Exercise.Words = d.data.Words;
-            $scope.Exercise.Text = d.data.Text;
-            $scope.Selections = [];
+        //ExerciseDatas.GetClozeExercise().then(function (d) {
+        //    $scope.DatabaseText = d.data.Text;
+        //    $scope.Exercise.Words = d.data.Words;
+        //    $scope.Exercise.Text = d.data.Text;
+        //    $scope.Selections = [];
 
-        var textLowerCase = d.data.Text.toLowerCase();
-        var wordsText = textLowerCase.split(/[\s,.:;]+/);
-        var wordsWithCount = [];
-        var uniqueWords = [];
-        var arrayJsonFormat = [];
+        //var textLowerCase = d.data.Text.toLowerCase();
+        //var wordsText = textLowerCase.split(/[\s,.:;]+/);
+        //var wordsWithCount = [];
+        //var uniqueWords = [];
+        //var arrayJsonFormat = [];
 
-        var savedIndex = 0;
+        //var savedIndex = 0;
 
-        // Sorting as we have a unique words array
-        for(var i = 0; i < wordsText.length; ++i ) {
-            if ($.inArray(wordsText[i], uniqueWords) == -1) {
-                var word = {
-                    'value': wordsText[i],
-                    'count': 1
-                };
-                arrayJsonFormat.push( word );
-                uniqueWords.push(wordsText[i]);
-            } else {
-                for (var j = 0; j < arrayJsonFormat.length; j++) {
-                    if( arrayJsonFormat[j].value == wordsText[i] ) {
-                        arrayJsonFormat[j].count += 1;
-                        break;
-                    }
-                }
-            }
-        }
-        $scope.myData = arrayJsonFormat;
-        }, function (error) {
-            alert("An error occured");
-        });
+        //// Sorting as we have a unique words array
+        //for(var i = 0; i < wordsText.length; ++i ) {
+        //    if ($.inArray(wordsText[i], uniqueWords) == -1) {
+        //        var word = {
+        //            'value': wordsText[i],
+        //            'count': 1
+        //        };
+        //        arrayJsonFormat.push( word );
+        //        uniqueWords.push(wordsText[i]);
+        //    } else {
+        //        for (var j = 0; j < arrayJsonFormat.length; j++) {
+        //            if( arrayJsonFormat[j].value == wordsText[i] ) {
+        //                arrayJsonFormat[j].count += 1;
+        //                break;
+        //            }
+        //        }
+        //    }
+        //}
+        //$scope.myData = arrayJsonFormat;
+        //}, function (error) {
+        //    alert("An error occured");
+        //});
 
-        $scope.gridOptions = {
-            data: 'myData',
-            selectedItems: $scope.Selections,
-            multiSelect: true
-        };
-    }
-
-    $scope.Easy = function () {
-        $scope.EasySelected = true;
-        $scope.Message = "Insérez le texte (Niveau 'facile')";
-        $scope.ExerciseClozeData.Level.Name = "Easy";
-    }
-
-    $scope.Medium = function () {
-        $scope.MediumSelected = true;
-        $scope.Message = "Insérez le texte (Niveau 'moyen')";
-        $scope.ExerciseClozeData.Level.Name = "Medium";
-    }
-
-    $scope.Hard = function () {
-        $scope.HardSelected = true;
-        $scope.Message = "Insérez le texte (Niveau 'difficile')";
-        $scope.ExerciseClozeData.Level.Name = "Hard";
-    }
+        //$scope.gridOptions = {
+        //    data: 'myData',
+        //    selectedItems: $scope.Selections,
+        //    multiSelect: true
+        //};
 
     ExerciseDatas.GetChapters().then(function (d) {
         $scope.Chapters = d.data;
@@ -872,59 +878,27 @@
         console.log('Error L435 is ' + error);
     });
 
-    //ExerciseDatas.GetClozeExercise().then(function (d) {
-    //    $scope.DatabaseText = d.data.Text;
-    //    $scope.Exercise.Words = d.data.Words;
-    //    $scope.Exercise.Text = d.data.Text;
-    //    $scope.Selections = [];
-
-        //var textLowerCase = d.data.Text.toLowerCase();
-        //var wordsText = textLowerCase.split(/[\s,.]+/);
-        //var wordsWithCount = [];
-        //var uniqueWords = [];
-        //var arrayJsonFormat = [];
-
-        //var savedIndex = 0;
-
-        // Sorting as we have a unique words array
-    //    for(var i = 0; i < wordsText.length; ++i ) {
-    //        if ($.inArray(wordsText[i], uniqueWords) == -1) {
-    //            var word = {
-    //                'value': wordsText[i],
-    //                'count': 1
-    //            };
-    //            arrayJsonFormat.push( word );
-    //            uniqueWords.push(wordsText[i]);
-    //        } else {
-    //            for (var j = 0; j < arrayJsonFormat.length; j++) {
-    //                if( arrayJsonFormat[j].value == wordsText[i] ) {
-    //                    arrayJsonFormat[j].count += 1;
-    //                    break;
-    //                }
-    //            }
-    //        }
-    //    }
-    //    $scope.myData = arrayJsonFormat;
-    //}, function (error) {
-    //    alert("An error occured");
-    //});
-
-    //$scope.gridOptions = {
-    //    data: 'myData',
-    //    selectedItems: $scope.Selections,
-    //    multiSelect: true
-    //};
-
     $scope.$watch('ClozeExercise', function (newValue) {
         $scope.IsFormValid = newValue;
     });
 
+    $scope.$watch('setClozeEx', function (value) {
+        $scope.IsFormValid = value;
+    });
+
+    $scope.update_data = function () {
+        // TODO
+    };
+
     $scope.SaveData = function () {
         if ($scope.IsFormValid) {
-            ExerciseDatas.CreateClozeExercise( $scope.ExerciseClozeData ).then(function (data) {
-                console.log('State: exercise saved, L861/ $scope.SaveData');
-                if( data == 'created' ) {
+            ExerciseDatas.CreateClozeExercise($scope.ExerciseClozeData).then(function (creationInfo) {
+                var state = creationInfo.data;
+                if( state == 'created' ) {
                     $scope.Button = 'Exercice sauvegardé !'
+                    console.log('State: exercise saved');
+                } else if( state == 'error existing name' ) {
+                    alert( 'Attention : la création de l\'exercice n\'a pas pu aboutir. Il existe déjà un exercice du même nom.' );
                 } else {
                     alert( 'L\'exercice n\'a pas pu être sauvegardé. Vérifiez vos entrées ou recommencez.' );
                 }
@@ -999,7 +973,7 @@
                         $scope.Login = function () {
                             $scope.Submitted = true;
                             if ($scope.IsFormValid) {
-                                $scope.ButtonMessage = "Connexion en cours..";
+                                $scope.ButtonMessage = "Connexion en cours...";
                                 LoginService.GetUser($scope.LoginData).then(function (d) {
                                     if (d.data.Username == null && d.data.Nickname == null) {
                                         $scope.LoginData.Username = "";
