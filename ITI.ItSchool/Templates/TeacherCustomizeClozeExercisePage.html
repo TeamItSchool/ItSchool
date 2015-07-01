@@ -119,7 +119,11 @@
             <form name="setExercise" ng-submit="update_data()" >
 
                 <md-select ng-model="ExerciseClozeData.Chapter.Name" placeholder="Chapitre...">
-                <md-option ng-repeat="chapter in Chapters" value="{{ chapter.Name }}" ng-model="ExerciseClozeData.Chapter.name">{{ chapter.Name }}</md-option>
+                       <md-option ng-repeat="chapter in Chapters" value="{{ chapter.Name }}" ng-model="ExerciseClozeData.Chapter.name">{{ chapter.Name }}</md-option>
+                </md-select>
+
+                <md-select ng-model="ExerciseClozeData.Level.Name" placeholder="Niveau...">
+                    <md-option ng-repeat="level in Levels" value="{{ level.Name }}" ng-model="ExerciseClozeData.Level.name">{{ level.Name }}</md-option>
                 </md-select>
                 <input type="text" name="exericiseName" ng-model="ExerciseClozeData.Name">
 

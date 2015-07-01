@@ -9,6 +9,7 @@ using ITI.ItSchool.Models.SchoolEntities;
 using ITI.ItSchool.Models.UserEntities;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web.Mvc;
@@ -323,10 +324,31 @@ namespace ITI.ItSchool.Models
         /// <returns>A list of the levels found.</returns>
         public JsonResult GetLevels()
         {
-            throw new NotImplementedException();
+            List<object> levels = new List<object>();
+            string sqlCommand = "Select Name from Levels";
+            string connectionString = ConfigurationManager.ConnectionStrings["ItSchool"].ConnectionString;
+            using( SqlConnection connection = new SqlConnection( connectionString ) )
+            {
+                connection.Open();
+                using( SqlCommand cmd = new SqlCommand( sqlCommand, connection ) )
+                {
+                    using( SqlDataReader reader = cmd.ExecuteReader() )
+                    {
+                        while( reader.Read() )
+                        {
+                            for (int i = 0; i < reader.FieldCount; i++ )
+                            {
+                                object value = reader.GetValue( i );
+                                levels.Add( value );
+                            }
+                        }
+                    }
+                }
+            }
+            return new JsonResult { Data = levels, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
-        /// <summary>
+        /// <summary> 
         /// Gets all pupils' classes.
         /// </summary>
         /// <returns>All the classes in a list form in JSON Data format.</returns>

@@ -813,6 +813,7 @@
     };
 
     $scope.Children = null;
+    $scope.Levels = null;
     
     ExerciseDatas.GetChildren(sessions_elements.data.Class.ClassId).then(function (d) {
             console.log( 'Data GetChildren: ' + d.data );
@@ -825,7 +826,8 @@
         });
 
     ExerciseDatas.GetLevels().then(function (d) {
-        //TODO
+        console.log( 'Data GetLevel: ' + d.data );
+        $scope.Levels = d.data;
     });
 
         //ExerciseDatas.GetClozeExercise().then(function (d) {
