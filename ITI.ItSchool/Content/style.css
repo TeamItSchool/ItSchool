@@ -9,7 +9,7 @@ body {
     background-attachment: scroll;
     background-size: cover;
     background-position: 55% 17%;
-    height: 150%;
+    height: 100%;
     animation: animationBackground linear 1.5s;
     animation-iteration-count: 1;
     transform-origin: 50% 50%;
@@ -104,14 +104,18 @@ p {
 }
 
 /*Button exercice choice*/
+#selection{
+    margin-top: 3%;
+}
+
 #selectExercices{
     background-color: #028;
     color: white;
-    transition: 1s ease-in-out;
+    transition: 0.25s ease-in-out;
 }
 
 #selectExercices:hover{
-    transform : rotate(380deg);
+    transform : rotate(20deg);
 }
 
 #selectExercices:active{

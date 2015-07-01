@@ -184,16 +184,16 @@ namespace ITI.ItSchool.ExerciseClozeContextMigrations
             //            Remarks = c.String(maxLength: 200),
             //        })
             //    .PrimaryKey(t => t.MatterId);
-            
-            //CreateTable(
-            //    "dbo.Levels",
-            //    c => new
-            //        {
-            //            LevelId = c.Int(nullable: false, identity: true),
-            //            Name = c.String(nullable: false, maxLength: 45),
-            //            Remarks = c.String(maxLength: 200),
-            //        })
-            //    .PrimaryKey(t => t.LevelId);
+
+            CreateTable(
+                "dbo.Levels",
+                c => new
+                    {
+                        LevelId = c.Int(nullable: false, identity: true),
+                        Name = c.String(nullable: false, maxLength: 45),
+                        Remarks = c.String(maxLength: 200),
+                    })
+                .PrimaryKey(t => t.LevelId);
             
         }
         

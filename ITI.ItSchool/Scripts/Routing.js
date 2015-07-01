@@ -86,19 +86,15 @@
         templateUrl: '/Templates/KidLobbyPage.html'/*,
         controller: 'KidLobbyController'*/
     })
-    .when('/kid/exercices', {
-        templateUrl: '/Templates/KidSelectExercicesPage.html'/*,
-        controller: 'KidSelectExercicesController'*/
-    })
-    .when('/kid/exercices/dictation', {
+    .when('/kid/lobby/dictation', {
         templateUrl: '/Templates/KidPlayDictationPage.html'/*,
         controller: 'KidPlayDictationController'*/
     })
-    .when('/kid/exercices/battleCard', {
+    .when('/kid/lobby/battleCard', {
         templateUrl: '/Templates/KidDescriptionBattleCardPage.html'/*,
         controller: 'KidDescriptionBattleCardController'*/
     })
-    .when('/kid/exercices/battleCard/play', {
+    .when('/kid/lobby/battleCard/play', {
         templateUrl: '/Templates/KidPlayBattleCardPage.html'/*,
         controller: 'KidPlayBattleCardController'*/
     })
@@ -621,7 +617,7 @@
     $scope.Message = "Bonjour " + monobjet.data.FirstName;
 
 })
-.controller('KidSelectExercicesController', function ($scope) {
+.controller('KidLobbyController', function ($scope) {
     $scope.Message = 'A quoi veux-tu jouer ?';
 })
 .controller('KidPlayDictationController', function ($scope, GetChildExerciseDictation, CheckDictationText) {
