@@ -196,11 +196,15 @@ namespace ITI.ItSchool.Controllers
             return jsonData;
         }
 
-        public string CreateClozeExercise( ExerciseClozeData exerciseCloze )
+        public string CreateClozeExercise(ExerciseClozeData exerciseCloze)
         {
-            IRepository db = new SQLRepository();
-            string creationInfo = db.CreateExerciseCloze( exerciseCloze );
-            return creationInfo;
+            if (ModelState.IsValid)
+            {
+                IRepository db = new SQLRepository();
+                string creationInfo = db.CreateExerciseCloze(exerciseCloze);
+                return creationInfo;
+            }
+            else return "error validation form";
         }
 
         public string UpdateClozeExercise( ExerciseClozeData exerciseCloze )
@@ -220,6 +224,13 @@ namespace ITI.ItSchool.Controllers
             IRepository db = new SQLRepository();
             var levels = db.GetLevels();
             return levels;
+        }
+
+        public JsonResult GetClozeExercises()
+        {
+            IRepository db = new SQLRepository();
+            var jsonData = db.GetClozeExercises();
+            return jsonData;
         }
     }
 }

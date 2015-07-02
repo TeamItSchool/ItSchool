@@ -159,7 +159,6 @@ namespace ITI.ItSchool.Models
                         return true;
                     }
                     else return false;
-
                 }
                 else return false;
             }
@@ -411,7 +410,6 @@ namespace ITI.ItSchool.Models
             throw new NotImplementedException();
         }
 
-
         public JsonResult getBattleCardChoice()
         {
             using (var db = new ExerciseBattleCardContext())
@@ -588,6 +586,20 @@ namespace ITI.ItSchool.Models
             JsonResult data = new JsonResult { Data = message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             return data;
             #endregion
+        }
+
+        /// <summary>
+        /// Gets all the cloze exercises for a select list in the client side.
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetClozeExercises()
+        {
+            List<ExerciseCloze> exercises = new List<ExerciseCloze>();
+            using( var db = new ExerciseClozeContext() )
+            {
+                exercises = db.ExerciseCloze.ToList();
+            }
+            return new JsonResult { Data = exercises, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         /// <summary>

@@ -29,6 +29,8 @@ namespace ITI.ItSchool.Models
 
         JsonResult GetClozeExerciseContent(string exerciseName);
 
+        JsonResult GetClozeExercises();
+
         JsonResult getUsersByClasses(int id);
 
         JsonResult SetExercise(Exercise exercise);
