@@ -6688,9 +6688,9 @@
     <Compile Include="ExerciseContextMigrations\Configuration.cs" />
     <Compile Include="ExerciseDictationContextMigrations\201506261309003_Initial.cs" />
     <Compile Include="ExerciseDictationContextMigrations\Configuration.cs" />
-    <Compile Include="ExerciseDictationResultsContextMigrations\201507011330233_Initial.cs" />
-    <Compile Include="ExerciseDictationResultsContextMigrations\201507011330233_Initial.Designer.cs">
-      <DependentUpon>201507011330233_Initial.cs</DependentUpon>
+    <Compile Include="ExerciseDictationResultsContextMigrations\201507022144286_Initial.cs" />
+    <Compile Include="ExerciseDictationResultsContextMigrations\201507022144286_Initial.Designer.cs">
+      <DependentUpon>201507022144286_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="ExerciseDictationResultsContextMigrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
@@ -6777,8 +6777,8 @@
     <EmbeddedResource Include="ExerciseContextMigrations\201507011300129_AddingExercisesResults.resx">
       <DependentUpon>201507011300129_AddingExercisesResults.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ExerciseDictationResultsContextMigrations\201507011330233_Initial.resx">
-      <DependentUpon>201507011330233_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="ExerciseDictationResultsContextMigrations\201507022144286_Initial.resx">
+      <DependentUpon>201507022144286_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

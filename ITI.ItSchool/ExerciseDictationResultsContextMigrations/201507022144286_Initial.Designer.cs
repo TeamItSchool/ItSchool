@@ -13,7 +13,7 @@ namespace ITI.ItSchool.ExerciseDictationResultsContextMigrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201507011330233_Initial"; }
+            get { return "201507022144286_Initial"; }
         }
         
         string IMigrationMetadata.Source

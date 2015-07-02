@@ -12,6 +12,7 @@ namespace ITI.ItSchool.ExerciseDictationResultsContextMigrations
                 c => new
                     {
                         ExerciseDictationResultsId = c.Int(nullable: false),
+                        Name = c.String(),
                         SubmittedText = c.String(),
                         Remarks = c.String(),
                         Mark = c.String(),

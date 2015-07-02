@@ -16,6 +16,7 @@ namespace ITI.ItSchool.Models.PlugExercicesResults
         [ForeignKey( "ExerciseDictationResultsId" )]
         public virtual ExercisesResults ExercisesResults { get; set; }
 
+        public string Name { get; set; }
         public string SubmittedText { get; set; }
 
         public string Remarks { get; set; }
