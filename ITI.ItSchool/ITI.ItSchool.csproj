@@ -6676,13 +6676,9 @@
     <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\DrawController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="ExerciseBattleCardContextMigrations\201506261307370_Initial.cs" />
     <Compile Include="ExerciseBattleCardContextMigrations\Configuration.cs" />
-    <Compile Include="ExerciseClozeContextMigrations\201506261311033_Initial.cs" />
     <Compile Include="ExerciseClozeContextMigrations\Configuration.cs" />
-    <Compile Include="ExerciseContextMigrations\201506261306027_Initial.cs" />
     <Compile Include="ExerciseContextMigrations\Configuration.cs" />
-    <Compile Include="ExerciseDictationContextMigrations\201506261309003_Initial.cs" />
     <Compile Include="ExerciseDictationContextMigrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -6720,9 +6716,7 @@
     <Compile Include="Models\UserEntities\Group.cs" />
     <Compile Include="Models\UserEntities\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SchoolContextMigrations\201506261302321_Initial.cs" />
     <Compile Include="SchoolContextMigrations\Configuration.cs" />
-    <Compile Include="UserContextMigrations\201506162024076_Initial.cs" />
     <Compile Include="UserContextMigrations\Configuration.cs" />
   </ItemGroup>
   <ItemGroup>
