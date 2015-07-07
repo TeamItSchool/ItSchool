@@ -1,15 +1,16 @@
 html{
-    background-color: #F2D893;
+    /*background-color: #F2D893;*/
 }
 
 body {
-    background-color: #F2D893;
-    background-image: url("../Images/Background.png");
+    /*background-color: #F2D893;*/
+    background-image: url("../Images/backgroundCliffHD.png");
     background-repeat: no-repeat;
     background-attachment: scroll;
+    -webkit-background-size: cover; /* pour anciens Chrome et Safari */
     background-size: cover;
-    background-position: 55% 17%;
-    height: 150%;
+    /*background-position: 55% 17%;*/
+    height: 100%;
     animation: animationBackground linear 1.5s;
     animation-iteration-count: 1;
     transform-origin: 50% 50%;
@@ -25,6 +26,14 @@ body {
     -ms-animation: animationBackground linear 1.5s;
     -ms-animation-iteration-count: 1;
     -ms-transform-origin: 50% 50%;
+}
+
+footer{
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    border : 1px solid black;
 }
 
 @keyframes animationBackground{
