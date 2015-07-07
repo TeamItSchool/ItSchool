@@ -4,6 +4,7 @@ using ITI.ItSchool.Models.Contexts;
 using ITI.ItSchool.Models.Entities;
 using ITI.ItSchool.Models.ExerciseEntities;
 using ITI.ItSchool.Models.ExercisesEntities;
+using ITI.ItSchool.Models.PlugExercicesResults;
 using ITI.ItSchool.Models.PlugExercises;
 using ITI.ItSchool.Models.SchoolEntities;
 using ITI.ItSchool.Models.UserEntities;
@@ -99,6 +100,8 @@ namespace ITI.ItSchool.Controllers
 
             IRepository repo = new SQLRepository();
 
+            User user = repo.FindByNickname(nickname);
+
             ExerciseDictation originalExerciseDictation = repo.FindExerciseDictationById( sentExerciseDictation.ExerciseDictationId );
 
             string[] textPieces = sentExerciseDictation.Text.Split( new Char[] { ' ' } );
@@ -123,6 +126,54 @@ namespace ITI.ItSchool.Controllers
                 message = "Bravo, tu as parfaitement réussi la dictée !";
             else
                 message = "La correction va être faite par ton professeur.";
+
+            ExercisesResults exoResults = new ExercisesResults();
+            ExerciseAffectation exoAffected = new ExerciseAffectation();
+            using( ExerciseContext exoContext = new ExerciseContext() )
+            {
+                exoAffected = exoContext.ExercisesAffectations.Where( e => e.ExerciseId.Equals( sentExerciseDictation.ExerciseDictationId ) ).Where( e => e.UserId.Equals( user.UserId ) ).FirstOrDefault();
+            }
+
+            ExerciseDictationResults searchedExoDictationResult = new ExerciseDictationResults();
+            using( ExerciseDictationResultsContext exoDictContext = new ExerciseDictationResultsContext() )
+            {
+                searchedExoDictationResult = exoDictContext.ExerciseDictationResults.Where( e => e.Name.Equals( sentExerciseDictation.Name + nickname ) ).FirstOrDefault();
+
+            }
+
+            if( searchedExoDictationResult == null )
+            {
+                exoResults.ExerciseResultsId = exoAffected.ExerciseAffectationId;
+                using( ExerciseContext exoContext = new ExerciseContext() )
+                {
+                    exoContext.ExercisesResults.Add( exoResults );
+                    exoContext.SaveChanges();
+                }
+
+                ExerciseDictationResults exoDictationResults = new ExerciseDictationResults();
+                exoDictationResults.ExerciseDictationResultsId = exoResults.ExerciseResultsId;
+                exoDictationResults.Name = sentExerciseDictation.Name + nickname;
+                exoDictationResults.SubmittedText = sentExerciseDictation.Text;
+
+                using( ExerciseDictationResultsContext exoDictationResultsContext = new ExerciseDictationResultsContext() )
+                {
+                    exoDictationResultsContext.ExerciseDictationResults.Add( exoDictationResults );
+                    exoDictationResultsContext.SaveChanges();
+                }
+            }
+            else
+            {
+                using( ExerciseDictationResultsContext exoDicResultsContext = new ExerciseDictationResultsContext() )
+                {
+                    searchedExoDictationResult.SubmittedText = sentExerciseDictation.Text;
+                    searchedExoDictationResult.ExercisesResults = null;
+                    //3. Mark entity as modified
+                    exoDicResultsContext.Entry( searchedExoDictationResult ).State = System.Data.Entity.EntityState.Modified;
+                    //4. call SaveChanges
+                    exoDicResultsContext.SaveChanges();
+                    message = "Texte mis à jour.";
+                }
+            }
 
             // Warning, data is initialized to null
             JsonResult jsonData = new JsonResult { Data = message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
