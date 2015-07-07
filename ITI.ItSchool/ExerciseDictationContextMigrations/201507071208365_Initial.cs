@@ -65,6 +65,7 @@ namespace ITI.ItSchool.ExerciseDictationContextMigrations
             //            ClassId = c.Int(nullable: false),
             //            AvatarId = c.Int(nullable: false),
             //            GroupId = c.Int(nullable: false),
+            //            Points = c.Int(nullable: false),
             //            Remarks = c.String(maxLength: 200),
             //        })
             //    .PrimaryKey(t => t.UserId)
@@ -180,16 +181,16 @@ namespace ITI.ItSchool.ExerciseDictationContextMigrations
             //            Remarks = c.String(maxLength: 200),
             //        })
             //    .PrimaryKey(t => t.MatterId);
-            
-            //CreateTable(
-            //    "dbo.Levels",
-            //    c => new
-            //        {
-            //            LevelId = c.Int(nullable: false, identity: true),
-            //            Name = c.String(nullable: false, maxLength: 45),
-            //            Remarks = c.String(maxLength: 200),
-            //        })
-            //    .PrimaryKey(t => t.LevelId);
+
+            CreateTable(
+                "dbo.Levels",
+                c => new
+                    {
+                        LevelId = c.Int( nullable: false, identity: true ),
+                        Name = c.String( nullable: false, maxLength: 45 ),
+                        Remarks = c.String( maxLength: 200 ),
+                    } )
+                .PrimaryKey( t => t.LevelId );
             
         }
         

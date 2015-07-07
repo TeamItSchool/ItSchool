@@ -7,26 +7,26 @@ namespace ITI.ItSchool.ExerciseContextMigrations
     {
         public override void Up()
         {
-            CreateTable(
-                "dbo.Exercises",
-                c => new
-                    {
-                        ExerciseId = c.Int(nullable: false, identity: true),
-                        ExerciseTypeId = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.ExerciseId)
-                .ForeignKey("dbo.ExercisesTypes", t => t.ExerciseTypeId, cascadeDelete: true)
-                .Index(t => t.ExerciseTypeId);
+            //CreateTable(
+            //    "dbo.Exercises",
+            //    c => new
+            //        {
+            //            ExerciseId = c.Int(nullable: false, identity: true),
+            //            ExerciseTypeId = c.Int(nullable: false),
+            //        })
+            //    .PrimaryKey(t => t.ExerciseId)
+            //    .ForeignKey("dbo.ExercisesTypes", t => t.ExerciseTypeId, cascadeDelete: true)
+            //    .Index(t => t.ExerciseTypeId);
             
-            CreateTable(
-                "dbo.ExercisesTypes",
-                c => new
-                    {
-                        ExerciseTypeId = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false, maxLength: 45),
-                        Description = c.String(maxLength: 200),
-                    })
-                .PrimaryKey(t => t.ExerciseTypeId);
+            //CreateTable(
+            //    "dbo.ExercisesTypes",
+            //    c => new
+            //        {
+            //            ExerciseTypeId = c.Int(nullable: false, identity: true),
+            //            Name = c.String(nullable: false, maxLength: 45),
+            //            Description = c.String(maxLength: 200),
+            //        })
+            //    .PrimaryKey(t => t.ExerciseTypeId);
             
             CreateTable(
                 "dbo.ExercisesAffectations",
@@ -58,6 +58,7 @@ namespace ITI.ItSchool.ExerciseContextMigrations
             //            ClassId = c.Int(nullable: false),
             //            AvatarId = c.Int(nullable: false),
             //            GroupId = c.Int(nullable: false),
+            //            Points = c.Int(nullable: false),
             //            Remarks = c.String(maxLength: 200),
             //        })
             //    .PrimaryKey(t => t.UserId)
@@ -137,10 +138,22 @@ namespace ITI.ItSchool.ExerciseContextMigrations
             //        })
             //    .PrimaryKey(t => t.GroupId);
             
+            CreateTable(
+                "dbo.ExercisesResults",
+                c => new
+                    {
+                        ExerciseResultsId = c.Int(nullable: false),
+                        Description = c.String(),
+                    })
+                .PrimaryKey(t => t.ExerciseResultsId)
+                .ForeignKey("dbo.ExercisesAffectations", t => t.ExerciseResultsId)
+                .Index(t => t.ExerciseResultsId);
+            
         }
         
         public override void Down()
         {
+            DropForeignKey("dbo.ExercisesResults", "ExerciseResultsId", "dbo.ExercisesAffectations");
             DropForeignKey("dbo.ExercisesAffectations", "UserId", "dbo.Users");
             DropForeignKey("dbo.Users", "GroupId", "dbo.Groups");
             DropForeignKey("dbo.Users", "ClassId", "dbo.Classes");
@@ -150,6 +163,7 @@ namespace ITI.ItSchool.ExerciseContextMigrations
             DropForeignKey("dbo.Avatars", "BodyId", "dbo.Bodies");
             DropForeignKey("dbo.ExercisesAffectations", "ExerciseId", "dbo.Exercises");
             DropForeignKey("dbo.Exercises", "ExerciseTypeId", "dbo.ExercisesTypes");
+            DropIndex("dbo.ExercisesResults", new[] { "ExerciseResultsId" });
             DropIndex("dbo.Avatars", new[] { "BodyId" });
             DropIndex("dbo.Avatars", new[] { "LegsId" });
             DropIndex("dbo.Avatars", new[] { "FootId" });
@@ -159,6 +173,7 @@ namespace ITI.ItSchool.ExerciseContextMigrations
             DropIndex("dbo.ExercisesAffectations", new[] { "ExerciseId" });
             DropIndex("dbo.ExercisesAffectations", new[] { "UserId" });
             DropIndex("dbo.Exercises", new[] { "ExerciseTypeId" });
+            DropTable("dbo.ExercisesResults");
             DropTable("dbo.Groups");
             DropTable("dbo.Classes");
             DropTable("dbo.Legs");

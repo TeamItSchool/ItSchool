@@ -600,7 +600,7 @@ namespace ITI.ItSchool.Models
                     dictationExo.ChapterId = chapter.ChapterId;
                     dictationExo.LevelId = edc.Level.Where(l => l.Name.Equals(dictationData.Level.Name)).Select(l => l.LevelId).FirstOrDefault();
                     dictationExo.Level = null;
-                    dictationExo.Name = "Dictée " + sc.Classes
+                    dictationExo.Name = "Dictée" + sc.Classes
                                             .Where(cl => cl.ClassId.Equals(dictationExo.Chapter.ClassId))
                                             .Select(cl => cl.Name)
                                             .FirstOrDefault() + edc.Level
@@ -710,7 +710,7 @@ namespace ITI.ItSchool.Models
                     battleCardExo.ChapterId = chapter.ChapterId;
                     battleCardExo.LevelId = exoBattleCardContext.Level.Where(l => l.Name.Equals(exoBattleCardData.Level.Name)).Select(l => l.LevelId).FirstOrDefault();
                     battleCardExo.Level = null;
-                    battleCardExo.Name = "BattleCard " + sc.Classes
+                    battleCardExo.Name = "BattleCard" + sc.Classes
                                             .Where(cl => cl.ClassId.Equals(battleCardExo.Chapter.ClassId))
                                             .Select(cl => cl.Name)
                                             .FirstOrDefault() + exoBattleCardContext.Level
