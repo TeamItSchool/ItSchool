@@ -64,5 +64,7 @@ namespace ITI.ItSchool.Models
         bool Remove(int id);
 
         IList<User> Update(User u);
+
+        ExerciseDictation FindExerciseDictationByLevelId( int levelID );
     }
 }

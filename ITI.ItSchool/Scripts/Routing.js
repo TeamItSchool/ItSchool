@@ -434,18 +434,6 @@
             })
         }
     };
-
-    /*$scope.SaveText = function () {
-        if ($scope.IsFormValid) {
-            $scope.Button = "Validtion en cours..."
-            $scope.Game.Data.trim();
-            $scope.ExerciseDictationData.Text = monobjet.data.Nickname + "/" + $scope.ExerciseDictationData.Text;
-            SaveDictationText.GetText($scope.ExerciseDictationData).then(function (d) {
-                $scope.Button = "Dictée sauvegardée";
-            })
-        }
-    };*/
-
 })
 .factory('CheckDictationText', function ($http) {
     var fac = {};
@@ -933,23 +921,35 @@
         }
     };    
 
+    var getDictation = function (LevelValue) {
+        SaveDictationText.GetDictation(LevelValue).then(function (d) {
+            if (d.data != null)
+                $scope.ExerciseDictationData.Text = d.data.Text;
+        });
+    }
+
     $scope.Easy = function () {
         $scope.EasySelected = true;
         $scope.ShowRecorder = true;
         $scope.Message = "Insérez le texte (Niveau facile)";
         $scope.ExerciseDictationData.Level.Name = "Easy";
+        getDictation(1);
     }
+
     $scope.Medium = function () {
         $scope.MediumSelected = true;
         $scope.ShowRecorder = true;
         $scope.Message = "Insérez le texte (Niveau moyen)";
         $scope.ExerciseDictationData.Level.Name = "Medium";
+        getDictation(2);
     }
+
     $scope.Hard = function () {
         $scope.HardSelected = true;
         $scope.ShowRecorder = true;
         $scope.Message = "Insérez le texte (Niveau difficile)";
         $scope.ExerciseDictationData.Level.Name = "Hard";
+        getDictation(3);
     }
 
     function __log(e, data) {
@@ -961,7 +961,10 @@
 
     function startUserMedia(stream) {
         var input = audio_context.createMediaStreamSource(stream);
-        input.connect(audio_context.destination);
+
+        //The commented line allow playback sound while using microphone
+        //input.connect(audio_context.destination);
+
         recorder = new Recorder(input);
     }
 
@@ -1266,7 +1269,11 @@
     var data = "";
 
     fac.GetChildren = function (d) {
-        return $http.get('/Data/GetSpecificChilden/' + d)
+        return $http.get('/Data/GetSpecificChilden/' + d);
+    }
+
+    fac.GetDictation = function (d) {
+        return $http.get('/Data/GetDictation/' + d);
     }
     
     fac.GetText = function (d) {

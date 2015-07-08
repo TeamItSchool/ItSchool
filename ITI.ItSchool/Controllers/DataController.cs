@@ -52,6 +52,13 @@ namespace ITI.ItSchool.Controllers
             return data;
         }
 
+        public JsonResult GetDictation( int id )
+        {
+            IRepository repo = new SQLRepository();
+            ExerciseDictation exoDictation = repo.FindExerciseDictationByLevelId( id );
+            return new JsonResult { Data = exoDictation, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
         /// <summary>
         /// Will search the exercise dictation in db from the user id and will define if a level is showable for the kid
         /// </summary>

@@ -851,5 +851,17 @@ namespace ITI.ItSchool.Models
             }
             return affectedBattleCard;
         }
+
+        public ExerciseDictation FindExerciseDictationByLevelId( int levelID )
+        {
+            ExerciseDictation exoDictation = new ExerciseDictation();
+            using( ExerciseDictationContext exoDictationContext = new ExerciseDictationContext() )
+            {
+                exoDictationContext.Configuration.LazyLoadingEnabled = false;
+                //Level level = exoDictationContext.Level.Where( l => l.LevelId.Equals( levelID ) ).FirstOrDefault();
+                exoDictation = exoDictationContext.ExerciseDictation.Where( e => e.Level.LevelId.Equals( levelID ) ).FirstOrDefault();
+            }
+            return exoDictation;
+        }
     }
 }

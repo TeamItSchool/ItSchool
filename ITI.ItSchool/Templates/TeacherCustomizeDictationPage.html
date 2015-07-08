@@ -45,7 +45,7 @@
             <h1>{{Message}}</h1>
             <form name="DictText" ng-submit="SaveText()">
 
-                <textarea ng-model="ExerciseDictationData.Text" name="text" placeholder="Texte de la dictée..." rows="5" cols="40"></textarea><br />
+                <textarea ng-model="ExerciseDictationData.Text" name="text" placeholder="Texte de la dictée..." rows="5" cols="40">{{ExerciseDictationData.Text}}</textarea><br />
                 <md-button class="md-raised md-primary" type="submit" name="SaveEasyText">{{Button}}</md-button>
             </form>
         </div>
@@ -58,7 +58,7 @@
                     </md-checkbox>
                 </div>
 
-                <textarea ng-model="ExerciseDictationData.Text" name="text" placeholder="Texte de la dictée..." rows="5" cols="40"></textarea><br />
+                <textarea ng-model="ExerciseDictationData.Text" name="text" placeholder="Texte de la dictée..." rows="5" cols="40">{{ExerciseDictationData.Text}}</textarea><br />
                 <md-button class="md-raised md-primary" type="submit" name="SaveMediumText">{{Button}}</md-button>
             </form>
         </div>
@@ -71,7 +71,7 @@
                     </md-checkbox>
                 </div>
 
-                <textarea ng-model="ExerciseDictationData.Text" name="text" placeholder="Texte de la dictée..." rows="5" cols="40"></textarea><br />
+                <textarea ng-model="ExerciseDictationData.Text" name="text" placeholder="Texte de la dictée..." rows="5" cols="40">{{ExerciseDictationData.Text}}</textarea><br />
                 <md-button class="md-raised md-primary" type="submit" name="SaveHardText">{{Button}}</md-button>
             </form>
         </div>
