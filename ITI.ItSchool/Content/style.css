@@ -28,13 +28,13 @@ body {
     -ms-transform-origin: 50% 50%;
 }
 
-footer{
+/*footer{
     width: 100%;
     position: absolute;
     bottom: 0px;
     left: 0px;
     border : 1px solid black;
-}
+}*/
 
 @keyframes animationBackground{
   0% {
