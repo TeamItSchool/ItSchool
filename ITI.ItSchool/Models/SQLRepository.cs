@@ -694,7 +694,6 @@ namespace ITI.ItSchool.Models
             #endregion
         }
 
-        public JsonResult SaveBattleCard(ExerciseBattleCardData exoBattleCardData)
         /// Gets all the cloze exercises for a select list in the client side.
         /// </summary>
         /// <returns></returns>
@@ -709,6 +708,11 @@ namespace ITI.ItSchool.Models
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="exoBattleCardData"></param>
+        /// <returns></returns>
+        public JsonResult SaveBattleCard(ExerciseBattleCardData exoBattleCardData)
         {
             ExerciseBattleCard battleCardExo = new ExerciseBattleCard();
             List<int> usersIds = new List<int>();
@@ -759,57 +763,58 @@ namespace ITI.ItSchool.Models
                                             .FirstOrDefault();
                     battleCardExo.Chapter = null;
 
-                // Save it into the DB and return the creation statement
-                //ExerciseBattleCard battleCard = exoBattleCardContext.ExerciseBattleCard.Where(ebattleCard => ebattleCard.Name.Equals(battleCardExo.Name) && ebattleCard.Level.Name.Equals(battleCardExo.Level.Name)).FirstOrDefault();
-                ExerciseBattleCard battleCard = exoBattleCardContext.ExerciseBattleCard.Where(ebattleCard => ebattleCard.Name.Equals(battleCardExo.Name)).FirstOrDefault();
-                if (battleCard == null)
-                {
-                    Exercise exercise = new Exercise();
-                    int exerciseId = 0;
-                    using (ExerciseContext exoContext = new ExerciseContext())
+                    // Save it into the DB and return the creation statement
+                    //ExerciseBattleCard battleCard = exoBattleCardContext.ExerciseBattleCard.Where(ebattleCard => ebattleCard.Name.Equals(battleCardExo.Name) && ebattleCard.Level.Name.Equals(battleCardExo.Level.Name)).FirstOrDefault();
+                    ExerciseBattleCard battleCard = exoBattleCardContext.ExerciseBattleCard.Where(ebattleCard => ebattleCard.Name.Equals(battleCardExo.Name)).FirstOrDefault();
+                    if (battleCard == null)
                     {
-                        ExerciseType exoType = exoContext.ExerciseTypes.Where(exType => exType.Name.Equals("CardGame")).FirstOrDefault();
-                        exercise.ExerciseTypeId = exoType.ExerciseTypeId;
-                        exoContext.Exercises.Add(exercise);
+                        Exercise exercise = new Exercise();
+                        int exerciseId = 0;
+                        using (ExerciseContext exoContext = new ExerciseContext())
+                        {
+                            ExerciseType exoType = exoContext.ExerciseTypes.Where(exType => exType.Name.Equals("CardGame")).FirstOrDefault();
+                            exercise.ExerciseTypeId = exoType.ExerciseTypeId;
+                            exoContext.Exercises.Add(exercise);
 
-                        exoContext.SaveChanges();
-                        exerciseId = exercise.ExerciseId;
+                            exoContext.SaveChanges();
+                            exerciseId = exercise.ExerciseId;
+                        }
+
+                        //Then we save the Exercise Plug
+                        battleCardExo.ExerciseBattleCardId = exerciseId;
+                        exoBattleCardContext.ExerciseBattleCard.Add(battleCardExo);
+                        exoBattleCardContext.SaveChanges();
+
+                        //Finally we affect the exercise to
+                        if (battleCardExo.LevelId.Equals(1))
+                        {
+                            usersIds = null;
+                            usersIds = repo.GetChildrenListIdByClassId(user.ClassId);
+                        }
+                        ExerciseAffectation(usersIds, exerciseId);
+                        message = "Jeu enregistré";
                     }
-
-                    //Then we save the Exercise Plug
-                    battleCardExo.ExerciseBattleCardId = exerciseId;
-                    exoBattleCardContext.ExerciseBattleCard.Add(battleCardExo);
-                    exoBattleCardContext.SaveChanges();
-
-                    //Finally we affect the exercise to
-                    if (battleCardExo.LevelId.Equals(1))
+                    // If the exercise was already in bdd, update the data
+                    else
                     {
-                        usersIds = null;
-                        usersIds = repo.GetChildrenListIdByClassId(user.ClassId);
+                        ExerciseBattleCard refExoBattleCard = new ExerciseBattleCard();
+
+                        refExoBattleCard = exoBattleCardContext.ExerciseBattleCard.Where(ex => ex.Name.Equals(battleCardExo.Name)).FirstOrDefault();
+
+                        ExerciseAffectation(usersIds, refExoBattleCard.ExerciseBattleCardId);
+                        battleCard.Choice = battleCardExo.Choice;
+
+                        //3. Mark entity as modified
+                        exoBattleCardContext.Entry(battleCard).State = System.Data.Entity.EntityState.Modified;
+                        //4. call SaveChanges
+                        exoBattleCardContext.SaveChanges();
+                        message = "Texte mis à jour.";
                     }
-                    ExerciseAffectation(usersIds, exerciseId);
-                    message = "Jeu enregistré";
+                    JsonResult data = new JsonResult { Data = message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                    return data;
                 }
-                // If the exercise was already in bdd, update the data
-                else
-                {
-                    ExerciseBattleCard refExoBattleCard = new ExerciseBattleCard();
-
-                    refExoBattleCard = exoBattleCardContext.ExerciseBattleCard.Where(ex => ex.Name.Equals(battleCardExo.Name)).FirstOrDefault();
-
-                    ExerciseAffectation(usersIds, refExoBattleCard.ExerciseBattleCardId);
-                    battleCard.Choice = battleCardExo.Choice;
-
-                    //3. Mark entity as modified
-                    exoBattleCardContext.Entry(battleCard).State = System.Data.Entity.EntityState.Modified;
-                    //4. call SaveChanges
-                    exoBattleCardContext.SaveChanges();
-                    message = "Texte mis à jour.";
-                }
-                JsonResult data = new JsonResult { Data = message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-                return data;
-            }
             #endregion
+            }
         }
 
         /// <summary>
