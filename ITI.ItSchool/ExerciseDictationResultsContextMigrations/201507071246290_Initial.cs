@@ -7,20 +7,20 @@ namespace ITI.ItSchool.ExerciseDictationResultsContextMigrations
     {
         public override void Up()
         {
-            //CreateTable(
-            //    "dbo.ExerciseDictationResults",
-            //    c => new
-            //        {
-            //            ExerciseDictationResultsId = c.Int(nullable: false),
-            //            Name = c.String(),
-            //            SubmittedText = c.String(),
-            //            Remarks = c.String(),
-            //            Mark = c.String(),
-            //            Points = c.Int(nullable: false),
-            //        })
-            //    .PrimaryKey(t => t.ExerciseDictationResultsId)
-            //    .ForeignKey("dbo.ExercisesResults", t => t.ExerciseDictationResultsId)
-            //    .Index(t => t.ExerciseDictationResultsId);
+            CreateTable(
+                "dbo.ExerciseDictationResults",
+                c => new
+                    {
+                        ExerciseDictationResultsId = c.Int(nullable: false),
+                        Name = c.String(),
+                        SubmittedText = c.String(),
+                        Remarks = c.String(),
+                        Mark = c.String(),
+                        Points = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ExerciseDictationResultsId)
+                .ForeignKey("dbo.ExercisesResults", t => t.ExerciseDictationResultsId)
+                .Index(t => t.ExerciseDictationResultsId);
             
             //CreateTable(
             //    "dbo.ExercisesResults",

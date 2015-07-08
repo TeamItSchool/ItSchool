@@ -116,29 +116,29 @@ namespace ITI.ItSchool.SchoolContextMigrations
             //        })
             //    .PrimaryKey(t => t.GroupId);
             
-            CreateTable(
-                "dbo.Exercises",
-                c => new
-                    {
-                        ExerciseId = c.Int(nullable: false, identity: true),
-                        ExerciseTypeId = c.Int(nullable: false),
-                        Chapter_ChapterId = c.Int(),
-                    })
-                .PrimaryKey(t => t.ExerciseId)
-                .ForeignKey("dbo.ExercisesTypes", t => t.ExerciseTypeId, cascadeDelete: true)
-                .ForeignKey("dbo.Chapters", t => t.Chapter_ChapterId)
-                .Index(t => t.ExerciseTypeId)
-                .Index(t => t.Chapter_ChapterId);
+            //CreateTable(
+            //    "dbo.Exercises",
+            //    c => new
+            //        {
+            //            ExerciseId = c.Int(nullable: false, identity: true),
+            //            ExerciseTypeId = c.Int(nullable: false),
+            //            Chapter_ChapterId = c.Int(),
+            //        })
+            //    .PrimaryKey(t => t.ExerciseId)
+            //    .ForeignKey("dbo.ExercisesTypes", t => t.ExerciseTypeId, cascadeDelete: true)
+            //    .ForeignKey("dbo.Chapters", t => t.Chapter_ChapterId)
+            //    .Index(t => t.ExerciseTypeId)
+            //    .Index(t => t.Chapter_ChapterId);
             
-            CreateTable(
-                "dbo.ExercisesTypes",
-                c => new
-                    {
-                        ExerciseTypeId = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false, maxLength: 45),
-                        Description = c.String(maxLength: 200),
-                    })
-                .PrimaryKey(t => t.ExerciseTypeId);
+            //CreateTable(
+            //    "dbo.ExercisesTypes",
+            //    c => new
+            //        {
+            //            ExerciseTypeId = c.Int(nullable: false, identity: true),
+            //            Name = c.String(nullable: false, maxLength: 45),
+            //            Description = c.String(maxLength: 200),
+            //        })
+            //    .PrimaryKey(t => t.ExerciseTypeId);
             
             CreateTable(
                 "dbo.Themes",
