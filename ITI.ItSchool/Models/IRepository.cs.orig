@@ -1,4 +1,7 @@
-﻿using ITI.ItSchool.Models.Entities;
+﻿using ITI.ItSchool.Models.ClassExercicesPlug;
+using ITI.ItSchool.Models.Entities;
+using ITI.ItSchool.Models.ExerciseEntities;
+using ITI.ItSchool.Models.PlugExercises;
 using ITI.ItSchool.Models.SchoolEntities;
 using ITI.ItSchool.Models.UserEntities;
 using System;
@@ -16,29 +19,33 @@ namespace ITI.ItSchool.Models
 
         List<User> GetChildrenListByClassId( int id );
 
+        List<int> GetChildrenListIdByClassId( int id );
+
         JsonResult FindUserByNickname(string nickname);
 
+        JsonResult SaveDictation( ExerciseDictationData dictationData );
+
+        JsonResult SaveBattleCard(ExerciseBattleCardData battleCardData);
+
         JsonResult GetChapters();
+
+        List<ExerciseAffectation> GetExerciseAffectationListByUserId( int id );
+
+        List<ExerciseDictation> GetExerciseDictationListById( List<int> IDs );
+
+        ExerciseDictation FindExerciseDictationById( int id );
+        List<ExerciseBattleCard> GetExerciseBattleCardListById(List<int> IDs);
 
         JsonResult GetClasses();
 
         JsonResult GetGroups();
 
-<<<<<<< HEAD
         JsonResult GetClozeExerciseContent();
+        JsonResult getUsersByClasses(int id);
 
         JsonResult SetExercise(Exercise exercise);
 
         User FindByNickname(string nickname);
-=======
-        JsonResult getUsersByClasses(int id);
-
-        IList<User> Update( User u );
-        
-        User FindById( int id );
-        
-        User FindByMail( string mail );
->>>>>>> origin/guenole
 
         User FindById(int id);
 
@@ -50,18 +57,12 @@ namespace ITI.ItSchool.Models
 
         bool Create(Class g);
 
-<<<<<<< HEAD
         bool Remove(User u);
 
         bool Remove(int id);
 
         IList<User> Update(User u);
 
-        IList<User> FindAllUsers();
-=======
-        JsonResult SetExercise( Exercise exercise );
-
         JsonResult getBattleCardChoice();
->>>>>>> origin/guenole
     }
 }

@@ -23,6 +23,8 @@ namespace ITI.ItSchool.Models.Contexts
 
         public DbSet<ExerciseAffectation> ExercisesAffectations { get; set; }
 
+        public DbSet<ExercisesResults> ExercisesResults { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ExerciseAffectation>()

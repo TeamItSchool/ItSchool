@@ -1,15 +1,16 @@
 html{
-    background-color: #F2D893;
+    /*background-color: #F2D893;*/
 }
 
 body {
-    background-color: #F2D893;
-    background-image: url("../Images/Background.png");
+    /*background-color: #F2D893;*/
+    background-image: url("../Images/backgroundCliffHD.png");
     background-repeat: no-repeat;
     background-attachment: scroll;
+    -webkit-background-size: cover; /* pour anciens Chrome et Safari */
     background-size: cover;
-    background-position: 55% 17%;
-    height: 150%;
+    /*background-position: 55% 17%;*/
+    height: 100%;
     animation: animationBackground linear 1.5s;
     animation-iteration-count: 1;
     transform-origin: 50% 50%;
@@ -25,6 +26,14 @@ body {
     -ms-animation: animationBackground linear 1.5s;
     -ms-animation-iteration-count: 1;
     -ms-transform-origin: 50% 50%;
+}
+
+footer{
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    border : 1px solid black;
 }
 
 @keyframes animationBackground{
@@ -375,3 +384,84 @@ h1, h2, h3, h4 {
     width: 75%;
     margin-left: 10%;
 }
+
+#log{
+    width: 75%;
+}
+
+/*Battle Card begin*/
+#header{
+    margin-left: 13%;
+}
+
+#global {
+    padding-bottom : 5%;
+    position: relative; /* on positionne le conteneur */
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    height : 100%;
+}
+
+#gameDescription {
+	margin-top: 3%;
+	text-align : center;
+	margin-left: auto;
+	margin-right: auto;
+	width: 70%;
+	border : 1px solid black;
+	box-shadow: 0px 0px 65px #CDBE9F inset, 0px 0px 20px #BEAE8C inset, 0px 0px 5px #816F47;
+	font-family: Georgia,Times,serif;
+	line-height: 1.50em;
+	
+} 
+
+#alphabet, #chiffre{
+    margin-top : 1.5%;          
+    border : 1px solid black;
+	box-shadow: 0px 0px 65px #CDBE9F inset, 0px 0px 20px #BEAE8C inset, 0px 0px 5px #816F47;
+	font-family: Georgia,Times,serif;
+	line-height: 1.50em;
+}
+#alphabet{
+    margin-right: 8%;
+}
+
+#leftArrow, #rightArrow{
+    position : absolute;
+    /*border : 1px solid black;*/
+    top : 45%;
+    background-color : #FF4081;
+}
+#leftArrow{           
+    right: 90%;
+}
+#rightArrow{
+    left: 90%;
+}
+
+#choice{
+    margin-top : 1.5%;          
+    border : 1px solid black;
+	box-shadow: 0px 0px 65px #CDBE9F inset, 0px 0px 20px #BEAE8C inset, 0px 0px 5px #816F47;
+	font-family: Georgia,Times,serif;
+	line-height: 1.50em;
+}
+
+#choiceTitle{
+    text-decoration: underline;
+    font-weight : bold;
+}
+
+#alphabet{
+    font-weight : bold;
+}
+
+#leftArrow{
+    position : absolute;
+    top : 45%;
+    background-color : #FF4081;
+    right: 90%;
+}
+
+/*Battle Card end*/

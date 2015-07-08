@@ -1447,6 +1447,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Images\Background.png" />
+    <Content Include="Images\backgroundCliffHD.png" />
     <Content Include="Images\material-design-icons\navigation\1x_ios\ic_apps_black_24dp.png" />
     <Content Include="Images\pen.png" />
     <Content Include="Images\material-design-icons\navigation\1x_ios\ic_apps_black_48dp.png" />
@@ -6676,26 +6677,31 @@
     <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\DrawController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="ExerciseBattleCardContextMigrations\201506300652132_Initial.cs" />
-    <Compile Include="ExerciseBattleCardContextMigrations\201506300652132_Initial.Designer.cs">
-      <DependentUpon>201506300652132_Initial.cs</DependentUpon>
+    <Compile Include="ExerciseBattleCardContextMigrations\201507071230526_Initial.cs" />
+    <Compile Include="ExerciseBattleCardContextMigrations\201507071230526_Initial.Designer.cs">
+      <DependentUpon>201507071230526_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="ExerciseBattleCardContextMigrations\Configuration.cs" />
-    <Compile Include="ExerciseClozeContextMigrations\201506300650038_Initial.cs" />
-    <Compile Include="ExerciseClozeContextMigrations\201506300650038_Initial.Designer.cs">
-      <DependentUpon>201506300650038_Initial.cs</DependentUpon>
+    <Compile Include="ExerciseClozeContextMigrations\201507071212064_Initial.cs" />
+    <Compile Include="ExerciseClozeContextMigrations\201507071212064_Initial.Designer.cs">
+      <DependentUpon>201507071212064_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="ExerciseClozeContextMigrations\Configuration.cs" />
-    <Compile Include="ExerciseContextMigrations\201506300645425_Initial.cs" />
-    <Compile Include="ExerciseContextMigrations\201506300645425_Initial.Designer.cs">
-      <DependentUpon>201506300645425_Initial.cs</DependentUpon>
+    <Compile Include="ExerciseContextMigrations\201507071005572_Initial.cs" />
+    <Compile Include="ExerciseContextMigrations\201507071005572_Initial.Designer.cs">
+      <DependentUpon>201507071005572_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="ExerciseContextMigrations\Configuration.cs" />
-    <Compile Include="ExerciseDictationContextMigrations\201506300654219_Initial.cs" />
-    <Compile Include="ExerciseDictationContextMigrations\201506300654219_Initial.Designer.cs">
-      <DependentUpon>201506300654219_Initial.cs</DependentUpon>
+    <Compile Include="ExerciseDictationContextMigrations\201507071208365_Initial.cs" />
+    <Compile Include="ExerciseDictationContextMigrations\201507071208365_Initial.Designer.cs">
+      <DependentUpon>201507071208365_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="ExerciseDictationContextMigrations\Configuration.cs" />
+    <Compile Include="ExerciseDictationResultsContextMigrations\201507071246290_Initial.cs" />
+    <Compile Include="ExerciseDictationResultsContextMigrations\201507071246290_Initial.Designer.cs">
+      <DependentUpon>201507071246290_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExerciseDictationResultsContextMigrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -6703,14 +6709,18 @@
     <Compile Include="Models\AvatarEntities\Foot.cs" />
     <Compile Include="Models\AvatarEntities\Legs.cs" />
     <Compile Include="Models\CardsData.cs" />
+    <Compile Include="Models\ClassExercicesPlug\ExerciseBattleCardData.cs" />
     <Compile Include="Models\ClassExercicesPlug\ExerciseClozeData.cs" />
     <Compile Include="Models\ClassExercicesPlug\ExerciseDictationData.cs" />
     <Compile Include="Models\Contexts\ExerciseBattleCardContext.cs" />
     <Compile Include="Models\Contexts\ExerciseClozeContext.cs" />
     <Compile Include="Models\Contexts\ExerciseDictationContext.cs" />
+    <Compile Include="Models\Contexts\ExerciseDictationResultsContext.cs" />
     <Compile Include="Models\DictationText.cs" />
     <Compile Include="Models\ExerciseEntities\ExerciseAffectation.cs" />
+    <Compile Include="Models\ExerciseEntities\ExercisesResults.cs" />
     <Compile Include="Models\LoginData.cs" />
+    <Compile Include="Models\PlugExercicesResults\ExerciseDictationResults.cs" />
     <Compile Include="Models\PlugExercises\ExerciseBattleCard.cs" />
     <Compile Include="Models\PlugExercises\ExerciseCloze.cs" />
     <Compile Include="Models\PlugExercises\ExerciseDictation.cs" />
@@ -6731,14 +6741,14 @@
     <Compile Include="Models\UserEntities\Group.cs" />
     <Compile Include="Models\UserEntities\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SchoolContextMigrations\201506300647216_Initial.cs" />
-    <Compile Include="SchoolContextMigrations\201506300647216_Initial.Designer.cs">
-      <DependentUpon>201506300647216_Initial.cs</DependentUpon>
+    <Compile Include="SchoolContextMigrations\201507071002031_Initial.cs" />
+    <Compile Include="SchoolContextMigrations\201507071002031_Initial.Designer.cs">
+      <DependentUpon>201507071002031_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="SchoolContextMigrations\Configuration.cs" />
-    <Compile Include="UserContextMigrations\201506300641038_Initial.cs" />
-    <Compile Include="UserContextMigrations\201506300641038_Initial.Designer.cs">
-      <DependentUpon>201506300641038_Initial.cs</DependentUpon>
+    <Compile Include="UserContextMigrations\201507070954372_Initial.cs" />
+    <Compile Include="UserContextMigrations\201507070954372_Initial.Designer.cs">
+      <DependentUpon>201507070954372_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="UserContextMigrations\Configuration.cs" />
   </ItemGroup>
@@ -6776,27 +6786,30 @@
     <TypeScriptCompile Include="Scripts\collections.d.ts" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ExerciseBattleCardContextMigrations\201506300652132_Initial.resx">
-      <DependentUpon>201506300652132_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ExerciseClozeContextMigrations\201506300650038_Initial.resx">
-      <DependentUpon>201506300650038_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ExerciseContextMigrations\201506300645425_Initial.resx">
-      <DependentUpon>201506300645425_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ExerciseDictationContextMigrations\201506300654219_Initial.resx">
-      <DependentUpon>201506300654219_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SchoolContextMigrations\201506300647216_Initial.resx">
-      <DependentUpon>201506300647216_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserContextMigrations\201506300641038_Initial.resx">
-      <DependentUpon>201506300641038_Initial.cs</DependentUpon>
-    </EmbeddedResource>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
+    <EmbeddedResource Include="ExerciseBattleCardContextMigrations\201507071230526_Initial.resx">
+      <DependentUpon>201507071230526_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExerciseClozeContextMigrations\201507071212064_Initial.resx">
+      <DependentUpon>201507071212064_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExerciseContextMigrations\201507071005572_Initial.resx">
+      <DependentUpon>201507071005572_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExerciseDictationContextMigrations\201507071208365_Initial.resx">
+      <DependentUpon>201507071208365_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExerciseDictationResultsContextMigrations\201507071246290_Initial.resx">
+      <DependentUpon>201507071246290_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SchoolContextMigrations\201507071002031_Initial.resx">
+      <DependentUpon>201507071002031_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserContextMigrations\201507070954372_Initial.resx">
+      <DependentUpon>201507070954372_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -30,6 +30,7 @@ namespace ITI.ItSchool.UserContextMigrations
                         ClassId = c.Int(nullable: false),
                         AvatarId = c.Int(nullable: false),
                         GroupId = c.Int(nullable: false),
+                        Points = c.Int(nullable: false),
                         Remarks = c.String(maxLength: 200),
                     })
                 .PrimaryKey(t => t.UserId)

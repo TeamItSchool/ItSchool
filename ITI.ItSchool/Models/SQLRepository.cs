@@ -23,15 +23,16 @@ namespace ITI.ItSchool.Models
         /// </summary>
         /// <param name="id">The id of the user we are looking for.</param>
         /// <returns>The user we found.</returns>
-        private User FindById( int id )
+        private User FindUserById(int id)
         {
             User userFound = null;
-            using( var db = new UserContext() )
+            using (var db = new UserContext())
             {
-                userFound = db.Users.Where( u => u.UserId.Equals( id ) ).FirstOrDefault();
+                userFound = db.Users.Where(u => u.UserId.Equals(id)).FirstOrDefault();
             }
             return userFound;
         }
+
 
         /// <summary>
         /// Checks if the fields on the client side are well filled
@@ -390,6 +391,16 @@ namespace ITI.ItSchool.Models
             }
         }
 
+        public User FindById(int id)
+        {
+            User user = null;
+            using (var uc = new UserContext())
+            {
+                user = uc.Users.Where(a => a.UserId.Equals(id)).FirstOrDefault();
+            }
+            return user;
+        }
+
         public User FindByGrade(string grade)
         {
             throw new NotImplementedException();
@@ -429,9 +440,9 @@ namespace ITI.ItSchool.Models
                 uc.Configuration.LazyLoadingEnabled = false;
 
                 users = uc.Users
-                //    .Include("Avatar")
-                //    .Include("Class")
-                //    .Include("Group")
+                    //    .Include("Avatar")
+                    //    .Include("Class")
+                    //    .Include("Group")
                     .Where(u => u.ClassId.Equals(id)).Where(u => u.Group.Name.Equals("Élèves")).ToList();
 
                 //for (int i = 0; i < users.Count(); ++i)
@@ -450,19 +461,114 @@ namespace ITI.ItSchool.Models
         /// </summary>
         /// <param name="exerciseName">The name of the exercise we want to get some contents.</param>
         /// <returns>The exercise found.</returns>
-        public JsonResult GetClozeExerciseContent( string exerciseName )
+        public JsonResult GetClozeExerciseContent(string exerciseName)
         {
             ExerciseCloze ec = new ExerciseCloze();
             JsonResult data = null;
             using (var db = new ExerciseClozeContext())
             {
                 db.Configuration.LazyLoadingEnabled = false;
-                ec = db.ExerciseCloze.Where( e => e.Name.Equals( exerciseName ) ).FirstOrDefault();
+                ec = db.ExerciseCloze.Where(e => e.Name.Equals(exerciseName)).FirstOrDefault();
                 data = new JsonResult { Data = ec, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
             return data;
         }
 
+        /// <summary>
+        /// Creates a new cloze exercise. 
+        /// </summary>
+        /// <param name="exCloze">The exercise to Create</param>
+        /// <returns>3 probables possibilities : "created" means that we have well created the exercise, 
+        /// "error existing name" means that there is already an exercise named with the same name received, "not created" 
+        /// in any other case.</returns>
+        public string CreateExerciseCloze(ExerciseClozeData exCloze)
+        {
+            List<int> usersIds = new List<int>();
+            ExerciseType et = new ExerciseType();
+            Exercise exercise = new Exercise();
+            ExerciseCloze ec = null;
+            Chapter c = new Chapter();
+            Level l = new Level();
+            User pupil = new User();
+            string nameReceived = exCloze.Name;
+            string levelReceived = exCloze.Level.Name;
+            string chapterReceived = exCloze.Chapter.Name;
+            string creationInfo = "not created";
+            if (exCloze.UsersIds != null) usersIds = exCloze.UsersIds.ToList();
+            pupil = this.FindUserById(usersIds[0]);
+            // Get the Id of the Chapter which what we refer to
+            using (var db = new SchoolContext())
+            {
+                c = db.Chapters.Where(ch => ch.Name.Equals(chapterReceived)).FirstOrDefault();
+            }
+            /* We create the Exercise cloze after catching all the FK we needed, and assign to the exercise an
+            unique id */
+            using (var db = new ExerciseClozeContext())
+            {
+                db.Configuration.LazyLoadingEnabled = false;
+                // Before we check if the we already have an exercise cloze with an existing name
+                ec = db.ExerciseCloze.Where(ex => ex.Name.Equals(nameReceived)).FirstOrDefault();
+
+                if (ec != null) return "error existing name";
+
+                // Get the Id of the Exercise Type and create a new Exercise
+                using (var exerciseContext = new ExerciseContext())
+                {
+                    et = exerciseContext.ExerciseTypes.Where(ex => ex.Name.Equals("Texte à trous")).FirstOrDefault();
+                    exercise.ExerciseTypeId = et.ExerciseTypeId;
+                    exerciseContext.Exercises.Add(exercise);
+                    exerciseContext.SaveChanges();
+                }
+
+                l = db.Level.Where(lv => lv.Name.Equals(levelReceived)).FirstOrDefault();
+
+                // Create the cloze exercise
+                ec = new ExerciseCloze();
+                ec.ExerciseClozeId = exercise.ExerciseId;
+                ec.Name = exCloze.Name;
+                ec.Text = exCloze.Text;
+                ec.Words = exCloze.HiddenWords;
+                ec.ChapterId = c.ChapterId;
+                ec.LevelId = l.LevelId;
+                ec.Level = null;
+                try
+                {
+                    db.ExerciseCloze.Add(ec);
+                    db.SaveChanges();
+                    creationInfo = "created";
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
+            /* Finally, we affect the exercise : if the level is Easy, we affect the exercise to all the class.
+             Else, we affect it to some pupils only : the list which we have received. */
+            if (ec.LevelId == 1)
+            {
+                usersIds = null;
+                usersIds = this.GetChildrenListIdByClassId(pupil.ClassId);
+                ExerciseAffectation(usersIds, exercise.ExerciseId);
+            }
+            else
+            {
+                ExerciseAffectation(usersIds, exercise.ExerciseId);
+            }
+
+            return creationInfo;
+        }
+
+        public ExerciseDictation FindExerciseDictationById( int id )
+        {
+            ExerciseDictation exerciseDictation = new ExerciseDictation();
+            using( ExerciseDictationContext exoDictationContext = new ExerciseDictationContext() )
+            {
+                exoDictationContext.Configuration.LazyLoadingEnabled = false;
+                exerciseDictation = exoDictationContext.ExerciseDictation.Where( eD => eD.ExerciseDictationId.Equals( id ) ).FirstOrDefault();
+                return exerciseDictation;
+            }
+        }
         /// <summary>
         /// Create Or Update a Dictation
         /// It create a new Exercise only if the dictation doesn't exists in the DB
@@ -471,7 +577,7 @@ namespace ITI.ItSchool.Models
         /// </summary>
         /// <param name="dictationData"></param>
         /// <returns></returns>
-        public JsonResult SaveDictation( ExerciseDictationData dictationData )
+        public JsonResult SaveDictation(ExerciseDictationData dictationData)
         {
             // The Message that will be in the Json
             string message = "";
@@ -484,11 +590,11 @@ namespace ITI.ItSchool.Models
 
             //Affecting users' ids to a list.
             //This will be used for the affectation LATER
-            if( dictationData.UsersIds != null )
+            if (dictationData.UsersIds != null)
                 usersIds = dictationData.UsersIds.ToList();
 
             //Here we stock the user's nickname and the text data
-            string[] words = dictationData.Text.Split( '/' );
+            string[] words = dictationData.Text.Split('/');
 
             //User Nickname is getted here
             string nickname = words[0];
@@ -503,44 +609,44 @@ namespace ITI.ItSchool.Models
             IRepository repo = new SQLRepository();
 
             //Here we get our teacher user from the DataBase (IT CAN'T BE NULL !!!! IMPOSSIBLE !!)
-            User user = repo.FindByNickname( nickname );
+            User user = repo.FindByNickname(nickname);
 
             #region SaveExercise
-            using( var edc = new ExerciseDictationContext() )
+            using (var edc = new ExerciseDictationContext())
             {
                 dictationExo.Chapter = new Chapter();
                 dictationExo.Chapter.ClassId = user.ClassId;
                 dictationExo.Chapter.Class = null;
                 dictationExo.Chapter.Name = "Dictée";
 
-                using( var sc = new SchoolContext() )
+                using (var sc = new SchoolContext())
                 {
-                    Chapter chapter = sc.Chapters.Where( c => c.Name.Equals( "Dictée" ) )
+                    Chapter chapter = sc.Chapters.Where(c => c.Name.Equals("Dictée"))
                                                  .FirstOrDefault();
 
                     dictationExo.ChapterId = chapter.ChapterId;
-                    dictationExo.LevelId = edc.Level.Where( l => l.Name.Equals( dictationData.Level.Name ) ).Select( l => l.LevelId ).FirstOrDefault();
+                    dictationExo.LevelId = edc.Level.Where(l => l.Name.Equals(dictationData.Level.Name)).Select(l => l.LevelId).FirstOrDefault();
                     dictationExo.Level = null;
-                    dictationExo.Name = "Dictée " + sc.Classes
-                                            .Where( cl => cl.ClassId.Equals( dictationExo.Chapter.ClassId ) )
-                                            .Select( cl => cl.Name )
+                    dictationExo.Name = "Dictée" + sc.Classes
+                                            .Where(cl => cl.ClassId.Equals(dictationExo.Chapter.ClassId))
+                                            .Select(cl => cl.Name)
                                             .FirstOrDefault() + edc.Level
-                                            .Where( l => l.LevelId.Equals( dictationExo.LevelId ) )
-                                            .Select( l => l.Name )
+                                            .Where(l => l.LevelId.Equals(dictationExo.LevelId))
+                                            .Select(l => l.Name)
                                             .FirstOrDefault();
                     dictationExo.Chapter = null;
                 }
-                ExerciseDictation dictation = edc.ExerciseDictation.Where( exDictation => exDictation.Name.Equals( dictationExo.Name ) ).FirstOrDefault();
+                ExerciseDictation dictation = edc.ExerciseDictation.Where(exDictation => exDictation.Name.Equals(dictationExo.Name)).FirstOrDefault();
 
-                if( dictation == null )
+                if (dictation == null)
                 {
                     Exercise exercise = new Exercise();
                     int exerciseId = 0;
-                    using( ExerciseContext exoContext = new ExerciseContext() )
+                    using (ExerciseContext exoContext = new ExerciseContext())
                     {
-                        ExerciseType exoType = exoContext.ExerciseTypes.Where( exType => exType.Name.Equals( "Dictée" ) ).FirstOrDefault();
+                        ExerciseType exoType = exoContext.ExerciseTypes.Where(exType => exType.Name.Equals("Dictée")).FirstOrDefault();
                         exercise.ExerciseTypeId = exoType.ExerciseTypeId;
-                        exoContext.Exercises.Add( exercise );
+                        exoContext.Exercises.Add(exercise);
 
                         exoContext.SaveChanges();
                         exerciseId = exercise.ExerciseId;
@@ -548,36 +654,36 @@ namespace ITI.ItSchool.Models
 
                     //Then we save the Exercise Plug
                     dictationExo.ExerciseDictationId = exerciseId;
-                    edc.ExerciseDictation.Add( dictationExo );
+                    edc.ExerciseDictation.Add(dictationExo);
                     edc.SaveChanges();
 
                     //Finally we affect the exercise to
-                    if( dictationExo.LevelId.Equals( 1 ) )
+                    if (dictationExo.LevelId.Equals(1))
                     {
                         usersIds = null;
-                        usersIds = repo.GetChildrenListIdByClassId( user.ClassId );
+                        usersIds = repo.GetChildrenListIdByClassId(user.ClassId);
                     }
-                    this.AffectExercise( usersIds, exerciseId );
+                    ExerciseAffectation(usersIds, exerciseId);
 
                     message = "Jeu enregistré";
                 }
                 else
                 {
                     ExerciseDictation refExoDictation = new ExerciseDictation();
-                    refExoDictation = edc.ExerciseDictation.Where( ex => ex.Name.Equals( dictationExo.Name ) ).FirstOrDefault();
+                    refExoDictation = edc.ExerciseDictation.Where(ex => ex.Name.Equals(dictationExo.Name)).FirstOrDefault();
 
-                    if( dictationExo.LevelId.Equals( 1 ) )
+                    if (dictationExo.LevelId.Equals(1))
                         usersIds = null;
-                        usersIds = repo.GetChildrenListIdByClassId( user.ClassId );
+                    usersIds = repo.GetChildrenListIdByClassId(user.ClassId);
 
-                    this.AffectExercise( usersIds, refExoDictation.ExerciseDictationId );
+                    ExerciseAffectation(usersIds, refExoDictation.ExerciseDictationId);
                     dictation.Text = dictationExo.Text;
 
-                    if(dictationExo.AudioData != null)
+                    if (dictationExo.AudioData != null)
                         dictation.AudioData = dictationExo.AudioData;
 
                     //3. Mark entity as modified
-                    edc.Entry( dictation ).State = System.Data.Entity.EntityState.Modified;
+                    edc.Entry(dictation).State = System.Data.Entity.EntityState.Modified;
                     //4. call SaveChanges
                     edc.SaveChanges();
                     message = "Texte mis à jour.";
@@ -588,7 +694,7 @@ namespace ITI.ItSchool.Models
             #endregion
         }
 
-        /// <summary>
+        public JsonResult SaveBattleCard(ExerciseBattleCardData exoBattleCardData)
         /// Gets all the cloze exercises for a select list in the client side.
         /// </summary>
         /// <returns></returns>
@@ -603,117 +709,187 @@ namespace ITI.ItSchool.Models
         }
 
         /// <summary>
-        /// Creates a new cloze exercise. 
-        /// </summary>
-        /// <param name="exCloze">The exercise to Create</param>
-        /// <returns>3 probables possibilities : "created" means that we have well created the exercise, 
-        /// "error existing name" means that there is already an exercise named with the same name received, "not created" 
-        /// in any other case.</returns>
-        public string CreateExerciseCloze( ExerciseClozeData exCloze )
         {
+            ExerciseBattleCard battleCardExo = new ExerciseBattleCard();
             List<int> usersIds = new List<int>();
-            ExerciseType et = new ExerciseType();
-            Exercise exercise = new Exercise();
-            ExerciseCloze ec = null;
-            Chapter c = new Chapter();
-            Level l = new Level();
-            User pupil = new User();
-            string nameReceived = exCloze.Name;
-            string levelReceived = exCloze.Level.Name;
-            string chapterReceived = exCloze.Chapter.Name;
-            string creationInfo = "not created";
+            //Affecting users' ids to a list.
+            //This will be used for the affectation LATER
+            if (exoBattleCardData.UsersIds != null)
+                usersIds = exoBattleCardData.UsersIds.ToList();
 
-            if( exCloze.UsersIds != null ) usersIds = exCloze.UsersIds.ToList();
+            string message = "";
 
-            pupil = this.FindById( usersIds[0] );
+            string[] words = exoBattleCardData.ChoiceData.Split('/');
 
-            // Get the Id of the Chapter which what we refer to
-            using (var db = new SchoolContext())
+            //User Nickname is getted here
+            string nickname = words[0];
+
+            // Reaffecting correct data on the exercise
+            battleCardExo.Choice = words[1];
+
+
+            IRepository repo = new SQLRepository();
+            User user = repo.FindByNickname(nickname);
+
+            #region SaveExercise
+            using (var exoBattleCardContext = new ExerciseBattleCardContext())
             {
-                c = db.Chapters.Where(ch => ch.Name.Equals(chapterReceived)).FirstOrDefault();
-            }
-
-            /* We create the Exercise cloze after catching all the FK we needed, and assign to the exercise an
-            unique id */
-            using (var db = new ExerciseClozeContext())
-            {
-                db.Configuration.LazyLoadingEnabled = false;
-                // Before we check if the we already have an exercise cloze with an existing name
-                ec = db.ExerciseCloze.Where( ex => ex.Name.Equals( nameReceived ) ).FirstOrDefault();
-
-                if ( ec != null ) return "error existing name";
-
-                // Get the Id of the Exercise Type and create a new Exercise
-                using (var exerciseContext = new ExerciseContext())
+                using (var uc = new UserContext())
                 {
-                    et = exerciseContext.ExerciseTypes.Where(ex => ex.Name.Equals("Texte à trous")).FirstOrDefault();
-                    exercise.ExerciseTypeId = et.ExerciseTypeId;
-                    exerciseContext.Exercises.Add(exercise);
-                    exerciseContext.SaveChanges();
+                    battleCardExo.Chapter = new Chapter();
+                    battleCardExo.Chapter.ClassId = user.ClassId;
+                    battleCardExo.Chapter.Class = null;
                 }
 
-                l = db.Level.Where( lv => lv.Name.Equals( levelReceived ) ).FirstOrDefault();
-                
-                // Create the cloze exercise
-                ec = new ExerciseCloze();
-                ec.ExerciseClozeId = exercise.ExerciseId;
-                ec.Name = exCloze.Name;
-                ec.Text = exCloze.Text;
-                ec.Words = exCloze.HiddenWords;
-                ec.ChapterId = c.ChapterId;
-                ec.LevelId = l.LevelId;
-                ec.Level = null;
-                
+                battleCardExo.Chapter.Name = "Chapitre 1";
+
+                using (var sc = new SchoolContext())
+                {
+                    Chapter chapter = sc.Chapters.Where(c => c.Name.Equals(battleCardExo.Chapter.Name))
+                                                 .FirstOrDefault();
+                    battleCardExo.ChapterId = chapter.ChapterId;
+                    battleCardExo.LevelId = exoBattleCardContext.Level.Where(l => l.Name.Equals(exoBattleCardData.Level.Name)).Select(l => l.LevelId).FirstOrDefault();
+                    battleCardExo.Level = null;
+                    battleCardExo.Name = "BattleCard" + sc.Classes
+                                            .Where(cl => cl.ClassId.Equals(battleCardExo.Chapter.ClassId))
+                                            .Select(cl => cl.Name)
+                                            .FirstOrDefault() + exoBattleCardContext.Level
+                                            .Where(l => l.LevelId.Equals(battleCardExo.LevelId))
+                                            .Select(l => l.Name)
+                                            .FirstOrDefault();
+                    battleCardExo.Chapter = null;
+
                 // Save it into the DB and return the creation statement
-                db.ExerciseCloze.Add(ec);
-                db.SaveChanges();
-                creationInfo = "created";
-            }
+                //ExerciseBattleCard battleCard = exoBattleCardContext.ExerciseBattleCard.Where(ebattleCard => ebattleCard.Name.Equals(battleCardExo.Name) && ebattleCard.Level.Name.Equals(battleCardExo.Level.Name)).FirstOrDefault();
+                ExerciseBattleCard battleCard = exoBattleCardContext.ExerciseBattleCard.Where(ebattleCard => ebattleCard.Name.Equals(battleCardExo.Name)).FirstOrDefault();
+                if (battleCard == null)
+                {
+                    Exercise exercise = new Exercise();
+                    int exerciseId = 0;
+                    using (ExerciseContext exoContext = new ExerciseContext())
+                    {
+                        ExerciseType exoType = exoContext.ExerciseTypes.Where(exType => exType.Name.Equals("CardGame")).FirstOrDefault();
+                        exercise.ExerciseTypeId = exoType.ExerciseTypeId;
+                        exoContext.Exercises.Add(exercise);
 
-            /* Finally, we affect the exercise : if the level is Easy, we affect the exercise to all the class.
-             Else, we affect it to some pupils only : the list which we have received. */
-            if (ec.LevelId == 1)
-            {
-                usersIds = null;
-                usersIds = this.GetChildrenListIdByClassId( pupil.ClassId );
-                this.AffectExercise( usersIds, exercise.ExerciseId );
-            }
-            else
-            {
-                this.AffectExercise( usersIds, exercise.ExerciseId );
-            }
+                        exoContext.SaveChanges();
+                        exerciseId = exercise.ExerciseId;
+                    }
 
-            return creationInfo;
+                    //Then we save the Exercise Plug
+                    battleCardExo.ExerciseBattleCardId = exerciseId;
+                    exoBattleCardContext.ExerciseBattleCard.Add(battleCardExo);
+                    exoBattleCardContext.SaveChanges();
+
+                    //Finally we affect the exercise to
+                    if (battleCardExo.LevelId.Equals(1))
+                    {
+                        usersIds = null;
+                        usersIds = repo.GetChildrenListIdByClassId(user.ClassId);
+                    }
+                    ExerciseAffectation(usersIds, exerciseId);
+                    message = "Jeu enregistré";
+                }
+                // If the exercise was already in bdd, update the data
+                else
+                {
+                    ExerciseBattleCard refExoBattleCard = new ExerciseBattleCard();
+
+                    refExoBattleCard = exoBattleCardContext.ExerciseBattleCard.Where(ex => ex.Name.Equals(battleCardExo.Name)).FirstOrDefault();
+
+                    ExerciseAffectation(usersIds, refExoBattleCard.ExerciseBattleCardId);
+                    battleCard.Choice = battleCardExo.Choice;
+
+                    //3. Mark entity as modified
+                    exoBattleCardContext.Entry(battleCard).State = System.Data.Entity.EntityState.Modified;
+                    //4. call SaveChanges
+                    exoBattleCardContext.SaveChanges();
+                    message = "Texte mis à jour.";
+                }
+                JsonResult data = new JsonResult { Data = message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                return data;
+            }
+            #endregion
         }
 
-        private void AffectExercise( List<int> usersIds, int exerciseId )
+        /// <summary>
+        /// Affects a specific exercise to on or multiple users
+        /// </summary>
+        /// <param name="usersIds"></param>
+        /// <param name="exerciseId"></param>
+        private void ExerciseAffectation(List<int> usersIds, int exerciseId)
         {
-            int id = 0;
-
             using (ExerciseContext exerciseContext = new ExerciseContext())
             {
                 for (int i = 0; i < usersIds.Count(); i++)
                 {
                     ExerciseAffectation exerciseAffectation = new ExerciseAffectation();
                     exerciseAffectation.UserId = usersIds[i];
-                    id = usersIds[ i ];
+                    int id = usersIds[i];
                     exerciseAffectation.ExerciseId = exerciseId;
                     exerciseAffectation.CreationDate = DateTime.Now;
                     exerciseAffectation.FirstViewDate = exerciseAffectation.CreationDate;
                     exerciseAffectation.EndDate = DateTime.Now;
 
-                    // we look if the affectation exists or not
-                    ExerciseAffectation exA = exerciseContext.ExercisesAffectations.Where(e => e.UserId.Equals(id))
-                                                                                   .Where(e => e.ExerciseId.Equals(exerciseId))
-                                                                                   .FirstOrDefault();
-
-                    if( exA == null )
+                    //We look if the affectation already exist or no
+                    ExerciseAffectation exA = exerciseContext.ExercisesAffectations.Where(e => e.UserId.Equals(id)).Where(e => e.ExerciseId.Equals(exerciseId)).FirstOrDefault();
+                    if (exA == null)
                     {
                         exerciseContext.ExercisesAffectations.Add(exerciseAffectation);
                         exerciseContext.SaveChanges();
                     }
                 }
             }
+        }
+
+        public List<ExerciseAffectation> GetExerciseAffectationListByUserId(int id)
+        {
+            List<ExerciseAffectation> affectations = new List<ExerciseAffectation>();
+            using (ExerciseContext exoContext = new ExerciseContext())
+            {
+                affectations = exoContext.ExercisesAffectations.Where(eA => eA.UserId.Equals(id)).ToList();
+            }
+            return affectations;
+        }
+
+        public List<ExerciseDictation> GetExerciseDictationListById(List<int> IDs)
+        {
+            List<ExerciseDictation> affectedDictations = new List<ExerciseDictation>();
+
+            using (ExerciseDictationContext exoDictationContext = new ExerciseDictationContext())
+            {
+                exoDictationContext.Configuration.LazyLoadingEnabled = false;
+                //allDictations = exoDictationContext.ExerciseDictation.ToList();
+                for (int i = 0; i < IDs.Count(); i++)
+                {
+                    ExerciseDictation exoDictation = new ExerciseDictation();
+                    int id = IDs[i];
+                    exoDictation = exoDictationContext.ExerciseDictation.Where(eD => eD.ExerciseDictationId.Equals(id)).FirstOrDefault();
+                    affectedDictations.Add(exoDictation);
+                }
+
+            }
+            return affectedDictations;
+        }
+
+
+        public List<ExerciseBattleCard> GetExerciseBattleCardListById(List<int> IDs)
+        {
+            List<ExerciseBattleCard> affectedBattleCard = new List<ExerciseBattleCard>();
+
+            using (ExerciseBattleCardContext exoBattleCardContext = new ExerciseBattleCardContext())
+            {
+                exoBattleCardContext.Configuration.LazyLoadingEnabled = false;
+                for (int i = 0; i < IDs.Count(); i++)
+                {
+                    ExerciseBattleCard exoBattleCard = new ExerciseBattleCard();
+                    int id = IDs[i];
+                    exoBattleCard = exoBattleCardContext.ExerciseBattleCard.Where(eBC => eBC.ExerciseBattleCardId.Equals(id)).FirstOrDefault();
+                    if (exoBattleCard != null)
+                        affectedBattleCard.Add(exoBattleCard);
+                }
+            }
+            return affectedBattleCard;
         }
     }
 }

@@ -47,6 +47,8 @@ namespace ITI.ItSchool.Models.UserEntities
         [ForeignKey("GroupId")]
         public virtual Group Group { get; set; }
 
+        public int Points { get; set; }
+
         [MaxLength( 200 )]
         public string Remarks { get; set; }
     }

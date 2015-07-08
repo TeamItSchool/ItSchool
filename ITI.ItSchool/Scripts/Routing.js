@@ -1,4 +1,4 @@
-﻿angular.module('TheApp', ['ngRoute', 'ngMaterial', 'ngGrid']) // ['ngRoute'] is required for the routing and
+﻿angular.module('TheApp', ['ngRoute', 'ngMaterial', 'ngGrid', 'ngStorage' ]) // ['ngRoute'] is required for the routing and
     //['ngMaterial'] for the material design components
 .run(function ($log, $rootScope) {
     $log.debug("startApp running");
@@ -103,8 +103,8 @@
         controller: 'KidPlayBattleCardController'*/
     })
     .otherwise({   // This is when any route not matched
-    templateUrl: '/Templates/Error.html',
-    controller: 'ErrorController'
+        templateUrl: '/Templates/Error.html',
+        controller: 'ErrorController'
     })
     $locationProvider.html5Mode(false).hashPrefix('!'); // This is for Hashbang Mode
 })
@@ -477,14 +477,14 @@
                 } else if (d.data.Nickname != null && d.data.Group.Name == "Professeurs") {
                     $scope.LoginData.Username = "";
                     $scope.LoginData.Password = "";
-                    alert("Attention, vous vous trouvez actuellement dans l'espace des élèves.\n Veuillez cliquez sur le bouton 'Espace Professeur'.");
-                    $scope.Message = "Rejoins l'espace 'Enfant'";
+                    alert("Attention, vous vous trouvez actuellement dans l'espace des élèves.\nVeuillez cliquez sur le bouton 'Espace Professeur'.");
+                    $scope.Message = "Nous vous invitons à rejoindre l'espace 'Professeur'";
                     $scope.IsTeacher = true;
                 }
                 else {
                     $scope.LoginData.Username = "";
                     $scope.LoginData.Password = "";
-                    alert("Aïe.. Quelque chose s'est mal passé. Vois avec tes parents ou ton professeur.")
+                    alert("Aïe.. Quelque chose s'est mal passée. Vois avec tes parents ou ton professeur.")
                 }
 
                 console.log(d.data);
@@ -618,13 +618,13 @@
     var monobjet = JSON.parse(monobjet_json);
     // Affichage dans la console
     console.log(monobjet.data.FirstName);
-    $scope.Message = "Bonjour " + monobjet.data.FirstName;
+    $scope.Message = "Bonjour " + monobjet.data.Nickname;
 
 })
 .controller('KidSelectExercicesController', function ($scope) {
     $scope.Message = 'A quoi veux-tu jouer ?';
 })
-.controller('KidPlayDictationController', function ($scope, CheckDictationText) {
+.controller('KidPlayDictationController', function ($scope, GetChildExerciseDictation, CheckDictationText) {
     var monobjet_json = sessionStorage.getItem("objet");
     var monobjet = JSON.parse(monobjet_json);
     // Affichage dans la console
@@ -637,49 +637,151 @@
     $scope.Message2 = "";
     $scope.IsFormValid = false;
     $scope.Button = "Valider";
+    $scope.ShowDictationAudio = false;
+    $scope.ChildTextWritted = "";
 
-    $scope.Game = {
+    $scope.ExerciseDictationData = {
         //A REMPLIR
-        Data: '',
+        Text: '',
         Level: {
             Name: 'Test'
         },
-        ExerciseType: {
-            Name: 'Dictation'
-        }
+        AudioData: '',
+        UsersIds: ''
     };
+
+    $scope.ExerciseDictation = {
+
+    };
+
+
+    $scope.ExerciseDictationList = null;
+
+    var easyDictationFound = false;
+    var mediumDictationFound = false;
+    var hardDictationFound = false;
+
+    GetChildExerciseDictation.GetExerciseDictation(monobjet.data.UserId).then(function (d) {
+        $scope.ExerciseDictationList = d.data;
+
+        if ($scope.ExerciseDictationList != null) {
+            for (var i = 0; i < $scope.ExerciseDictationList.length; i++) {
+                if ($scope.ExerciseDictationList[i].LevelId == 1)
+                    easyDictationFound = true;
+                if ($scope.ExerciseDictationList[i].LevelId == 2)
+                    mediumDictationFound = true;
+                if ($scope.ExerciseDictationList[i].LevelId == 3)
+                    hardDictationFound = true;
+            }
+            if (easyDictationFound == false)
+                document.getElementById("easy").disabled = true;
+            if (mediumDictationFound == false)
+                document.getElementById("medium").disabled = true;
+            if (hardDictationFound == false)
+                document.getElementById("hard").disabled = true;
+        }
+        else {
+            document.getElementById("easy").disabled = true;
+            document.getElementById("medium").disabled = true;
+            document.getElementById("hard").disabled = true;
+        }
+        console.log($scope.ExerciseDictationList);
+    });
+    
+    $scope.Easy = function () {
+        for (var i = 0; i < $scope.ExerciseDictationList.length ; i++) {
+            if ($scope.ExerciseDictationList[i].LevelId == 1) {
+                $scope.ShowDictationAudio = true;
+                $scope.ExerciseDictation = $scope.ExerciseDictationList[i];
+
+                var audio = document.getElementById("dictationAudio");
+                audio.src = $scope.ExerciseDictation.AudioData;
+                //audio.play();
+            }
+            console.log($scope.ExerciseDictation.AudioData);
+        }
+        $scope.EasySelected = true;
+        $scope.Message = "Niveau Facile : Tu peux le faire !";
+        //$scope.ExerciseDictationData.Level.Name = "Easy";
+    }
+    $scope.Medium = function () {
+        for (var i = 0; i < $scope.ExerciseDictationList.length ; i++) {
+            if ($scope.ExerciseDictationList[i].LevelId == 2) {
+                $scope.ShowDictationAudio = true;
+                $scope.ExerciseDictation = $scope.ExerciseDictationList[i];
+
+                var audio = document.getElementById("dictationAudio2");
+                audio.src = $scope.ExerciseDictation.AudioData;
+            }
+            console.log($scope.ExerciseDictation.AudioData);
+        }
+        $scope.MediumSelected = true;
+        $scope.Message = "Niveau Moyen : Fonce, tu peux y arriver !";
+        //$scope.ExerciseDictationData.Level.Name = "Medium";
+    }
+    $scope.Hard = function () {
+        for (var i = 0; i < $scope.ExerciseDictationList.length ; i++) {
+            if ($scope.ExerciseDictationList[i].LevelId == 3) {
+                $scope.ShowDictationAudio = true;
+                $scope.ExerciseDictation = $scope.ExerciseDictationList[i];
+
+                var audio = document.getElementById("dictationAudio3");
+                audio.src = $scope.ExerciseDictation.AudioData;
+            }
+            console.log($scope.ExerciseDictation.AudioData);
+        }
+        $scope.HardSelected = true;
+        $scope.Message = "Niveau Difficle : Tu es le meilleur, donne tout ce que tu as !";
+        //$scope.ExerciseDictationData.Level.Name = "Hard";
+    }
 
     //Check if Form is valid or not // here DictText is our form Name
     $scope.$watch('DictText.$valid', function (newVal) {
         $scope.IsFormValid = newVal;
     });
-    $scope.IsFormValid
-    $scope.SaveText = function () {
+
+    $scope.SubmitText = function () {
         if ($scope.IsFormValid) {
             $scope.Button = "Validtion en cours..."
-            $scope.Game.Data.trim();
-            $scope.Game.Data = monobjet.data.Nickname + "/" + $scope.Game.Data;
-            SaveDictationText.GetText($scope.Game).then(function (d) {
-                $scope.Button = "Dictée sauvegardée";
+            $scope.ExerciseDictation.Text = monobjet.data.Nickname + "/" + $scope.ChildTextWritted;
+            CheckDictationText.GetDictationText($scope.ExerciseDictation).then(function (d) {
+                alert(d.data);
+                $scope.Button = "Dictée envoyée";
             })
         }
     };
 
-    $scope.Easy = function () {
-        $scope.EasySelected = true;
-        $scope.Message = "Insérez le texte (Niveau facile)";
-        $scope.Game.Level.Name = "Easy";
-    }
-    $scope.Medium = function () {
-        $scope.MediumSelected = true;
-        $scope.Message = "Insérez le texte (Niveau moyen)";
-        $scope.Game.Level.Name = "Medium";
-    }
-    $scope.Hard = function () {
-        $scope.HardSelected = true;
-        $scope.Message = "Insérez le texte (Niveau difficile)";
-        $scope.Game.Level.Name = "Hard";
-    }
+    /*$scope.SaveText = function () {
+        if ($scope.IsFormValid) {
+            $scope.Button = "Validtion en cours..."
+            $scope.Game.Data.trim();
+            $scope.ExerciseDictationData.Text = monobjet.data.Nickname + "/" + $scope.ExerciseDictationData.Text;
+            SaveDictationText.GetText($scope.ExerciseDictationData).then(function (d) {
+                $scope.Button = "Dictée sauvegardée";
+            })
+        }
+    };*/
+
+})
+.factory('CheckDictationText', function ($http) {
+    var fac = {};
+    var data = "";
+    fac.GetDictationText = function (d) {
+        return $http({
+            url: '/Data/CheckDictationText',
+            method: 'POST',
+            data: JSON.stringify(d),
+            header: { 'content-type': 'application/json' }
+        })
+    };
+    return fac;
+})
+.factory('GetChildExerciseDictation', function ($http) {
+    var fac = {};
+    fac.GetExerciseDictation = function (d) {
+        return $http.get('/Data/GetExerciseDictation/' + d)
+    };
+    return fac;
 })
 .controller('KidHomeController', function ($scope) {
     $scope.Message = 'Page "Élève"';
@@ -916,6 +1018,7 @@
 })
 .controller("TeacherRegistrationController", function ($scope, RegistrationService, LoginService) {
 
+    console.log(sessionStorage.getItem("objet"));
     sessionStorage.removeItem("objet");
     $scope.submitText = "Inscription";
     $scope.submitted = false;
@@ -1058,6 +1161,7 @@
     $scope.MediumSelected = false;
     $scope.HardSelected = false;
     $scope.Message2 = "";
+    $scope.ShowRecorder = false;
     $scope.IsFormValid = false;
     $scope.Button = "Sauvegarder";
 
@@ -1106,12 +1210,7 @@
             $scope.ExerciseDictationData.Text = monobjet.data.Nickname + "/" + $scope.ExerciseDictationData.Text;
             var res = $scope.ExerciseDictationData.Text.split("/");
 
-            if ($scope.ExerciseDictationData.Level.Name != "Easy")
-                $scope.ExerciseDictationData.UsersIds = $scope.selected;
-            else if ($scope.ExerciseDictationData.Level.Name != "Medium")
-                $scope.ExerciseDictationData.UsersIds = $scope.selected;
-            else if ($scope.ExerciseDictationData.Level.Name != "Hard")
-                $scope.ExerciseDictationData.UsersIds = $scope.selected;
+            $scope.ExerciseDictationData.UsersIds = $scope.selected;
 
             SaveDictationText.GetText($scope.ExerciseDictationData).then(function (d) {
                 $scope.ExerciseDictationData.Text = res[1];
@@ -1128,16 +1227,19 @@
 
     $scope.Easy = function () {
         $scope.EasySelected = true;
+        $scope.ShowRecorder = true;
         $scope.Message = "Insérez le texte (Niveau facile)";
         $scope.ExerciseDictationData.Level.Name = "Easy";
     }
     $scope.Medium = function () {
         $scope.MediumSelected = true;
+        $scope.ShowRecorder = true;
         $scope.Message = "Insérez le texte (Niveau moyen)";
         $scope.ExerciseDictationData.Level.Name = "Medium";
     }
     $scope.Hard = function () {
         $scope.HardSelected = true;
+        $scope.ShowRecorder = true;
         $scope.Message = "Insérez le texte (Niveau difficile)";
         $scope.ExerciseDictationData.Level.Name = "Hard";
     }
@@ -1207,15 +1309,9 @@
         try {
             // webkit shim
             window.AudioContext = window.AudioContext || window.webkitAudioContext;
-            navigator.getUserMedia = (navigator.getUserMedia ||
-                            navigator.webkitGetUserMedia ||
-                            navigator.mozGetUserMedia ||
-                            navigator.msGetUserMedia);
             window.URL = window.URL || window.webkitURL;
 
             audio_context = new AudioContext;
-            __log('Audio context set up.');
-            __log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
         } catch (e) {
             alert('No web audio support in this browser!');
         }
@@ -1230,6 +1326,13 @@
         button.nextElementSibling.disabled = false;
         var buttonStart = document.getElementById("StartButton")
         buttonStart.disabled = false;
+        navigator.getUserMedia = (navigator.getUserMedia ||
+                       navigator.webkitGetUserMedia ||
+                       navigator.mozGetUserMedia ||
+                       navigator.msGetUserMedia);
+        __log('Audio context set up.');
+        __log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
+        audio_context = new AudioContext;
         navigator.getUserMedia({ audio: true }, startUserMedia, function (e) {
             __log('No live audio input: ' + e);
         });
@@ -1561,12 +1664,13 @@
     $scope.IsFormValid = false;
     $scope.Button = "Sauvegarder";
 
-    $scope.ExerciseBattleCard = {
-        //A REMPLIR
-        Choice: '',
+    $scope.ExerciseBattleCardData = {
+        //A REMPLIR      
         Level: {
             Name: 'Test'
-        }
+        },
+        ChoiceData: '',
+        UsersIds: ''
     };
 
     $scope.Children = null;
@@ -1585,20 +1689,20 @@
         //console.log(d.data[0].ClassId);
 
         $scope.Children = d.data;
-        $scope.ExerciseBattleCard.Users = $scope.Children;
-        console.log($scope.ExerciseBattleCard.Users);
+        $scope.ExerciseBattleCardData.UsersIds = $scope.Children;
+        console.log($scope.ExerciseBattleCardData.UsersIds);
     });
 
     $scope.toggle = function (child, list) {
-        var idx = list.indexOf(child);
+        var idx = list.indexOf(child.UserId);
         if (idx > -1)
             list.splice(idx, 1);
         else
-            list.push(child);
+            list.push(child.UserId);
     };
 
     $scope.exists = function (child, list) {
-        return list.indexOf(child) > -1;
+        return list.indexOf(child.UserId) > -1;
     };
 
     //Check if Form is valid or not // here FormChoice is our form Name
@@ -1607,20 +1711,18 @@
     });
     $scope.IsFormValid
     $scope.SaveChoice = function () {
-        if ($scope.IsFormValid && $scope.ExerciseBattleCard.Choice != "") {
+        if ($scope.IsFormValid && $scope.ExerciseBattleCardData.ChoiceData != "") {
             $scope.Button = "Sauvegarde en cours..."
-            $scope.ExerciseBattleCard.Choice.trim();
-            $scope.ExerciseBattleCard.Choice = monobjet.data.Nickname + "/" + $scope.ExerciseBattleCard.Choice;
-            var res = $scope.ExerciseBattleCard.Choice.split("/");
+            $scope.ExerciseBattleCardData.ChoiceData.trim();
+            $scope.ExerciseBattleCardData.ChoiceData = monobjet.data.Nickname + "/" + $scope.ExerciseBattleCardData.ChoiceData;
+            var res = $scope.ExerciseBattleCardData.ChoiceData.split("/");
 
-            if ($scope.ExerciseBattleCard.Level.Name != "Easy") {
-                console.log($scope.ExerciseBattleCard.Level.Name);
-                $scope.ExerciseBattleCard.Users = $scope.selected;
-            }
+
+            $scope.ExerciseBattleCardData.UsersIds = $scope.selected;
                 
 
-            SaveBattleCardChoice.GetChoice($scope.ExerciseBattleCard).then(function (d) {
-                $scope.ExerciseBattleCard.Choice = res[1];
+            SaveBattleCardChoice.GetChoice($scope.ExerciseBattleCardData).then(function (d) {
+                $scope.ExerciseBattleCardData.ChoiceData = res[1];
                 console.log(d.data);
                 if (d.data == "Jeu enregistré")
                     $scope.Button = "Battle Card sauvegardé";
@@ -1634,18 +1736,18 @@
     $scope.Easy = function () {
         $scope.EasySelected = true;
         $scope.Message = "Niveau facile";
-        $scope.ExerciseBattleCard.Level.Name = "Easy";
+        $scope.ExerciseBattleCardData.Level.Name = "Easy";
     }
 
     $scope.Medium = function () {
         $scope.MediumSelected = true;
         $scope.Message = "Niveau moyen";
-        $scope.ExerciseBattleCard.Level.Name = "Medium";
+        $scope.ExerciseBattleCardData.Level.Name = "Medium";
     }
     $scope.Hard = function () {
         $scope.HardSelected = true;
         $scope.Message = "Niveau difficile";
-        $scope.ExerciseBattleCard.Level.Name = "Hard";
+        $scope.ExerciseBattleCardData.Level.Name = "Hard";
     }
 })
 
@@ -1668,21 +1770,141 @@
 })
 
 // Kid description BattleCard
-.controller('KidDescriptionBattleCardController', function ($scope) {
-
-})
-
-// Play BattleCard
-.controller('KidPlayBattleCardController', function ($scope) {
+.controller('KidDescriptionBattleCardController', function ($scope, GetChildExerciseBattleCard, battleCardService, $localStorage) {
     var monobjet_json = sessionStorage.getItem("objet");
     var monobjet = JSON.parse(monobjet_json);
     // Affichage dans la console
-    console.log(monobjet.data.FirstName + " est dans la page de jeu card game");
+    console.log(monobjet.data.FirstName + " est dans la page de description battleCard");
+
+    console.log($localStorage.choiceData);
+
+    $scope.Message = 'Sélectionne un niveau';
+    $scope.EasySelected = false;
+    $scope.MediumSelected = false;
+    $scope.HardSelected = false;
+
+    var easyBattleCardFound = false;
+    var mediumBattleCardFound = false;
+    var hardBattleCardFound = false;
+
+    $scope.ExerciseBattleCardData = {
+        //A REMPLIR      
+        Level: {
+            Name: 'Test'
+        },
+        ChoiceData: '',
+        UsersIds: ''
+    };
+
+    $scope.ExerciseBattleCard = {
+        //A REMPLIR
+    };
+
+    $scope.ExerciseBattleCardList = null;
 
 
-    $scope.Time = 'Vous avez 1 minute(s) ! ';
+    GetChildExerciseBattleCard.GetExerciseBattleCard(monobjet.data.UserId).then(function (d) {
+        $scope.ExerciseBattleCardList = d.data;
+        console.log($scope.ExerciseBattleCardList);
+
+        for ( i = 0; i < $scope.ExerciseBattleCardList.length ; i++) {
+            if ($scope.ExerciseBattleCardList[i].LevelId == 1)
+                easyBattleCardFound = true;
+            if ($scope.ExerciseBattleCardList[i].LevelId == 2)
+                mediumBattleCardFound = true;
+            if ($scope.ExerciseBattleCardList[i].LevelId == 3)
+                hardBattleCardFound = true;
+        }
+
+        if (!easyBattleCardFound)
+            document.getElementById("easy").disabled = true;
+        if (!mediumBattleCardFound)
+            document.getElementById("medium").disabled = true;
+        if (!hardBattleCardFound)
+            document.getElementById("hard").disabled = true;
+        
+    });
+
+    $scope.Easy = function () {
+        for (i = 0; i < $scope.ExerciseBattleCardList.length ; i++) {
+            if ($scope.ExerciseBattleCardList[i].LevelId == 1)
+                battleCardService.addChoice($scope.ExerciseBattleCardList[i].Choice);
+        }
+        $scope.EasySelected = true;
+        $scope.Message = "Niveau Facile : Tu peux le faire !";
+        $scope.ExerciseBattleCardData.Level.Name = "Easy";
+    }
+
+    $scope.Medium = function () {
+        for (i = 0; i < $scope.ExerciseBattleCardList.length ; i++) {
+            if ($scope.ExerciseBattleCardList[i].LevelId == 2)
+                battleCardService.addChoice($scope.ExerciseBattleCardList[i].Choice);
+        }
+        $scope.MediumSelected = true;
+        $scope.Message = "Niveau Moyen : Fonce, tu peux y arriver !";
+        $scope.ExerciseBattleCardData.Level.Name = "Medium";
+    }
+    $scope.Hard = function () {
+        for (i = 0; i < $scope.ExerciseBattleCardList.length ; i++) {
+            if ($scope.ExerciseBattleCardList[i].LevelId == 3)
+                battleCardService.addChoice($scope.ExerciseBattleCardList[i].Choice);
+        }
+        $scope.HardSelected = true;
+        $scope.Message = "Niveau Difficle : Tu es le meilleur, donne tout ce que tu as !";
+        $scope.ExerciseBattleCardData.Level.Name = "Hard";
+    }
+})
+
+// Play BattleCard
+.controller('KidPlayBattleCardController', function ($scope, battleCardService, $localStorage) {
+    var monobjet_json = sessionStorage.getItem("objet");
+    var monobjet = JSON.parse(monobjet_json);
+    // Affichage dans la console
+    console.log(monobjet.data.FirstName + " est dans la page de jeu battleCard");
+
+    if (battleCardService.getChoice() != "") {
+        console.log('battleCardService.getChoice() different de vide ')
+        $localStorage.choiceData = battleCardService.getChoice();
+    }
+        
+    $scope.choice = $localStorage.choiceData;
+    console.log($scope.choice);
+
+    $scope.Time = 'Vous avez 1 minutes ! ';
     $scope.Score = 0
     $scope.svgCard = "/Images/redCard.svg";
+
+    loadBattleCardGame($scope.choice);
+    
+    $scope.$on('$locationChangeStart', function () {
+        stopClock();
+    });
+})
+
+.factory('GetChildExerciseBattleCard', function ($http) {
+    var fac = {};
+    fac.GetExerciseBattleCard = function (d) {
+        return $http.get('/Data/GetExerciseBattleCard/' + d)
+    };
+    return fac;
+})
+
+.service('battleCardService', function () {
+    var choice = "";
+
+    var addChoice = function (dataChoice) {
+        choice = dataChoice;
+    };
+
+    var getChoice = function () {
+        return choice;
+    };
+
+    return {
+        addChoice : addChoice,
+        getChoice : getChoice   
+    };
+
 })
 
 .controller('KidHomeController', function ($scope) {
@@ -1759,19 +1981,6 @@
         })
     };
 
-    return fac;
-})
-.factory('CheckDictationText', function ($http) {
-    var fac = {};
-    var data = "";
-    fac.GetDictationText = function (d) {
-        return $http({
-            url: '/Data/CheckDictationText',
-            method: 'POST',
-            data: JSON.stringify(d),
-            header: { 'content-type': 'application/json' }
-        })
-    };
     return fac;
 })
     //Registration Factory

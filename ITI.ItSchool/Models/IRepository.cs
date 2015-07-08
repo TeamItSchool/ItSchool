@@ -1,5 +1,7 @@
 ﻿using ITI.ItSchool.Models.ClassExercicesPlug;
 using ITI.ItSchool.Models.Entities;
+using ITI.ItSchool.Models.ExerciseEntities;
+using ITI.ItSchool.Models.PlugExercises;
 using ITI.ItSchool.Models.SchoolEntities;
 using ITI.ItSchool.Models.UserEntities;
 using System.Collections.Generic;
@@ -9,19 +11,31 @@ namespace ITI.ItSchool.Models
 {
     public interface IRepository
     {
-        List<User> GetChildrenListByClassId( int id );
 
-        List<int> GetChildrenListIdByClassId( int id );
+        List<User> GetChildrenListByClassId(int id);
+
+        List<int> GetChildrenListIdByClassId(int id);
 
         JsonResult GetChildrenByClassId(int id);
 
         JsonResult FindUserByNickname(string nickname);
 
-        JsonResult GetChapters();
-
-        JsonResult GetClasses();
+        User FindById(int id);
 
         JsonResult SaveDictation(ExerciseDictationData dictationData);
+
+        JsonResult SaveBattleCard(ExerciseBattleCardData battleCardData);
+
+        JsonResult GetChapters();
+
+        List<ExerciseAffectation> GetExerciseAffectationListByUserId(int id);
+
+        List<ExerciseDictation> GetExerciseDictationListById(List<int> IDs);
+
+        ExerciseDictation FindExerciseDictationById( int id );
+        List<ExerciseBattleCard> GetExerciseBattleCardListById(List<int> IDs);
+
+        JsonResult GetClasses();
 
         JsonResult GetGroups();
 

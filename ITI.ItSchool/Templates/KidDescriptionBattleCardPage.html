@@ -4,8 +4,10 @@
             background-color: #F0E8D8;
         }
 
-        h1 {
+        h1, h2 {
+            width: 100%;
             text-align: center;
+            /*border : 1px solid black;*/
         }
 
         #global {
@@ -103,9 +105,53 @@
             </p>
         </div>
 
-        <div id="gameStart">
+        <!--<div id="gameStart">
             <a href="#!/kid/exercices/battleCard/play">PLAY THE GAME</a>
-        </div>
+        </div>-->
+
+        <center>
+            <div ng-show="!EasySelected && !MediumSelected && !HardSelected">
+                <h1>{{Message}}</h1>
+                <table>
+                    <tr>
+                        <td>
+                            <form novalidate name="EasyForm" ng-submit="Easy()">
+                                <md-button class="md-raised md-primary" type="submit" name="easy" id="easy">Facile</md-button>
+                            </form>
+                        </td>
+                        <td>
+                            <form novalidate name="MediumForm" ng-submit="Medium()">
+                                <md-button class="md-raised md-primary" type="submit" name="medium" id="medium">Moyen</md-button>
+                            </form>
+                        </td>
+                        <td>
+                            <form novalidate name="HardForm" ng-submit="Hard()">
+                                <md-button class="md-raised md-primary" type="submit" name="hard" id="hard">Difficile</md-button>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div ng-show="EasySelected">
+                <h1>{{Message}}</h1>
+                <div id="gameStart">
+                    <a href="#!/kid/exercices/battleCard/play">PLAY THE GAME</a>
+                </div>
+
+            </div>
+            <div ng-show="MediumSelected">
+                <h1>{{Message}}</h1>
+                <div id="gameStart">
+                    <a href="#!/kid/exercices/battleCard/play">PLAY THE GAME</a>
+                </div>
+            </div>
+            <div ng-show="HardSelected">
+                <h1>{{Message}}</h1>
+                <form name="DictText" ng-submit="SaveText">
+
+                </form>
+            </div>
+        </center>
 
     </div>
 

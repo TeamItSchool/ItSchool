@@ -1,4 +1,4 @@
-namespace ITI.ItSchool.ExerciseClozeContextMigrations
+namespace ITI.ItSchool.ExerciseBattleCardContextMigrations
 {
     using System;
     using System.Data.Entity.Migrations;
@@ -8,21 +8,20 @@ namespace ITI.ItSchool.ExerciseClozeContextMigrations
         public override void Up()
         {
             CreateTable(
-                "dbo.ExerciseCloze",
+                "dbo.ExerciseBattleCard",
                 c => new
                     {
-                        ExerciseClozeId = c.Int(nullable: false),
+                        ExerciseBattleCardId = c.Int(nullable: false),
                         Name = c.String(maxLength: 50),
                         LevelId = c.Int(nullable: false),
                         ChapterId = c.Int(nullable: false),
-                        Text = c.String(),
-                        Words = c.String(),
+                        Choice = c.String(),
                     })
-                .PrimaryKey(t => t.ExerciseClozeId)
+                .PrimaryKey(t => t.ExerciseBattleCardId)
                 .ForeignKey("dbo.Chapters", t => t.ChapterId, cascadeDelete: true)
-                .ForeignKey("dbo.Exercises", t => t.ExerciseClozeId)
+                .ForeignKey("dbo.Exercises", t => t.ExerciseBattleCardId)
                 .ForeignKey("dbo.Levels", t => t.LevelId, cascadeDelete: true)
-                .Index(t => t.ExerciseClozeId)
+                .Index(t => t.ExerciseBattleCardId)
                 .Index(t => t.LevelId)
                 .Index(t => t.ChapterId);
             
@@ -65,6 +64,7 @@ namespace ITI.ItSchool.ExerciseClozeContextMigrations
             //            ClassId = c.Int(nullable: false),
             //            AvatarId = c.Int(nullable: false),
             //            GroupId = c.Int(nullable: false),
+            //            Points = c.Int(nullable: false),
             //            Remarks = c.String(maxLength: 200),
             //        })
             //    .PrimaryKey(t => t.UserId)
@@ -181,23 +181,23 @@ namespace ITI.ItSchool.ExerciseClozeContextMigrations
             //        })
             //    .PrimaryKey(t => t.MatterId);
             
-            CreateTable(
-                "dbo.Levels",
-                c => new
-                    {
-                        LevelId = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false, maxLength: 45),
-                        Remarks = c.String(maxLength: 200),
-                    })
-                .PrimaryKey(t => t.LevelId);
+            //CreateTable(
+            //    "dbo.Levels",
+            //    c => new
+            //        {
+            //            LevelId = c.Int(nullable: false, identity: true),
+            //            Name = c.String(nullable: false, maxLength: 45),
+            //            Remarks = c.String(maxLength: 200),
+            //        })
+            //    .PrimaryKey(t => t.LevelId);
             
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.ExerciseCloze", "LevelId", "dbo.Levels");
-            DropForeignKey("dbo.ExerciseCloze", "ExerciseClozeId", "dbo.Exercises");
-            DropForeignKey("dbo.ExerciseCloze", "ChapterId", "dbo.Chapters");
+            DropForeignKey("dbo.ExerciseBattleCard", "LevelId", "dbo.Levels");
+            DropForeignKey("dbo.ExerciseBattleCard", "ExerciseBattleCardId", "dbo.Exercises");
+            DropForeignKey("dbo.ExerciseBattleCard", "ChapterId", "dbo.Chapters");
             DropForeignKey("dbo.Chapters", "ThemeId", "dbo.Themes");
             DropForeignKey("dbo.Themes", "MatterId", "dbo.Matters");
             DropForeignKey("dbo.Exercises", "Chapter_ChapterId", "dbo.Chapters");
@@ -220,9 +220,9 @@ namespace ITI.ItSchool.ExerciseClozeContextMigrations
             DropIndex("dbo.Users", new[] { "ClassId" });
             DropIndex("dbo.Chapters", new[] { "ThemeId" });
             DropIndex("dbo.Chapters", new[] { "ChapterId" });
-            DropIndex("dbo.ExerciseCloze", new[] { "ChapterId" });
-            DropIndex("dbo.ExerciseCloze", new[] { "LevelId" });
-            DropIndex("dbo.ExerciseCloze", new[] { "ExerciseClozeId" });
+            DropIndex("dbo.ExerciseBattleCard", new[] { "ChapterId" });
+            DropIndex("dbo.ExerciseBattleCard", new[] { "LevelId" });
+            DropIndex("dbo.ExerciseBattleCard", new[] { "ExerciseBattleCardId" });
             DropTable("dbo.Levels");
             DropTable("dbo.Matters");
             DropTable("dbo.Themes");
@@ -236,7 +236,7 @@ namespace ITI.ItSchool.ExerciseClozeContextMigrations
             DropTable("dbo.Users");
             DropTable("dbo.Classes");
             DropTable("dbo.Chapters");
-            DropTable("dbo.ExerciseCloze");
+            DropTable("dbo.ExerciseBattleCard");
         }
     }
 }
