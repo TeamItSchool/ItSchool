@@ -307,6 +307,15 @@
 })
 .controller('KidSelectExercicesController', function ($scope) {
     $scope.Message = 'A quoi veux-tu jouer ?';
+    $scope.demo = {
+        topDirections: ['left', 'up'],
+        bottomDirections: ['down', 'right'],
+        isOpen: false,
+        availableModes: ['md-fling', 'md-scale'],
+        selectedMode: 'md-scale',
+        availableDirections: ['up', 'down', 'left', 'right'],
+        selectedDirection: 'right'
+    };
 })
 .controller('KidPlayDictationController', function ($scope, GetChildExerciseDictation, CheckDictationText) {
     var monobjet_json = sessionStorage.getItem("objet");
@@ -481,6 +490,10 @@
     $scope.IsFormValid = false;
     $scope.IsKid = false;
     $scope.ButtonMessage = "Connexion";
+
+    $scope.GoBack = function () {
+        window.history.back();
+    };
 
     $scope.LoginData = {
         Username: '',
@@ -1339,7 +1352,9 @@
 
 // Description customize BattleCard
 .controller('TeacherDescriptionBattleCardController', function ($scope) {
-
+    $scope.GoBack = function () {
+        window.history.back();
+    };
 })
 
 // Customize BattleCard
@@ -1348,7 +1363,11 @@
     var monobjet = JSON.parse(monobjet_json);
     // Affichage dans la console
     console.log(monobjet.data.FirstName + " est dans la modification de card game");
-    console.log("ClassId : " + monobjet.data.ClassId)
+    console.log("ClassId : " + monobjet.data.ClassId);
+
+     $scope.GoBack = function () {
+        window.history.back();
+    };
 
     $scope.Message = 'Choix du niveau';
     $scope.EasySelected = false;
@@ -1470,6 +1489,10 @@
     console.log(monobjet.data.FirstName + " est dans la page de description battleCard");
 
     console.log($localStorage.choiceData);
+
+    $scope.GoBack = function () {
+        window.history.back();
+    };
 
     $scope.Message = 'Sélectionne un niveau';
     $scope.EasySelected = false;
