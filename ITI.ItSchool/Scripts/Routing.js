@@ -828,9 +828,9 @@
         bottomDirections: ['down', 'right'],
         isOpen: false,
         availableModes: ['md-fling', 'md-scale'],
-        selectedMode: 'md-fling',
+        selectedMode: 'md-scale',
         availableDirections: ['up', 'down', 'left', 'right'],
-        selectedDirection: 'up'
+        selectedDirection: 'right'
     };
 })
 .controller('TeacherDictationController', function ($scope, SaveDictationText) {
