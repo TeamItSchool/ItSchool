@@ -262,11 +262,12 @@ namespace ITI.ItSchool.Controllers
             return jsonData;
         }
 
-        public JsonResult GetClozeExercise(string exerciseName)
+        public JsonResult GetClozeExercise( string exerciseName )
         {
+            JsonResult jsonData = null;
             IRepository db = new SQLRepository();
-            var exerciseData = db.GetClozeExerciseContent(exerciseName);
-            return exerciseData;
+            jsonData = db.GetClozeExerciseContent( exerciseName );
+            return jsonData;
         }
 
         public JsonResult GetGroups()
@@ -278,16 +279,39 @@ namespace ITI.ItSchool.Controllers
 
         public string CreateClozeExercise(ExerciseClozeData exerciseCloze)
         {
-            IRepository db = new SQLRepository();
-            string creationInfo = db.CreateExerciseCloze(exerciseCloze);
-            return creationInfo;
+            if (ModelState.IsValid)
+            {
+                IRepository db = new SQLRepository();
+                string creationInfo = db.CreateExerciseCloze(exerciseCloze);
+                return creationInfo;
+            }
+            else return "error validation form";
+        }
+
+        public string UpdateClozeExercise( ExerciseClozeData exerciseCloze )
+        {
+            throw new NotImplementedException();
         }
 
         public JsonResult GetChapters()
-        {
+        {   
             IRepository db = new SQLRepository();
             var chapters = db.GetChapters();
             return chapters;
+        }
+
+        public JsonResult GetLevels()
+        {
+            IRepository db = new SQLRepository();
+            var levels = db.GetLevels();
+            return levels;
+        }
+
+        public JsonResult GetClozeExercises()
+        {
+            IRepository db = new SQLRepository();
+            var jsonData = db.GetClozeExercises();
+            return jsonData;
         }
     }
 }

@@ -39,7 +39,11 @@ namespace ITI.ItSchool.Models
 
         JsonResult GetGroups();
 
+        JsonResult GetLevels();
+
         JsonResult GetClozeExerciseContent(string exerciseName);
+
+        JsonResult GetClozeExercises();
 
         JsonResult getUsersByClasses(int id);
 
