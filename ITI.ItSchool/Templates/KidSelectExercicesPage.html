@@ -1,17 +1,36 @@
 ﻿<div ng-controller="KidSelectExercicesController">
     <section class="row">
-        <ul class="nav nav-pills  nav-justified">
+        <!--<ul class="nav nav-pills  nav-justified">
             <li> <a href="#!/home">Accueil </a></li>
-            <!--<li> <a href="#">Avatar </a></li>
-            <li> <a href="#">Messages </a></li>-->
+            <li> <a href="#">Avatar </a></li>
+            <li> <a href="#">Messages </a></li>
             <li> <a href="#!/kid/login">Deconnexion </a></li>
         </ul>
-    </section>
+    </section>-->
+        <div class="lock-size" layout="row" layout-align="left">
+            <md-fab-speed-dial md-open="demo.isOpen" md-direction="{{demo.selectedDirection}}"
+                               ng-class="demo.selectedMode">
+                <md-fab-trigger>
+                    <md-button aria-label="menu" class="md-fab md-warn">
+                        <md-icon md-svg-src="../Images/material-design-icons/svg/menu.svg"></md-icon>
+                    </md-button>
+                </md-fab-trigger>
+                <md-fab-actions>
+                    <md-button aria-label="logout" class="md-fab md-raised md-mini" href="#!/kid/login">
+                        <md-icon style=" color:black" md-svg-src="../Images/material-design-icons/svg/logout.svg">
+                        </md-icon>
+                        <md-tooltip>
+                            Déconnexion
+                        </md-tooltip>
+                    </md-button>
+                </md-fab-actions>
+            </md-fab-speed-dial>
+        </div>
     <center>
         <h1>{{Message}}</h1>
         <table>
             <tr>
-                <td><md-button class="md-raised md-primary" href="#!/kid/exercices/drag_drop">Glissé-Déposé</md-button></td>
+                <!--<td><md-button class="md-raised md-primary" href="#!/kid/exercices/drag_drop">Glissé-Déposé</md-button></td>-->
                 <td><md-button class="md-raised md-primary" href="#!/kid/exercices/battleCard">Battle Card</md-button></td>
                 <td><md-button class="md-raised md-primary" href="#!/kid/exercices/dictation">Dictée</md-button></td>
                 <td><md-button class="md-raised md-primary" href="#!/kid/exercices/cloze_exercize">Texte à trous</md-button></td>

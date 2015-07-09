@@ -123,6 +123,20 @@
     $scope.IsTeacher = false;
     $scope.ButtonMessage = "Connexion";
 
+    $scope.demo = {
+        topDirections: ['left', 'up'],
+        bottomDirections: ['down', 'right'],
+        isOpen: false,
+        availableModes: ['md-fling', 'md-scale'],
+        selectedMode: 'md-scale',
+        availableDirections: ['up', 'down', 'left', 'right'],
+        selectedDirection: 'right'
+    };
+
+    $scope.GoBack = function () {
+        location.reload();
+    };
+
     $scope.LoginData = {
         Username: '',
         Password: ''
@@ -307,6 +321,15 @@
 })
 .controller('KidSelectExercicesController', function ($scope) {
     $scope.Message = 'A quoi veux-tu jouer ?';
+    $scope.demo = {
+        topDirections: ['left', 'up'],
+        bottomDirections: ['down', 'right'],
+        isOpen: false,
+        availableModes: ['md-fling', 'md-scale'],
+        selectedMode: 'md-scale',
+        availableDirections: ['up', 'down', 'left', 'right'],
+        selectedDirection: 'right'
+    };
 })
 .controller('KidPlayDictationController', function ($scope, GetChildExerciseDictation, CheckDictationText) {
     var monobjet_json = sessionStorage.getItem("objet");
@@ -323,6 +346,20 @@
     $scope.Button = "Valider";
     $scope.ShowDictationAudio = false;
     $scope.ChildTextWritted = "";
+
+    $scope.GoBack = function () {
+        window.history.back();
+    };
+
+    $scope.demo = {
+        topDirections: ['left', 'up'],
+        bottomDirections: ['down', 'right'],
+        isOpen: false,
+        availableModes: ['md-fling', 'md-scale'],
+        selectedMode: 'md-scale',
+        availableDirections: ['up', 'down', 'left', 'right'],
+        selectedDirection: 'right'
+    };
 
     $scope.ExerciseDictationData = {
         //A REMPLIR
@@ -460,6 +497,20 @@
 })
 .controller('TeacherHomeController', function ($scope) {
     $scope.Message = 'Page "Professeurs"';
+    $scope.demo = {
+        topDirections: ['left', 'up'],
+        bottomDirections: ['down', 'right'],
+        isOpen: false,
+        availableModes: ['md-fling', 'md-scale'],
+        selectedMode: 'md-scale',
+        availableDirections: ['up', 'down', 'left', 'right'],
+        selectedDirection: 'right'
+    };
+    $scope.GoBack = function () {
+        window.history.back();
+    };
+
+
 })
 .controller('TeacherLobbyController', function ($scope, LoginService) {
 
@@ -481,6 +532,20 @@
     $scope.IsFormValid = false;
     $scope.IsKid = false;
     $scope.ButtonMessage = "Connexion";
+
+    $scope.demo = {
+        topDirections: ['left', 'up'],
+        bottomDirections: ['down', 'right'],
+        isOpen: false,
+        availableModes: ['md-fling', 'md-scale'],
+        selectedMode: 'md-scale',
+        availableDirections: ['up', 'down', 'left', 'right'],
+        selectedDirection: 'right'
+    };
+
+    $scope.GoBack = function () {
+        location.reload();
+    };
 
     $scope.LoginData = {
         Username: '',
@@ -828,9 +893,9 @@
         bottomDirections: ['down', 'right'],
         isOpen: false,
         availableModes: ['md-fling', 'md-scale'],
-        selectedMode: 'md-fling',
+        selectedMode: 'md-scale',
         availableDirections: ['up', 'down', 'left', 'right'],
-        selectedDirection: 'up'
+        selectedDirection: 'right'
     };
 })
 .controller('TeacherDictationController', function ($scope, SaveDictationText) {
@@ -840,6 +905,20 @@
     // Affichage dans la console
     console.log(monobjet.data.FirstName + " est dans la modification de la dictée");
     console.log("Sa classe est : " + monobjet.data.Class.Name);
+
+    $scope.GoBack = function () {
+        window.history.back();
+    };
+
+    $scope.demo = {
+        topDirections: ['left', 'up'],
+        bottomDirections: ['down', 'right'],
+        isOpen: false,
+        availableModes: ['md-fling', 'md-scale'],
+        selectedMode: 'md-scale',
+        availableDirections: ['up', 'down', 'left', 'right'],
+        selectedDirection: 'right'
+    };
 
     $scope.Message = 'Selectionnez un niveau.';
     $scope.EasySelected = false;
@@ -1339,7 +1418,9 @@
 
 // Description customize BattleCard
 .controller('TeacherDescriptionBattleCardController', function ($scope) {
-
+    $scope.GoBack = function () {
+        window.history.back();
+    };
 })
 
 // Customize BattleCard
@@ -1348,7 +1429,11 @@
     var monobjet = JSON.parse(monobjet_json);
     // Affichage dans la console
     console.log(monobjet.data.FirstName + " est dans la modification de card game");
-    console.log("ClassId : " + monobjet.data.ClassId)
+    console.log("ClassId : " + monobjet.data.ClassId);
+
+     $scope.GoBack = function () {
+        window.history.back();
+    };
 
     $scope.Message = 'Choix du niveau';
     $scope.EasySelected = false;
@@ -1470,6 +1555,10 @@
     console.log(monobjet.data.FirstName + " est dans la page de description battleCard");
 
     console.log($localStorage.choiceData);
+
+    $scope.GoBack = function () {
+        window.history.back();
+    };
 
     $scope.Message = 'Sélectionne un niveau';
     $scope.EasySelected = false;
@@ -1602,6 +1691,9 @@
 
 .controller('KidHomeController', function ($scope) {
     $scope.Message = 'Page "Élève"';
+    $scope.GoBack = function () {
+        window.history.back();
+    };
 })
 
 .controller('ErrorController', function ($scope) {
