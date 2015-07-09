@@ -1,8 +1,8 @@
 ﻿<div ng-controller="KidDescriptionBattleCardController">
     <style>
-        body, html {
+        /*body, html {
             background-color: #F0E8D8;
-        }
+        }*/
 
         h1, h2 {
             width: 100%;
@@ -10,18 +10,18 @@
             /*border : 1px solid black;*/
         }
 
-        #global {
+        /*#global {
             padding-bottom: 5%;
-            position: relative; /* on positionne le conteneur */
+            position: relative;
             margin-left: auto;
             margin-right: auto;
             width: 100%;
             height: 100%;
             border: 1px solid black;
             background: #F0E8D8 -moz-linear-gradient(center bottom, #DACDB1 11%, #F0E8D8 56%) repeat scroll 0% 0%;
-        }
+        }*/
 
-        #gameDescription {
+        /*#gameDescription {
             margin-top: 3%;
             text-align: center;
             margin-left: auto;
@@ -31,18 +31,18 @@
             box-shadow: 0px 0px 65px #CDBE9F inset, 0px 0px 20px #BEAE8C inset, 0px 0px 5px #816F47;
             font-family: Georgia,Times,serif;
             line-height: 1.50em;
-        }
+        }*/
 
-        #leftArrow{
+        /*#leftArrow{
             position: absolute;
-            /*border : 1px solid black;*/
+            border : 1px solid black;
             top: 45%;
             background-color: #CDBE9F;
-        }
+        }*/
 
-        #leftArrow {
+        /*#leftArrow {
             right: 90%;
-        }
+        }*/
 
         #gameStart {
 	    position : relative;
@@ -81,7 +81,7 @@
     }
     </style>
 
-    <h1>Battle Card Game</h1>
+    <h1>Battle Card</h1>
 
 
     <div id="global">
@@ -135,21 +135,21 @@
             <div ng-show="EasySelected">
                 <h1>{{Message}}</h1>
                 <div id="gameStart">
-                    <a href="#!/kid/exercices/battleCard/play">PLAY THE GAME</a>
+                    <a href="#!/kid/exercices/battleCard/play">JOUER</a>
                 </div>
 
             </div>
             <div ng-show="MediumSelected">
                 <h1>{{Message}}</h1>
                 <div id="gameStart">
-                    <a href="#!/kid/exercices/battleCard/play">PLAY THE GAME</a>
+                    <a href="#!/kid/exercices/battleCard/play">JOUER</a>
                 </div>
             </div>
             <div ng-show="HardSelected">
                 <h1>{{Message}}</h1>
-                <form name="DictText" ng-submit="SaveText">
-
-                </form>
+                <div id="gameStart">
+                    <a href="#!/kid/exercices/battleCard/play">JOUER</a>
+                </div>
             </div>
         </center>
 

@@ -1,10 +1,18 @@
 ﻿<div ng-controller="TeacherSelectExercicesController">
+    <section class="row">
+        <ul class="nav nav-pills  nav-justified">
+            <li> <a href="#!/home">Accueil </a></li>
+            <!--<li> <a href="#">Classes </a></li>
+            <li> <a href="#">Messages </a></li>-->
+            <li> <a href="#!/teacher/login">Deconnexion </a></li>
+        </ul>
+    </section>
     <center>
         <h1>{{Message}}</h1>
         <table>
             <tr>
                 <td><md-button class="md-raised md-primary" href="#!/teacher/exercices/matter">Glissé-Déposé</md-button></td>
-                <td><md-button class="md-raised md-primary" href="#!/teacher/exercices/battleCard">Card Game</md-button></td>
+                <td><md-button class="md-raised md-primary" href="#!/teacher/exercices/battleCard">Battle Card</md-button></td>
                 <td><md-button class="md-raised md-primary" href="#!/teacher/exercices/dictation">Dictée</md-button></td>
                 <td><md-button class="md-raised md-primary" href="#!/teacher/exercices/cloze_exercise">Texte à trous</md-button></td>
             </tr>
