@@ -808,7 +808,7 @@ namespace ITI.ItSchool.Models
                         exoBattleCardContext.Entry(battleCard).State = System.Data.Entity.EntityState.Modified;
                         //4. call SaveChanges
                         exoBattleCardContext.SaveChanges();
-                        message = "Texte mis à jour.";
+                        message = "Choix mis à jour.";
                     }
                     JsonResult data = new JsonResult { Data = message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                     return data;
