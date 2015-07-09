@@ -44,7 +44,6 @@
                     <option value="0-999">0-999</option>
                 </select>
                 <md-button id="saveExercise" class="md-raised md-primary" type="submit" name="SaveEasyChoice">{{Button}}</md-button>
-                <h2>{{ExerciseBattleCardData.ChoiceData}} + {{ExerciseBattleCardData.Level.Name}}</h2>
             </form>
         </div>
         <div ng-show="MediumSelected">
@@ -64,9 +63,7 @@
                         {{child.FirstName}} <span ng-if="exists(child,selected)">selected</span>
                     </md-checkbox>
                 </div>
-                 <code style="display: block; padding : 8px;">{{selected | json}}</code> 
                 <md-button id="saveExercise" class="md-raised md-primary" type="submit" name="SaveMediumChoice">{{Button}}</md-button>
-                <h2>{{ExerciseBattleCardData.ChoiceData}} + {{ExerciseBattleCardData.Level.Name}}</h2>
                 </form>
         </div>
         <div ng-show="HardSelected">
@@ -86,9 +83,7 @@
                         {{child.FirstName}} <span ng-if="exists(child,selected)">selected</span>
                     </md-checkbox>
                 </div>
-                <!-- <code style="display: block; padding : 8px;">{{selected | json}}</code> -->
                 <md-button id="saveExercise" class="md-raised md-primary" type="submit" name="SaveHardChoice">{{Button}}</md-button>
-                <h2>{{ExerciseBattleCardData.ChoiceData}} + {{ExerciseBattleCardData.Level.Name}}</h2>
             </form>
         </div>
         </center>

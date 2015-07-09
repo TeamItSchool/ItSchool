@@ -9,8 +9,8 @@ body {
     background-attachment: scroll;
     -webkit-background-size: cover; /* pour anciens Chrome et Safari */
     background-size: cover;
-    /*background-position: 55% 17%;*/
-    height: 100%;
+    background-position: 55% 17%;
+    height: 170%;
     animation: animationBackground linear 1.5s;
     animation-iteration-count: 1;
     transform-origin: 50% 50%;
@@ -28,13 +28,128 @@ body {
     -ms-transform-origin: 50% 50%;
 }
 
-footer{
-    width: 100%;
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-    border : 1px solid black;
+
+/* Large desktops and laptops */
+@media (min-width: 1200px) {
+    /*h2{
+        border : 1px solid black;
+    }*/
 }
+
+/* Landscape tablets and medium desktops */
+@media (min-width: 992px) and (max-width: 1199px) {
+
+}
+
+/* Portrait tablets and small desktops */
+@media (min-width: 768px) and (max-width: 991px) {
+        /*h2{
+        border : 1px solid blue;
+    }*/
+}
+
+/* Landscape phones and portrait tablets */
+@media (max-width: 767px) {
+    #sectionLogo{
+        margin-top : 5%;
+        margin-left: auto;
+        margin-right: auto;
+        width : 50%;
+    }
+    h2{
+        /*border : 1px solid black;*/
+        font-size : 3.0vh;
+    }
+    #imageLogo img{
+        height : 65px;
+        width : 100px;
+    }
+    .md-raised{
+        margin : 0px;
+        line-height: 20px;
+        min-height: 20px;
+        font-size : 2.5vh;
+    }
+
+    footer p{
+        font-size : 40%;
+    }
+}
+
+/* Portrait phones and smaller */
+@media (max-width: 480px) {
+    h2{
+        /*border : 1px solid yellow;*/
+    }
+    #sectionLogo{
+        margin-left: auto;
+        margin-right: auto;
+        width : 80%;
+    }
+    .md-raised{
+        margin : 0px;
+        line-height: 20px;
+        min-height: 20px;
+        font-size : 2.5vh;
+    }
+}
+
+
+#mainContainer{
+    height : 80%;
+    /*border : 1px solid black;*/
+    padding-top : 10%;
+}
+
+#sectionLogo{
+    /*border : 1px solid green;*/
+}
+
+#imageLogo{
+    /*border : 1px solid orange;*/
+}
+
+#imageLogo img{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#IndexNgView{
+    /*border : 1px solid yellow;*/
+}
+
+#homeController{
+    height : 50%;
+    /*border : 1px solid red;*/
+}
+
+
+
+footer{
+    /*background-color : #87CEFA;*/
+    width: 100%;
+    position: absolute;  
+    left: 0px;
+    bottom : 0px;
+    /*top : 100%;*/
+    /*border : 1px solid black;*/
+}
+
+footer p{
+    /*border : 1px solid purple;*/
+    height : 0px;
+    margin : 0px;
+}
+
+.row{
+    /*border : 1px solid blue;*/
+}
+
+.col-xs-offset-4 {
+	margin-left: 33.33333333333333%;
+}
+
+
 
 @keyframes animationBackground{
   0% {
@@ -413,18 +528,18 @@ h1, h2, h3, h4 {
 	box-shadow: 0px 0px 65px #CDBE9F inset, 0px 0px 20px #BEAE8C inset, 0px 0px 5px #816F47;
 	font-family: Georgia,Times,serif;
 	line-height: 1.50em;
-	
 } 
 
 #alphabet, #chiffre{
     margin-top : 1.5%;          
-    border : 1px solid black;
-	box-shadow: 0px 0px 65px #CDBE9F inset, 0px 0px 20px #BEAE8C inset, 0px 0px 5px #816F47;
+    /*border : 1px solid black;*/
+	/*box-shadow: 0px 0px 65px #CDBE9F inset, 0px 0px 20px #BEAE8C inset, 0px 0px 5px #816F47;*/
 	font-family: Georgia,Times,serif;
 	line-height: 1.50em;
 }
 #alphabet{
     margin-right: 8%;
+    font-weight : bold;
 }
 
 #leftArrow, #rightArrow{
@@ -443,17 +558,13 @@ h1, h2, h3, h4 {
 #choice{
     margin-top : 1.5%;          
     border : 1px solid black;
-	box-shadow: 0px 0px 65px #CDBE9F inset, 0px 0px 20px #BEAE8C inset, 0px 0px 5px #816F47;
+	/*box-shadow: 0px 0px 65px #CDBE9F inset, 0px 0px 20px #BEAE8C inset, 0px 0px 5px #816F47;*/
 	font-family: Georgia,Times,serif;
 	line-height: 1.50em;
 }
 
 #choiceTitle{
     text-decoration: underline;
-    font-weight : bold;
-}
-
-#alphabet{
     font-weight : bold;
 }
 
