@@ -9,6 +9,7 @@ using ITI.ItSchool.Models.SchoolEntities;
 using ITI.ItSchool.Models.UserEntities;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web.Mvc;
@@ -159,7 +160,6 @@ namespace ITI.ItSchool.Models
                         return true;
                     }
                     else return false;
-
                 }
                 else return false;
             }
@@ -318,6 +318,37 @@ namespace ITI.ItSchool.Models
         }
 
         /// <summary>
+        /// Gets all the existing levels to set an exercise.
+        /// As we cannot access to it by context directly, we opted for another method.
+        /// </summary>
+        /// <returns>A list of the levels found.</returns>
+        public JsonResult GetLevels()
+        {
+            List<object> levels = new List<object>();
+            string sqlCommand = "Select Name from Levels";
+            string connectionString = ConfigurationManager.ConnectionStrings["ItSchool"].ConnectionString;
+            using( SqlConnection connection = new SqlConnection( connectionString ) )
+            {
+                connection.Open();
+                using( SqlCommand cmd = new SqlCommand( sqlCommand, connection ) )
+                {
+                    using( SqlDataReader reader = cmd.ExecuteReader() )
+                    {
+                        while( reader.Read() )
+                        {
+                            for (int i = 0; i < reader.FieldCount; i++ )
+                            {
+                                object value = reader.GetValue( i );
+                                levels.Add( value );
+                            }
+                        }
+                    }
+                }
+            }
+            return new JsonResult { Data = levels, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        /// <summary> 
         /// Gets all pupils' classes.
         /// </summary>
         /// <returns>All the classes in a list form in JSON Data format.</returns>
@@ -390,7 +421,6 @@ namespace ITI.ItSchool.Models
             throw new NotImplementedException();
         }
 
-
         public JsonResult getBattleCardChoice()
         {
             using (var db = new ExerciseBattleCardContext())
@@ -426,7 +456,11 @@ namespace ITI.ItSchool.Models
             return data;
         }
 
-
+        /// <summary>
+        /// Gets the content of a cloze exercise, by his name.
+        /// </summary>
+        /// <param name="exerciseName">The name of the exercise we want to get some contents.</param>
+        /// <returns>The exercise found.</returns>
         public JsonResult GetClozeExerciseContent(string exerciseName)
         {
             ExerciseCloze ec = new ExerciseCloze();
@@ -460,17 +494,13 @@ namespace ITI.ItSchool.Models
             string levelReceived = exCloze.Level.Name;
             string chapterReceived = exCloze.Chapter.Name;
             string creationInfo = "not created";
-
             if (exCloze.UsersIds != null) usersIds = exCloze.UsersIds.ToList();
-
             pupil = this.FindUserById(usersIds[0]);
-
             // Get the Id of the Chapter which what we refer to
             using (var db = new SchoolContext())
             {
                 c = db.Chapters.Where(ch => ch.Name.Equals(chapterReceived)).FirstOrDefault();
             }
-
             /* We create the Exercise cloze after catching all the FK we needed, and assign to the exercise an
             unique id */
             using (var db = new ExerciseClozeContext())
@@ -494,7 +524,6 @@ namespace ITI.ItSchool.Models
 
                 // Create the cloze exercise
                 ec = new ExerciseCloze();
-
                 ec.ExerciseClozeId = exercise.ExerciseId;
                 ec.Name = exCloze.Name;
                 ec.Text = exCloze.Text;
@@ -502,7 +531,6 @@ namespace ITI.ItSchool.Models
                 ec.ChapterId = c.ChapterId;
                 ec.LevelId = l.LevelId;
                 ec.Level = null;
-
                 try
                 {
                     db.ExerciseCloze.Add(ec);
@@ -541,7 +569,6 @@ namespace ITI.ItSchool.Models
                 return exerciseDictation;
             }
         }
-
         /// <summary>
         /// Create Or Update a Dictation
         /// It create a new Exercise only if the dictation doesn't exists in the DB
@@ -667,6 +694,24 @@ namespace ITI.ItSchool.Models
             #endregion
         }
 
+        /// Gets all the cloze exercises for a select list in the client side.
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetClozeExercises()
+        {
+            List<ExerciseCloze> exercises = new List<ExerciseCloze>();
+            using( var db = new ExerciseClozeContext() )
+            {
+                exercises = db.ExerciseCloze.ToList();
+            }
+            return new JsonResult { Data = exercises, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="exoBattleCardData"></param>
+        /// <returns></returns>
         public JsonResult SaveBattleCard(ExerciseBattleCardData exoBattleCardData)
         {
             ExerciseBattleCard battleCardExo = new ExerciseBattleCard();
@@ -706,7 +751,6 @@ namespace ITI.ItSchool.Models
                 {
                     Chapter chapter = sc.Chapters.Where(c => c.Name.Equals(battleCardExo.Chapter.Name))
                                                  .FirstOrDefault();
-
                     battleCardExo.ChapterId = chapter.ChapterId;
                     battleCardExo.LevelId = exoBattleCardContext.Level.Where(l => l.Name.Equals(exoBattleCardData.Level.Name)).Select(l => l.LevelId).FirstOrDefault();
                     battleCardExo.Level = null;
@@ -719,57 +763,58 @@ namespace ITI.ItSchool.Models
                                             .FirstOrDefault();
                     battleCardExo.Chapter = null;
 
-                }
-                //ExerciseBattleCard battleCard = exoBattleCardContext.ExerciseBattleCard.Where(ebattleCard => ebattleCard.Name.Equals(battleCardExo.Name) && ebattleCard.Level.Name.Equals(battleCardExo.Level.Name)).FirstOrDefault();
-                ExerciseBattleCard battleCard = exoBattleCardContext.ExerciseBattleCard.Where(ebattleCard => ebattleCard.Name.Equals(battleCardExo.Name)).FirstOrDefault();
-                if (battleCard == null)
-                {
-                    Exercise exercise = new Exercise();
-                    int exerciseId = 0;
-                    using (ExerciseContext exoContext = new ExerciseContext())
+                    // Save it into the DB and return the creation statement
+                    //ExerciseBattleCard battleCard = exoBattleCardContext.ExerciseBattleCard.Where(ebattleCard => ebattleCard.Name.Equals(battleCardExo.Name) && ebattleCard.Level.Name.Equals(battleCardExo.Level.Name)).FirstOrDefault();
+                    ExerciseBattleCard battleCard = exoBattleCardContext.ExerciseBattleCard.Where(ebattleCard => ebattleCard.Name.Equals(battleCardExo.Name)).FirstOrDefault();
+                    if (battleCard == null)
                     {
-                        ExerciseType exoType = exoContext.ExerciseTypes.Where(exType => exType.Name.Equals("CardGame")).FirstOrDefault();
-                        exercise.ExerciseTypeId = exoType.ExerciseTypeId;
-                        exoContext.Exercises.Add(exercise);
+                        Exercise exercise = new Exercise();
+                        int exerciseId = 0;
+                        using (ExerciseContext exoContext = new ExerciseContext())
+                        {
+                            ExerciseType exoType = exoContext.ExerciseTypes.Where(exType => exType.Name.Equals("CardGame")).FirstOrDefault();
+                            exercise.ExerciseTypeId = exoType.ExerciseTypeId;
+                            exoContext.Exercises.Add(exercise);
 
-                        exoContext.SaveChanges();
-                        exerciseId = exercise.ExerciseId;
+                            exoContext.SaveChanges();
+                            exerciseId = exercise.ExerciseId;
+                        }
+
+                        //Then we save the Exercise Plug
+                        battleCardExo.ExerciseBattleCardId = exerciseId;
+                        exoBattleCardContext.ExerciseBattleCard.Add(battleCardExo);
+                        exoBattleCardContext.SaveChanges();
+
+                        //Finally we affect the exercise to
+                        if (battleCardExo.LevelId.Equals(1))
+                        {
+                            usersIds = null;
+                            usersIds = repo.GetChildrenListIdByClassId(user.ClassId);
+                        }
+                        ExerciseAffectation(usersIds, exerciseId);
+                        message = "Jeu enregistré";
                     }
-
-                    //Then we save the Exercise Plug
-                    battleCardExo.ExerciseBattleCardId = exerciseId;
-                    exoBattleCardContext.ExerciseBattleCard.Add(battleCardExo);
-                    exoBattleCardContext.SaveChanges();
-
-                    //Finally we affect the exercise to
-                    if (battleCardExo.LevelId.Equals(1))
+                    // If the exercise was already in bdd, update the data
+                    else
                     {
-                        usersIds = null;
-                        usersIds = repo.GetChildrenListIdByClassId(user.ClassId);
+                        ExerciseBattleCard refExoBattleCard = new ExerciseBattleCard();
+
+                        refExoBattleCard = exoBattleCardContext.ExerciseBattleCard.Where(ex => ex.Name.Equals(battleCardExo.Name)).FirstOrDefault();
+
+                        ExerciseAffectation(usersIds, refExoBattleCard.ExerciseBattleCardId);
+                        battleCard.Choice = battleCardExo.Choice;
+
+                        //3. Mark entity as modified
+                        exoBattleCardContext.Entry(battleCard).State = System.Data.Entity.EntityState.Modified;
+                        //4. call SaveChanges
+                        exoBattleCardContext.SaveChanges();
+                        message = "Texte mis à jour.";
                     }
-                    ExerciseAffectation(usersIds, exerciseId);
-                    message = "Jeu enregistré";
+                    JsonResult data = new JsonResult { Data = message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                    return data;
                 }
-                // If the exercise was already in bdd, update the data
-                else
-                {
-                    ExerciseBattleCard refExoBattleCard = new ExerciseBattleCard();
-
-                    refExoBattleCard = exoBattleCardContext.ExerciseBattleCard.Where(ex => ex.Name.Equals(battleCardExo.Name)).FirstOrDefault();
-
-                    ExerciseAffectation(usersIds, refExoBattleCard.ExerciseBattleCardId);
-                    battleCard.Choice = battleCardExo.Choice;
-
-                    //3. Mark entity as modified
-                    exoBattleCardContext.Entry(battleCard).State = System.Data.Entity.EntityState.Modified;
-                    //4. call SaveChanges
-                    exoBattleCardContext.SaveChanges();
-                    message = "Texte mis à jour.";
-                }
-                JsonResult data = new JsonResult { Data = message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-                return data;
-            }
             #endregion
+            }
         }
 
         /// <summary>
@@ -850,6 +895,18 @@ namespace ITI.ItSchool.Models
                 }
             }
             return affectedBattleCard;
+        }
+
+        public ExerciseDictation FindExerciseDictationByLevelId( int levelID )
+        {
+            ExerciseDictation exoDictation = new ExerciseDictation();
+            using( ExerciseDictationContext exoDictationContext = new ExerciseDictationContext() )
+            {
+                exoDictationContext.Configuration.LazyLoadingEnabled = false;
+                //Level level = exoDictationContext.Level.Where( l => l.LevelId.Equals( levelID ) ).FirstOrDefault();
+                exoDictation = exoDictationContext.ExerciseDictation.Where( e => e.Level.LevelId.Equals( levelID ) ).FirstOrDefault();
+            }
+            return exoDictation;
         }
     }
 }

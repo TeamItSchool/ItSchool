@@ -39,7 +39,11 @@ namespace ITI.ItSchool.Models
 
         JsonResult GetGroups();
 
+        JsonResult GetLevels();
+
         JsonResult GetClozeExerciseContent(string exerciseName);
+
+        JsonResult GetClozeExercises();
 
         JsonResult getUsersByClasses(int id);
 
@@ -64,5 +68,7 @@ namespace ITI.ItSchool.Models
         bool Remove(int id);
 
         IList<User> Update(User u);
+
+        ExerciseDictation FindExerciseDictationByLevelId( int levelID );
     }
 }

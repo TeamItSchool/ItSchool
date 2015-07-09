@@ -1,11 +1,4 @@
 ﻿<div ng-controller="TeacherDictationController">
-
-    <script>
-        function disableMicrophone() {
-            location.reload();
-        }
-    </script>
-
     <center>
         <div ng-show="!EasySelected && !MediumSelected && !HardSelected">
             <h1>{{Message}}</h1>
@@ -30,25 +23,30 @@
             </table>
         </div>
         <div ng-show="ShowRecorder">
-            <md-button class="md-raised md-primary" ng-click="startRecording(this);" id="StartButton" disabled>Enregistrer</md-button>
-            <md-button class="md-raised md-primary" ng-click="stopRecording(this);" id="StopButton" disabled>Arrêter</md-button>
-            <md-button class="md-raised md-primary" ng-click="enableMicrophone()" id="EnableMicrophone">Activer le micro</md-button>
-            <md-button class="md-raised md-primary" onclick="disableMicrophone()" id="DisableMicrophone" disabled>Désactiver le micro</md-button>
-            <audio id="myAudio"></audio>
-            <h2>Recordings</h2>
-            <ul id="recordingslist"></ul>
 
-            <h2>Log</h2>
-            <pre id="log"></pre>
+            <md-button class="md-fab" aria-label="FAB" ng-click="startRecording(this);" id="StartButton" disabled>
+                <md-icon md-svg-src="../Images/material-design-icons/svg/checkbox-blank-circle.svg"></md-icon>
+            </md-button>
+
+            <md-button class="md-fab" aria-label="FAB" ng-click="stopRecording(this);" id="StopButton" disabled>
+                <md-icon md-svg-src="../Images/material-design-icons/svg/stop.svg"></md-icon>
+            </md-button>
+
+
+            <md-button class="md-fab" aria-label="FAB" ng-click="enableMicrophone()" id="EnableMicrophone">
+                <md-icon md-svg-src="{{MicButtonSVG}}"></md-icon>
+            </md-button>
+            <audio id="myAudio"></audio><br />
+             <h2><span id="theSpan"></span></h2>
+            <ul id="recordingslist"></ul>
         </div>
-        
+        <br /><br />
         <div ng-show="EasySelected">
             <h1>{{Message}}</h1>
             <form name="DictText" ng-submit="SaveText()">
 
-                <textarea ng-model="ExerciseDictationData.Text" name="text" placeholder="Texte de la dictée..." rows="5" cols="40"></textarea><br />
+                <textarea ng-model="ExerciseDictationData.Text" name="text" placeholder="Texte de la dictée..." rows="5" cols="40">{{ExerciseDictationData.Text}}</textarea><br />
                 <md-button class="md-raised md-primary" type="submit" name="SaveEasyText">{{Button}}</md-button>
-                <h2>{{ExerciseDictationData.Text}} + {{ExerciseDictationData.Level.Name}}</h2>
             </form>
         </div>
         <div ng-show="MediumSelected">
@@ -60,9 +58,8 @@
                     </md-checkbox>
                 </div>
 
-                <textarea ng-model="ExerciseDictationData.Text" name="text" placeholder="Texte de la dictée..." rows="5" cols="40"></textarea><br />
+                <textarea ng-model="ExerciseDictationData.Text" name="text" placeholder="Texte de la dictée..." rows="5" cols="40">{{ExerciseDictationData.Text}}</textarea><br />
                 <md-button class="md-raised md-primary" type="submit" name="SaveMediumText">{{Button}}</md-button>
-                <h2>{{ExerciseDictationData.Text}} + {{ExerciseDictationData.Level.Name}}</h2>
             </form>
         </div>
         <div ng-show="HardSelected">
@@ -74,9 +71,8 @@
                     </md-checkbox>
                 </div>
 
-                <textarea ng-model="ExerciseDictationData.Text" name="text" placeholder="Texte de la dictée..." rows="5" cols="40"></textarea><br />
+                <textarea ng-model="ExerciseDictationData.Text" name="text" placeholder="Texte de la dictée..." rows="5" cols="40">{{ExerciseDictationData.Text}}</textarea><br />
                 <md-button class="md-raised md-primary" type="submit" name="SaveHardText">{{Button}}</md-button>
-                <h2>{{ExerciseDictationData.Text}} + {{ExerciseDictationData.Level.Name}}</h2>
             </form>
         </div>
     </center>

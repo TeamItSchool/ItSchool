@@ -3,6 +3,7 @@ using ITI.ItSchool.Models.SchoolEntities;
 using ITI.ItSchool.Models.UserEntities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -10,6 +11,7 @@ namespace ITI.ItSchool.Models.ClassExercicesPlug
 {
     public class ExerciseClozeData
     {
+        [Required]
         public string Name { get; set; }
 
         public string Text { get; set; }
