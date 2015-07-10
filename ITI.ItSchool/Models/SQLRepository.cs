@@ -531,16 +531,10 @@ namespace ITI.ItSchool.Models
                 ec.ChapterId = c.ChapterId;
                 ec.LevelId = l.LevelId;
                 ec.Level = null;
-                try
-                {
-                    db.ExerciseCloze.Add(ec);
-                    db.SaveChanges();
-                    creationInfo = "created";
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
+
+                db.ExerciseCloze.Add(ec);
+                db.SaveChanges();
+                creationInfo = "created";
             }
 
             /* Finally, we affect the exercise : if the level is Easy, we affect the exercise to all the class.
@@ -702,6 +696,7 @@ namespace ITI.ItSchool.Models
             List<ExerciseCloze> exercises = new List<ExerciseCloze>();
             using( var db = new ExerciseClozeContext() )
             {
+                db.Configuration.LazyLoadingEnabled = false;
                 exercises = db.ExerciseCloze.ToList();
             }
             return new JsonResult { Data = exercises, JsonRequestBehavior = JsonRequestBehavior.AllowGet };

@@ -17,7 +17,7 @@ namespace ITI.ItSchool.ExerciseContextMigrations
                 .PrimaryKey(t => t.ExerciseId)
                 .ForeignKey("dbo.ExercisesTypes", t => t.ExerciseTypeId, cascadeDelete: true)
                 .Index(t => t.ExerciseTypeId);
-
+            
             CreateTable(
                 "dbo.ExercisesTypes",
                 c => new
@@ -137,7 +137,7 @@ namespace ITI.ItSchool.ExerciseContextMigrations
             //            Remarks = c.String(maxLength: 200),
             //        })
             //    .PrimaryKey(t => t.GroupId);
-            
+
             CreateTable(
                 "dbo.ExercisesResults",
                 c => new
