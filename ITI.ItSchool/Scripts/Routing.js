@@ -1694,6 +1694,15 @@
     $scope.GoBack = function () {
         window.history.back();
     };
+    $scope.demo = {
+        topDirections: ['left', 'up'],
+        bottomDirections: ['down', 'right'],
+        isOpen: false,
+        availableModes: ['md-fling', 'md-scale'],
+        selectedMode: 'md-scale',
+        availableDirections: ['up', 'down', 'left', 'right'],
+        selectedDirection: 'right'
+    };
 })
 
 .controller('ErrorController', function ($scope) {
