@@ -109,7 +109,7 @@
     $locationProvider.html5Mode(false).hashPrefix('!'); // This is for Hashbang Mode
 })
 .controller('HomeController', function ($scope) {
-    $scope.Message = "Bienvenue";
+    $scope.Message = "Un voyage vers l'apprentissage";
 })
 .controller('KidLoginController', function ($scope, LoginService) {
 
