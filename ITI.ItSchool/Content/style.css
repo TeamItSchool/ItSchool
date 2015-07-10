@@ -594,4 +594,13 @@ h1, h2, h3, h4 {
     right: 90%;
 }
 
+span.descriptionTitleBattleCard {
+    text-decoration : underline;
+    font-weight : bold;
+}
+
+span.characterBattleCard{
+    font-weight : bold;
+}
+
 /*Battle Card end*/
