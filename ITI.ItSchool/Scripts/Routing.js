@@ -115,7 +115,7 @@
 
     sessionStorage.removeItem("objet");
 
-    $scope.Message = "Embarque dans l'aventure It'School :)";
+    $scope.Message = "Les terres de Schola attendent leur héros";
     $scope.IsLogedIn = false;
     $scope.ShowSpin = false;
     $scope.Submitted = false;
@@ -237,7 +237,7 @@
                     alert(d);
                     if (d == 'Le compte a bien été créé.') {
                         $scope.IsRegistered = true;
-                        $scope.Message = "Embarque dans l'aventure It'School !";
+                        $scope.Message = "Les terres de Schola attendent leur héros";
                         $scope.IsLogedIn = false;
                         $scope.ShowSpin = false;
                         $scope.Submitted = false;
@@ -492,9 +492,9 @@
     };
     return fac;
 })
-.controller('KidHomeController', function ($scope) {
-    $scope.Message = 'Page "Élève"';
-})
+//.controller('KidHomeController', function ($scope) {
+//    $scope.Message = "Embarque dans l'aventure It'School :)";
+//})
 .controller('TeacherHomeController', function ($scope) {
     $scope.Message = 'Page "Professeurs"';
     $scope.demo = {
@@ -578,7 +578,7 @@
                     console.log(monobjet.data.FirstName);
 
                     $scope.IsLogedIn = true;
-                    $scope.Message = "Vous êtes bien connecté. Bienvenue " + d.data.FirstName + " " + d.data.LastName;
+                    $scope.Message = "Bienvenue " + d.data.FirstName + " " + d.data.LastName;
                 } else if (d.data.Nickname != null && d.data.Group.Name == "Élèves") {
                     $scope.LoginData.Username = "";
                     $scope.LoginData.Password = "";
@@ -1690,7 +1690,7 @@
 })
 
 .controller('KidHomeController', function ($scope) {
-    $scope.Message = 'Page "Élève"';
+    $scope.Message = "Embarque dans l'aventure It'School :)";
     $scope.GoBack = function () {
         window.history.back();
     };
