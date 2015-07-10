@@ -1,12 +1,12 @@
 ﻿<div ng-controller="KidSelectExercicesController">
-    <section class="row">
-        <!--<ul class="nav nav-pills  nav-justified">
-            <li> <a href="#!/home">Accueil </a></li>
-            <li> <a href="#">Avatar </a></li>
-            <li> <a href="#">Messages </a></li>
-            <li> <a href="#!/kid/login">Deconnexion </a></li>
-        </ul>
-    </section>-->
+    <div ng-show="EmptySession">
+        <center>
+            <h3 style="color:red">Vous n'êtes pas connecté, <br />donc non autorisé à être sur cette page.</h3>
+            <md-button class="md-raised md-primary" href="#!/home">Accueil</md-button>
+        </center>
+    </div>
+
+    <div ng-show="!EmptySession">
         <div class="lock-size" layout="row" layout-align="left">
             <md-fab-speed-dial md-open="demo.isOpen" md-direction="{{demo.selectedDirection}}"
                                ng-class="demo.selectedMode">
@@ -26,15 +26,16 @@
                 </md-fab-actions>
             </md-fab-speed-dial>
         </div>
-    <center class="positionCenter">
-        <h1>{{Message}}</h1>
-        <table>
-            <tr>
-                <!--<td><md-button class="md-raised md-primary" href="#!/kid/exercices/drag_drop">Glissé-Déposé</md-button></td>-->
-                <td><md-button class="md-raised md-primary" href="#!/kid/exercices/battleCard">Battle Card</md-button></td>
-                <td><md-button class="md-raised md-primary" href="#!/kid/exercices/dictation">Dictée</md-button></td>
-                <td><md-button class="md-raised md-primary" href="#!/kid/exercices/cloze_exercize">Texte à trous</md-button></td>
-            </tr>
-        </table>
-    </center>
+        <center class="positionCenter">
+            <h1>{{Message}}</h1>
+            <table>
+                <tr>
+                    <!--<td><md-button class="md-raised md-primary" href="#!/kid/exercices/drag_drop">Glissé-Déposé</md-button></td>-->
+                    <td><md-button class="md-raised md-primary" href="#!/kid/exercices/battleCard">Battle Card</md-button></td>
+                    <td><md-button class="md-raised md-primary" href="#!/kid/exercices/dictation">Dictée</md-button></td>
+                    <td><md-button class="md-raised md-primary" href="#!/kid/exercices/cloze_exercize">Texte à trous</md-button></td>
+                </tr>
+            </table>
+        </center>
+    </div>
 </div>
