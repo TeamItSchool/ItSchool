@@ -1,30 +1,41 @@
 ﻿<div ng-controller="KidPlayBattleCardController">
-    <div id="clock"></div>
-    <div id="messageClock">{{Time}}</div>
+    <div ng-show="EmptySession">
+        <center>
+            <h3 style="color:red">Vous n'êtes pas connecté, <br />donc non autorisé à être sur cette page.</h3>
+            <md-button class="md-raised md-primary" href="#!/home">Accueil</md-button>
+        </center>
+    </div>
 
-    <div id="score">{{Score}}</div>
-    <!--<div class="logo" ng-include="'/Images/redCard.svg'"></div>-->
-    <!--<object id="card1" class="card" type="image/svg+xml" data={{svgCard}}>ðŸ‚ </object>-->
-    <div id="container">
+    <div ng-show="!EmptySession">
+        <div id="clock"></div>
+        <div id="messageClock">{{Time}}</div>
 
-        <svg id="gameZone">
-            <foreignobject x="10" y="10" width="100%" height="100%">
-                <div id="hand">
+        <div id="score">{{Score}}</div>
+        <!--<div class="logo" ng-include="'/Images/redCard.svg'"></div>-->
+        <!--<object id="card1" class="card" type="image/svg+xml" data={{svgCard}}>ðŸ‚ </object>-->
+        <div id="container">
 
-                    <object id="card1" class="card" type="image/svg+xml" data={{svgCard}}>ðŸ‚ </object>
-                    <object id="card2" class="card" type="image/svg+xml" data={{svgCard}}>ðŸ‚ </object>
-                    <object id="card3" class="card" type="image/svg+xml" data={{svgCard}}>ðŸ‚ </object>
-                    <object id="card4" class="card" type="image/svg+xml" data={{svgCard}}>ðŸ‚ </object>
-                    <object id="card5" class="card" type="image/svg+xml" data={{svgCard}}>ðŸ‚ </object>
-                </div>
+            <svg id="gameZone">
+                <foreignobject x="10" y="10" width="100%" height="100%">
+                    <div id="hand">
 
-                <div id="deal">
-                    <object id="cardToFind" class="card" type="image/svg+xml" data={{svgCard}}>ðŸ‚ </object>
-                </div>
-            </foreignobject>
-        </svg>
+                        <object id="card1" class="card" type="image/svg+xml" data={{svgCard}}>ðŸ‚ </object>
+                        <object id="card2" class="card" type="image/svg+xml" data={{svgCard}}>ðŸ‚ </object>
+                        <object id="card3" class="card" type="image/svg+xml" data={{svgCard}}>ðŸ‚ </object>
+                        <object id="card4" class="card" type="image/svg+xml" data={{svgCard}}>ðŸ‚ </object>
+                        <object id="card5" class="card" type="image/svg+xml" data={{svgCard}}>ðŸ‚ </object>
+                    </div>
+
+                    <div id="deal">
+                        <object id="cardToFind" class="card" type="image/svg+xml" data={{svgCard}}>ðŸ‚ </object>
+                    </div>
+                </foreignobject>
+            </svg>
+
+        </div>
 
     </div>
+    
 
     <script src="../Scripts/BattleCardJS/snap.svg.js"></script>
     <script src="../Scripts/BattleCardJS/flipclock.js"></script>

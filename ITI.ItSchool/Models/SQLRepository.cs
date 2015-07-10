@@ -796,6 +796,10 @@ namespace ITI.ItSchool.Models
 
                         refExoBattleCard = exoBattleCardContext.ExerciseBattleCard.Where(ex => ex.Name.Equals(battleCardExo.Name)).FirstOrDefault();
 
+                        if( battleCardExo.LevelId.Equals( 1 ) )
+                            usersIds = null;
+                        usersIds = repo.GetChildrenListIdByClassId( user.ClassId );
+
                         ExerciseAffectation(usersIds, refExoBattleCard.ExerciseBattleCardId);
                         battleCard.Choice = battleCardExo.Choice;
 
@@ -803,7 +807,7 @@ namespace ITI.ItSchool.Models
                         exoBattleCardContext.Entry(battleCard).State = System.Data.Entity.EntityState.Modified;
                         //4. call SaveChanges
                         exoBattleCardContext.SaveChanges();
-                        message = "Texte mis à jour.";
+                        message = "Choix mis à jour.";
                     }
                     JsonResult data = new JsonResult { Data = message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                     return data;
@@ -890,6 +894,18 @@ namespace ITI.ItSchool.Models
                 }
             }
             return affectedBattleCard;
+        }
+
+        public ExerciseDictation FindExerciseDictationByLevelId( int levelID )
+        {
+            ExerciseDictation exoDictation = new ExerciseDictation();
+            using( ExerciseDictationContext exoDictationContext = new ExerciseDictationContext() )
+            {
+                exoDictationContext.Configuration.LazyLoadingEnabled = false;
+                //Level level = exoDictationContext.Level.Where( l => l.LevelId.Equals( levelID ) ).FirstOrDefault();
+                exoDictation = exoDictationContext.ExerciseDictation.Where( e => e.Level.LevelId.Equals( levelID ) ).FirstOrDefault();
+            }
+            return exoDictation;
         }
     }
 }

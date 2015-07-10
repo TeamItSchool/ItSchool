@@ -1,13 +1,40 @@
 ﻿<div ng-controller="TeacherSelectExercicesController">
-    <center>
-        <h1>{{Message}}</h1>
-        <table>
-            <tr>
-                <td><md-button class="md-raised md-primary" href="#!/teacher/exercices/matter">Glissé-Déposé</md-button></td>
-                <td><md-button class="md-raised md-primary" href="#!/teacher/exercices/battleCard">Card Game</md-button></td>
-                <td><md-button class="md-raised md-primary" href="#!/teacher/exercices/dictation">Dictée</md-button></td>
-                <td><md-button class="md-raised md-primary" href="#!/teacher/exercices/cloze_exercise">Texte à trous</md-button></td>
-            </tr>
-        </table>
-    </center>
+    <div ng-show="EmptySession">
+        <center>
+            <h3 style="color:red">Vous n'êtes pas connecté, <br />donc non autorisé à être sur cette page.</h3>
+            <md-button class="md-raised md-primary" href="#!/home">Accueil</md-button>
+        </center>
+    </div>
+    <div ng-show="!EmptySession">
+        <div class="lock-size" layout="row" layout-align="left">
+            <md-fab-speed-dial md-open="demo.isOpen" md-direction="{{demo.selectedDirection}}"
+                               ng-class="demo.selectedMode">
+                <md-fab-trigger>
+                    <md-button aria-label="menu" class="md-fab md-warn">
+                        <md-icon md-svg-src="../Images/material-design-icons/svg/menu.svg"></md-icon>
+                    </md-button>
+                </md-fab-trigger>
+                <md-fab-actions>
+                    <md-button aria-label="logout" class="md-fab md-raised md-mini" href="#!/teacher/login">
+                        <md-icon style=" color:black" md-svg-src="../Images/material-design-icons/svg/logout.svg">
+                        </md-icon>
+                        <md-tooltip>
+                            Déconnexion
+                        </md-tooltip>
+                    </md-button>
+                </md-fab-actions>
+            </md-fab-speed-dial>
+        </div>
+        <center class="positionCenter">
+            <h1>{{Message}}</h1>
+            <table>
+                <tr>
+                    <!--<td><md-button class="md-raised md-primary" href="#!/teacher/exercices/matter">Glissé-Déposé</md-button></td>-->
+                    <td><md-button class="md-raised md-primary" href="#!/teacher/exercices/battleCard">Battle Card</md-button></td>
+                    <td><md-button class="md-raised md-primary" href="#!/teacher/exercices/dictation">Dictée</md-button></td>
+                    <td><md-button class="md-raised md-primary" href="#!/teacher/exercices/cloze_exercise">Texte à trous</md-button></td>
+                </tr>
+            </table>
+        </center>
+    </div>
 </div>

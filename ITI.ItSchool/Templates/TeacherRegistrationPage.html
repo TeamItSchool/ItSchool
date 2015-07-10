@@ -30,7 +30,7 @@
                     <input type="password" ng-model="User.Password" name="uPassword" placeholder="Mot de passe..." ng-class="submitted?'ng-dirty':''" required autofocus />
                     <span class="error" ng-show="(RegisterForm.uPassword.$dirty || submitted) && RegisterForm.uPassword.$error.required">Le mot de passe doit être entré !</span>
                 </md-input-container>
-                <md-select ng-model="User.Class.Name" placeholder="Classe" required>
+                <md-select ng-model="User.Class.Name" placeholder="Classe" style="width:10%" required>
                     <md-option ng-repeat="class in Classes" value="{{class.Name}}" ng-model="User.Class.Name">{{class.Name}}</md-option>
                 </md-select>
                 <br />
@@ -44,13 +44,13 @@
                         <md-input-container style="width:10%">
                             <label>Pseudo</label>
                             <input type="text" ng-model="LoginData.Username" name="cUsername" ng-class="Submitted?'ng-dirty':''" required>
-                            <span class="error" ng-show="(LoginData.cUsername.$dirty || submitted) && LoginForm.cUsername.$error.required">Username required</span>
+                            <span class="error" ng-show="(LoginData.cUsername.$dirty || Submitted) && LoginForm.cUsername.$error.required">Pseudo requis</span>
                         </md-input-container>
                         <br />
                         <md-input-container style="width:10%">
                             <label>Mot de passe</label>
                             <input type="password" ng-model="LoginData.Password" name="cPassword" ng-class="Submitted?'ng-dirty':''" required>
-                            <span class="error" ng-show="(LoginData.cPassword.$dirty || Submitted) && LoginForm.cPassword.$error.required">Password required</span>
+                            <span class="error" ng-show="(LoginData.cPassword.$dirty || Submitted) && LoginForm.cPassword.$error.required">Mot de passe requis</span>
                         </md-input-container>
                         <br />
                         <md-button class="md-raised md-primary" value="Login" type="submit">Connexion</md-button>
@@ -60,7 +60,7 @@
                     <md-button class="md-fab" aria-label="FAB" href="#!/teacher/">
                         <md-icon md-svg-src="../Images/material-design-icons/navigation/svg/production/ic_arrow_back_36px.svg"></md-icon>
                     </md-button>
-                    <md-button class="md-fab" aria-label="FAB" href="#!/teacher/lobby">
+                    <md-button class="md-fab" aria-label="FAB" href="#!/teacher/exercises">
                         <md-icon md-svg-src="../Images/material-design-icons/navigation/svg/production/ic_arrow_forward_36px.svg"></md-icon>
                     </md-button>
                 </div>

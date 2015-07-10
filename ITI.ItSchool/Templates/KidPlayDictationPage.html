@@ -1,57 +1,91 @@
 ﻿<div ng-controller="KidPlayDictationController">
-    <center>
-        <div ng-show="!EasySelected && !MediumSelected && !HardSelected">
-            <h1>{{Message}}</h1>
-            <table>
-                <tr>
-                    <td>
-                        <form novalidate name="EasyForm" ng-submit="Easy()">
-                            <md-button class="md-raised md-primary" type="submit" name="easy" id="easy">Facile</md-button>
-                        </form>
-                    </td>
-                    <td>
-                        <form novalidate name="MediumForm" ng-submit="Medium()">
-                            <md-button class="md-raised md-primary" type="submit" name="medium" id="medium">Moyen</md-button>
-                        </form>
-                    </td>
-                    <td>
-                        <form novalidate name="HardForm" ng-submit="Hard()">
-                            <md-button class="md-raised md-primary" type="submit" name="hard" id="hard">Difficile</md-button>
-                        </form>
-                    </td>
-                </tr>
-            </table>
+    <div ng-show="EmptySession">
+        <center>
+            <h3 style="color:red">Il faut être un héros (et se connecter) <br /> afin d'avoir accès à cette page.</h3>
+            <md-button class="md-raised md-primary" href="#!/home">Accueil</md-button>
+        </center>
+    </div>
+
+    <div ng-show="!EmptySession">
+        <div class="lock-size" layout="row" layout-align="left">
+            <md-fab-speed-dial md-open="demo.isOpen" md-direction="{{demo.selectedDirection}}"
+                               ng-class="demo.selectedMode">
+                <md-fab-trigger>
+                    <md-button aria-label="menu" class="md-fab md-warn">
+                        <md-icon md-svg-src="../Images/material-design-icons/svg/menu.svg"></md-icon>
+                    </md-button>
+                </md-fab-trigger>
+                <md-fab-actions>
+                    <md-button aria-label="home" class="md-fab md-raised md-mini" ng-click="GoBack()">
+                        <md-icon style="color:black" md-svg-src="../Images/material-design-icons/svg/home.svg"></md-icon>
+                        <md-tooltip>
+                            Accueil
+                        </md-tooltip>
+                    </md-button>
+                    <md-button aria-label="logout" class="md-fab md-raised md-mini" href="#!/kid/login">
+                        <md-icon style=" color:black" md-svg-src="../Images/material-design-icons/svg/logout.svg">
+                        </md-icon>
+                        <md-tooltip>
+                            Déconnexion
+                        </md-tooltip>
+                    </md-button>
+                </md-fab-actions>
+            </md-fab-speed-dial>
         </div>
-        <div ng-show="EasySelected">
-            <h1>{{Message}}</h1>
-            <audio controls="controls" autobuffer="autobuffer" id="dictationAudio">
-                <source src="" />
-            </audio><br />
-            <form name="DictText" ng-submit="SubmitText()">
-                <textarea ng-model="ChildTextWritted" name="text" placeholder="Texte de la dictée..." rows="5" cols="40"></textarea><br />
-                <md-button class="md-raised md-primary" type="submit" name="SaveEasyText">{{Button}}</md-button>
-                <h2>{{ChildTextWritted}}</h2>
-            </form>
-        </div>
-        <div ng-show="MediumSelected">
-            <h1>{{Message}}</h1>
-            <form name="DictText" ng-submit="SaveText">
-                <audio controls="controls" autobuffer="autobuffer" id="dictationAudio2">
+        <center class="positionCenter">
+            <div ng-show="!EasySelected && !MediumSelected && !HardSelected">
+                <h1>{{Message}}</h1>
+                <table>
+                    <tr>
+                        <td>
+                            <form novalidate name="EasyForm" ng-submit="Easy()">
+                                <md-button class="md-raised md-primary" type="submit" name="easy" id="easy">Facile</md-button>
+                            </form>
+                        </td>
+                        <td>
+                            <form novalidate name="MediumForm" ng-submit="Medium()">
+                                <md-button class="md-raised md-primary" type="submit" name="medium" id="medium">Moyen</md-button>
+                            </form>
+                        </td>
+                        <td>
+                            <form novalidate name="HardForm" ng-submit="Hard()">
+                                <md-button class="md-raised md-primary" type="submit" name="hard" id="hard">Difficile</md-button>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div ng-show="EasySelected">
+                <h1>{{Message}}</h1>
+                <audio controls="controls" autobuffer="autobuffer" id="dictationAudio">
                     <source src="" />
                 </audio><br />
-                <textarea name="text" placeholder="Texte de la dictée..." rows="5" cols="40"></textarea><br />
-                <md-button class="md-raised md-primary" type="submit" name="SaveEasyText">{{Button}}</md-button>
-            </form>
-        </div>
-        <div ng-show="HardSelected">
-            <h1>{{Message}}</h1>
-            <form name="DictText" ng-submit="SaveText">
-                <audio controls="controls" autobuffer="autobuffer" id="dictationAudio3">
-                    <source src="" />
-                </audio><br />
-                <textarea name="text" placeholder="Texte de la dictée..." rows="5" cols="40"></textarea><br />
-                <md-button class="md-raised md-primary" type="submit" name="SaveEasyText">{{Button}}</md-button>
-            </form>
-        </div>
-    </center>
+                <form name="DictText" ng-submit="SubmitText()">
+                    <textarea ng-model="ChildTextWritted" name="text" placeholder="Texte de la dictée..." rows="5" cols="40"></textarea><br />
+                    <md-button class="md-raised md-primary" type="submit" name="SaveEasyText">{{Button}}</md-button>
+                    <h2>{{ChildTextWritted}}</h2>
+                </form>
+            </div>
+            <div ng-show="MediumSelected">
+                <h1>{{Message}}</h1>
+                <form name="DictText" ng-submit="SaveText">
+                    <audio controls="controls" autobuffer="autobuffer" id="dictationAudio2">
+                        <source src="" />
+                    </audio><br />
+                    <textarea name="text" placeholder="Texte de la dictée..." rows="5" cols="40"></textarea><br />
+                    <md-button class="md-raised md-primary" type="submit" name="SaveEasyText">{{Button}}</md-button>
+                </form>
+            </div>
+            <div ng-show="HardSelected">
+                <h1>{{Message}}</h1>
+                <form name="DictText" ng-submit="SaveText">
+                    <audio controls="controls" autobuffer="autobuffer" id="dictationAudio3">
+                        <source src="" />
+                    </audio><br />
+                    <textarea name="text" placeholder="Texte de la dictée..." rows="5" cols="40"></textarea><br />
+                    <md-button class="md-raised md-primary" type="submit" name="SaveEasyText">{{Button}}</md-button>
+                </form>
+            </div>
+        </center>
+    </div>
 </div>

@@ -1,9 +1,30 @@
 ﻿<div ng-controller="TeacherLoginController">
-    <center>
+    <div class="lock-size" layout="row" layout-align="left">
+        <md-fab-speed-dial md-open="demo.isOpen" md-direction="{{demo.selectedDirection}}"
+                           ng-class="demo.selectedMode">
+            <md-fab-trigger>
+                <md-button aria-label="menu" class="md-fab md-warn">
+                    <md-icon md-svg-src="../Images/material-design-icons/svg/menu.svg"></md-icon>
+                </md-button>
+            </md-fab-trigger>
+            <md-fab-actions>
+                <md-button aria-label="home" class="md-fab md-raised md-mini" href="#!/home">
+                    <md-icon style="color:black" md-svg-src="../Images/material-design-icons/svg/home.svg"></md-icon>
+                    <md-tooltip>
+                        Accueil du site
+                    </md-tooltip>
+                </md-button>
+            </md-fab-actions>
+        </md-fab-speed-dial>
+    </div>
+    <center class="positionCenter">
         <h3>{{Message}}</h3>
         <div ng-show="!IsKid">
             <form novalidate name="LoginForm" ng-submit="Login()">
                 <div ng-show="!IsLogedIn">
+                    <div ng-show="ShowSpin">
+                        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                    </div>
                     <md-input-container style="width:10%">
                         <label>Pseudo</label>
                         <input type="text" ng-model="LoginData.Username" name="cUsername" ng-class="Submitted?'ng-dirty':''" required autofocus>
@@ -20,10 +41,10 @@
                 </div>
             </form>
             <div ng-show="IsLogedIn">
-                <md-button class="md-fab" aria-label="FAB" href="#!/teacher/">
+                <md-button class="md-fab" aria-label="FAB" ng-click="GoBack()">
                     <md-icon md-svg-src="../Images/material-design-icons/navigation/svg/production/ic_arrow_back_36px.svg"></md-icon>
                 </md-button>
-                <md-button class="md-fab" aria-label="FAB" href="#!/teacher/lobby">
+                <md-button class="md-fab" aria-label="FAB" href="#!/teacher/exercices">
                     <md-icon md-svg-src="../Images/material-design-icons/navigation/svg/production/ic_arrow_forward_36px.svg"></md-icon>
                 </md-button>
             </div>
@@ -32,5 +53,10 @@
             <md-button class="md-raised md-primary" href="#!/kid/">Espace Élève</md-button>
         </div>
     </center>
+    <script>
+    function goBack() {
+        window.history.back();
+    }
+    </script>
 </div>
 

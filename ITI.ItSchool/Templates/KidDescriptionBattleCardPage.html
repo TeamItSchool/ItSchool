@@ -1,8 +1,8 @@
 ﻿<div ng-controller="KidDescriptionBattleCardController">
     <style>
-        body, html {
+        /*body, html {
             background-color: #F0E8D8;
-        }
+        }*/
 
         h1, h2 {
             width: 100%;
@@ -10,18 +10,18 @@
             /*border : 1px solid black;*/
         }
 
-        #global {
+        /*#global {
             padding-bottom: 5%;
-            position: relative; /* on positionne le conteneur */
+            position: relative;
             margin-left: auto;
             margin-right: auto;
             width: 100%;
             height: 100%;
             border: 1px solid black;
             background: #F0E8D8 -moz-linear-gradient(center bottom, #DACDB1 11%, #F0E8D8 56%) repeat scroll 0% 0%;
-        }
+        }*/
 
-        #gameDescription {
+        /*#gameDescription {
             margin-top: 3%;
             text-align: center;
             margin-left: auto;
@@ -31,18 +31,18 @@
             box-shadow: 0px 0px 65px #CDBE9F inset, 0px 0px 20px #BEAE8C inset, 0px 0px 5px #816F47;
             font-family: Georgia,Times,serif;
             line-height: 1.50em;
-        }
+        }*/
 
-        #leftArrow{
+        /*#leftArrow{
             position: absolute;
-            /*border : 1px solid black;*/
+            border : 1px solid black;
             top: 45%;
             background-color: #CDBE9F;
-        }
+        }*/
 
-        #leftArrow {
+        /*#leftArrow {
             right: 90%;
-        }
+        }*/
 
         #gameStart {
 	    position : relative;
@@ -80,79 +80,108 @@
 	    text-decoration:underline
     }
     </style>
+    <div ng-show="EmptySession">
+        <center>
+            <h3 style="color:red">Vous n'êtes pas connecté, <br />donc non autorisé à être sur cette page.</h3>
+            <md-button class="md-raised md-primary" href="#!/home">Accueil</md-button>
+        </center>
+    </div>
 
-    <h1>Battle Card Game</h1>
-
-
-    <div id="global">
-
-        <md-button id="leftArrow" class="md-fab" aria-label="FAB" href="#!/kid/exercices">
-            <md-icon md-svg-src="../Images/material-design-icons/navigation/svg/production/ic_arrow_back_36px.svg"></md-icon>
-        </md-button>
-
-        <div id="gameDescription">
-            <h2>Description</h2>
-            <p>
-                Pandente itaque viam fatorum sorte tristissima, qua praestitutum erat eum vita et imperio spoliari, itineribus interiectis permutatione
-                iumentorum emensis venit Petobionem oppidum Noricorum, ubi reseratae sunt insidiarum latebrae omnes, et Barbatio repente apparuit comes,
-                qui sub eo domesticis praefuit, cum Apodemio agente in rebus milites ducens, quos beneficiis suis oppigneratos elegerat imperator certus
-                nec praemiis nec miseratione ulla posse deflecti.<br>
-                Et est admodum mirum videre plebem innumeram mentibus ardore quodam infuso cum dimicationum curulium eventu pendentem. haec similiaque
-                memorabile nihil vel serium agi Romae permittunt. ergo redeundum ad textum.<br />
-                Et quia Montius inter dilancinantium manus spiritum efflaturus Epigonum et Eusebium nec professionem nec dignitatem ostendens aliquotiens
-                increpabat, qui sint hi magna quaerebatur industria, et nequid intepesceret, Epigonus e Lycia philosophus ducitur et Eusebius ab Emissa Pittacas
-                cognomento, concitatus orator, cum quaestor non hos sed tribunos fabricarum insimulasset promittentes armorum si novas res agitari conperissent.
-            </p>
+    <div ng-show="!EmptySession"><h1>Battle Card</h1>
+        <div class="lock-size" layout="row" layout-align="left">
+            <md-fab-speed-dial md-open="demo.isOpen" md-direction="{{demo.selectedDirection}}"
+                               ng-class="demo.selectedMode">
+                <md-fab-trigger>
+                    <md-button aria-label="menu" class="md-fab md-warn">
+                        <md-icon md-svg-src="../Images/material-design-icons/svg/menu.svg"></md-icon>
+                    </md-button>
+                </md-fab-trigger>
+                <md-fab-actions>
+                    <md-button aria-label="home" class="md-fab md-raised md-mini" ng-click="GoBack()">
+                        <md-icon style="color:black" md-svg-src="../Images/material-design-icons/svg/home.svg"></md-icon>
+                        <md-tooltip>
+                            Accueil
+                        </md-tooltip>
+                    </md-button>
+                    <md-button aria-label="logout" class="md-fab md-raised md-mini" href="#!/kid/login">
+                        <md-icon style=" color:black" md-svg-src="../Images/material-design-icons/svg/logout.svg">
+                        </md-icon>
+                        <md-tooltip>
+                            Déconnexion
+                        </md-tooltip>
+                    </md-button>
+                </md-fab-actions>
+            </md-fab-speed-dial>
         </div>
 
-        <!--<div id="gameStart">
+        <div id="global">
+
+            <md-button id="leftArrow" class="md-fab" aria-label="FAB" ng-click="GoBack()">
+                <md-icon md-svg-src="../Images/material-design-icons/navigation/svg/production/ic_arrow_back_36px.svg"></md-icon>
+            </md-button>
+
+            <div id="gameDescription">
+                <h2>Description</h2>
+                <p><span class="characterBattleCard">Chef NashKar : </span><br />" Te voilà enfin jeune aventurier. Notre peuple est en danger ! Nous te donnerons le trésor de notre village en échange de ton aide."</p>
+                <p><span class="descriptionTitleBattleCard">Mission : </span> <br /> Relève le défi du Battle Card afin d'aider le chef NashKaR</p>
+                <p>
+                    <span class="descriptionTitleBattleCard">Règle : </span> <br />
+                    Tu as à ta disposition 5 cartes.
+                    Parmi ton jeu de cartes, il te faut cliquer la ou les cartes similaires à la carte modèle se trouvant à droite.
+                </p>
+                <p>
+                    <span class="descriptionTitleBattleCard">Temps : </span> <br /> Tu as une minute pour réaliser le Battle Card !
+                </p>
+            </div>
+
+            <!--<div id="gameStart">
             <a href="#!/kid/exercices/battleCard/play">PLAY THE GAME</a>
         </div>-->
 
-        <center>
-            <div ng-show="!EasySelected && !MediumSelected && !HardSelected">
-                <h1>{{Message}}</h1>
-                <table>
-                    <tr>
-                        <td>
-                            <form novalidate name="EasyForm" ng-submit="Easy()">
-                                <md-button class="md-raised md-primary" type="submit" name="easy" id="easy">Facile</md-button>
-                            </form>
-                        </td>
-                        <td>
-                            <form novalidate name="MediumForm" ng-submit="Medium()">
-                                <md-button class="md-raised md-primary" type="submit" name="medium" id="medium">Moyen</md-button>
-                            </form>
-                        </td>
-                        <td>
-                            <form novalidate name="HardForm" ng-submit="Hard()">
-                                <md-button class="md-raised md-primary" type="submit" name="hard" id="hard">Difficile</md-button>
-                            </form>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div ng-show="EasySelected">
-                <h1>{{Message}}</h1>
-                <div id="gameStart">
-                    <a href="#!/kid/exercices/battleCard/play">PLAY THE GAME</a>
+            <center>
+                <div ng-show="!EasySelected && !MediumSelected && !HardSelected">
+                    <h1>{{Message}}</h1>
+                    <table>
+                        <tr>
+                            <td>
+                                <form novalidate name="EasyForm" ng-submit="Easy()">
+                                    <md-button class="md-raised md-primary" type="submit" name="easy" id="easy">Facile</md-button>
+                                </form>
+                            </td>
+                            <td>
+                                <form novalidate name="MediumForm" ng-submit="Medium()">
+                                    <md-button class="md-raised md-primary" type="submit" name="medium" id="medium">Moyen</md-button>
+                                </form>
+                            </td>
+                            <td>
+                                <form novalidate name="HardForm" ng-submit="Hard()">
+                                    <md-button class="md-raised md-primary" type="submit" name="hard" id="hard">Difficile</md-button>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
+                <div ng-show="EasySelected">
+                    <h1>{{Message}}</h1>
+                    <div id="gameStart">
+                        <a href="#!/kid/exercices/battleCard/play">JOUER</a>
+                    </div>
 
-            </div>
-            <div ng-show="MediumSelected">
-                <h1>{{Message}}</h1>
-                <div id="gameStart">
-                    <a href="#!/kid/exercices/battleCard/play">PLAY THE GAME</a>
                 </div>
-            </div>
-            <div ng-show="HardSelected">
-                <h1>{{Message}}</h1>
-                <form name="DictText" ng-submit="SaveText">
-
-                </form>
-            </div>
-        </center>
-
+                <div ng-show="MediumSelected">
+                    <h1>{{Message}}</h1>
+                    <div id="gameStart">
+                        <a href="#!/kid/exercices/battleCard/play">JOUER</a>
+                    </div>
+                </div>
+                <div ng-show="HardSelected">
+                    <h1>{{Message}}</h1>
+                    <div id="gameStart">
+                        <a href="#!/kid/exercices/battleCard/play">JOUER</a>
+                    </div>
+                </div>
+            </center>
+        </div>
     </div>
-
+    
 </div>

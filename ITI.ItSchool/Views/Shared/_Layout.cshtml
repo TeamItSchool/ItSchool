@@ -4,7 +4,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
     <title>@ViewBag.Title</title>
     <link href="~/Components/angular-material/angular-material.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Bootstrap -->
+    <link href="~/Content/Bootstrap/bootstrap-theme.css" rel="stylesheet" media="screen">
+    <link href="~/Content/Bootstrap/bootstrap.css" rel="stylesheet" type="text/css" />
 
     <link href="~/Content/ng-grid.css" rel="stylesheet" type="text/css" />
 
@@ -23,10 +26,7 @@
     <!-- BattleCardGame -->
     <link href="~/Content/BattleCardCss/battleCardGame.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="~/Content/BattleCardCss/flipclock.css" rel="stylesheet" type="text/css" media="screen" />
-    <!-- Bootstrap -->
-    <link href="~/Content/bootstrap-theme.min.css" rel="stylesheet" media="screen">
-    <!-- Font-Awesome -->
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+
     <!-- My style -->
     <link href="~/Content/style.css" rel="stylesheet" media="screen" type="text/css">
 
@@ -34,15 +34,17 @@
 </head>
 <body ng-app="TheApp">
     
-    <div class="container body-content">
-        <div id="background">
-            @RenderBody()
-            
-        </div>
+    @*<div class="container body-content">*@
+    <div class="container" id="mainContainer">
+        @RenderBody()
+        @*<div id="background">
+                @RenderBody()
+
+            </div>*@
     </div>
         <script src="~/Scripts/jquery-ui.js"></script>
         <script src="~/Scripts/jquery.js"></script>
-        <script src="~/Scripts/bootstrap.min.js"></script>
+        <script src="~/Scripts/bootstrap.js"></script>
         <script src="../Components/angular-animate/angular-animate.js"></script>
         <script src="../Components/angular-aria/angular-aria.js"></script>
         <script type="text/javascript" src="../Components/angular-material/angular-material.js"></script>

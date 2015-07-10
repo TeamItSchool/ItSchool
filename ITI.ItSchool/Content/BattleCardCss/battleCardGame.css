@@ -35,7 +35,7 @@ svg#gameZone {
 
 #hand {
 	text-align: center;
-	background-color: #008800;
+	/*background-color: #008800;*/
 	position: absolute;
 	padding-top: 20px;
 	padding-bottom: 20px;
@@ -47,7 +47,7 @@ svg#gameZone {
 
 #deal {
 	text-align: center;
-	background-color: #008800;
+	/*background-color: #008800;*/
 	border-radius: 5px;
 	position: absolute;
 	padding-top: 20px;

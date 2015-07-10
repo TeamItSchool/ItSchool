@@ -52,6 +52,13 @@ namespace ITI.ItSchool.Controllers
             return data;
         }
 
+        public JsonResult GetDictation( int id )
+        {
+            IRepository repo = new SQLRepository();
+            ExerciseDictation exoDictation = repo.FindExerciseDictationByLevelId( id );
+            return new JsonResult { Data = exoDictation, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
         /// <summary>
         /// Will search the exercise dictation in db from the user id and will define if a level is showable for the kid
         /// </summary>
@@ -171,7 +178,10 @@ namespace ITI.ItSchool.Controllers
                     exoDicResultsContext.Entry( searchedExoDictationResult ).State = System.Data.Entity.EntityState.Modified;
                     //4. call SaveChanges
                     exoDicResultsContext.SaveChanges();
-                    message = "Texte mis à jour.";
+                    if( success == true )
+                        message = "Ton texte a été mis à jour et bravo, tu as parfaitement réussi la dictée !";
+                    else
+                        message = "Ton texte a bien été mis à jour. La correction va être faite par ton professeur.";
                 }
             }
 
