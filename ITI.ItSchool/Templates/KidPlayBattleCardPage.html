@@ -7,31 +7,6 @@
     </div>
 
     <div ng-show="!EmptySession">
-        <div class="lock-size" layout="row" layout-align="left">
-            <md-fab-speed-dial md-open="demo.isOpen" md-direction="{{demo.selectedDirection}}"
-                               ng-class="demo.selectedMode">
-                <md-fab-trigger>
-                    <md-button aria-label="menu" class="md-fab md-warn">
-                        <md-icon md-svg-src="../Images/material-design-icons/svg/menu.svg"></md-icon>
-                    </md-button>
-                </md-fab-trigger>
-                <md-fab-actions>
-                    <md-button aria-label="home" class="md-fab md-raised md-mini" href="#!/teacher/exercices">
-                        <md-icon style="color:black" md-svg-src="../Images/material-design-icons/svg/home.svg"></md-icon>
-                        <md-tooltip>
-                            Accueil
-                        </md-tooltip>
-                    </md-button>
-                    <md-button aria-label="logout" class="md-fab md-raised md-mini" href="#!/teacher/login">
-                        <md-icon style=" color:black" md-svg-src="../Images/material-design-icons/svg/logout.svg">
-                        </md-icon>
-                        <md-tooltip>
-                            Déconnexion
-                        </md-tooltip>
-                    </md-button>
-                </md-fab-actions>
-            </md-fab-speed-dial>
-        </div>
         <div id="clock"></div>
         <div id="messageClock">{{Time}}</div>
 
