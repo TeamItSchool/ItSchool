@@ -275,7 +275,7 @@
                                         console.log(monobjet.data.FirstName);
 
                                         $scope.IsLogedIn = true;
-                                        $scope.Message = "Bienvenue " + d.data.FirstName + " " + d.data.Group.Name;
+                                        $scope.Message = "Bienvenue " + d.data.FirstName;
                                     } else if (d.data.Nickname != null && d.data.Group.Name == "Professeurs") {
                                         $scope.LoginData.Username = "";
                                         $scope.LoginData.Password = "";

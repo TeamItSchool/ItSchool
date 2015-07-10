@@ -44,14 +44,14 @@
                     <div ng-show="!IsLogedIn">
                         <md-input-container style="width:10%">
                             <label>Pseudo</label>
-                            <input type="text" ng-model="LoginForm.Username" name="cUsername" ng-class="Submitted?'ng-dirty':''" required>
-                            <span class="error" ng-show="(LoginForm.cUsername.$dirty || Submitted) && LoginForm.cUsername.$error.required">Pseudo requis</span>
+                            <input type="text" ng-model="LoginData.Username" name="cUsername" ng-class="Submitted?'ng-dirty':''" required>
+                            <span class="error" ng-show="(LoginData.cUsername.$dirty || Submitted) && LoginForm.cUsername.$error.required">Pseudo requis</span>
                         </md-input-container>
                         <br />
                         <md-input-container style="width:10%">
                             <label>Mot de passe</label>
-                            <input type="password" ng-model="LoginForm.Password" name="cPassword" ng-class="Submitted?'ng-dirty':''" required>
-                            <span class="error" ng-show="(LoginForm.cPassword.$dirty || Submitted) && LoginForm.cPassword.$error.required">Mot de passe requis</span>
+                            <input type="password" ng-model="LoginData.Password" name="cPassword" ng-class="Submitted?'ng-dirty':''" required>
+                            <span class="error" ng-show="(LoginData.cPassword.$dirty || Submitted) && LoginForm.cPassword.$error.required">Mot de passe requis</span>
                         </md-input-container>
                         <br />
                         <md-button class="md-raised md-primary" value="Login" type="submit">Connexion</md-button>
