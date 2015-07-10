@@ -1793,6 +1793,7 @@
     <Content Include="Global.asax" />
     <Content Include="Images\Background.png" />
     <Content Include="Images\backgroundCliffHD.png" />
+    <Content Include="Images\magic_kingdomHD.png" />
     <Content Include="Images\material-design-icons\navigation\1x_ios\ic_apps_black_24dp.png" />
     <Content Include="Images\pen.png" />
     <Content Include="Images\material-design-icons\navigation\1x_ios\ic_apps_black_48dp.png" />
