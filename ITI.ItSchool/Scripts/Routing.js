@@ -320,7 +320,7 @@
 
 })
 .controller('KidSelectExercicesController', function ($scope) {
-    $('body').css('background-image', 'url(../Images/magic_kingdomHD.png)');
+    //$('body').css('background-image', 'url(../Images/magic_kingdomHD.png)');
     $scope.Message = 'A quoi veux-tu jouer ?';
     $scope.demo = {
         topDirections: ['left', 'up'],
@@ -331,9 +331,9 @@
         availableDirections: ['up', 'down', 'left', 'right'],
         selectedDirection: 'right'
     };
-    $scope.$on('$locationChangeStart', function () {
-        $('body').css('background-image', 'url(../Images/backgroundCliffHD.png)');
-    });
+    //$scope.$on('$locationChangeStart', function () {
+    //    $('body').css('background-image', 'url(../Images/backgroundCliffHD.png)');
+    //});
 })
 .controller('KidPlayDictationController', function ($scope, GetChildExerciseDictation, CheckDictationText) {
     var monobjet_json = sessionStorage.getItem("objet");
