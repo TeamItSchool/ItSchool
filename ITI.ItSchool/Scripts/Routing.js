@@ -326,7 +326,7 @@
 })
 .controller('KidSelectExercicesController', function ($scope) {
     $scope.EmptySession = false;
-    $('body').css('background-image', 'url(../Images/magic_kingdomHD.png)');
+    //$('body').css('background-image', 'url(../Images/magic_kingdomHD.png)');
     if (sessionStorage.getItem("objet") == null)
         $scope.EmptySession = true;
     else {
