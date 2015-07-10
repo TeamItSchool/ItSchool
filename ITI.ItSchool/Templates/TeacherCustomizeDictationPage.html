@@ -1,104 +1,113 @@
 ﻿<div ng-controller="TeacherDictationController">
-    <div class="lock-size" layout="row" layout-align="left">
-        <md-fab-speed-dial md-open="demo.isOpen" md-direction="{{demo.selectedDirection}}"
-                           ng-class="demo.selectedMode">
-            <md-fab-trigger>
-                <md-button aria-label="menu" class="md-fab md-warn">
-                    <md-icon md-svg-src="../Images/material-design-icons/svg/menu.svg"></md-icon>
-                </md-button>
-            </md-fab-trigger>
-            <md-fab-actions>
-                <md-button aria-label="home" class="md-fab md-raised md-mini" ng-click="GoBack()">
-                    <md-icon style="color:black" md-svg-src="../Images/material-design-icons/svg/home.svg"></md-icon>
-                    <md-tooltip>
-                        Accueil
-                    </md-tooltip>
-                </md-button>
-                <md-button aria-label="logout" class="md-fab md-raised md-mini" href="#!/teacher/login">
-                    <md-icon style=" color:black" md-svg-src="../Images/material-design-icons/svg/logout.svg">
-                    </md-icon>
-                    <md-tooltip>
-                        Déconnexion
-                    </md-tooltip>
-                </md-button>
-            </md-fab-actions>
-        </md-fab-speed-dial>
+    <div ng-show="EmptySession">
+        <center>
+            <h3 style="color:red">Vous n'êtes pas connecté, <br />donc non autorisé à être sur cette page.</h3>
+            <md-button class="md-raised md-primary" href="#!/home">Accueil</md-button>
+        </center>
     </div>
-    <center class="positionCenter">
-        <div ng-show="!EasySelected && !MediumSelected && !HardSelected">
-            <h1>{{Message}}</h1>
-            <table>
-                <tr>
-                    <td>
-                        <form novalidate name="EasyForm" ng-submit="Easy()">
-                            <md-button class="md-raised md-primary" type="submit" name="easy">Facile</md-button>
-                        </form>
-                    </td>
-                    <td>
-                        <form novalidate name="MediumForm" ng-submit="Medium()">
-                            <md-button class="md-raised md-primary" type="submit" name="medium">Moyen</md-button>
-                        </form>
-                    </td>
-                    <td>
-                        <form novalidate name="HardForm" ng-submit="Hard()">
-                            <md-button class="md-raised md-primary" type="submit" name="hard">Difficile</md-button>
-                        </form>
-                    </td>
-                </tr>
-            </table>
+    <div ng-show="!EmptySession">
+        <div class="lock-size" layout="row" layout-align="left">
+            <md-fab-speed-dial md-open="demo.isOpen" md-direction="{{demo.selectedDirection}}"
+                               ng-class="demo.selectedMode">
+                <md-fab-trigger>
+                    <md-button aria-label="menu" class="md-fab md-warn">
+                        <md-icon md-svg-src="../Images/material-design-icons/svg/menu.svg"></md-icon>
+                    </md-button>
+                </md-fab-trigger>
+                <md-fab-actions>
+                    <md-button aria-label="home" class="md-fab md-raised md-mini" ng-click="GoBack()">
+                        <md-icon style="color:black" md-svg-src="../Images/material-design-icons/svg/home.svg"></md-icon>
+                        <md-tooltip>
+                            Accueil
+                        </md-tooltip>
+                    </md-button>
+                    <md-button aria-label="logout" class="md-fab md-raised md-mini" href="#!/teacher/login">
+                        <md-icon style=" color:black" md-svg-src="../Images/material-design-icons/svg/logout.svg">
+                        </md-icon>
+                        <md-tooltip>
+                            Déconnexion
+                        </md-tooltip>
+                    </md-button>
+                </md-fab-actions>
+            </md-fab-speed-dial>
         </div>
-        <div ng-show="ShowRecorder">
+        <center class="positionCenter">
+            <div ng-show="!EasySelected && !MediumSelected && !HardSelected">
+                <h1>{{Message}}</h1>
+                <table>
+                    <tr>
+                        <td>
+                            <form novalidate name="EasyForm" ng-submit="Easy()">
+                                <md-button class="md-raised md-primary" type="submit" name="easy">Facile</md-button>
+                            </form>
+                        </td>
+                        <td>
+                            <form novalidate name="MediumForm" ng-submit="Medium()">
+                                <md-button class="md-raised md-primary" type="submit" name="medium">Moyen</md-button>
+                            </form>
+                        </td>
+                        <td>
+                            <form novalidate name="HardForm" ng-submit="Hard()">
+                                <md-button class="md-raised md-primary" type="submit" name="hard">Difficile</md-button>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div ng-show="ShowRecorder">
 
-            <md-button class="md-fab" aria-label="FAB" ng-click="startRecording(this);" id="StartButton" disabled>
-                <md-icon md-svg-src="../Images/material-design-icons/svg/checkbox-blank-circle.svg"></md-icon>
-            </md-button>
+                <md-button class="md-fab" aria-label="FAB" ng-click="startRecording(this);" id="StartButton" disabled>
+                    <md-icon md-svg-src="../Images/material-design-icons/svg/checkbox-blank-circle.svg"></md-icon>
+                </md-button>
 
-            <md-button class="md-fab" aria-label="FAB" ng-click="stopRecording(this);" id="StopButton" disabled>
-                <md-icon md-svg-src="../Images/material-design-icons/svg/stop.svg"></md-icon>
-            </md-button>
+                <md-button class="md-fab" aria-label="FAB" ng-click="stopRecording(this);" id="StopButton" disabled>
+                    <md-icon md-svg-src="../Images/material-design-icons/svg/stop.svg"></md-icon>
+                </md-button>
 
 
-            <md-button class="md-fab" aria-label="FAB" ng-click="enableMicrophone()" id="EnableMicrophone">
-                <md-icon md-svg-src="{{MicButtonSVG}}"></md-icon>
-            </md-button>
-            <audio id="myAudio"></audio><br />
-             <h2><span id="theSpan"></span></h2>
-            <ul id="recordingslist"></ul>
-        </div>
-        <br /><br />
-        <div ng-show="EasySelected">
-            <h1>{{Message}}</h1>
-            <form name="DictText" ng-submit="SaveText()">
+                <md-button class="md-fab" aria-label="FAB" ng-click="enableMicrophone()" id="EnableMicrophone">
+                    <md-icon md-svg-src="{{MicButtonSVG}}"></md-icon>
+                </md-button>
+                <audio id="myAudio"></audio><br />
+                <h2><span id="theSpan"></span></h2>
+                <ul id="recordingslist"></ul>
+            </div>
+            <br /><br />
+            <div ng-show="EasySelected">
+                <h1>{{Message}}</h1>
+                <form name="DictText" ng-submit="SaveText()">
 
-                <textarea ng-model="ExerciseDictationData.Text" name="text" placeholder="Texte de la dictée..." rows="5" cols="40">{{ExerciseDictationData.Text}}</textarea><br />
-                <md-button class="md-raised md-primary" type="submit" name="SaveEasyText">{{Button}}</md-button>
-            </form>
-        </div>
-        <div ng-show="MediumSelected">
-            <h1>{{Message}}</h1>
-            <form name="DictText" ng-submit="SaveText()">
-                <div ng-repeat="child in Children">
-                    <md-checkbox ng-checked="exists(child, selected)" ng-click="toggle(child, selected)">
-                        {{ "Élève : " + child.FirstName + " " + child.LastName + " (Pseudo : " + child.Nickname + ")"}}
-                    </md-checkbox>
-                </div>
+                    <textarea ng-model="ExerciseDictationData.Text" name="text" placeholder="Texte de la dictée..." rows="5" cols="40">{{ExerciseDictationData.Text}}</textarea><br />
+                    <md-button class="md-raised md-primary" type="submit" name="SaveEasyText">{{Button}}</md-button>
+                </form>
+            </div>
+            <div ng-show="MediumSelected">
+                <h1>{{Message}}</h1>
+                <form name="DictText" ng-submit="SaveText()">
+                    <div ng-repeat="child in Children">
+                        <md-checkbox ng-checked="exists(child, selected)" ng-click="toggle(child, selected)">
+                            {{ "Élève : " + child.FirstName + " " + child.LastName + " (Pseudo : " + child.Nickname + ")"}}
+                        </md-checkbox>
+                    </div>
 
-                <textarea ng-model="ExerciseDictationData.Text" name="text" placeholder="Texte de la dictée..." rows="5" cols="40">{{ExerciseDictationData.Text}}</textarea><br />
-                <md-button class="md-raised md-primary" type="submit" name="SaveMediumText">{{Button}}</md-button>
-            </form>
-        </div>
-        <div ng-show="HardSelected">
-            <h1>{{Message}}</h1>
-            <form name="DictText" ng-submit="SaveText()">
-                <div ng-repeat="child in Children">
-                    <md-checkbox ng-checked="exists(child, selected)" ng-click="toggle(child, selected)">
-                        {{ "Élève : " + child.FirstName + " " + child.LastName + " (Pseudo : " + child.Nickname + ")"}}
-                    </md-checkbox>
-                </div>
+                    <textarea ng-model="ExerciseDictationData.Text" name="text" placeholder="Texte de la dictée..." rows="5" cols="40">{{ExerciseDictationData.Text}}</textarea><br />
+                    <md-button class="md-raised md-primary" type="submit" name="SaveMediumText">{{Button}}</md-button>
+                </form>
+            </div>
+            <div ng-show="HardSelected">
+                <h1>{{Message}}</h1>
+                <form name="DictText" ng-submit="SaveText()">
+                    <div ng-repeat="child in Children">
+                        <md-checkbox ng-checked="exists(child, selected)" ng-click="toggle(child, selected)">
+                            {{ "Élève : " + child.FirstName + " " + child.LastName + " (Pseudo : " + child.Nickname + ")"}}
+                        </md-checkbox>
+                    </div>
 
-                <textarea ng-model="ExerciseDictationData.Text" name="text" placeholder="Texte de la dictée..." rows="5" cols="40">{{ExerciseDictationData.Text}}</textarea><br />
-                <md-button class="md-raised md-primary" type="submit" name="SaveHardText">{{Button}}</md-button>
-            </form>
-        </div>
-    </center>
+                    <textarea ng-model="ExerciseDictationData.Text" name="text" placeholder="Texte de la dictée..." rows="5" cols="40">{{ExerciseDictationData.Text}}</textarea><br />
+                    <md-button class="md-raised md-primary" type="submit" name="SaveHardText">{{Button}}</md-button>
+                </form>
+            </div>
+        </center>
+    </div>
+    
 </div>
