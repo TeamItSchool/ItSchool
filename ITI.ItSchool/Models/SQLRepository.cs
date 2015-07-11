@@ -801,6 +801,10 @@ namespace ITI.ItSchool.Models
 
                         refExoBattleCard = exoBattleCardContext.ExerciseBattleCard.Where(ex => ex.Name.Equals(battleCardExo.Name)).FirstOrDefault();
 
+                        if( battleCardExo.LevelId.Equals( 1 ) )
+                            usersIds = null;
+                        usersIds = repo.GetChildrenListIdByClassId( user.ClassId );
+
                         ExerciseAffectation(usersIds, refExoBattleCard.ExerciseBattleCardId);
                         battleCard.Choice = battleCardExo.Choice;
 

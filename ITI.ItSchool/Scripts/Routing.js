@@ -326,16 +326,6 @@
 })
 .controller('KidSelectExercicesController', function ($scope) {
     //$('body').css('background-image', 'url(../Images/magic_kingdomHD.png)');
-    $scope.Message = 'A quoi veux-tu jouer ?';
-    $scope.demo = {
-        topDirections: ['left', 'up'],
-        bottomDirections: ['down', 'right'],
-        isOpen: false,
-        availableModes: ['md-fling', 'md-scale'],
-        selectedMode: 'md-scale',
-        availableDirections: ['up', 'down', 'left', 'right'],
-        selectedDirection: 'right'
-    };
     //$scope.$on('$locationChangeStart', function () {
     //    $('body').css('background-image', 'url(../Images/backgroundCliffHD.png)');
     //});
@@ -1739,7 +1729,7 @@
     $scope.choice = $localStorage.choiceData;
     console.log($scope.choice);
 
-    $scope.Time = 'Vous avez 1 minutes ! ';
+    $scope.Time = 'Vous avez 1 minute(s) ! ';
     $scope.Score = 0
     $scope.svgCard = "/Images/redCard.svg";
 

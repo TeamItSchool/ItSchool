@@ -22,6 +22,9 @@
         <div ng-show="!IsTeacher">
             <form novalidate name="LoginForm" ng-submit="Login()">
                 <div ng-show="!IsLogedIn">
+                    <div ng-show="ShowSpin">
+                        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                    </div>
                     <md-input-container style="width:10%">
                         <label>Pseudo</label>
                         <input type="text" ng-model="LoginData.Username" name="cUsername" ng-class="Submitted?'ng-dirty':''" required autofocus>

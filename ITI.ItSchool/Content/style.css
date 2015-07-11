@@ -10,7 +10,7 @@ body {
     -webkit-background-size: cover; /* pour anciens Chrome et Safari */
     background-size: cover;
     background-position: 55% 17%;
-    height: 170%;
+    height: 200%;
     animation: animationBackground linear 1.5s;
     animation-iteration-count: 1;
     transform-origin: 50% 50%;
