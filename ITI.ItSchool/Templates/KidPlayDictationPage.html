@@ -68,7 +68,7 @@
             </div>
             <div ng-show="MediumSelected">
                 <h1>{{Message}}</h1>
-                <form name="DictText" ng-submit="SaveText">
+                <form name="DictText" ng-submit="SubmitText()">
                     <audio controls="controls" autobuffer="autobuffer" id="dictationAudio2">
                         <source src="" />
                     </audio><br />
@@ -78,7 +78,7 @@
             </div>
             <div ng-show="HardSelected">
                 <h1>{{Message}}</h1>
-                <form name="DictText" ng-submit="SaveText">
+                <form name="DictText" ng-submit="SubmitText()">
                     <audio controls="controls" autobuffer="autobuffer" id="dictationAudio3">
                         <source src="" />
                     </audio><br />
