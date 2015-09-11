@@ -245,7 +245,7 @@ namespace ITI.ItSchool.Controllers
             {
                 MailMessage mail = new MailMessage();
                 //mail.To.Add( email );
-                mail.To.Add( "kikabouguenole@gmail.com" );
+                mail.To.Add( u.Mail );
 
                 //mail to the subscriber !
                 mail.From = new MailAddress( "itschool.management.team@gmail.com" );

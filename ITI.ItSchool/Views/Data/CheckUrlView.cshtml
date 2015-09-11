@@ -8,7 +8,13 @@
     </div>
 </section>
 
-    <center><strong>Hello, here is the code = @ViewBag.ActivationCode</strong></center>
+    <center>
+        <strong>Hello, here is the code = @ViewBag.ActivationCode</strong>
+        <br />
+        <md-button class="md-raised md-primary" href="http://localhost:18264/#!/kid/">Élève</md-button>
+        <br />
+        <md-button class="md-raised md-primary" href="http://localhost:18264/#!/teacher/">Professeur</md-button>
+    </center>
 
 @section Scripts{
     <script src="~/Scripts/Routing.js"></script>
