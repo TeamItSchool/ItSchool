@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Net;
+using System.Net.Mail;
 
 namespace ITI.ItSchool.Controllers
 {
@@ -237,25 +239,95 @@ namespace ITI.ItSchool.Controllers
         public JsonResult Register(User u)
         {
             string message = "";
+            string activationCode = Guid.NewGuid().ToString();
 
-            //Here we will save data to the database
-            if (ModelState.IsValid != false)
+            try
             {
-                SQLRepository sUserRepo = new SQLRepository();
-                var user = sUserRepo.FindByNickname(u.Nickname);
-                if (user == null)
-                {
-                    sUserRepo.Create(u);
-                    message = "Le compte a bien été créé.";
-                }
-                else
-                    message = "Le pseudo existe déjà";
+                MailMessage mail = new MailMessage();
+                //mail.To.Add( email );
+                mail.To.Add( "kikabouguenole@gmail.com" );
+
+                //mail to the subscriber !
+                mail.From = new MailAddress( "itschool.management.team@gmail.com" );
+
+
+                mail.Subject = "Inscription sur It'School";
+
+                string body = "Bonjour " + u.FirstName.Trim() + ",";
+                body += "<br /><br />Merci de vous être inscrit sur le site itschool.edu.fr";
+                body += "<br /><br />Afin de finaliser l'inscription, nous vous prions de cliquer sur le lien ci-dessous qui activera votre compte.";
+
+                //Here is the URL to validate the registration
+                //Will give access to a page wich validate the activation number
+                
+                body += "<br /><a href = 'http://localhost:18264/Data/CheckUrl?ActivationCode=" + activationCode + "'>Cliquez ici afin d'activer le compte.</a>";
+                
+                body += "<br /><br />";
+                body += "<br /><br />Cordialement,";
+                body += "<br /><br />L'équipe It'School.";
+
+                mail.Body = body;
+
+                mail.IsBodyHtml = true;
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "smtp.gmail.com"; //Or Your SMTP Server Address
+                smtp.Credentials = new System.Net.NetworkCredential
+                     ( "itschool.management.team@gmail.com", "LearnWithFun" ); // ***use valid credentials***
+                smtp.Port = 587;
+
+                //Or your Smtp Email ID and Password
+                smtp.EnableSsl = true;
+                smtp.Send( mail );
+                message = "Un mail vous a été envoyé afin de confirmer votre inscription.";
             }
-            else
+            catch( Exception ex )
             {
-                message = "Failed!";
+                message = "Exception in sendEmail : " + ex.Message;
             }
+
+            //using( MailMessage mm = new MailMessage( "kikabouguenole@gmail.com", "kikabouguenole@gmail.com") )
+            //{
+            //    mm.Subject = "Account Activation";
+            //    string body = "Hello " + u.FirstName.Trim() + ",";
+            //    body += "<br /><br />Please click the following link to activate your account";
+            //    body += "<br /><a href = '" + Request.Url.AbsoluteUri.Replace( "CS.aspx", "CS_Activation.aspx?ActivationCode=" + activationCode ) + "'>Click here to activate your account.</a>";
+            //    body += "<br /><br />Thanks";
+            //    mm.Body = body;
+            //    mm.IsBodyHtml = true;
+            //    SmtpClient smtp = new SmtpClient();
+            //    smtp.Host = "smtp.gmail.com";
+            //    smtp.EnableSsl = true;
+            //    NetworkCredential NetworkCred = new NetworkCredential( "kikabouguenole@gmail.com", "LesSimpsons:D" );
+            //    smtp.UseDefaultCredentials = true;
+            //    smtp.Credentials = NetworkCred;
+            //    smtp.Port = 587;
+            //    smtp.Send( mm );
+            //}
+
+            ////Here we will save data to the database
+            //if (ModelState.IsValid != false)
+            //{
+            //    SQLRepository sUserRepo = new SQLRepository();
+            //    var user = sUserRepo.FindByNickname(u.Nickname);
+            //    if (user == null)
+            //    {
+            //        sUserRepo.Create(u);
+            //        message = "Le compte a bien été créé.";
+            //    }
+            //    else
+            //        message = "Le pseudo existe déjà";
+            //}
+            //else
+            //{
+            //    message = "Failed!";
+            //}
             return new JsonResult { Data = message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        public ActionResult CheckURL(string activationCode)
+        {
+            ViewBag.ActivationCode = activationCode;
+            return View("CheckUrlView");
         }
 
         public JsonResult GetClasses()
