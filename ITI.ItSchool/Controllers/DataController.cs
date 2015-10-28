@@ -321,6 +321,7 @@ namespace ITI.ItSchool.Controllers
             //{
             //    message = "Failed!";
             //}
+
             return new JsonResult { Data = message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 

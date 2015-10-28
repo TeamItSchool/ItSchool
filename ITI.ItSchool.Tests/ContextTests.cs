@@ -20,6 +20,7 @@ namespace ITI.ItSchool.Tests
             IDatabaseInitializer<UserContext> init = new DropCreateDatabaseAlways<UserContext>();
             Database.SetInitializer( init );
             init.InitializeDatabase( new UserContext() );
+            Console.WriteLine("Swag");
         }
 
         private void initialize_database_exerciseContext()
